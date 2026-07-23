@@ -1,1 +1,4 @@
+User-agent: *
+Allow: /
 
+Sitemap: https://Allyonoappsite.github.io/Allyonoappsite/sitemap.xml
