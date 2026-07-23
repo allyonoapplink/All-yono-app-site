@@ -1,9 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url>
-    <loc>https://Allyonoappsite.github.io/Allyonoappsite/</loc>
-    <lastmod>2026-07-23</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>1.0</priority>
-  </url>
+   <url>
+      <loc>https://allyonoapplink.github.io/All-yono-app-site/</loc>
+      <priority>1.00</priority>
+   </url>
+   <url>
+      <loc>https://allyonoapplink.github.io/All-yono-app-site/about.html</loc>
+      <priority>0.80</priority>
+   </url>
+   <url>
+      <loc>https://allyonoapplink.github.io/All-yono-app-site/contact.html</loc>
+      <priority>0.80</priority>
+   </url>
+   <url>
+      <loc>https://allyonoapplink.github.io/All-yono-app-site/privacy-policy.html</loc>
+      <priority>0.50</priority>
+   </url>
+   <url>
+      <loc>https://allyonoapplink.github.io/All-yono-app-site/terms.html</loc>
+      <priority>0.50</priority>
+   </url>
+   <url>
+      <loc>https://allyonoapplink.github.io/All-yono-app-site/disclaimer.html</loc>
+      <priority>0.50</priority>
+   </url>
 </urlset>
