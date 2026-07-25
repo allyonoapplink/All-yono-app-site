@@ -93,7 +93,7 @@
 
     /* --- DETAIL PAGE PREMIUM STYLES --- */
     .detail-premium { padding: 14px; }
-    .detail-premium .hero-section { display: flex; gap: 14px; align-items: center; margin-bottom: 14px; }
+    .detail-premium .hero-section { display: flex; gap: 14px; align-items: center; margin-bottom: 12px; }
     .detail-premium .hero-img { width: 72px; height: 72px; border-radius: 16px; overflow: hidden; border: 1px solid #e2e8f0; flex-shrink: 0; }
     .detail-premium .hero-img img { width: 100%; height: 100%; object-fit: cover; display: block; }
     .detail-premium .hero-info { flex: 1; }
@@ -119,6 +119,20 @@
     .detail-premium .color-5 .section-title { color: #d97706; }
     .detail-premium .color-6 .section-title { color: #0891b2; }
     .detail-premium .color-7 .section-title { color: #db2777; }
+
+    /* --- Related Games --- */
+    .related-section { padding: 10px; background: white; border-top: 1px solid #e9edf4; margin-top: 4px; }
+    .related-title { font-weight: 700; font-size: 0.8rem; color: #0b1e33; margin-bottom: 6px; display: flex; align-items: center; gap: 8px; }
+    .related-grid { display: flex; flex-direction: column; gap: 5px; }
+    .related-item { display: flex; align-items: center; gap: 6px; padding: 5px 8px; background: #f8fafc; border-radius: 10px; border: 1px solid #e9edf4; cursor: pointer; }
+    .related-item:active { transform: scale(0.97); }
+    .related-item img { width: 28px; height: 28px; border-radius: 8px; object-fit: cover; display: block; }
+    .related-item .rinfo { flex: 1; display: flex; flex-direction: column; gap: 0px; min-width: 0; }
+    .related-item .rname { font-weight: 600; font-size: 0.6rem; color: #0b1e33; }
+    .related-item .rname .alt { font-weight: 400; font-size: 0.45rem; color: #6b7280; }
+    .related-item .rbonus { font-size: 0.45rem; color: #dc2626; font-weight: 600; display: inline-flex; align-items: center; gap: 3px; }
+    .related-item .rwithdraw { font-size: 0.4rem; color: #0a0a0a; font-weight: 500; display: inline-flex; align-items: center; gap: 3px; }
+    .related-item .rdownload { background: #0a0a0a; color: white; border: none; padding: 2px 8px; border-radius: 40px; font-weight: 600; font-size: 0.4rem; white-space: nowrap; cursor: pointer; }
 
     .footer-note { padding: 10px; text-align: center; color: #94a3b8; font-size: 0.5rem; border-top: 1px solid #e9edf4; }
 
@@ -154,6 +168,11 @@
       .detail-premium .info-grid { grid-template-columns: 1fr 1fr; gap: 4px; }
       .detail-premium .info-grid .info-item { font-size: 0.5rem; padding: 6px 8px; }
       .icon-svg { width: 14px; height: 14px; }
+      .related-item .rname { font-size: 0.5rem; }
+      .related-item .rname .alt { font-size: 0.4rem; }
+      .related-item .rbonus { font-size: 0.4rem; }
+      .related-item .rwithdraw { font-size: 0.35rem; }
+      .related-item .rdownload { font-size: 0.35rem; padding: 2px 6px; }
     }
   </style>
 </head>
@@ -239,7 +258,9 @@
         faq: "Q: Is it safe? A: Yes, fully encrypted. Q: Min withdrawal? A: ₹100.",
         tips: "Start with small bets, use welcome bonus wisely.",
         rewards: "Daily login bonus, referral rewards up to ₹200",
-        withdrawInfo: "UPI, Bank Transfer, Paytm - min ₹100, instant processing."
+        withdrawInfo: "UPI, Bank Transfer, Paytm - min ₹100, instant processing.",
+        howToDownload: "1. Tap the Download button above.\n2. Allow installation from unknown sources.\n3. Open the APK and tap Install.\n4. Register with your mobile number.\n5. Claim your signup bonus instantly!",
+        safety: "All Yono App Site uses standard encryption to protect user data. Transactions are processed securely via UPI and bank transfer. Play responsibly."
       },
       { name: "567 Slots", altName: "567 Slots Game", bonus: "₹45", withdrawal: "₹100", downloadUrl: "https://join567slots0.com/?code=4NYF487URJ6&t=1781505684", img: "https://i.ibb.co/hFytMXY2/1000022725.jpg",
         desc: "567 Slots Game - भारत का favourite slot game! Spin & win real cash. Get ₹45 welcome bonus.",
@@ -249,7 +270,9 @@
         faq: "Q: Minimum deposit? A: ₹100. Q: Withdrawal time? A: 24-48 hrs.",
         tips: "Use free spins first, then play with bonus.",
         rewards: "Daily spin bonus, loyalty rewards up to ₹500",
-        withdrawInfo: "UPI & Bank Transfer, min ₹100, processing within 24 hrs."
+        withdrawInfo: "UPI & Bank Transfer, min ₹100, processing within 24 hrs.",
+        howToDownload: "1. Tap Download button.\n2. Enable unknown sources.\n3. Install the APK.\n4. Sign up with your number.\n5. Get your ₹45 bonus!",
+        safety: "567 Slots uses secure payment gateways. Your data is protected with industry-standard encryption."
       },
       { name: "Saga Slots", altName: "Saga Slots APK", bonus: "₹40", withdrawal: "₹100", downloadUrl: "https://www.sagaslots5.com/?code=0QHJSERZYMV&t=1781505813", img: "https://i.ibb.co/20dzhBZf/1000022725.jpg",
         desc: "Saga Slots APK - epic slot adventure with huge bonuses. ₹40 signup bonus.",
@@ -259,7 +282,9 @@
         faq: "Q: Is it legal? A: Yes, licensed. Q: Bonus wagering? A: 10x.",
         tips: "Complete daily missions for extra coins.",
         rewards: "Mission rewards up to ₹300, VIP cashback",
-        withdrawInfo: "UPI, Paytm, min ₹100, 24-48 hrs."
+        withdrawInfo: "UPI, Paytm, min ₹100, 24-48 hrs.",
+        howToDownload: "1. Click Download.\n2. Allow installation.\n3. Install APK.\n4. Register.\n5. Claim ₹40 bonus.",
+        safety: "Saga Slots is a licensed platform with secure transactions and data protection."
       },
       { name: "Jaiho 91", altName: "Jaiho 91 Game", bonus: "₹50", withdrawal: "₹100", downloadUrl: "https://jaiho91bonus.vip/?code=C42T99ZQHAT&t=1781506067", img: "https://i.ibb.co/zV0C6Xkk/1000022725.jpg",
         desc: "Jaiho 91 Game - teen patti aur rummy ka best combo! ₹50 bonus on signup.",
@@ -269,7 +294,9 @@
         faq: "Q: Minimum age? A: 18+. Q: Withdrawal limit? A: ₹100 min.",
         tips: "Learn basic strategies for Teen Patti and Rummy.",
         rewards: "Referral bonus ₹50, daily cashback",
-        withdrawInfo: "UPI, Bank, min ₹100, instant for verified users."
+        withdrawInfo: "UPI, Bank, min ₹100, instant for verified users.",
+        howToDownload: "1. Tap Download.\n2. Enable unknown sources.\n3. Install APK.\n4. Register.\n5. Get ₹50 bonus!",
+        safety: "Jaiho 91 uses secure servers and encrypted transactions for user safety."
       },
       { name: "Rummy Ludo", altName: "Rummy Ludo APK", bonus: "₹35", withdrawal: "₹100", downloadUrl: "https://rummyludoapp37.com/", img: "https://i.ibb.co/Z6Xy7y2x/1000022725.jpg",
         desc: "Rummy Ludo APK - Rummy aur Ludo dono ek app mein! ₹35 welcome bonus.",
@@ -279,15 +306,17 @@
         faq: "Q: Free to play? A: Yes, with bonus. Q: Withdrawal? A: ₹100 min.",
         tips: "Practice in free rooms before cash games.",
         rewards: "Tournament prizes up to ₹1000",
-        withdrawInfo: "UPI, Paytm, min ₹100."
+        withdrawInfo: "UPI, Paytm, min ₹100.",
+        howToDownload: "1. Click Download.\n2. Allow installation.\n3. Install APK.\n4. Sign up.\n5. Claim ₹35 bonus.",
+        safety: "Rummy Ludo provides a secure gaming environment with safe payment options."
       }
     ];
 
-    // Build unique mapping for all games (use name as key)
+    // Build unique mapping
     const gameMap = {};
     gamesData.forEach(g => { gameMap[g.name] = g; });
 
-    // Extended games list from original (to keep home grid same)
+    // Extended games list
     const allGames = [
       { name: "All Yono App Site", altName: "All Yono Games", bonus: "₹45", withdrawal: "₹100", downloadUrl: "https://www.earntp.com/m/jm9n7r", img: "https://i.ibb.co/CssC2WbG/1000022725.jpg" },
       { name: "567 Slots", altName: "567 Slots Game", bonus: "₹45", withdrawal: "₹100", downloadUrl: "https://join567slots0.com/?code=4NYF487URJ6&t=1781505684", img: "https://i.ibb.co/hFytMXY2/1000022725.jpg" },
@@ -336,7 +365,6 @@
       { name: "Spin Lucky", altName: "Spin Lucky Game", bonus: "₹44", withdrawal: "₹100", downloadUrl: "https://www.earntp.com/m/jm9n7r", img: "https://i.ibb.co/VY95vgTQ/spin-lucky.jpg" }
     ];
 
-    // Deduplicate for home grid
     const seen = new Set();
     const uniqueGames = allGames.filter(g => {
       const key = g.name.trim().toLowerCase();
@@ -345,7 +373,6 @@
       return true;
     });
 
-    // --- DOM refs ---
     const mainGrid = document.getElementById('mainGrid');
     const detailView = document.getElementById('detailView');
     const detailContent = document.getElementById('detailContent');
@@ -356,7 +383,6 @@
     const overlayContent = document.getElementById('overlayContent');
     const overlayClose = document.getElementById('overlayClose');
 
-    // --- Nav overlay ---
     const contentMap = {
       about: { title: '📖 About All Yono App Site', text: 'All Yono App Site (All Yono Apk / All Yono New / All Yono Games) is a curated platform listing 45+ top gaming apps including Teen Patti, Rummy, Slots, and Casino. We provide direct download links and bonus details for each app.' },
       contact: { title: '📬 Contact', text: 'For any queries, feedback or support, you can reach us via email: support@allyonoappsite.com. You can also connect with us on Telegram: @allyonoappsite.' },
@@ -379,7 +405,6 @@
 
     let historyStack = [];
 
-    // --- Render home grid (original layout) ---
     function renderGrid() {
       mainGrid.innerHTML = '';
       uniqueGames.forEach((game, index) => {
@@ -412,7 +437,6 @@
     }
     renderGrid();
 
-    // --- Premium detail renderer ---
     function showDetail(game, pushHistory = true) {
       if (pushHistory) historyStack.push(game);
       document.getElementById('detailTitle').textContent = 'Download ' + game.name + ' APK';
@@ -434,8 +458,14 @@
       const tips = g.tips || "Start with bonus, play responsibly.";
       const rewards = g.rewards || "Welcome bonus, referral rewards, daily cashback.";
       const withdrawInfo = g.withdrawInfo || "UPI, Bank Transfer, Paytm - min ₹100.";
+      const howToDownload = g.howToDownload || "1. Tap Download button.\n2. Enable unknown sources.\n3. Install APK.\n4. Register.\n5. Claim bonus!";
+      const safety = g.safety || "This app uses standard security measures to protect user data.";
+
+      // Build related games (all games except current)
+      const relatedGames = uniqueGames.filter(ug => ug.name !== game.name);
 
       detailContent.innerHTML = `
+        <!-- Hero -->
         <div class="hero-section">
           <div class="hero-img"><img src="${game.img}" alt="${game.name}" onerror="this.src='https://i.ibb.co/LXqV77rd/yono-games.jpg'"></div>
           <div class="hero-info">
@@ -445,6 +475,7 @@
           </div>
         </div>
 
+        <!-- Info Grid -->
         <div class="info-grid">
           <div class="info-item"><span class="icon-svg"><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg></span> <span class="label">Rating</span> <span class="value">⭐ ${rating}</span></div>
           <div class="info-item"><span class="icon-svg"><svg viewBox="0 0 24 24"><path d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg></span> <span class="label">Update</span> <span class="value">${update}</span></div>
@@ -452,47 +483,115 @@
           <div class="info-item"><span class="icon-svg"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg></span> <span class="label">Downloads</span> <span class="value">${downloads}</span></div>
         </div>
 
+        <!-- Description -->
         <div class="section-card ${colorClass}">
           <div class="section-title"><span class="icon-svg"><svg viewBox="0 0 24 24"><path d="M4 4h16v16H4z"/><path d="M8 8h8v2H8z"/><path d="M8 12h6v2H8z"/><path d="M8 16h4v2H8z"/></svg></span> 📝 Description</div>
           <div class="section-body">${desc}</div>
         </div>
 
+        <!-- Features -->
         <div class="section-card ${colorClass}">
           <div class="section-title"><span class="icon-svg"><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg></span> ✨ Features</div>
           <div class="section-body"><ul>${features.map(f => `<li>${f}</li>`).join('')}</ul></div>
         </div>
 
+        <!-- Game Info -->
         <div class="section-card ${colorClass}">
           <div class="section-title"><span class="icon-svg"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg></span> 🎮 Game Information</div>
           <div class="section-body">${gameInfo}</div>
         </div>
 
+        <!-- Rewards -->
         <div class="section-card ${colorClass}">
           <div class="section-title"><span class="icon-svg"><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg></span> 🏆 Rewards & Bonuses</div>
           <div class="section-body">${rewards}</div>
         </div>
 
+        <!-- How to Download -->
+        <div class="section-card ${colorClass}">
+          <div class="section-title"><span class="icon-svg"><svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><path d="M12 15V3"/></svg></span> 📥 How to Download</div>
+          <div class="section-body">${howToDownload.replace(/\n/g, '<br>')}</div>
+        </div>
+
+        <!-- Safety & Security -->
+        <div class="section-card ${colorClass}">
+          <div class="section-title"><span class="icon-svg"><svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="M12 8v4"/><path d="M12 16h.01"/></svg></span> 🔒 Safety & Security</div>
+          <div class="section-body">${safety}</div>
+        </div>
+
+        <!-- Tips -->
         <div class="section-card ${colorClass}">
           <div class="section-title"><span class="icon-svg"><svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="M12 8v4"/><path d="M12 16h.01"/></svg></span> 💡 Pro Tips</div>
           <div class="section-body">${tips}</div>
         </div>
 
+        <!-- Withdrawal Info -->
         <div class="section-card ${colorClass}">
           <div class="section-title"><span class="icon-svg"><svg viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V4a1 1 0 00-1-1H9a1 1 0 00-1 1v3"/><path d="M8 12h8"/></svg></span> 💳 Withdrawal Info</div>
           <div class="section-body">${withdrawInfo}</div>
         </div>
 
+        <!-- Version Info -->
+        <div class="section-card ${colorClass}">
+          <div class="section-title"><span class="icon-svg"><svg viewBox="0 0 24 24"><path d="M4 4h16v16H4z"/><path d="M8 8h8v2H8z"/><path d="M8 12h6v2H8z"/><path d="M8 16h4v2H8z"/></svg></span> 📱 Version Information</div>
+          <div class="section-body"><strong>Version:</strong> ${version} | <strong>Size:</strong> ${size} | <strong>Updated:</strong> ${update}</div>
+        </div>
+
+        <!-- FAQ -->
         <div class="section-card ${colorClass}">
           <div class="section-title"><span class="icon-svg"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 015.83 1c0 2-3 3-3 3"/><path d="M12 17h.01"/></svg></span> ❓ FAQ</div>
           <div class="section-body">${faq}</div>
         </div>
 
+        <!-- Download Button -->
         <a href="${game.downloadUrl}" class="download-btn-lg" target="_blank">
           <span class="icon-svg" style="width:20px;height:20px;"><svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><path d="M12 15V3"/></svg></span>
           ⬇ Download APK Now
         </a>
-        <div style="height:10px;"></div>
+        <div style="height:12px;"></div>
+
+        <!-- Other Related Yono Games -->
+        <div class="related-section">
+          <div class="related-title">
+            <span class="icon-svg"><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg></span>
+            Other Related Yono Games
+          </div>
+          <div class="related-grid" id="relatedGrid"></div>
+        </div>
       `;
+
+      // Populate related games
+      const relatedGrid = document.getElementById('relatedGrid');
+      if (relatedGrid) {
+        relatedGrid.innerHTML = '';
+        relatedGames.forEach(g => {
+          const item = document.createElement('div');
+          item.className = 'related-item';
+          item.dataset.name = g.name;
+          item.dataset.altName = g.altName || g.name;
+          item.dataset.bonus = g.bonus;
+          item.dataset.withdrawal = g.withdrawal;
+          item.dataset.downloadUrl = g.downloadUrl;
+          item.dataset.img = g.img;
+          item.innerHTML = `
+            <img src="${g.img}" alt="${g.name}" loading="lazy" onerror="this.src='https://i.ibb.co/LXqV77rd/yono-games.jpg'">
+            <div class="rinfo">
+              <div class="rname">${g.name} <span class="alt">| ${g.altName}</span></div>
+              <div class="rbonus"><span class="icon-svg" style="width:10px;height:10px;"><svg viewBox="0 0 24 24"><rect x="3" y="8" width="18" height="13" rx="2"/><path d="M3 8l9-5 9 5"/><path d="M8 12h8"/></svg></span> ${g.bonus}</div>
+              <div class="rwithdraw"><span class="icon-svg" style="width:10px;height:10px;"><svg viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V4a1 1 0 00-1-1H9a1 1 0 00-1 1v3"/><path d="M8 12h8"/></svg></span> ${g.withdrawal}</div>
+            </div>
+            <span class="rdownload">Download</span>
+          `;
+          relatedGrid.appendChild(item);
+          item.addEventListener('click', function(e) {
+            e.stopPropagation();
+            const name = this.dataset.name;
+            const gData = gameMap[name] || gameMap["All Yono App Site"];
+            if (gData) showDetail(gData, true);
+            else showDetail(gameMap["All Yono App Site"], true);
+          });
+        });
+      }
 
       mainGrid.style.display = 'none';
       mainGrid.classList.remove('show');
@@ -503,7 +602,6 @@
       window.scrollTo({ top: 0 });
     }
 
-    // --- Navigation ---
     function goHome() {
       historyStack = [];
       detailView.style.display = 'none';
