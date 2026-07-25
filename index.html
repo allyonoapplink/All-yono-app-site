@@ -204,23 +204,86 @@
     }
     .led-icon.glow-bg { box-shadow: 0 0 20px rgba(0,255,0,0.15), 0 0 40px rgba(0,200,255,0.05); }
 
-    /* premium CSS icons - clean, modern, no glow */
-    .icon-gift { display: inline-block; width: 14px; height: 14px; background: #e74c3c; border-radius: 2px 2px 4px 4px; position: relative; flex-shrink: 0; }
-    .icon-gift::before { content: ''; position: absolute; top: -3px; left: 3px; width: 4px; height: 4px; background: #f1c40f; border-radius: 50%; }
-    .icon-gift::after { content: ''; position: absolute; bottom: 0; left: 1px; right: 1px; height: 4px; background: repeating-linear-gradient(90deg, #fff 0px 1px, #f1c40f 1px 2px); border-radius: 0 0 2px 2px; }
-    .icon-bank { display: inline-block; width: 16px; height: 13px; background: #2c3e50; border-radius: 2px 2px 0 0; position: relative; flex-shrink: 0; border-bottom: 2px solid #3498db; }
-    .icon-bank::before { content: ''; position: absolute; top: -3px; left: 2px; right: 2px; height: 3px; background: #3498db; border-radius: 1px 1px 0 0; }
-    .icon-bank::after { content: ''; position: absolute; bottom: -2px; left: 2px; right: 2px; height: 2px; background: #3498db; border-radius: 0 0 1px 1px; }
-    .icon-home { display: inline-block; width: 14px; height: 14px; position: relative; flex-shrink: 0; }
-    .icon-home::before { content: ''; position: absolute; bottom: 0; left: 1px; right: 1px; height: 7px; background: #2c3e50; border-radius: 1px 1px 0 0; }
-    .icon-home::after { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 7px; background: transparent; border-left: 6px solid transparent; border-right: 6px solid transparent; border-bottom: 7px solid #2c3e50; }
-    .icon-about { display: inline-block; width: 14px; height: 14px; background: #2c3e50; border-radius: 50%; position: relative; flex-shrink: 0; }
-    .icon-about::before { content: 'i'; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); font-size: 9px; font-weight: 900; color: #fff; font-style: italic; }
-    .icon-contact { display: inline-block; width: 14px; height: 14px; position: relative; flex-shrink: 0; }
-    .icon-contact::before { content: ''; position: absolute; top: 1px; left: 2px; width: 7px; height: 7px; border: 1.5px solid #2c3e50; border-radius: 50%; }
-    .icon-contact::after { content: ''; position: absolute; bottom: 0; left: 4px; width: 5px; height: 5px; border-left: 1.5px solid #2c3e50; border-bottom: 1.5px solid #2c3e50; border-radius: 0 0 0 3px; }
-    .icon-shield { display: inline-block; width: 14px; height: 15px; position: relative; flex-shrink: 0; }
-    .icon-shield::before { content: ''; position: absolute; top: 0; left: 1px; right: 1px; height: 12px; background: #2c3e50; clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%); }
+    /* premium CSS icons — clean, modern, no glow, no animation */
+    .icon-gift {
+      display: inline-block; width: 16px; height: 16px; background: #e11d48; border-radius: 2px 2px 4px 4px;
+      position: relative; flex-shrink: 0; box-shadow: inset 0 -2px 0 #9f1239;
+    }
+    .icon-gift::before {
+      content: ''; position: absolute; top: -5px; left: 2px; width: 4px; height: 5px;
+      background: #fcd34d; border-radius: 1px 1px 0 0; box-shadow: 6px 0 0 #fcd34d;
+    }
+    .icon-gift::after {
+      content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 4px;
+      background: repeating-linear-gradient(90deg, #fff 0px 2px, #fcd34d 2px 4px);
+      border-radius: 0 0 2px 2px;
+    }
+
+    .icon-bank {
+      display: inline-block; width: 18px; height: 14px; background: #1e293b; border-radius: 2px 2px 0 0;
+      position: relative; flex-shrink: 0; border-bottom: 2px solid #3b82f6;
+    }
+    .icon-bank::before {
+      content: ''; position: absolute; top: -3px; left: 1px; right: 1px; height: 3px;
+      background: #3b82f6; border-radius: 1px 1px 0 0;
+    }
+    .icon-bank::after {
+      content: ''; position: absolute; bottom: -2px; left: 2px; right: 2px; height: 2px;
+      background: #3b82f6; border-radius: 0 0 1px 1px;
+    }
+
+    .icon-home {
+      display: inline-block; width: 16px; height: 14px; background: transparent; position: relative; flex-shrink: 0;
+    }
+    .icon-home::before {
+      content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 7px;
+      background: #2563eb; border-radius: 0 0 1px 1px;
+    }
+    .icon-home::after {
+      content: ''; position: absolute; top: 0; left: 1px; right: 1px; height: 7px;
+      background: transparent; border-left: 6px solid transparent; border-right: 6px solid transparent;
+      border-bottom: 7px solid #2563eb;
+    }
+
+    .icon-about {
+      display: inline-block; width: 16px; height: 16px; background: #2563eb; border-radius: 50%;
+      position: relative; flex-shrink: 0;
+    }
+    .icon-about::before {
+      content: 'i'; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+      font-size: 9px; font-weight: 800; color: #fff; font-family: serif;
+    }
+
+    .icon-contact {
+      display: inline-block; width: 16px; height: 16px; background: transparent; position: relative; flex-shrink: 0;
+    }
+    .icon-contact::before {
+      content: ''; position: absolute; top: 2px; left: 2px; width: 8px; height: 8px;
+      border: 1.5px solid #2563eb; border-radius: 50%;
+    }
+    .icon-contact::after {
+      content: ''; position: absolute; bottom: 0; left: 3px; width: 6px; height: 5px;
+      border-left: 1.5px solid #2563eb; border-bottom: 1.5px solid #2563eb; border-radius: 0 0 0 3px;
+    }
+
+    .icon-shield {
+      display: inline-block; width: 16px; height: 18px; background: transparent; position: relative; flex-shrink: 0;
+    }
+    .icon-shield::before {
+      content: ''; position: absolute; top: 1px; left: 1px; right: 1px; height: 13px;
+      background: #2563eb; clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+    }
+
+    .icon-close-black {
+      display: inline-block; width: 24px; height: 24px; background: #000; border-radius: 50%;
+      position: relative; cursor: pointer; flex-shrink: 0;
+    }
+    .icon-close-black::before, .icon-close-black::after {
+      content: ''; position: absolute; top: 50%; left: 15%; right: 15%; height: 2px;
+      background: #fff; border-radius: 2px;
+    }
+    .icon-close-black::before { transform: rotate(45deg); }
+    .icon-close-black::after { transform: rotate(-45deg); }
 
     .tag-section { padding: 10px; background: #f8fafc; border-top: 1px solid #e9edf4; }
     .tag-section .tag-title { font-weight: 700; font-size: 0.85rem; color: #0b1e33; margin-bottom: 8px; display: flex; align-items: center; gap: 8px; }
@@ -291,8 +354,9 @@
     .footer-note { padding: 10px; text-align: center; color: #94a3b8; font-size: 0.5rem; border-top: 1px solid #e9edf4; }
 
     .info-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.4); backdrop-filter: blur(3px); z-index: 99; justify-content: center; align-items: center; }
-    .info-card { background: white; max-width: 400px; width: 90%; padding: 20px 18px; border-radius: 28px; box-shadow: 0 30px 60px rgba(0,0,0,0.2); }
-    .info-card h2 { font-size: 1.2rem; margin-bottom: 8px; color: #0b1e33; }
+    .info-card { background: white; max-width: 400px; width: 90%; padding: 20px 18px; border-radius: 28px; box-shadow: 0 30px 60px rgba(0,0,0,0.2); position: relative; }
+    .info-card .close-top { position: absolute; top: 12px; right: 12px; }
+    .info-card h2 { font-size: 1.2rem; margin-bottom: 8px; color: #0b1e33; padding-right: 30px; }
     .info-card p { color: #334155; line-height: 1.5; font-size: 0.8rem; }
     .info-card .close-btn { background: #eef2ff; border: none; padding: 5px 16px; border-radius: 60px; font-weight: 600; margin-top: 12px; cursor: pointer; color: #1e293b; border: 1px solid #cbd5e1; font-size: 0.75rem; }
 
@@ -320,12 +384,18 @@
       .led-icon .inner-icon { font-size: 0.45rem; }
       .game-tag { font-size: 0.45rem; padding: 3px 8px; }
       .related-item .rname { font-size: 0.5rem; }
-      .icon-gift { width: 12px; height: 12px; }
-      .icon-bank { width: 13px; height: 11px; }
-      .icon-home { width: 12px; height: 12px; }
-      .icon-about { width: 12px; height: 12px; }
-      .icon-contact { width: 12px; height: 12px; }
-      .icon-shield { width: 12px; height: 13px; }
+      .icon-gift { width: 14px; height: 14px; }
+      .icon-gift::before { top: -4px; left: 1px; width: 3px; height: 4px; box-shadow: 5px 0 0 #fcd34d; }
+      .icon-bank { width: 15px; height: 12px; }
+      .icon-home { width: 14px; height: 12px; }
+      .icon-home::after { border-left-width: 5px; border-right-width: 5px; }
+      .icon-about { width: 14px; height: 14px; }
+      .icon-about::before { font-size: 7px; }
+      .icon-contact { width: 14px; height: 14px; }
+      .icon-contact::before { width: 6px; height: 6px; }
+      .icon-contact::after { width: 4px; height: 4px; left: 2px; }
+      .icon-shield { width: 14px; height: 15px; }
+      .icon-shield::before { height: 11px; }
     }
   </style>
 </head>
@@ -562,9 +632,9 @@
 <!-- OVERLAY -->
 <div class="info-overlay" id="infoOverlay">
   <div class="info-card">
+    <div class="close-top"><span class="icon-close-black" id="overlayClose"></span></div>
     <h2 id="overlayTitle">About</h2>
-    <p id="overlayContent">Content goes here.</p>
-    <button class="close-btn" id="overlayClose">✕ Close</button>
+    <div id="overlayContent">Content goes here.</div>
   </div>
 </div>
 
@@ -646,7 +716,7 @@
         const key = this.dataset.target;
         if (contentMap[key]) {
           overlayTitle.textContent = contentMap[key].title;
-          overlayContent.textContent = contentMap[key].text;
+          overlayContent.innerHTML = contentMap[key].text;
           overlay.style.display = 'flex';
         }
         document.querySelectorAll('.nav-small').forEach(l => l.classList.remove('active'));
