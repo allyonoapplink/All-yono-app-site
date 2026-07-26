@@ -1,4 +1,3 @@
-0000
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -287,7 +286,11 @@
     .card-download-sm { background: #0a0a0a; color: white; border: none; padding: 3px 10px; border-radius: 40px; font-weight: 600; font-size: 0.45rem; white-space: nowrap; cursor: pointer; }
     .card-download-sm:active { transform: scale(0.95); }
 
-    .footer-note { padding: 10px; text-align: center; color: #94a3b8; font-size: 0.5rem; border-top: 1px solid #e9edf4; }
+    .footer-links { display: flex; justify-content: center; align-items: center; gap: 8px; padding: 8px 10px; background: #f8fafc; border-top: 1px solid #e9edf4; flex-wrap: wrap; }
+    .footer-links a { font-size: 0.55rem; font-weight: 500; color: #1e293b; text-decoration: none; border: 1px solid #e2e8f0; padding: 3px 12px; border-radius: 40px; background: white; }
+    .footer-links a:active { transform: scale(0.95); }
+
+    .footer-note { padding: 6px 10px 10px; text-align: center; color: #94a3b8; font-size: 0.5rem; background: #f8fafc; }
 
     .info-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.4); backdrop-filter: blur(3px); z-index: 99; justify-content: center; align-items: center; }
     .info-card { background: white; max-width: 400px; width: 90%; padding: 20px 18px; border-radius: 28px; box-shadow: 0 30px 60px rgba(0,0,0,0.2); }
@@ -324,6 +327,7 @@
       .led-icon .inner-icon { font-size: 0.45rem; }
       .game-tag { font-size: 0.45rem; padding: 3px 8px; }
       .related-item .rname { font-size: 0.5rem; }
+      .footer-links a { font-size: 0.45rem; padding: 2px 8px; }
     }
   </style>
 </head>
@@ -592,8 +596,18 @@
       </div>
       <div class="related-grid" id="relatedGrid"></div>
     </div>
+
+    <!-- Footer Links: About.html • Contact.html • Disclaimer.html -->
+    <div class="footer-links">
+      <a href="#" onclick="window.open('about.html', '_blank'); return false;">About.html</a>
+      <span style="color:#94a3b8;font-size:0.5rem;">•</span>
+      <a href="#" onclick="window.open('contact.html', '_blank'); return false;">Contact.html</a>
+      <span style="color:#94a3b8;font-size:0.5rem;">•</span>
+      <a href="#" onclick="window.open('disclaimer.html', '_blank'); return false;">Disclaimer.html</a>
+    </div>
   </div>
 
+  <!-- FOOTER NOTE -->
   <div class="footer-note">All Yono App Site • All Yono Apk • All Yono New • All Yono Games • 45+ Games • ₹45 Bonus • ₹100 Withdrawal</div>
 </div>
 
@@ -871,7 +885,7 @@
       uniqueGames.forEach(g => {
         const tag = document.createElement('span');
         tag.className = 'game-tag';
-        // Use icon based on first letter or random
+        // Use icon based on first letter
         const iconMap = {
           'a': '<svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>',
           'r': '<svg viewBox="0 0 24 24"><path d="M4 4h11a4 4 0 010 8H4"/><path d="M4 12h8a4 4 0 010 8H4"/><path d="M4 4v16"/></svg>',
