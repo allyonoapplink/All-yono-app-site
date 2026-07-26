@@ -118,14 +118,14 @@
     .marquee-container marquee .highlight { color: #facc15; background: rgba(0,0,0,0.2); padding: 2px 10px; border-radius: 20px; }
 
     .nav-row-small { display: flex; justify-content: space-around; align-items: center; background: #f8fafc; padding: 4px 6px; border-bottom: 1px solid #e9edf4; gap: 2px; }
-    .nav-small { font-size: 0.5rem; font-weight: 600; color: #1e293b; background: white; padding: 3px 8px; border-radius: 40px; border: 1px solid #e2e8f0; cursor: pointer; white-space: nowrap; }
+    .nav-small { font-size: 0.5rem; font-weight: 600; color: #1e293b; background: white; padding: 3px 8px; border-radius: 40px; border: 1px solid #e2e8f0; cursor: pointer; white-space: nowrap; display: inline-flex; align-items: center; gap: 4px; }
     .nav-small:active { transform: scale(0.95); }
     .nav-small.active { background: #1e293b; color: white; border-color: #1e293b; }
 
     .game-detail-header { display: flex; justify-content: space-between; align-items: center; padding: 8px 14px; background: #f8fafc; border-bottom: 1px solid #e9edf4; }
     .back-btn { background: #eef2ff; border: none; padding: 3px 12px; border-radius: 40px; font-weight: 600; font-size: 0.6rem; color: #1e293b; cursor: pointer; }
     .back-btn:active { transform: scale(0.95); }
-    .game-detail-title { font-weight: 700; font-size: 0.6rem; color: #ffffff !important; background: #1e293b; padding: 4px 12px; border-radius: 40px; cursor: pointer; white-space: nowrap; }
+    .game-detail-title { font-weight: 700; font-size: 0.6rem; color: #ffffff !important; background: #1e293b; padding: 4px 12px; border-radius: 40px; cursor: pointer; white-space: nowrap; display: inline-flex; align-items: center; gap: 6px; }
 
     .detail-card { background: white; padding: 14px; border-bottom: 1px solid #e9edf4; }
     .detail-top { display: flex; gap: 12px; align-items: center; }
@@ -135,13 +135,22 @@
     .detail-info .game-name { font-weight: 800; font-size: 1rem; color: #0b1e33; }
     .detail-info .game-name .alt { font-weight: 400; font-size: 0.7rem; color: #6b7280; }
     .detail-info .game-sub { display: flex; flex-direction: column; gap: 2px; margin-top: 3px; }
-    .detail-info .game-sub .signup-bonus { color: #dc2626; font-weight: 700; font-size: 0.8rem; }
-    .detail-info .game-sub .min-withdraw { color: #0a0a0a; font-weight: 600; font-size: 0.75rem; }
+    .detail-info .game-sub .signup-bonus { color: #dc2626; font-weight: 700; font-size: 0.8rem; display: inline-flex; align-items: center; gap: 4px; }
+    .detail-info .game-sub .min-withdraw { color: #0a0a0a; font-weight: 600; font-size: 0.75rem; display: inline-flex; align-items: center; gap: 4px; }
     .detail-info .game-meta-detail { display: flex; flex-wrap: wrap; gap: 5px 10px; margin-top: 5px; font-size: 0.6rem; }
-    .detail-info .game-meta-detail .rating { background: #e6f7e6; color: #00aa00; padding: 2px 8px; border-radius: 40px; border: 1px solid #00ff00; box-shadow: 0 0 10px rgba(0,255,0,0.2); animation: metaGlowGreen 2s ease-in-out infinite; font-weight: 600; }
-    .detail-info .game-meta-detail .size { background: #e6f7ff; color: #0088aa; padding: 2px 8px; border-radius: 40px; border: 1px solid #00ddff; box-shadow: 0 0 10px rgba(0,200,255,0.2); animation: metaGlowCyan 2s ease-in-out infinite 0.4s; font-weight: 600; }
-    .detail-info .game-meta-detail .votes { background: #fce4ec; color: #d81b60; padding: 2px 8px; border-radius: 40px; border: 1px solid #ff4081; box-shadow: 0 0 10px rgba(255,64,129,0.2); animation: metaGlowPink 2s ease-in-out infinite 0.8s; font-weight: 600; }
-    .detail-info .game-meta-detail .bonus-badge { background: #ffebee; color: #d50000; padding: 2px 8px; border-radius: 40px; border: 1px solid #ff1744; box-shadow: 0 0 10px rgba(255,23,68,0.2); animation: metaGlowRed 2s ease-in-out infinite 1.2s; font-weight: 600; }
+    .detail-info .game-meta-detail .rating { background: #e6f7e6; color: #00aa00; padding: 2px 8px; border-radius: 40px; border: 1px solid #00ff00; box-shadow: 0 0 10px rgba(0,255,0,0.2); animation: metaGlowGreen 2s ease-in-out infinite; font-weight: 600; display: inline-flex; align-items: center; gap: 3px; }
+    .detail-info .game-meta-detail .size { background: #e6f7ff; color: #0088aa; padding: 2px 8px; border-radius: 40px; border: 1px solid #00ddff; box-shadow: 0 0 10px rgba(0,200,255,0.2); animation: metaGlowCyan 2s ease-in-out infinite 0.4s; font-weight: 600; display: inline-flex; align-items: center; gap: 3px; }
+    .detail-info .game-meta-detail .votes { background: #fce4ec; color: #d81b60; padding: 2px 8px; border-radius: 40px; border: 1px solid #ff4081; box-shadow: 0 0 10px rgba(255,64,129,0.2); animation: metaGlowPink 2s ease-in-out infinite 0.8s; font-weight: 600; display: inline-flex; align-items: center; gap: 3px; }
+    .detail-info .game-meta-detail .bonus-badge { background: #ffebee; color: #d50000; padding: 2px 8px; border-radius: 40px; border: 1px solid #ff1744; box-shadow: 0 0 10px rgba(255,23,68,0.2); animation: metaGlowRed 2s ease-in-out infinite 1.2s; font-weight: 600; display: inline-flex; align-items: center; gap: 3px; }
+
+    /* Premium Update New Version Section */
+    .version-section { display: flex; align-items: center; justify-content: space-between; padding: 6px 12px; background: #f8fafc; border-radius: 30px; border: 1px solid #e9edf4; margin-top: 8px; }
+    .version-left { display: flex; align-items: center; gap: 6px; font-size: 0.65rem; color: #1e293b; font-weight: 600; }
+    .version-left .refresh-icon { display: inline-flex; align-items: center; justify-content: center; width: 18px; height: 18px; color: #2563eb; }
+    .version-left .refresh-icon svg { width: 16px; height: 16px; stroke: currentColor; stroke-width: 2; fill: none; stroke-linecap: round; stroke-linejoin: round; }
+    .version-right { display: flex; align-items: center; gap: 6px; }
+    .version-text { font-size: 0.6rem; color: #475569; font-weight: 500; }
+    .version-badge { display: inline-flex; align-items: center; justify-content: center; background: #dc2626; color: white; font-size: 0.45rem; font-weight: 700; width: 18px; height: 18px; border-radius: 50%; box-shadow: 0 0 10px rgba(220,38,38,0.4); }
 
     @keyframes metaGlowGreen { 0%,100%{ box-shadow:0 0 8px rgba(0,255,0,0.15); } 50%{ box-shadow:0 0 18px rgba(0,255,0,0.4); } }
     @keyframes metaGlowCyan { 0%,100%{ box-shadow:0 0 8px rgba(0,200,255,0.15); } 50%{ box-shadow:0 0 18px rgba(0,200,255,0.4); } }
@@ -247,6 +256,8 @@
     .game-tags-container { display: flex; flex-wrap: wrap; gap: 6px; }
     .game-tag { background: #eef2ff; color: #2563eb; padding: 4px 10px; border-radius: 40px; font-size: 0.55rem; font-weight: 600; border: 1px solid #b3c8e6; cursor: pointer; display: inline-flex; align-items: center; gap: 4px; }
     .game-tag:active { transform: scale(0.95); background: #dbeafe; }
+    .game-tag .tag-icon { display: inline-flex; align-items: center; justify-content: center; width: 14px; height: 14px; flex-shrink: 0; }
+    .game-tag .tag-icon svg { width: 12px; height: 12px; stroke: currentColor; stroke-width: 2; fill: none; stroke-linecap: round; stroke-linejoin: round; }
 
     .related-section { padding: 10px; background: white; border-top: 1px solid #e9edf4; }
     .related-title { font-weight: 700; font-size: 0.8rem; color: #0b1e33; margin-bottom: 6px; display: flex; align-items: center; gap: 8px; }
@@ -257,8 +268,8 @@
     .related-item .rinfo { flex: 1; display: flex; flex-direction: column; gap: 0px; }
     .related-item .rname { font-weight: 600; font-size: 0.6rem; color: #0b1e33; }
     .related-item .rname .alt { font-weight: 400; font-size: 0.45rem; color: #6b7280; }
-    .related-item .rbonus { font-size: 0.45rem; color: #2563eb; font-weight: 600; }
-    .related-item .rwithdraw { font-size: 0.4rem; color: #0a0a0a; font-weight: 500; }
+    .related-item .rbonus { font-size: 0.45rem; color: #2563eb; font-weight: 600; display: inline-flex; align-items: center; gap: 3px; }
+    .related-item .rwithdraw { font-size: 0.4rem; color: #0a0a0a; font-weight: 500; display: inline-flex; align-items: center; gap: 3px; }
     .related-item .rdownload { background: #00bcd4; color: white; border: none; padding: 2px 8px; border-radius: 40px; font-weight: 600; font-size: 0.4rem; white-space: nowrap; cursor: pointer; }
 
     #mainGrid { display: flex; flex-direction: column; gap: 6px; padding: 8px; }
@@ -270,8 +281,8 @@
     .card-info { flex: 1; display: flex; flex-direction: column; gap: 1px; }
     .card-name { font-weight: 700; font-size: 0.7rem; color: #0b1e33; display: flex; align-items: center; gap: 3px; flex-wrap: wrap; }
     .card-name .alt { font-weight: 400; font-size: 0.5rem; color: #6b7280; }
-    .card-bonus { font-size: 0.55rem; color: #dc2626; font-weight: 600; }
-    .card-withdraw { font-size: 0.5rem; color: #0a0a0a; font-weight: 500; }
+    .card-bonus { font-size: 0.55rem; color: #dc2626; font-weight: 600; display: inline-flex; align-items: center; gap: 3px; }
+    .card-withdraw { font-size: 0.5rem; color: #0a0a0a; font-weight: 500; display: inline-flex; align-items: center; gap: 3px; }
     .card-download-sm { background: #0a0a0a; color: white; border: none; padding: 3px 10px; border-radius: 40px; font-weight: 600; font-size: 0.45rem; white-space: nowrap; cursor: pointer; }
     .card-download-sm:active { transform: scale(0.95); }
 
@@ -283,9 +294,8 @@
     .info-card p { color: #334155; line-height: 1.5; font-size: 0.8rem; }
     .info-card .close-btn { background: #eef2ff; border: none; padding: 5px 16px; border-radius: 60px; font-weight: 600; margin-top: 12px; cursor: pointer; color: #1e293b; border: 1px solid #cbd5e1; font-size: 0.75rem; }
 
-    /* ===== COPIED STYLES FOR ICONS FROM OLD HTML ===== */
     .icon-svg { display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0; width: 16px; height: 16px; vertical-align: middle; }
-    .icon-svg svg { width: 100%; height: 100%; display: block; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+    .icon-svg svg { width: 100%; height: 100%; display: block; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
     .icon-svg.small { width: 14px; height: 14px; }
     .icon-svg.large { width: 18px; height: 18px; }
 
@@ -414,7 +424,7 @@
       <span class="icon-svg"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg></span> Contact
     </span>
     <span class="nav-small" data-target="disclaimer">
-      <span class="icon-svg"><svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="M12 8v4"/><path d="M12 16h.01"/></svg></span> Disclaimer
+      <span class="icon-svg"><svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="M9 12l2 2 4-4"/></svg></span> Disclaimer
     </span>
   </div>
 
@@ -425,7 +435,10 @@
   <div id="detailView" class="hidden" style="display:none;">
     <div class="game-detail-header">
       <button class="back-btn" id="backBtn">← Back</button>
-      <span class="game-detail-title" id="detailTitle">Download APK • Welcome Bonus</span>
+      <span class="game-detail-title" id="detailTitle">
+        <span class="icon-svg" style="width:14px;height:14px;"><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg></span>
+        Download APK • Welcome Bonus
+      </span>
     </div>
     <div class="detail-card">
       <div class="detail-top">
@@ -441,10 +454,31 @@
             </span>
           </div>
           <div class="game-meta-detail">
-            <span class="rating" id="detailRating">⭐ 4.6</span>
-            <span class="size" id="detailSize">📦 53 MB</span>
-            <span class="votes" id="detailVotes">💛 27K</span>
-            <span class="bonus-badge" id="detailBonus">🎁 ₹30</span>
+            <span class="rating" id="detailRating">
+              <span class="icon-svg" style="width:12px;height:12px;"><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></span> 4.6
+            </span>
+            <span class="size" id="detailSize">
+              <span class="icon-svg" style="width:12px;height:12px;"><svg viewBox="0 0 24 24"><path d="M20 7h-4.5L15 4H9L8.5 7H4v13h16V7z"/></svg></span> 53 MB
+            </span>
+            <span class="votes" id="detailVotes">
+              <span class="icon-svg" style="width:12px;height:12px;"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg></span> 27K
+            </span>
+            <span class="bonus-badge" id="detailBonus">
+              <span class="icon-svg" style="width:12px;height:12px;"><svg viewBox="0 0 24 24"><rect x="3" y="8" width="18" height="13" rx="2"/><path d="M3 8l9-5 9 5"/><path d="M8 12h8"/></svg></span> ₹30
+            </span>
+          </div>
+          <!-- Premium Update New Version Section -->
+          <div class="version-section">
+            <div class="version-left">
+              <span class="refresh-icon">
+                <svg viewBox="0 0 24 24"><path d="M23 4v6h-6"/><path d="M1 20v-6h6"/><path d="M3.51 9a9 9 0 0114.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0020.49 15"/></svg>
+              </span>
+              <span>Update New Version</span>
+            </div>
+            <div class="version-right">
+              <span class="version-text" id="detailVersion">v3.2.1</span>
+              <span class="version-badge">●</span>
+            </div>
           </div>
         </div>
       </div>
@@ -549,7 +583,7 @@
       <div class="game-tags-container" id="gameTagsContainer"></div>
     </div>
 
-    <!-- RELATED SECTION COPIED FROM OLD HTML WITH FULL CARDS -->
+    <!-- RELATED SECTION -->
     <div class="related-section">
       <div class="related-title">
         <span class="icon-svg"><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg></span>
@@ -574,51 +608,51 @@
 <script>
   (function() {
     const games = [
-      { name: "All Yono App Site", altName: "All Yono Games", bonus: "₹45", withdrawal: "₹100", downloadUrl: "https://www.earntp.com/m/jm9n7r", img: "https://i.ibb.co/CssC2WbG/1000022725.jpg" },
-      { name: "567 Slots", altName: "567 Slots Game", bonus: "₹45", withdrawal: "₹100", downloadUrl: "https://join567slots0.com/?code=4NYF487URJ6&t=1781505684", img: "https://i.ibb.co/hFytMXY2/1000022725.jpg" },
-      { name: "Saga Slots", altName: "Saga Slots APK", bonus: "₹40", withdrawal: "₹100", downloadUrl: "https://www.sagaslots5.com/?code=0QHJSERZYMV&t=1781505813", img: "https://i.ibb.co/20dzhBZf/1000022725.jpg" },
-      { name: "Jaiho 91", altName: "Jaiho 91 Game", bonus: "₹50", withdrawal: "₹100", downloadUrl: "https://jaiho91bonus.vip/?code=C42T99ZQHAT&t=1781506067", img: "https://i.ibb.co/zV0C6Xkk/1000022725.jpg" },
-      { name: "Rummy Ludo", altName: "Rummy Ludo APK", bonus: "₹35", withdrawal: "₹100", downloadUrl: "https://rummyludoapp37.com/", img: "https://i.ibb.co/Z6Xy7y2x/1000022725.jpg" },
-      { name: "ABC Rummy", altName: "ABC Rummy Game", bonus: "₹42", withdrawal: "₹100", downloadUrl: "https://d34i569g8ztoql.cloudfront.net/abcrummy_MeApp.apk", img: "https://i.ibb.co/Ldmd1DHH/1000022725.jpg" },
-      { name: "Rummy 91", altName: "Rummy 91 APK", bonus: "₹38", withdrawal: "₹100", downloadUrl: "https://d16sfv4ssrmnvt.cloudfront.net/rummy91_AGENT.apk", img: "https://i.ibb.co/Fb2j77pp/1000022725.jpg" },
-      { name: "Love Rummy", altName: "Love Rummy Game", bonus: "₹36", withdrawal: "₹100", downloadUrl: "https://d34i569g8ztoql.cloudfront.net/loverummy_App.apk", img: "https://i.ibb.co/PZ2dpNJ9/1000022725.jpg" },
-      { name: "Spin Crush", altName: "Spin Crush APK", bonus: "₹30", withdrawal: "₹100", downloadUrl: "https://d292swwe9zki3u.cloudfront.net/spincrush_freecash.apk", img: "https://i.ibb.co/S4C26kVS/1000022725.jpg" },
-      { name: "Top Rummy", altName: "Top Rummy Game", bonus: "₹48", withdrawal: "₹100", downloadUrl: "https://th7.my/BY1JWS/3gvute0", img: "https://i.ibb.co/bRy3w8dN/1000022725.jpg" },
-      { name: "Rummy 365", altName: "Rummy 365 APK", bonus: "₹44", withdrawal: "₹100", downloadUrl: "https://join567slots0.com/?code=4NYF487URJ6&t=1781505684", img: "https://i.ibb.co/Hf9bhrFm/1000022725.jpg" },
-      { name: "Teen Patti Gold", altName: "Teen Patti Gold Game", bonus: "₹37", withdrawal: "₹100", downloadUrl: "https://www.earntp.com/gold/jm9n7r", img: "https://i.ibb.co/C5XcGXsJ/teen-patti-gold.jpg" },
-      { name: "Teen Patti Master", altName: "Teen Patti Master APK", bonus: "₹20", withdrawal: "₹100", downloadUrl: "https://www.earntp.com/m/jm9n7r", img: "https://i.ibb.co/JjrZjn2n/teen-patti-master.jpg" },
-      { name: "Yono Rummy", altName: "Yono Rummy Game", bonus: "₹25", withdrawal: "₹100", downloadUrl: "https://yonorummy043.com/?code=VIPYQC5EE9X&t=1781107758", img: "https://i.ibb.co/zTFDGPpX/yono-rummy.jpg" },
-      { name: "Slots Winner", altName: "Slots Winner APK", bonus: "₹40", withdrawal: "₹100", downloadUrl: "https://slotswinneri.com/?code=PGVC6CBNF53&t=1781107393", img: "https://i.ibb.co/NdbNBtx7/slots-winner.jpg" },
-      { name: "Good Slots", altName: "Good Slots Game", bonus: "₹15", withdrawal: "₹100", downloadUrl: "https://7sharegoodslots.vip?pid=320806209&channel=2010001&t=pdd2&pkg=com.1", img: "https://i.ibb.co/nq9kMKHZ/good-slots.jpg" },
-      { name: "Diwa Slot", altName: "Diwa Slot APK", bonus: "₹50", withdrawal: "₹100", downloadUrl: "https://sharediwaslot1.vip?pid=483455673&channel=2010002&t=pdd2&pkg=com.diwaslotwhl.app", img: "https://i.ibb.co/BKB6QMbD/diwa-slot.jpg" },
-      { name: "GoGo Rummy", altName: "GoGo Rummy Game", bonus: "₹28", withdrawal: "₹100", downloadUrl: "https://www.gogorummyagent.com/?code=V4UTQA2VYMQ&t=1781196694", img: "https://i.ibb.co/Y7dzDP7z/gogo-rummy.jpg" },
-      { name: "Joy Rummy", altName: "Joy Rummy APK", bonus: "₹35", withdrawal: "₹100", downloadUrl: "https://www.joyrummymax.com/?code=J5KFTAWJ9X5&t=1781198100", img: "https://i.ibb.co/nqD8CD8W/joy-rummy.jpg" },
-      { name: "Spin Gold", altName: "Spin Gold Game", bonus: "₹22", withdrawal: "₹100", downloadUrl: "https://uono-bingo101.com/?code=3WFQ231H9Y2&t=1781197828", img: "https://i.ibb.co/G3QnY0vY/spin-gold.jpg" },
-      { name: "Bingo 101", altName: "Bingo 101 APK", bonus: "₹45", withdrawal: "₹100", downloadUrl: "https://uono-bingo101.com/?code=3WFQ231H9Y2&t=1781197828", img: "https://i.ibb.co/My9tjNgL/bingo101.jpg" },
-      { name: "Yes Spin", altName: "Yes Spin Game", bonus: "₹18", withdrawal: "₹100", downloadUrl: "https://www.yesspineee.com/?code=47TXJTLU5YY&t=1781198907", img: "https://i.ibb.co/m5qzq7W4/yes-spin.jpg" },
-      { name: "Yono Arcade", altName: "Yono Arcade APK", bonus: "₹32", withdrawal: "₹100", downloadUrl: "https://yonoarcadeapk9.com/?code=96LNEL9FQXZ&t=1781199006", img: "https://i.ibb.co/mCzSG1L7/yono-arcade.jpg" },
-      { name: "SVIP 777", altName: "SVIP 777 Game", bonus: "₹27", withdrawal: "₹100", downloadUrl: "https://www.svip777.life?pid=297924008&channel=2050001&t=pdd2&pkg=com.svip777.h5", img: "https://i.ibb.co/vfWZMLm/svip777.jpg" },
-      { name: "OK Rummy", altName: "OK Rummy APK", bonus: "₹38", withdrawal: "₹100", downloadUrl: "https://www.okrummy22.com/?code=H2GU92WUXXA&t=1781199220", img: "https://i.ibb.co/99fCMbNC/ok-rummy.jpg" },
-      { name: "Hind 777", altName: "Hind 777 Game", bonus: "₹42", withdrawal: "₹100", downloadUrl: "https://www.hindi777agent5.com/?code=7LFFR8WPHEG&t=1781199307", img: "https://i.ibb.co/5gf3q0Sh/hind777.jpg" },
-      { name: "Bet 213", altName: "Bet 213 APK", bonus: "₹36", withdrawal: "₹100", downloadUrl: "https://www.bet213.rocks/?code=2QTKPV4BYDH&t=1781199576", img: "https://i.ibb.co/YTqq2C4F/bet213.jpg" },
-      { name: "Boss Rummy", altName: "Boss Rummy Game", bonus: "₹40", withdrawal: "₹100", downloadUrl: "https://www.bossrummyy.com/?code=LSHTVUZE1NR&t=1781429504", img: "https://i.ibb.co/fdWgRgxk/1000022725.jpg" },
-      { name: "Yono 777", altName: "Yono 777 APK", bonus: "₹35", withdrawal: "₹100", downloadUrl: "https://uono777refer.vip/?code=F9MPSLKZCV9&t=1781429388", img: "https://i.ibb.co/VWz6S3JB/1000022725.jpg" },
-      { name: "Diwa VIP", altName: "Diwa VIP Game", bonus: "₹60", withdrawal: "₹100", downloadUrl: "https://uono777refer.vip/?code=F9MPSLKZCV9&t=1781429388", img: "https://i.ibb.co/ynsBHKtg/1000022725.jpg" },
-      { name: "Diwa 777", altName: "Diwa 777 APK", bonus: "₹45", withdrawal: "₹100", downloadUrl: "https://sharediwa7771.top?pid=287747863&channel=2010001&t=pdd2&pkg=com.diwa777.app", img: "https://i.ibb.co/Kx2RKNvN/1000022725.jpg" },
-      { name: "Yono Games", altName: "Yono Games APK", bonus: "₹45", withdrawal: "₹100", downloadUrl: "https://yonogamesm.com/?code=LHS49AEHVMR&t=1784314209", img: "https://i.ibb.co/LXqV77rd/yono-games.jpg" },
-      { name: "INR Rummy", altName: "INR Rummy Game", bonus: "₹45", withdrawal: "₹100", downloadUrl: "https://inrrummy.club/?code=JMQBV8TAPD7&t=1784298106", img: "https://i.ibb.co/Y7ZRkLFp/inr-rummy.jpg" },
-      { name: "Slots Winner Pro", altName: "Slots Winner Pro APK", bonus: "₹45", withdrawal: "₹100", downloadUrl: "https://slotswinneri.com/?code=PGVC6CBNF53&t=1784299271", img: "https://i.ibb.co/wNYf5LG8/slots-winner.jpg" },
-      { name: "MBM BET", altName: "MBM BET Game", bonus: "₹45", withdrawal: "₹100", downloadUrl: "https://www.mbmbet3.com/?code=GD3H3VA6YK5&t=1784297830", img: "https://i.ibb.co/sJcmCxK6/mbm-bet.jpg" },
-      { name: "Goa Spin", altName: "Goa Spin APK", bonus: "₹45", withdrawal: "₹100", downloadUrl: "https://www.earntp.com/m/jm9n7r", img: "https://i.ibb.co/FbpzMnQx/goa-spin.jpg" },
-      { name: "101Z", altName: "101Z Game", bonus: "₹40", withdrawal: "₹100", downloadUrl: "https://www.earntp.com/gold/jm9n7r", img: "https://i.ibb.co/F4tpkSSm/101z.jpg" },
-      { name: "777 Game", altName: "777 Game APK", bonus: "₹50", withdrawal: "₹100", downloadUrl: "https://t.me/yonogamestite", img: "https://i.ibb.co/YFG8D6NF/777-game.jpg" },
-      { name: "Teen Patti", altName: "Teen Patti Game", bonus: "₹35", withdrawal: "₹100", downloadUrl: "https://www.earntp.com/gold/jm9n7r", img: "https://i.ibb.co/5xkDVhrK/teen-patti.jpg" },
-      { name: "All Yono Games", altName: "All Yono Games APK", bonus: "₹42", withdrawal: "₹100", downloadUrl: "https://www.earntp.com/gold/jm9n7r", img: "https://i.ibb.co/yzyKyN1/all-yono-games.jpg" },
-      { name: "New Yono Games", altName: "New Yono Games Game", bonus: "₹38", withdrawal: "₹100", downloadUrl: "https://t.me/yonogamestite", img: "https://i.ibb.co/8nq6LH05/new-yono-games.jpg" },
-      { name: "Yono Apps", altName: "Yono Apps APK", bonus: "₹36", withdrawal: "₹100", downloadUrl: "https://t.me/yonogamestite", img: "https://i.ibb.co/S4rJJnB7/yono-apps.jpg" },
-      { name: "Spin Winner", altName: "Spin Winner Game", bonus: "₹30", withdrawal: "₹100", downloadUrl: "https://www.yesspineee.com/?code=47TXJTLU5YY&t=1781198907", img: "https://i.ibb.co/ZpP9wKdm/spin-winner.jpg" },
-      { name: "Yono All Games", altName: "Yono All Games APK", bonus: "₹48", withdrawal: "₹100", downloadUrl: "https://diwavipshare.cc?pid=428256719&channel=2050001&t=pdd2&pkg=com.diwavip.h5", img: "https://i.ibb.co/XxxDXGr3/yono-all-games.jpg" },
-      { name: "Spin Lucky", altName: "Spin Lucky Game", bonus: "₹44", withdrawal: "₹100", downloadUrl: "https://www.earntp.com/m/jm9n7r", img: "https://i.ibb.co/VY95vgTQ/spin-lucky.jpg" }
+      { name: "All Yono App Site", altName: "All Yono Games", bonus: "₹45", withdrawal: "₹100", downloadUrl: "https://www.earntp.com/m/jm9n7r", img: "https://i.ibb.co/CssC2WbG/1000022725.jpg", version: "v3.2.1" },
+      { name: "567 Slots", altName: "567 Slots Game", bonus: "₹45", withdrawal: "₹100", downloadUrl: "https://join567slots0.com/?code=4NYF487URJ6&t=1781505684", img: "https://i.ibb.co/hFytMXY2/1000022725.jpg", version: "v2.5.0" },
+      { name: "Saga Slots", altName: "Saga Slots APK", bonus: "₹40", withdrawal: "₹100", downloadUrl: "https://www.sagaslots5.com/?code=0QHJSERZYMV&t=1781505813", img: "https://i.ibb.co/20dzhBZf/1000022725.jpg", version: "v3.0.2" },
+      { name: "Jaiho 91", altName: "Jaiho 91 Game", bonus: "₹50", withdrawal: "₹100", downloadUrl: "https://jaiho91bonus.vip/?code=C42T99ZQHAT&t=1781506067", img: "https://i.ibb.co/zV0C6Xkk/1000022725.jpg", version: "v4.1.0" },
+      { name: "Rummy Ludo", altName: "Rummy Ludo APK", bonus: "₹35", withdrawal: "₹100", downloadUrl: "https://rummyludoapp37.com/", img: "https://i.ibb.co/Z6Xy7y2x/1000022725.jpg", version: "v2.0.8" },
+      { name: "ABC Rummy", altName: "ABC Rummy Game", bonus: "₹42", withdrawal: "₹100", downloadUrl: "https://d34i569g8ztoql.cloudfront.net/abcrummy_MeApp.apk", img: "https://i.ibb.co/Ldmd1DHH/1000022725.jpg", version: "v1.9.3" },
+      { name: "Rummy 91", altName: "Rummy 91 APK", bonus: "₹38", withdrawal: "₹100", downloadUrl: "https://d16sfv4ssrmnvt.cloudfront.net/rummy91_AGENT.apk", img: "https://i.ibb.co/Fb2j77pp/1000022725.jpg", version: "v2.1.5" },
+      { name: "Love Rummy", altName: "Love Rummy Game", bonus: "₹36", withdrawal: "₹100", downloadUrl: "https://d34i569g8ztoql.cloudfront.net/loverummy_App.apk", img: "https://i.ibb.co/PZ2dpNJ9/1000022725.jpg", version: "v1.7.2" },
+      { name: "Spin Crush", altName: "Spin Crush APK", bonus: "₹30", withdrawal: "₹100", downloadUrl: "https://d292swwe9zki3u.cloudfront.net/spincrush_freecash.apk", img: "https://i.ibb.co/S4C26kVS/1000022725.jpg", version: "v3.0.0" },
+      { name: "Top Rummy", altName: "Top Rummy Game", bonus: "₹48", withdrawal: "₹100", downloadUrl: "https://th7.my/BY1JWS/3gvute0", img: "https://i.ibb.co/bRy3w8dN/1000022725.jpg", version: "v2.8.1" },
+      { name: "Rummy 365", altName: "Rummy 365 APK", bonus: "₹44", withdrawal: "₹100", downloadUrl: "https://join567slots0.com/?code=4NYF487URJ6&t=1781505684", img: "https://i.ibb.co/Hf9bhrFm/1000022725.jpg", version: "v1.5.0" },
+      { name: "Teen Patti Gold", altName: "Teen Patti Gold Game", bonus: "₹37", withdrawal: "₹100", downloadUrl: "https://www.earntp.com/gold/jm9n7r", img: "https://i.ibb.co/C5XcGXsJ/teen-patti-gold.jpg", version: "v4.0.1" },
+      { name: "Teen Patti Master", altName: "Teen Patti Master APK", bonus: "₹20", withdrawal: "₹100", downloadUrl: "https://www.earntp.com/m/jm9n7r", img: "https://i.ibb.co/JjrZjn2n/teen-patti-master.jpg", version: "v3.5.0" },
+      { name: "Yono Rummy", altName: "Yono Rummy Game", bonus: "₹25", withdrawal: "₹100", downloadUrl: "https://yonorummy043.com/?code=VIPYQC5EE9X&t=1781107758", img: "https://i.ibb.co/zTFDGPpX/yono-rummy.jpg", version: "v2.0.0" },
+      { name: "Slots Winner", altName: "Slots Winner APK", bonus: "₹40", withdrawal: "₹100", downloadUrl: "https://slotswinneri.com/?code=PGVC6CBNF53&t=1781107393", img: "https://i.ibb.co/NdbNBtx7/slots-winner.jpg", version: "v1.8.5" },
+      { name: "Good Slots", altName: "Good Slots Game", bonus: "₹15", withdrawal: "₹100", downloadUrl: "https://7sharegoodslots.vip?pid=320806209&channel=2010001&t=pdd2&pkg=com.1", img: "https://i.ibb.co/nq9kMKHZ/good-slots.jpg", version: "v1.2.0" },
+      { name: "Diwa Slot", altName: "Diwa Slot APK", bonus: "₹50", withdrawal: "₹100", downloadUrl: "https://sharediwaslot1.vip?pid=483455673&channel=2010002&t=pdd2&pkg=com.diwaslotwhl.app", img: "https://i.ibb.co/BKB6QMbD/diwa-slot.jpg", version: "v2.2.0" },
+      { name: "GoGo Rummy", altName: "GoGo Rummy Game", bonus: "₹28", withdrawal: "₹100", downloadUrl: "https://www.gogorummyagent.com/?code=V4UTQA2VYMQ&t=1781196694", img: "https://i.ibb.co/Y7dzDP7z/gogo-rummy.jpg", version: "v1.9.1" },
+      { name: "Joy Rummy", altName: "Joy Rummy APK", bonus: "₹35", withdrawal: "₹100", downloadUrl: "https://www.joyrummymax.com/?code=J5KFTAWJ9X5&t=1781198100", img: "https://i.ibb.co/nqD8CD8W/joy-rummy.jpg", version: "v2.3.0" },
+      { name: "Spin Gold", altName: "Spin Gold Game", bonus: "₹22", withdrawal: "₹100", downloadUrl: "https://uono-bingo101.com/?code=3WFQ231H9Y2&t=1781197828", img: "https://i.ibb.co/G3QnY0vY/spin-gold.jpg", version: "v1.6.0" },
+      { name: "Bingo 101", altName: "Bingo 101 APK", bonus: "₹45", withdrawal: "₹100", downloadUrl: "https://uono-bingo101.com/?code=3WFQ231H9Y2&t=1781197828", img: "https://i.ibb.co/My9tjNgL/bingo101.jpg", version: "v2.0.0" },
+      { name: "Yes Spin", altName: "Yes Spin Game", bonus: "₹18", withdrawal: "₹100", downloadUrl: "https://www.yesspineee.com/?code=47TXJTLU5YY&t=1781198907", img: "https://i.ibb.co/m5qzq7W4/yes-spin.jpg", version: "v1.3.0" },
+      { name: "Yono Arcade", altName: "Yono Arcade APK", bonus: "₹32", withdrawal: "₹100", downloadUrl: "https://yonoarcadeapk9.com/?code=96LNEL9FQXZ&t=1781199006", img: "https://i.ibb.co/mCzSG1L7/yono-arcade.jpg", version: "v2.5.0" },
+      { name: "SVIP 777", altName: "SVIP 777 Game", bonus: "₹27", withdrawal: "₹100", downloadUrl: "https://www.svip777.life?pid=297924008&channel=2050001&t=pdd2&pkg=com.svip777.h5", img: "https://i.ibb.co/vfWZMLm/svip777.jpg", version: "v1.8.0" },
+      { name: "OK Rummy", altName: "OK Rummy APK", bonus: "₹38", withdrawal: "₹100", downloadUrl: "https://www.okrummy22.com/?code=H2GU92WUXXA&t=1781199220", img: "https://i.ibb.co/99fCMbNC/ok-rummy.jpg", version: "v1.9.0" },
+      { name: "Hind 777", altName: "Hind 777 Game", bonus: "₹42", withdrawal: "₹100", downloadUrl: "https://www.hindi777agent5.com/?code=7LFFR8WPHEG&t=1781199307", img: "https://i.ibb.co/5gf3q0Sh/hind777.jpg", version: "v2.0.0" },
+      { name: "Bet 213", altName: "Bet 213 APK", bonus: "₹36", withdrawal: "₹100", downloadUrl: "https://www.bet213.rocks/?code=2QTKPV4BYDH&t=1781199576", img: "https://i.ibb.co/YTqq2C4F/bet213.jpg", version: "v1.7.0" },
+      { name: "Boss Rummy", altName: "Boss Rummy Game", bonus: "₹40", withdrawal: "₹100", downloadUrl: "https://www.bossrummyy.com/?code=LSHTVUZE1NR&t=1781429504", img: "https://i.ibb.co/fdWgRgxk/1000022725.jpg", version: "v2.1.0" },
+      { name: "Yono 777", altName: "Yono 777 APK", bonus: "₹35", withdrawal: "₹100", downloadUrl: "https://uono777refer.vip/?code=F9MPSLKZCV9&t=1781429388", img: "https://i.ibb.co/VWz6S3JB/1000022725.jpg", version: "v2.0.0" },
+      { name: "Diwa VIP", altName: "Diwa VIP Game", bonus: "₹60", withdrawal: "₹100", downloadUrl: "https://uono777refer.vip/?code=F9MPSLKZCV9&t=1781429388", img: "https://i.ibb.co/ynsBHKtg/1000022725.jpg", version: "v1.5.0" },
+      { name: "Diwa 777", altName: "Diwa 777 APK", bonus: "₹45", withdrawal: "₹100", downloadUrl: "https://sharediwa7771.top?pid=287747863&channel=2010001&t=pdd2&pkg=com.diwa777.app", img: "https://i.ibb.co/Kx2RKNvN/1000022725.jpg", version: "v1.8.0" },
+      { name: "Yono Games", altName: "Yono Games APK", bonus: "₹45", withdrawal: "₹100", downloadUrl: "https://yonogamesm.com/?code=LHS49AEHVMR&t=1784314209", img: "https://i.ibb.co/LXqV77rd/yono-games.jpg", version: "v3.0.0" },
+      { name: "INR Rummy", altName: "INR Rummy Game", bonus: "₹45", withdrawal: "₹100", downloadUrl: "https://inrrummy.club/?code=JMQBV8TAPD7&t=1784298106", img: "https://i.ibb.co/Y7ZRkLFp/inr-rummy.jpg", version: "v1.6.0" },
+      { name: "Slots Winner Pro", altName: "Slots Winner Pro APK", bonus: "₹45", withdrawal: "₹100", downloadUrl: "https://slotswinneri.com/?code=PGVC6CBNF53&t=1784299271", img: "https://i.ibb.co/wNYf5LG8/slots-winner.jpg", version: "v2.0.0" },
+      { name: "MBM BET", altName: "MBM BET Game", bonus: "₹45", withdrawal: "₹100", downloadUrl: "https://www.mbmbet3.com/?code=GD3H3VA6YK5&t=1784297830", img: "https://i.ibb.co/sJcmCxK6/mbm-bet.jpg", version: "v1.4.0" },
+      { name: "Goa Spin", altName: "Goa Spin APK", bonus: "₹45", withdrawal: "₹100", downloadUrl: "https://www.earntp.com/m/jm9n7r", img: "https://i.ibb.co/FbpzMnQx/goa-spin.jpg", version: "v1.5.0" },
+      { name: "101Z", altName: "101Z Game", bonus: "₹40", withdrawal: "₹100", downloadUrl: "https://www.earntp.com/gold/jm9n7r", img: "https://i.ibb.co/F4tpkSSm/101z.jpg", version: "v1.2.0" },
+      { name: "777 Game", altName: "777 Game APK", bonus: "₹50", withdrawal: "₹100", downloadUrl: "https://t.me/yonogamestite", img: "https://i.ibb.co/YFG8D6NF/777-game.jpg", version: "v2.0.0" },
+      { name: "Teen Patti", altName: "Teen Patti Game", bonus: "₹35", withdrawal: "₹100", downloadUrl: "https://www.earntp.com/gold/jm9n7r", img: "https://i.ibb.co/5xkDVhrK/teen-patti.jpg", version: "v4.0.0" },
+      { name: "All Yono Games", altName: "All Yono Games APK", bonus: "₹42", withdrawal: "₹100", downloadUrl: "https://www.earntp.com/gold/jm9n7r", img: "https://i.ibb.co/yzyKyN1/all-yono-games.jpg", version: "v3.1.0" },
+      { name: "New Yono Games", altName: "New Yono Games Game", bonus: "₹38", withdrawal: "₹100", downloadUrl: "https://t.me/yonogamestite", img: "https://i.ibb.co/8nq6LH05/new-yono-games.jpg", version: "v1.9.0" },
+      { name: "Yono Apps", altName: "Yono Apps APK", bonus: "₹36", withdrawal: "₹100", downloadUrl: "https://t.me/yonogamestite", img: "https://i.ibb.co/S4rJJnB7/yono-apps.jpg", version: "v2.0.0" },
+      { name: "Spin Winner", altName: "Spin Winner Game", bonus: "₹30", withdrawal: "₹100", downloadUrl: "https://www.yesspineee.com/?code=47TXJTLU5YY&t=1781198907", img: "https://i.ibb.co/ZpP9wKdm/spin-winner.jpg", version: "v1.3.0" },
+      { name: "Yono All Games", altName: "Yono All Games APK", bonus: "₹48", withdrawal: "₹100", downloadUrl: "https://diwavipshare.cc?pid=428256719&channel=2050001&t=pdd2&pkg=com.diwavip.h5", img: "https://i.ibb.co/XxxDXGr3/yono-all-games.jpg", version: "v3.0.0" },
+      { name: "Spin Lucky", altName: "Spin Lucky Game", bonus: "₹44", withdrawal: "₹100", downloadUrl: "https://www.earntp.com/m/jm9n7r", img: "https://i.ibb.co/VY95vgTQ/spin-lucky.jpg", version: "v1.5.0" }
     ];
 
     const seen = new Set();
@@ -709,6 +743,7 @@
         card.dataset.rating = getRandomRating();
         card.dataset.size = getRandomSize();
         card.dataset.votes = getRandomVotes();
+        card.dataset.version = game.version || 'v2.0.0';
 
         card.innerHTML = `
           <div class="card-number">${index + 1}</div>
@@ -732,7 +767,8 @@
             img: this.dataset.img,
             rating: this.dataset.rating,
             size: this.dataset.size,
-            votes: this.dataset.votes
+            votes: this.dataset.votes,
+            version: this.dataset.version
           };
           showDetail(gData, true);
         });
@@ -764,13 +800,14 @@
 
       document.getElementById('detailImg').src = game.img;
       document.getElementById('detailName').innerHTML = game.name + ' <span class="alt">| ' + (game.altName || game.name) + '</span>';
-      document.getElementById('detailTitle').textContent = 'Download ' + game.name + ' APK • Welcome ' + game.bonus + ' Bonus';
+      document.getElementById('detailTitle').innerHTML = '<span class="icon-svg" style="width:14px;height:14px;"><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg></span> Download ' + game.name + ' APK • Welcome ' + game.bonus + ' Bonus';
       document.getElementById('detailSignup').innerHTML = '<span class="icon-svg small"><svg viewBox="0 0 24 24"><rect x="3" y="8" width="18" height="13" rx="2"/><path d="M3 8l9-5 9 5"/><path d="M8 12h8"/></svg></span> Sign Up Bonus ' + game.bonus;
       document.getElementById('detailWithdraw').innerHTML = '<span class="icon-svg small"><svg viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V4a1 1 0 00-1-1H9a1 1 0 00-1 1v3"/><path d="M8 12h8"/></svg></span> Min. Withdraw ' + game.withdrawal;
-      document.getElementById('detailBonus').textContent = '🎁 ' + game.bonus;
-      document.getElementById('detailRating').textContent = '⭐ ' + (game.rating || '4.6');
-      document.getElementById('detailSize').textContent = '📦 ' + (game.size || '53 MB');
-      document.getElementById('detailVotes').textContent = '💛 ' + (game.votes || '27K');
+      document.getElementById('detailBonus').innerHTML = '<span class="icon-svg" style="width:12px;height:12px;"><svg viewBox="0 0 24 24"><rect x="3" y="8" width="18" height="13" rx="2"/><path d="M3 8l9-5 9 5"/><path d="M8 12h8"/></svg></span> ' + game.bonus;
+      document.getElementById('detailRating').innerHTML = '<span class="icon-svg" style="width:12px;height:12px;"><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></span> ' + (game.rating || '4.6');
+      document.getElementById('detailSize').innerHTML = '<span class="icon-svg" style="width:12px;height:12px;"><svg viewBox="0 0 24 24"><path d="M20 7h-4.5L15 4H9L8.5 7H4v13h16V7z"/></svg></span> ' + (game.size || '53 MB');
+      document.getElementById('detailVotes').innerHTML = '<span class="icon-svg" style="width:12px;height:12px;"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg></span> ' + (game.votes || '27K');
+      document.getElementById('detailVersion').textContent = game.version || 'v2.0.0';
       document.getElementById('detailDownloadBtn').href = game.downloadUrl;
 
       const gName = game.name;
@@ -833,7 +870,22 @@
       uniqueGames.forEach(g => {
         const tag = document.createElement('span');
         tag.className = 'game-tag';
-        tag.textContent = g.name + ' | ' + (g.altName || g.name);
+        // Use icon based on first letter or random
+        const iconMap = {
+          'a': '<svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>',
+          'r': '<svg viewBox="0 0 24 24"><path d="M4 4h11a4 4 0 010 8H4"/><path d="M4 12h8a4 4 0 010 8H4"/><path d="M4 4v16"/></svg>',
+          's': '<svg viewBox="0 0 24 24"><path d="M12 2v4"/><path d="M12 18v4"/><path d="M4.93 4.93l2.83 2.83"/><path d="M16.24 16.24l2.83 2.83"/><path d="M2 12h4"/><path d="M18 12h4"/><path d="M4.93 19.07l2.83-2.83"/><path d="M16.24 7.76l2.83-2.83"/></svg>',
+          'b': '<svg viewBox="0 0 24 24"><path d="M4 4h7a4 4 0 010 8H4"/><path d="M4 12h9a4 4 0 010 8H4"/><path d="M4 4v16"/></svg>',
+          'j': '<svg viewBox="0 0 24 24"><path d="M12 4v16"/><path d="M8 8h8"/><path d="M8 16h8"/></svg>',
+          't': '<svg viewBox="0 0 24 24"><path d="M4 4h16"/><path d="M12 4v16"/></svg>',
+          'y': '<svg viewBox="0 0 24 24"><path d="M12 2v20"/><path d="M4 10l8 6 8-6"/></svg>',
+          'd': '<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M8 12h8"/></svg>',
+          'g': '<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M8 8h8"/><path d="M8 12h6"/><path d="M8 16h4"/></svg>',
+          'l': '<svg viewBox="0 0 24 24"><path d="M4 4h16"/><path d="M4 12h12"/><path d="M4 20h8"/></svg>'
+        };
+        const firstChar = g.name.charAt(0).toLowerCase();
+        const iconSvg = iconMap[firstChar] || iconMap['a'];
+        tag.innerHTML = '<span class="tag-icon">' + iconSvg + '</span> ' + g.name + ' | ' + (g.altName || g.name);
         tag.dataset.name = g.name;
         tag.dataset.altName = g.altName || g.name;
         tag.dataset.bonus = g.bonus;
@@ -843,6 +895,7 @@
         tag.dataset.rating = g.rating || getRandomRating();
         tag.dataset.size = g.size || getRandomSize();
         tag.dataset.votes = g.votes || getRandomVotes();
+        tag.dataset.version = g.version || 'v2.0.0';
         tag.addEventListener('click', function(e) {
           e.stopPropagation();
           showDetail({
@@ -854,13 +907,13 @@
             img: this.dataset.img,
             rating: this.dataset.rating,
             size: this.dataset.size,
-            votes: this.dataset.votes
+            votes: this.dataset.votes,
+            version: this.dataset.version
           }, true);
         });
         tagsContainer.appendChild(tag);
       });
 
-      // Related section with full game cards (copied from old HTML)
       const relatedGrid = document.getElementById('relatedGrid');
       relatedGrid.innerHTML = '';
       uniqueGames.filter(g => g.name !== game.name).forEach(g => {
@@ -875,6 +928,7 @@
         item.dataset.rating = getRandomRating();
         item.dataset.size = getRandomSize();
         item.dataset.votes = getRandomVotes();
+        item.dataset.version = g.version || 'v2.0.0';
 
         item.innerHTML = `
           <img src="${g.img}" alt="${g.name}" loading="lazy" onerror="this.src='https://i.ibb.co/LXqV77rd/yono-games.jpg'">
@@ -898,7 +952,8 @@
             img: this.dataset.img,
             rating: this.dataset.rating,
             size: this.dataset.size,
-            votes: this.dataset.votes
+            votes: this.dataset.votes,
+            version: this.dataset.version
           }, true);
         });
       });
