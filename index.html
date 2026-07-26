@@ -165,11 +165,7 @@
       border-radius: 50%; position: relative; flex-shrink: 0; background: #000; border: 2px solid #1a1a1a;
       box-shadow: 0 0 15px rgba(0,255,0,0.1);
     }
-    .led-icon .inner-icon { 
-      font-size: 0.65rem; font-weight: 700; color: #fff; z-index: 2; position: relative; 
-      display: flex; align-items: center; justify-content: center;
-    }
-    .led-icon .inner-icon svg { width: 16px; height: 16px; stroke: #fff; stroke-width: 2; fill: none; stroke-linecap: round; stroke-linejoin: round; }
+    .led-icon .inner-icon { font-size: 0.65rem; font-weight: 700; color: #fff; z-index: 2; position: relative; text-shadow: 0 0 8px currentColor; }
     .led-icon.green-cyan::before {
       content: ''; position: absolute; inset: -3px; border-radius: 50%;
       background: conic-gradient(from 0deg, #00ff00 0deg 60deg, #00ffff 120deg 180deg, #00ff00 240deg 300deg, #00ff00 360deg);
@@ -240,8 +236,7 @@
     .toc-header:active { transform: scale(0.97); }
     .toc-header .toc-left { display: flex; align-items: center; gap: 8px; }
     .toc-header .toc-left .toc-icon { display: inline-flex; align-items: center; justify-content: center; width: 24px; height: 24px; border-radius: 50%; background: #000; border: 2px solid #1a1a1a; box-shadow: 0 0 15px rgba(255,0,0,0.1); }
-    .toc-header .toc-left .toc-icon .inner { display: flex; align-items: center; justify-content: center; }
-    .toc-header .toc-left .toc-icon .inner svg { width: 14px; height: 14px; stroke: #fff; stroke-width: 2; fill: none; stroke-linecap: round; stroke-linejoin: round; }
+    .toc-header .toc-left .toc-icon .inner { font-size: 0.6rem; font-weight: 800; color: #fff; }
     .toc-header .toc-left .toc-title { font-weight: 700; font-size: 0.85rem; color: #0b1e33; }
     .toc-header .toc-right { font-size: 1.2rem; color: #64748b; transition: transform 0.3s ease; }
     .toc-header .toc-right.open { transform: rotate(180deg); }
@@ -324,6 +319,64 @@
       color: #e2e8f0;
     }
 
+    /* Premium Close Icon for Overlay */
+    .close-icon-wrap {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      position: relative;
+      background: #0a0a0a;
+      border: 2px solid #1a1a1a;
+      cursor: pointer;
+      flex-shrink: 0;
+      transition: transform 0.2s ease;
+    }
+    .close-icon-wrap:active { transform: scale(0.9); }
+    .close-icon-wrap::before {
+      content: '';
+      position: absolute;
+      inset: -4px;
+      border-radius: 50%;
+      background: conic-gradient(from 0deg, #00ff00 0deg 40deg, #00cc00 80deg 120deg, #00ff00 160deg 200deg, #00cc00 240deg 280deg, #00ff00 320deg 360deg);
+      animation: closeSpin 6s linear infinite;
+      z-index: 0;
+      -webkit-mask: radial-gradient(farthest-side, transparent calc(100% - 3px), #fff calc(100% - 2px));
+      mask: radial-gradient(farthest-side, transparent calc(100% - 3px), #fff calc(100% - 2px));
+    }
+    .close-icon-wrap .close-icon-inner {
+      position: relative;
+      z-index: 2;
+      color: #fff;
+      width: 16px;
+      height: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .close-icon-wrap .close-icon-inner svg {
+      width: 100%;
+      height: 100%;
+      stroke: #ffffff;
+      stroke-width: 2.5;
+      fill: none;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+    .close-icon-wrap .close-glow {
+      position: absolute;
+      inset: -6px;
+      border-radius: 50%;
+      background: rgba(0,255,0,0.05);
+      filter: blur(8px);
+      z-index: -1;
+      animation: glowPulse 2s ease-in-out infinite;
+    }
+    @keyframes closeSpin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+    @keyframes glowPulse { 0%,100% { opacity: 0.5; } 50% { opacity: 1; } }
+
     .related-section { padding: 10px; background: white; border-top: 1px solid #e9edf4; }
     .related-title { font-weight: 700; font-size: 0.8rem; color: #0b1e33; margin-bottom: 6px; display: flex; align-items: center; gap: 8px; }
     .related-grid { display: flex; flex-direction: column; gap: 5px; }
@@ -358,16 +411,24 @@
     .footer-note { padding: 6px 10px 10px; text-align: center; color: #94a3b8; font-size: 0.5rem; background: #f8fafc; }
 
     .info-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.4); backdrop-filter: blur(3px); z-index: 99; justify-content: center; align-items: center; }
-    .info-card { background: white; max-width: 400px; width: 90%; padding: 20px 18px; border-radius: 28px; box-shadow: 0 30px 60px rgba(0,0,0,0.2); }
-    .info-card h2 { font-size: 1.2rem; margin-bottom: 8px; color: #0b1e33; }
+    .info-card { background: white; max-width: 400px; width: 90%; padding: 20px 18px; border-radius: 28px; box-shadow: 0 30px 60px rgba(0,0,0,0.2); position: relative; max-height: 80vh; overflow-y: auto; }
+    .info-card .close-top { position: absolute; top: 12px; right: 12px; z-index: 5; cursor: pointer; }
+    .info-card .close-top .close-icon-wrap { width: 28px; height: 28px; }
+    .info-card .close-top .close-icon-wrap .close-icon-inner { width: 14px; height: 14px; }
+    .info-card h2 { font-size: 1.2rem; margin-bottom: 8px; color: #0b1e33; padding-right: 40px; }
     .info-card p { color: #334155; line-height: 1.5; font-size: 0.8rem; }
-    .info-card .close-btn { background: #eef2ff; border: none; padding: 5px 16px; border-radius: 60px; font-weight: 600; margin-top: 12px; cursor: pointer; color: #1e293b; border: 1px solid #cbd5e1; font-size: 0.75rem; }
+
+    /* Page-specific tag containers */
+    .page-tags-top, .page-tags-bottom { display: flex; flex-wrap: wrap; gap: 6px; margin: 8px 0; }
+    .page-tags-top .game-tag, .page-tags-bottom .game-tag { background: #0b1e33; color: #fff; font-size: 0.5rem; padding: 4px 12px 4px 8px; gap: 6px; }
+    .page-tags-top .tag-loader, .page-tags-bottom .tag-loader { width: 14px; height: 14px; }
 
     .icon-svg { display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0; width: 16px; height: 16px; vertical-align: middle; }
     .icon-svg svg { width: 100%; height: 100%; display: block; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
     .icon-svg.small { width: 14px; height: 14px; }
     .icon-svg.large { width: 18px; height: 18px; }
 
+    /* Unique layout classes */
     .layout-left .detail-top { flex-direction: row; }
     .layout-right .detail-top { flex-direction: row-reverse; }
     .layout-center .detail-top { flex-direction: column; text-align: center; }
@@ -410,7 +471,7 @@
       .card-img { margin-left: 14px; width: 34px; height: 34px; }
       .telegram-btn .corner-led { width: 4px; height: 4px; }
       .led-icon { width: 20px; height: 20px; }
-      .led-icon .inner-icon svg { width: 12px; height: 12px; }
+      .led-icon .inner-icon { font-size: 0.45rem; }
       .game-tag { font-size: 0.45rem; padding: 4px 10px 4px 8px; gap: 5px; }
       .game-tag .tag-loader { width: 14px; height: 14px; }
       .related-item .rname { font-size: 0.5rem; }
@@ -418,6 +479,10 @@
       .layout-center .detail-top { flex-direction: column; }
       .layout-left .detail-top { flex-direction: row; }
       .layout-right .detail-top { flex-direction: row-reverse; }
+      .info-card .close-top .close-icon-wrap { width: 24px; height: 24px; }
+      .info-card .close-top .close-icon-wrap .close-icon-inner { width: 12px; height: 12px; }
+      .page-tags-top .game-tag, .page-tags-bottom .game-tag { font-size: 0.4rem; padding: 3px 8px 3px 6px; }
+      .page-tags-top .tag-loader, .page-tags-bottom .tag-loader { width: 12px; height: 12px; }
     }
   </style>
 </head>
@@ -586,7 +651,7 @@
 
     <div class="tag-section" id="tagSection">
       <div class="tag-title" id="tagSectionTitle">
-        <span class="led-icon green-cyan glow-bg"><span class="inner-icon"><svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><path d="M12 15V3"/></svg></span></span>
+        <span class="led-icon green-cyan glow-bg"><span class="inner-icon">📢</span></span>
         <span>Top Offers</span>
       </div>
       <div class="tag-grid" id="tagGridContainer"></div>
@@ -595,7 +660,7 @@
     <div class="toc-section">
       <div class="toc-header" id="tocToggle">
         <div class="toc-left">
-          <span class="toc-icon"><span class="inner"><svg viewBox="0 0 24 24"><path d="M4 6h16"/><path d="M4 12h16"/><path d="M4 18h16"/></svg></span></span>
+          <span class="toc-icon"><span class="inner">📋</span></span>
           <span class="toc-title">Table of Contents</span>
         </div>
         <div class="toc-right" id="tocArrow">▼</div>
@@ -652,20 +717,20 @@
 
     <div class="faq-section">
       <div class="faq-title">
-        <span class="led-icon red-yellow glow-bg"><span class="inner-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 015.83 1c0 2-3 3-3 3"/><path d="M12 17h.01"/></svg></span></span>
+        <span class="led-icon red-yellow glow-bg"><span class="inner-icon">❓</span></span>
         <span>Frequently Asked Questions</span>
       </div>
       <div class="faq-grid">
-        <div class="faq-box"><div class="faq-q"><span class="led-icon white-red glow-bg" style="width:20px;height:20px;"><span class="inner-icon" style="font-size:0.5rem;"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 8h.01"/></svg></span></span> 1. What Is The <span id="faq1Name">Game Name</span> app APK?</div><div class="faq-a" id="faq1Content">The <span id="faq1Name2">Game Name</span> APP APK is an excellent application that offers users a sign-up bonus of ₹<span id="faq1Bonus">700</span> when they join. This game includes a fantastic bonus program, and you can learn more by reading the complete post. Additionally, <span id="faq1Name3">Game Name</span> APK is a popular slots game with a minimum withdrawal amount of ₹100. Referral Bonus: ₹<span id="faq1Ref">25</span></div></div>
-        <div class="faq-box"><div class="faq-q"><span class="led-icon white-red glow-bg" style="width:20px;height:20px;"><span class="inner-icon" style="font-size:0.5rem;"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 8h.01"/></svg></span></span> 2. How to Sign Up for <span id="faq2Name">Game Name</span> APK?</div><div class="faq-a" id="faq2Content">To sign up for the <span id="faq2Name2">Game Name</span> APK, follow these steps:<br><strong>•</strong> Click on the Download Button for the <span id="faq2Name3">Game Name</span> APK.<br><strong>•</strong> Select OK to start the download.<br><strong>•</strong> Install the App application on your smartphone.<br><strong>•</strong> Open the new app and click on Play as Guest.<br><strong>•</strong> Click on the Profile Button and bind your mobile number.<br>After completing these steps, you will receive a sign-up bonus of ₹<span id="faq2Bonus">500</span>. Referral Bonus: ₹<span id="faq2Ref">18</span></div></div>
-        <div class="faq-box"><div class="faq-q"><span class="led-icon white-red glow-bg" style="width:20px;height:20px;"><span class="inner-icon" style="font-size:0.5rem;"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 8h.01"/></svg></span></span> 3. How Many Games Are Available In The <span id="faq3Name">Game Name</span> App?</div><div class="faq-a" id="faq3Content">The <span id="faq3Name2">Game Name</span> app offers support for 75+ different types of games. You can enjoy a variety of games such as Rummy, Teen Patti, 7 Up Down, Dragon vs Tiger, and many more.</div></div>
-        <div class="faq-box"><div class="faq-q"><span class="led-icon white-red glow-bg" style="width:20px;height:20px;"><span class="inner-icon" style="font-size:0.5rem;"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 8h.01"/></svg></span></span> 4. What are some of the best features of the <span id="faq4Name">Game Name</span> app APK?</div><div class="faq-a" id="faq4Content"><strong>•</strong> Enjoy a bonus of ₹<span id="faq4Bonus">51</span> for free in the APK.<br><strong>•</strong> Access to 20 gaming options.<br><strong>•</strong> Earn up to ₹<span id="faq4Bonus2">150</span> for inviting friends.<br><strong>•</strong> Withdrawals can be made starting from a minimum of ₹<span id="faq4Withdraw">500</span>.<br><strong>•</strong> Click on the Profile Button and bind your mobile number.<br><strong>•</strong> The minimum deposit required is ₹<span id="faq4Deposit">100</span>. Referral Bonus: ₹<span id="faq4Ref">22</span></div></div>
+        <div class="faq-box"><div class="faq-q"><span class="led-icon white-red glow-bg" style="width:20px;height:20px;"><span class="inner-icon" style="font-size:0.5rem;">Q</span></span> 1. What Is The <span id="faq1Name">Game Name</span> app APK?</div><div class="faq-a" id="faq1Content">The <span id="faq1Name2">Game Name</span> APP APK is an excellent application that offers users a sign-up bonus of ₹<span id="faq1Bonus">700</span> when they join. This game includes a fantastic bonus program, and you can learn more by reading the complete post. Additionally, <span id="faq1Name3">Game Name</span> APK is a popular slots game with a minimum withdrawal amount of ₹100. Referral Bonus: ₹<span id="faq1Ref">25</span></div></div>
+        <div class="faq-box"><div class="faq-q"><span class="led-icon white-red glow-bg" style="width:20px;height:20px;"><span class="inner-icon" style="font-size:0.5rem;">Q</span></span> 2. How to Sign Up for <span id="faq2Name">Game Name</span> APK?</div><div class="faq-a" id="faq2Content">To sign up for the <span id="faq2Name2">Game Name</span> APK, follow these steps:<br><strong>•</strong> Click on the Download Button for the <span id="faq2Name3">Game Name</span> APK.<br><strong>•</strong> Select OK to start the download.<br><strong>•</strong> Install the App application on your smartphone.<br><strong>•</strong> Open the new app and click on Play as Guest.<br><strong>•</strong> Click on the Profile Button and bind your mobile number.<br>After completing these steps, you will receive a sign-up bonus of ₹<span id="faq2Bonus">500</span>. Referral Bonus: ₹<span id="faq2Ref">18</span></div></div>
+        <div class="faq-box"><div class="faq-q"><span class="led-icon white-red glow-bg" style="width:20px;height:20px;"><span class="inner-icon" style="font-size:0.5rem;">Q</span></span> 3. How Many Games Are Available In The <span id="faq3Name">Game Name</span> App?</div><div class="faq-a" id="faq3Content">The <span id="faq3Name2">Game Name</span> app offers support for 75+ different types of games. You can enjoy a variety of games such as Rummy, Teen Patti, 7 Up Down, Dragon vs Tiger, and many more.</div></div>
+        <div class="faq-box"><div class="faq-q"><span class="led-icon white-red glow-bg" style="width:20px;height:20px;"><span class="inner-icon" style="font-size:0.5rem;">Q</span></span> 4. What are some of the best features of the <span id="faq4Name">Game Name</span> app APK?</div><div class="faq-a" id="faq4Content"><strong>•</strong> Enjoy a bonus of ₹<span id="faq4Bonus">51</span> for free in the APK.<br><strong>•</strong> Access to 20 gaming options.<br><strong>•</strong> Earn up to ₹<span id="faq4Bonus2">150</span> for inviting friends.<br><strong>•</strong> Withdrawals can be made starting from a minimum of ₹<span id="faq4Withdraw">500</span>.<br><strong>•</strong> Click on the Profile Button and bind your mobile number.<br><strong>•</strong> The minimum deposit required is ₹<span id="faq4Deposit">100</span>. Referral Bonus: ₹<span id="faq4Ref">22</span></div></div>
       </div>
     </div>
 
     <div class="game-tags-section">
       <div class="game-tags-title">
-        <span class="led-icon green-cyan glow-bg"><span class="inner-icon"><svg viewBox="0 0 24 24"><path d="M20.59 13.41l-7.17 7.17a2 2 0 01-2.83 0L2 12V2h10l8.59 8.59a2 2 0 010 2.82z"/><path d="M7 7h.01"/></svg></span></span>
+        <span class="led-icon green-cyan glow-bg"><span class="inner-icon">🏷️</span></span>
         <span>Tags – All Yono Games</span>
       </div>
       <div class="game-tags-container" id="gameTagsContainer"></div>
@@ -680,11 +745,11 @@
     </div>
 
     <div class="footer-links">
-      <a href="#" onclick="window.open('about.html', '_blank'); return false;">About.html</a>
+      <a href="#" onclick="window.open('about.html', '_blank'); return false;">About</a>
       <span style="color:#94a3b8;font-size:0.5rem;">•</span>
-      <a href="#" onclick="window.open('contact.html', '_blank'); return false;">Contact.html</a>
+      <a href="#" onclick="window.open('contact.html', '_blank'); return false;">Contact</a>
       <span style="color:#94a3b8;font-size:0.5rem;">•</span>
-      <a href="#" onclick="window.open('disclaimer.html', '_blank'); return false;">Disclaimer.html</a>
+      <a href="#" onclick="window.open('disclaimer.html', '_blank'); return false;">Disclaimer</a>
     </div>
   </div>
 
@@ -694,9 +759,18 @@
 <!-- OVERLAY -->
 <div class="info-overlay" id="infoOverlay">
   <div class="info-card">
+    <div class="close-top" id="overlayCloseBtn">
+      <div class="close-icon-wrap">
+        <span class="close-glow"></span>
+        <span class="close-icon-inner">
+          <svg viewBox="0 0 24 24"><path d="M18 6L6 18"/><path d="M6 6l12 12"/></svg>
+        </span>
+      </div>
+    </div>
     <h2 id="overlayTitle">About</h2>
-    <p id="overlayContent">Content goes here.</p>
-    <button class="close-btn" id="overlayClose">✕ Close</button>
+    <div id="overlayContent">
+      <p>Loading...</p>
+    </div>
   </div>
 </div>
 
@@ -765,20 +839,76 @@
     const overlay = document.getElementById('infoOverlay');
     const overlayTitle = document.getElementById('overlayTitle');
     const overlayContent = document.getElementById('overlayContent');
-    const overlayClose = document.getElementById('overlayClose');
+    const overlayCloseBtn = document.getElementById('overlayCloseBtn');
 
-    const contentMap = {
-      about: { title: '📖 About All Yono App Site', text: 'All Yono App Site (also known as All Yono Apk / All Yono New / All Yono Games) is a curated platform listing 45+ top gaming apps including Teen Patti, Rummy, Slots, and Casino. We provide direct download links and bonus details for each app.' },
-      contact: { title: '📬 Contact', text: 'For any queries, feedback or support, you can reach us via email: support@allyonoappsite.com. You can also connect with us on Telegram: @allyonoappsite.' },
-      disclaimer: { title: '⚠️ Disclaimer', text: 'All Yono App Site does not host or operate any of the games listed. We only provide information and referral links. Users are advised to check the terms and conditions of each app. Play responsibly.' }
+    // Page content with tags
+    const pageContent = {
+      about: {
+        title: '📖 About',
+        tags: ['All Yono App Site', '567 Slots', 'Rummy Ludo', 'Teen Patti Gold', 'Yono Rummy', 'Slots Winner', 'Bingo 101', 'Spin Crush'],
+        content: `
+          <p>All Yono App Site is a curated platform listing 45+ top gaming apps including Teen Patti, Rummy, Slots, and Casino. We provide direct download links and bonus details for each app.</p>
+          <p>Our mission is to help users discover the best real cash earning games in India. All apps listed are verified and trusted by millions of players.</p>
+          <p>Whether you're a beginner or a pro, All Yono App Site has something for everyone. Start your gaming journey today!</p>
+        `
+      },
+      contact: {
+        title: '📬 Contact',
+        tags: ['Jaiho 91', 'ABC Rummy', 'Love Rummy', 'Top Rummy', 'Rummy 365', 'Yono 777', 'GoGo Rummy', 'Joy Rummy'],
+        content: `
+          <p>For any queries, feedback or support, you can reach us via email: <strong>support@allyonoappsite.com</strong></p>
+          <p>You can also connect with us on Telegram: <strong>@allyonoappsite</strong></p>
+          <p>We respond to all inquiries within 24 hours. Your feedback helps us improve and bring you the best gaming recommendations.</p>
+        `
+      },
+      disclaimer: {
+        title: '⚠️ Disclaimer',
+        tags: ['Spin Gold', 'Yes Spin', 'Yono Arcade', 'SVIP 777', 'OK Rummy', 'Hind 777', 'Bet 213', 'Boss Rummy'],
+        content: `
+          <p>All Yono App Site does not host or operate any of the games listed. We only provide information and referral links.</p>
+          <p>Users are advised to check the terms and conditions of each app before downloading or using it.</p>
+          <p>Play responsibly. Real money gaming involves financial risk. Only play with money you can afford to lose.</p>
+          <p>All Yono App Site is not responsible for any losses or damages incurred while using any third-party apps or services.</p>
+        `
+      }
     };
+
+    // Helper to create tag HTML
+    function createTagHTML(name) {
+      return `
+        <span class="game-tag">
+          <span class="tag-loader">
+            <svg viewBox="0 0 50 50">
+              <circle class="loader-ring-bg" cx="25" cy="25" r="20"/>
+              <circle class="loader-ring" cx="25" cy="25" r="20"/>
+            </svg>
+          </span>
+          <span class="tag-text">${name}</span>
+        </span>
+      `;
+    }
 
     document.querySelectorAll('.nav-small[data-target]').forEach(el => {
       el.addEventListener('click', function() {
         const key = this.dataset.target;
-        if (contentMap[key]) {
-          overlayTitle.textContent = contentMap[key].title;
-          overlayContent.textContent = contentMap[key].text;
+        if (pageContent[key]) {
+          const data = pageContent[key];
+          overlayTitle.textContent = data.title;
+          
+          // Build content with tags at top and bottom
+          let html = '<div class="page-tags-top">';
+          data.tags.forEach(tag => {
+            html += createTagHTML(tag);
+          });
+          html += '</div>';
+          html += data.content;
+          html += '<div class="page-tags-bottom">';
+          data.tags.forEach(tag => {
+            html += createTagHTML(tag);
+          });
+          html += '</div>';
+          
+          overlayContent.innerHTML = html;
           overlay.style.display = 'flex';
         }
         document.querySelectorAll('.nav-small').forEach(l => l.classList.remove('active'));
@@ -786,7 +916,7 @@
       });
     });
 
-    overlayClose.addEventListener('click', function() {
+    overlayCloseBtn.addEventListener('click', function() {
       overlay.style.display = 'none';
     });
     overlay.addEventListener('click', function(e) {
@@ -919,11 +1049,11 @@
 
       const tagContainer = document.getElementById('tagGridContainer');
       const tagVariants = [
-        { head: '<svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>', title: gName + ' APK Download – Get ₹' + b.tag1 + ' Instant Bonus!', content: 'Play skill-based Rummy, Teen Patti & slots. Safe withdrawals from ₹100. Start earning real cash in minutes – download APK & claim your bonus today! Referral Bonus: ₹' + b.ref1 },
-        { head: '<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M8 12h8"/></svg>', title: 'Unlock ₹' + b.tag2 + ' Bonus in ' + gName + ' App!', content: 'Enjoy thrilling games like Aviator, Rummy & more. Refer friends for extra cash. Fast, secure withdrawals via bank/UPI. Trusted by millions – start playing now! Referral Bonus: ₹' + b.ref2 },
-        { head: '<svg viewBox="0 0 24 24"><rect x="3" y="8" width="18" height="13" rx="2"/><path d="M3 8l9-5 9 5"/><path d="M8 12h8"/></svg>', title: gName + ' – Signup for ₹' + b.tag3 + '-₹' + b.tag3b + ' Free Bonus', content: 'Play 20+ exciting games including Dragon vs Tiger & slots. Minimum deposit ₹100, instant payouts. Download now & earn real money daily! Referral Bonus: ₹' + b.ref3 },
-        { head: '<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 8v8"/><path d="M8 12h8"/></svg>', title: 'Experience ' + gName + ' – ₹' + b.tag4 + ' Welcome Bonus on Download', content: 'Build sequences, join cash tournaments & daily mystery rewards. Safe, fun, and secure gaming – start winning real cash today! Referral Bonus: ₹' + b.ref4 },
-        { head: '<svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/><path d="M12 8v8"/><path d="M8 12h8"/></svg>', title: 'Dive into ' + gName + ' – India\'s Top Online Gaming App', content: 'Get ₹' + b.tag5 + ' signup bonus, play Rummy, Teen Patti, slots & Aviator. Withdraw from ₹100, join 1Cr+ players & claim daily bonuses. Download APK now! Referral Bonus: ₹' + b.ref5 }
+        { head: '🏆', title: gName + ' APK Download – Get ₹' + b.tag1 + ' Instant Bonus!', content: 'Play skill-based Rummy, Teen Patti & slots. Safe withdrawals from ₹100. Start earning real cash in minutes – download APK & claim your bonus today! Referral Bonus: ₹' + b.ref1 },
+        { head: '💰', title: 'Unlock ₹' + b.tag2 + ' Bonus in ' + gName + ' App!', content: 'Enjoy thrilling games like Aviator, Rummy & more. Refer friends for extra cash. Fast, secure withdrawals via bank/UPI. Trusted by millions – start playing now! Referral Bonus: ₹' + b.ref2 },
+        { head: '🎁', title: gName + ' – Signup for ₹' + b.tag3 + '-₹' + b.tag3b + ' Free Bonus', content: 'Play 20+ exciting games including Dragon vs Tiger & slots. Minimum deposit ₹100, instant payouts. Download now & earn real money daily! Referral Bonus: ₹' + b.ref3 },
+        { head: '🎰', title: 'Experience ' + gName + ' – ₹' + b.tag4 + ' Welcome Bonus on Download', content: 'Build sequences, join cash tournaments & daily mystery rewards. Safe, fun, and secure gaming – start winning real cash today! Referral Bonus: ₹' + b.ref4 },
+        { head: '🇮🇳', title: 'Dive into ' + gName + ' – India\'s Top Online Gaming App', content: 'Get ₹' + b.tag5 + ' signup bonus, play Rummy, Teen Patti, slots & Aviator. Withdraw from ₹100, join 1Cr+ players & claim daily bonuses. Download APK now! Referral Bonus: ₹' + b.ref5 }
       ];
       const shuffled = tagVariants.sort(() => (gName.length * 7) % 3 - 1.5);
       tagContainer.innerHTML = '';
