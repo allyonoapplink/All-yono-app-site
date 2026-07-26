@@ -479,6 +479,73 @@
       const faq3 = g.faq3 || "Q: 3. How Many Games Are Available In The All Yono App Site App? A: The All Yono App Site app offers support for 75+ different types of games. You can enjoy a variety of games such as Rummy, Teen Patti, 7 Up Down, Dragon vs Tiger, and many more.";
       const faq4 = g.faq4 || "Q: 4. What are some of the best features of the All Yono App Site app APK? A: • Enjoy a bonus of ₹572 for free in the APK. • Access to 20 gaming options. • Earn up to ₹428 for inviting friends. • Withdrawals can be made starting from a minimum of ₹612. • Click on the Profile Button and bind your mobile number. • The minimum deposit required is ₹388. Referral Bonus: ₹21";
 
+      // Generate unique new tags per app (55+ unique styles)
+      const uniqueTagSet = [
+        { title: "🔥 " + game.name + " – Premium Gaming Experience", desc: "Experience the thrill of " + game.name + " with stunning graphics and smooth gameplay. " + (game.bonus || "₹45") + " welcome bonus awaits you! " + (game.altName || "") },
+        { title: "🎯 " + game.name + " – Win Big Every Day", desc: "Daily tournaments, cash prizes, and unlimited fun. " + game.name + " offers " + (game.features ? game.features.slice(0,2).join(', ') : 'exciting games') + ". Get started with " + (game.bonus || "₹45") + " bonus!" },
+        { title: "🏅 " + game.name + " – India's Favorite Gaming App", desc: "Join millions of players on " + game.name + ". Play Rummy, Teen Patti, Slots and more. " + (game.bonus || "₹45") + " signup bonus. " + (game.withdrawal || "₹100") + " min withdrawal. " + (game.altName || "") },
+        { title: "💎 " + game.name + " – Premium Rewards Await", desc: "Unlock exclusive rewards and bonuses on " + game.name + ". " + (game.bonus || "₹45") + " welcome bonus, " + (game.withdrawal || "₹100") + " min withdrawal. " + (game.downloads || "500K+") + " downloads!" },
+        { title: "🚀 " + game.name + " – Fastest Withdrawals", desc: "Get your winnings instantly with " + game.name + "'s fast UPI withdrawal system. " + (game.bonus || "₹45") + " bonus on signup. " + (game.altName || "") + " – play now!" },
+        { title: "🎮 " + game.name + " – 55+ Games Collection", desc: "From Rummy to Slots, " + game.name + " has it all. " + (game.bonus || "₹45") + " bonus for new users. " + (game.withdrawal || "₹100") + " min withdrawal. " + (game.version || "v2.0") },
+        { title: "🏆 " + game.name + " – Win Real Cash", desc: "Play and win real cash on " + game.name + ". " + (game.bonus || "₹45") + " signup bonus. " + (game.features ? game.features[0] : 'Secure platform') + ". " + (game.altName || "") },
+        { title: "⭐ " + game.name + " – Rated " + (game.rating || "4.5") + " ★", desc: game.name + " is rated " + (game.rating || "4.5") + " by users. " + (game.bonus || "₹45") + " bonus, " + (game.withdrawal || "₹100") + " withdrawal. " + (game.downloads || "500K+") + " happy players!" },
+        { title: "🎁 " + game.name + " – Get " + (game.bonus || "₹45") + " Free", desc: "Claim " + (game.bonus || "₹45") + " welcome bonus on " + game.name + ". Play Rummy, Teen Patti, Slots. " + (game.withdrawal || "₹100") + " min withdrawal. " + (game.altName || "") },
+        { title: "📱 " + game.name + " – Best Mobile Gaming App", desc: game.name + " is optimized for mobile gaming. " + (game.bonus || "₹45") + " bonus, " + (game.size || "45 MB") + " size, " + (game.version || "v2.0") + ". " + (game.altName || "") },
+        { title: "💰 " + game.name + " – Earn Daily Rewards", desc: "Earn daily rewards and bonuses on " + game.name + ". " + (game.bonus || "₹45") + " signup bonus. " + (game.withdrawal || "₹100") + " min withdrawal. " + (game.features ? game.features[0] : 'Trusted app') },
+        { title: "🎰 " + game.name + " – Slot Games Collection", desc: "Enjoy a wide variety of slot games on " + game.name + ". " + (game.bonus || "₹45") + " welcome bonus. " + (game.altName || "") + ". " + (game.downloads || "500K+") + " downloads!" },
+        { title: "🃏 " + game.name + " – Rummy & Card Games", desc: "Play classic Rummy and card games on " + game.name + ". " + (game.bonus || "₹45") + " bonus. " + (game.withdrawal || "₹100") + " min withdrawal. " + (game.version || "v2.0") },
+        { title: "🇮🇳 " + game.name + " – Made for India", desc: game.name + " is designed for Indian players. " + (game.bonus || "₹45") + " bonus, UPI withdrawal, " + (game.withdrawal || "₹100") + " min. " + (game.altName || "") },
+        { title: "🔒 " + game.name + " – Secure & Safe", desc: "Play securely on " + game.name + " with encrypted transactions. " + (game.bonus || "₹45") + " welcome bonus. " + (game.withdrawal || "₹100") + " min withdrawal. " + (game.altName || "") },
+        { title: "⚡ " + game.name + " – Lightning Fast", desc: "Experience lightning-fast gameplay on " + game.name + ". " + (game.bonus || "₹45") + " bonus, " + (game.size || "45 MB") + " size. " + (game.version || "v2.0") },
+        { title: "🎯 " + game.name + " – Target Big Wins", desc: "Aim for big wins on " + game.name + ". " + (game.bonus || "₹45") + " signup bonus. " + (game.features ? game.features.slice(0,2).join(', ') : 'Exciting games') + ". " + (game.altName || "") },
+        { title: "🏅 " + game.name + " – Champion's Choice", desc: "Chosen by champions, " + game.name + " offers " + (game.bonus || "₹45") + " bonus. " + (game.withdrawal || "₹100") + " min withdrawal. " + (game.downloads || "500K+") + " players!" },
+        { title: "💎 " + game.name + " – Diamond Rewards", desc: "Get diamond-level rewards on " + game.name + ". " + (game.bonus || "₹45") + " welcome bonus. " + (game.altName || "") + ". " + (game.version || "v2.0") },
+        { title: "🚀 " + game.name + " – Launch Your Winning Journey", desc: "Start your winning journey with " + game.name + ". " + (game.bonus || "₹45") + " bonus, " + (game.withdrawal || "₹100") + " withdrawal. " + (game.features ? game.features[0] : 'Trusted app') },
+        { title: "🎮 " + game.name + " – Ultimate Gaming Hub", desc: game.name + " is the ultimate gaming hub. " + (game.bonus || "₹45") + " bonus, " + (game.size || "45 MB") + " size. " + (game.altName || "") + ". Play now!" },
+        { title: "🏆 " + game.name + " – Trophy Hunter", desc: "Hunt for trophies on " + game.name + ". " + (game.bonus || "₹45") + " signup bonus. " + (game.withdrawal || "₹100") + " min withdrawal. " + (game.downloads || "500K+") + " downloads!" },
+        { title: "⭐ " + game.name + " – Star Rated App", desc: game.name + " is a star-rated app. " + (game.bonus || "₹45") + " bonus, " + (game.rating || "4.5") + " rating. " + (game.altName || "") + ". " + (game.version || "v2.0") },
+        { title: "🎁 " + game.name + " – Gift of " + (game.bonus || "₹45"), desc: "Get the gift of " + (game.bonus || "₹45") + " on " + game.name + ". " + (game.withdrawal || "₹100") + " min withdrawal. " + (game.features ? game.features[0] : 'Play games') },
+        { title: "📱 " + game.name + " – Mobile Optimized", desc: game.name + " is fully optimized for mobile. " + (game.bonus || "₹45") + " bonus, " + (game.size || "45 MB") + " size. " + (game.altName || "") + ". Download now!" },
+        { title: "💰 " + game.name + " – Cash King", desc: "Become the Cash King with " + game.name + ". " + (game.bonus || "₹45") + " signup bonus. " + (game.withdrawal || "₹100") + " min withdrawal. " + (game.downloads || "500K+") + " players!" },
+        { title: "🎰 " + game.name + " – Spin to Win", desc: "Spin and win on " + game.name + ". " + (game.bonus || "₹45") + " welcome bonus. " + (game.altName || "") + ". " + (game.version || "v2.0") },
+        { title: "🃏 " + game.name + " – Master of Cards", desc: "Master card games on " + game.name + ". " + (game.bonus || "₹45") + " bonus. " + (game.withdrawal || "₹100") + " min withdrawal. " + (game.features ? game.features[0] : 'Play cards') },
+        { title: "🇮🇳 " + game.name + " – Desi Gaming", desc: "Desi gaming experience on " + game.name + ". " + (game.bonus || "₹45") + " bonus, UPI withdrawal. " + (game.altName || "") + ". " + (game.size || "45 MB") },
+        { title: "🔒 " + game.name + " – Trusted Platform", desc: "A trusted platform, " + game.name + " offers " + (game.bonus || "₹45") + " bonus. " + (game.withdrawal || "₹100") + " min withdrawal. " + (game.downloads || "500K+") + " users!" },
+        { title: "⚡ " + game.name + " – Speed Gaming", desc: "Speed gaming on " + game.name + ". " + (game.bonus || "₹45") + " signup bonus. " + (game.version || "v2.0") + ". " + (game.altName || "") },
+        { title: "🎯 " + game.name + " – Precision Play", desc: "Precision play on " + game.name + ". " + (game.bonus || "₹45") + " bonus, " + (game.withdrawal || "₹100") + " withdrawal. " + (game.features ? game.features[0] : 'Precision gaming') },
+        { title: "🏅 " + game.name + " – Olympic Level Gaming", desc: "Olympic level gaming on " + game.name + ". " + (game.bonus || "₹45") + " bonus. " + (game.size || "45 MB") + " size. " + (game.altName || "") },
+        { title: "💎 " + game.name + " – Premium Experience", desc: "Premium gaming experience on " + game.name + ". " + (game.bonus || "₹45") + " welcome bonus. " + (game.withdrawal || "₹100") + " min withdrawal. " + (game.downloads || "500K+") },
+        { title: "🚀 " + game.name + " – Rocket Speed", desc: "Rocket speed withdrawals on " + game.name + ". " + (game.bonus || "₹45") + " bonus. " + (game.altName || "") + ". " + (game.version || "v2.0") },
+        { title: "🎮 " + game.name + " – Gamer's Paradise", desc: "A gamer's paradise, " + game.name + " offers " + (game.bonus || "₹45") + " bonus. " + (game.features ? game.features.slice(0,2).join(', ') : 'Many games') + ". " + (game.withdrawal || "₹100") },
+        { title: "🏆 " + game.name + " – Winner's Circle", desc: "Join the winner's circle on " + game.name + ". " + (game.bonus || "₹45") + " signup bonus. " + (game.downloads || "500K+") + " downloads. " + (game.altName || "") },
+        { title: "⭐ " + game.name + " – Top Rated", desc: "Top rated app " + game.name + " with " + (game.bonus || "₹45") + " bonus. " + (game.rating || "4.5") + " stars. " + (game.withdrawal || "₹100") + " min withdrawal." },
+        { title: "🎁 " + game.name + " – Bonus Bonanza", desc: "Bonus bonanza on " + game.name + ". " + (game.bonus || "₹45") + " welcome bonus. " + (game.size || "45 MB") + " size. " + (game.altName || "") },
+        { title: "📱 " + game.name + " – Android Gaming", desc: "Android gaming at its best on " + game.name + ". " + (game.bonus || "₹45") + " bonus. " + (game.version || "v2.0") + ". " + (game.features ? game.features[0] : 'Android app') },
+        { title: "💰 " + game.name + " – Money Maker", desc: "Make money on " + game.name + ". " + (game.bonus || "₹45") + " signup bonus. " + (game.withdrawal || "₹100") + " min withdrawal. " + (game.downloads || "500K+") },
+        { title: "🎰 " + game.name + " – Slot Heaven", desc: "Slot heaven on " + game.name + ". " + (game.bonus || "₹45") + " bonus. " + (game.altName || "") + ". " + (game.size || "45 MB") },
+        { title: "🃏 " + game.name + " – Rummy Master", desc: "Become a Rummy master on " + game.name + ". " + (game.bonus || "₹45") + " welcome bonus. " + (game.withdrawal || "₹100") + " min withdrawal." },
+        { title: "🇮🇳 " + game.name + " – Indian Gaming", desc: "Indian gaming at its finest on " + game.name + ". " + (game.bonus || "₹45") + " bonus. " + (game.version || "v2.0") + ". " + (game.altName || "") },
+        { title: "🔒 " + game.name + " – Safe Gaming", desc: "Safe and secure gaming on " + game.name + ". " + (game.bonus || "₹45") + " signup bonus. " + (game.withdrawal || "₹100") + " min withdrawal. " + (game.downloads || "500K+") },
+        { title: "⚡ " + game.name + " – Quick Play", desc: "Quick play on " + game.name + ". " + (game.bonus || "₹45") + " bonus. " + (game.size || "45 MB") + " size. " + (game.altName || "") },
+        { title: "🎯 " + game.name + " – Aim for Gold", desc: "Aim for gold on " + game.name + ". " + (game.bonus || "₹45") + " welcome bonus. " + (game.features ? game.features[0] : 'Gold rewards') + ". " + (game.withdrawal || "₹100") },
+        { title: "🏅 " + game.name + " – Medal Winner", desc: "Win medals on " + game.name + ". " + (game.bonus || "₹45") + " signup bonus. " + (game.version || "v2.0") + ". " + (game.altName || "") },
+        { title: "💎 " + game.name + " – Jewel Gaming", desc: "Jewel gaming experience on " + game.name + ". " + (game.bonus || "₹45") + " bonus. " + (game.downloads || "500K+") + " downloads." },
+        { title: "🚀 " + game.name + " – Boost Your Winnings", desc: "Boost your winnings on " + game.name + ". " + (game.bonus || "₹45") + " welcome bonus. " + (game.withdrawal || "₹100") + " min withdrawal. " + (game.altName || "") },
+        { title: "🎮 " + game.name + " – Ultimate Fun", desc: "Ultimate fun on " + game.name + ". " + (game.bonus || "₹45") + " bonus. " + (game.size || "45 MB") + " size. " + (game.version || "v2.0") },
+        { title: "🏆 " + game.name + " – Champion's Arena", desc: "Champion's arena on " + game.name + ". " + (game.bonus || "₹45") + " signup bonus. " + (game.features ? game.features[0] : 'Champion games') + ". " + (game.withdrawal || "₹100") },
+        { title: "⭐ " + game.name + " – Five Star Gaming", desc: "Five star gaming on " + game.name + ". " + (game.bonus || "₹45") + " bonus. " + (game.rating || "4.5") + " rating. " + (game.altName || "") },
+        { title: "🎁 " + game.name + " – Gift Box", desc: "Open your gift box on " + game.name + ". " + (game.bonus || "₹45") + " welcome bonus. " + (game.downloads || "500K+") + " downloads. " + (game.version || "v2.0") }
+      ];
+
+      // Select unique tags for this app (use name as seed)
+      const seed = game.name.length;
+      const startIdx = (seed * 7) % uniqueTagSet.length;
+      const selectedTags = [];
+      for (let i = 0; i < Math.min(8, uniqueTagSet.length); i++) {
+        const idx = (startIdx + i * 3) % uniqueTagSet.length;
+        selectedTags.push(uniqueTagSet[idx]);
+      }
+
       const relatedGames = uniqueGames.filter(ug => ug.name !== game.name);
 
       detailContent.innerHTML = `
@@ -498,6 +565,13 @@
           <div class="info-item"><span class="icon-svg"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg></span> <span class="label">Downloads</span> <span class="value">${downloads}</span></div>
         </div>
 
+        <!-- NEW FULL-WIDTH DOWNLOAD BUTTON -->
+        <a href="${game.downloadUrl}" class="download-btn-lg" target="_blank" style="margin-bottom:14px;">
+          <span class="icon-svg" style="width:20px;height:20px;"><svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><path d="M12 15V3"/></svg></span>
+          ⬇ Download APK Now
+        </a>
+
+        <!-- ALL EXISTING TAGS (KEPT EXACTLY AS BEFORE) -->
         <div class="section-card ${colorClass}">
           <div class="section-title"><span class="icon-svg"><svg viewBox="0 0 24 24"><path d="M4 4h16v16H4z"/><path d="M8 8h8v2H8z"/><path d="M8 12h6v2H8z"/><path d="M8 16h4v2H8z"/></svg></span> 📝 Description</div>
           <div class="section-body">${desc}</div>
@@ -548,11 +622,16 @@
           <div class="section-body">${faq}<br><br>${faq2}<br><br>${faq3}<br><br>${faq4}</div>
         </div>
 
-        <a href="${game.downloadUrl}" class="download-btn-lg" target="_blank">
-          <span class="icon-svg" style="width:20px;height:20px;"><svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><path d="M12 15V3"/></svg></span>
-          ⬇ Download APK Now
-        </a>
-        <div style="height:12px;"></div>
+        <!-- NEW UNIQUE TAGS PER APP (APPENDED BELOW ALL EXISTING TAGS) -->
+        <div style="margin-top:12px; border-top: 2px solid #e9edf4; padding-top:12px;">
+          <div style="font-weight:700; font-size:0.8rem; color:#0b1e33; margin-bottom:8px;">🏷️ App Highlights – ${game.name}</div>
+          ${selectedTags.map(t => `
+            <div class="section-card ${colorClass}" style="margin-bottom:6px;">
+              <div class="section-title">${t.title}</div>
+              <div class="section-body">${t.desc}</div>
+            </div>
+          `).join('')}
+        </div>
 
         <div class="related-section">
           <div class="related-title">
