@@ -10,172 +10,11 @@
   <meta name="robots" content="index, follow">
   <link rel="canonical" href="https://allyonoappsite.com/">
   <style>
-    * { margin:0; padding:0; box-sizing:border-box; font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif; }
-    body { background: #f5f7fc; padding: 0; min-height: 100vh; display: flex; flex-direction: column; align-items: center; }
-    .container { max-width: 480px; width: 100%; background: #fff; min-height: 100vh; overflow: hidden; }
-
-    #mainGrid, #detailView { transition: none !important; }
-    #mainGrid.hidden { display: none !important; opacity: 0 !important; }
-    #detailView.hidden { display: none !important; opacity: 0 !important; }
-    #mainGrid.show { display: flex !important; opacity: 1 !important; }
-    #detailView.show { display: block !important; opacity: 1 !important; }
-
-    .top-header { display: flex; justify-content: space-between; align-items: center; padding: 8px 10px; background: white; border-bottom: 1px solid #e9edf4; position: sticky; top: 0; z-index: 10; }
-    .header-left { display: flex; align-items: center; gap: 6px; }
-    .logo-cyan-round { width: 36px; height: 36px; border-radius: 50%; background: #000; border: 2px solid #00ddff; box-shadow: 0 0 15px rgba(0,200,255,0.3); overflow: hidden; flex-shrink: 0; display: flex; align-items: center; justify-content: center; animation: cyanPulse 2s ease-in-out infinite; }
-    .logo-cyan-round img { width: 90%; height: 90%; object-fit: cover; border-radius: 50%; display: block; }
-    @keyframes cyanPulse { 0%,100%{ box-shadow:0 0 15px rgba(0,200,255,0.3); } 50%{ box-shadow:0 0 25px rgba(0,200,255,0.5); } }
-
-    .site-name-led-round { display: inline-flex; align-items: center; justify-content: center; position: relative; padding: 4px 16px 4px 14px; border-radius: 40px; background: #000; border: 2px solid #1a1a1a; box-shadow: 0 0 20px rgba(0,255,100,0.1); min-height: 32px; overflow: hidden; }
-    .site-name-led-round::before { content: ''; position: absolute; top: -4px; left: -4px; right: -4px; bottom: -4px; border-radius: 50px; background: conic-gradient(from 0deg, #00ff00 0deg 40deg, #00ffff 90deg 130deg, #ffff00 180deg 220deg, #ff00ff 270deg 310deg, #00ff00 360deg); animation: ledLeftMove 3s linear infinite; z-index: -1; padding: 4px; -webkit-mask: radial-gradient(farthest-side, transparent calc(100% - 4px), #fff calc(100% - 3px)); mask: radial-gradient(farthest-side, transparent calc(100% - 4px), #fff calc(100% - 3px)); }
-    .site-name-led-round::after { content: ''; position: absolute; top: -8px; left: -8px; right: -8px; bottom: -8px; border-radius: 50px; background: conic-gradient(from 30deg, rgba(0,255,0,0.15) 0deg 30deg, rgba(0,255,255,0.15) 90deg 120deg, rgba(255,255,0,0.15) 180deg 210deg, rgba(255,0,255,0.15) 270deg 300deg, rgba(0,255,0,0.15) 360deg); animation: ledLeftMove 4s linear infinite reverse; z-index: -2; filter: blur(12px); }
-    @keyframes ledLeftMove { 0% { transform: translateX(-20px); } 50% { transform: translateX(20px); } 100% { transform: translateX(-20px); } }
-    .site-name-led-round .led-dot-round { position: absolute; width: 8px; height: 8px; border-radius: 50%; z-index: 2; animation: ledDotLeftMove 3s ease-in-out infinite; box-shadow: 0 0 12px currentColor; }
-    .site-name-led-round .led-dot-round.green { background: #00ff00; color: #00ff00; animation-delay:0s; }
-    .site-name-led-round .led-dot-round.cyan { background: #00ffff; color: #00ffff; animation-delay:0.75s; }
-    .site-name-led-round .led-dot-round.yellow { background: #ffff00; color: #ffff00; animation-delay:1.5s; }
-    .site-name-led-round .led-dot-round.pink { background: #ff00ff; color: #ff00ff; animation-delay:2.25s; }
-    @keyframes ledDotLeftMove { 0% { left: -4px; top: 50%; transform: translateY(-50%); } 50% { left: calc(100% - 4px); top: 50%; transform: translateY(-50%); } 100% { left: -4px; top: 50%; transform: translateY(-50%); } }
-    .site-name-led-round .site-name-text { font-weight: 700; font-size: 0.5rem; color: #ffffff; letter-spacing: 0.2px; text-shadow: 0 0 15px rgba(0,255,100,0.15); white-space: nowrap; position: relative; z-index: 1; padding: 2px 0; line-height: 1.3; }
-    .site-name-text .d1 { color: #86efac; font-weight: 800; }
-    .site-name-text .d2 { color: #facc15; font-weight: 800; }
-    .site-name-text .d3 { color: #60a5fa; font-weight: 800; }
-    .site-name-text .d4 { color: #f472b6; font-weight: 800; }
-    .site-name-text .sep { color: #6b7280; font-weight: 400; }
-    .header-right { display: flex; align-items: center; gap: 8px; }
-    .share-btn { background: #000; color: white; border: none; padding: 4px 10px; border-radius: 40px; font-weight: 600; font-size: 0.5rem; cursor: pointer; display: flex; align-items: center; gap: 3px; border: 1px solid #222; }
-    .share-btn:active { transform: scale(0.95); }
-    .share-btn svg { width: 12px; height: 12px; fill: white; }
-    .telegram-btn { display: inline-block; width: 32px; height: 32px; border-radius: 50%; overflow: visible; flex-shrink: 0; position: relative; background: #000; border: 2px solid #1a1a1a; box-shadow: 0 0 10px rgba(0,255,100,0.2); padding: 2px; }
-    .telegram-btn::before { content: ''; position: absolute; top: -3px; left: -3px; right: -3px; bottom: -3px; border-radius: 50%; background: conic-gradient(from 0deg, #00ff00 0deg 30deg, #00ffff 90deg 120deg, #ff00ff 180deg 210deg, #ffff00 270deg 300deg, #00ff00 360deg); animation: ledSlowSpinRound 10s linear infinite; z-index: -1; padding: 3px; -webkit-mask: radial-gradient(farthest-side, transparent calc(100% - 3px), #fff calc(100% - 2px)); mask: radial-gradient(farthest-side, transparent calc(100% - 3px), #fff calc(100% - 2px)); }
-    .telegram-btn img { width: 100%; height: 100%; object-fit: cover; display: block; border-radius: 50%; position: relative; z-index: 1; background: #000; }
-    .telegram-btn .corner-led { position: absolute; width: 5px; height: 5px; border-radius: 50%; z-index: 2; animation: ledPulseSlow 2.5s ease-in-out infinite; box-shadow: 0 0 6px currentColor; }
-    .telegram-btn .corner-led.tl { top: -1px; left: -1px; color: #00ff00; background: #00ff00; animation-delay:0s; }
-    .telegram-btn .corner-led.tr { top: -1px; right: -1px; color: #00ffff; background: #00ffff; animation-delay:0.6s; }
-    .telegram-btn .corner-led.bl { bottom: -1px; left: -1px; color: #ff00ff; background: #ff00ff; animation-delay:1.2s; }
-    .telegram-btn .corner-led.br { bottom: -1px; right: -1px; color: #ffff00; background: #ffff00; animation-delay:1.8s; }
-    @keyframes ledPulseSlow { 0%,100%{ opacity:0.5; transform:scale(0.8); } 50%{ opacity:1; transform:scale(1.2); box-shadow:0 0 10px currentColor; } }
-
-    .marquee-container { background: linear-gradient(90deg, #1a2a6c, #b21f1f, #fdbb2d); padding: 6px 0; overflow: hidden; border-bottom: 1px solid #e9edf4; }
-    .marquee-container marquee { color: #ffffff; font-size: 0.65rem; font-weight: 700; letter-spacing: 0.5px; text-shadow: 0 1px 3px rgba(0,0,0,0.3); }
-    .marquee-container marquee span { margin: 0 12px; display: inline-block; }
-    .marquee-container marquee .highlight { color: #facc15; background: rgba(0,0,0,0.2); padding: 2px 10px; border-radius: 20px; }
-
-    .nav-row-small { display: flex; justify-content: space-around; align-items: center; background: #f8fafc; padding: 4px 6px; border-bottom: 1px solid #e9edf4; gap: 2px; }
-    .nav-small { font-size: 0.5rem; font-weight: 600; color: #1e293b; background: white; padding: 3px 8px; border-radius: 40px; border: 1px solid #e2e8f0; cursor: pointer; white-space: nowrap; display: inline-flex; align-items: center; gap: 4px; }
-    .nav-small:active { transform: scale(0.95); }
-    .nav-small.active { background: #1e293b; color: white; border-color: #1e293b; }
-
-    .game-detail-header { display: flex; justify-content: space-between; align-items: center; padding: 8px 14px; background: #f8fafc; border-bottom: 1px solid #e9edf4; }
-    .back-btn { background: #eef2ff; border: none; padding: 3px 12px; border-radius: 40px; font-weight: 600; font-size: 0.6rem; color: #1e293b; cursor: pointer; }
-    .back-btn:active { transform: scale(0.95); }
-    .game-detail-title { font-weight: 700; font-size: 0.6rem; color: #ffffff !important; background: #1e293b; padding: 4px 12px; border-radius: 40px; cursor: pointer; white-space: nowrap; }
-
-    .icon-svg { display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0; width: 16px; height: 16px; vertical-align: middle; }
-    .icon-svg svg { width: 100%; height: 100%; display: block; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
-    .icon-svg.small { width: 14px; height: 14px; }
-    .icon-svg.large { width: 18px; height: 18px; }
-
-    #mainGrid { display: flex; flex-direction: column; gap: 6px; padding: 8px; }
-    .card { background: white; border-radius: 12px; padding: 8px 10px; box-shadow: 0 2px 8px rgba(0,0,0,0.03); display: flex; align-items: center; gap: 8px; border: 1px solid #e9edf4; cursor: pointer; position: relative; overflow: hidden; width: 100%; }
-    .card:active { transform: scale(0.97); background: #fafcff; }
-    .card-number { position: absolute; top: 3px; left: 3px; background: #000; color: #fff; width: 20px; height: 20px; border-radius: 50%; font-size: 0.5rem; font-weight: 800; display: flex; align-items: center; justify-content: center; z-index: 5; border: 1.5px solid #333; box-shadow: 0 2px 6px rgba(0,0,0,0.3); }
-    .card-img { width: 80px; height: 80px; border-radius: 10px; background: #f0f4ff; flex-shrink: 0; overflow: hidden; border: 1px solid #e2e8f0; margin-left: 18px; }
-    .card-img img { width: 100%; height: 100%; object-fit: cover; display: block; }
-    .card-info { flex: 1; display: flex; flex-direction: column; gap: 2px; min-width: 0; }
-    .card-name { font-weight: 700; font-size: 0.7rem; color: #0b1e33; display: flex; align-items: center; gap: 3px; flex-wrap: wrap; }
-    .card-name .alt { font-weight: 400; font-size: 0.5rem; color: #6b7280; }
-    .card-bonus { font-size: 0.55rem; color: #dc2626; font-weight: 600; display: inline-flex; align-items: center; gap: 4px; }
-    .card-withdraw { font-size: 0.5rem; color: #0a0a0a; font-weight: 500; display: inline-flex; align-items: center; gap: 4px; }
-    .card-download-sm { background: #0a0a0a; color: white; border: none; padding: 3px 10px; border-radius: 40px; font-weight: 600; font-size: 0.45rem; white-space: nowrap; cursor: pointer; flex-shrink: 0; }
-    .card-download-sm:active { transform: scale(0.95); }
-
-    .detail-premium { padding: 14px; }
-    .detail-premium .hero-section { display: flex; gap: 14px; align-items: center; margin-bottom: 12px; }
-    .detail-premium .hero-img { width: 72px; height: 72px; border-radius: 16px; overflow: hidden; border: 1px solid #e2e8f0; flex-shrink: 0; }
-    .detail-premium .hero-img img { width: 100%; height: 100%; object-fit: cover; display: block; }
-    .detail-premium .hero-info { flex: 1; }
-    .detail-premium .hero-info .app-name { font-weight: 800; font-size: 1.1rem; color: #0b1e33; }
-    .detail-premium .hero-info .app-sub { font-size: 0.65rem; color: #64748b; }
-    .detail-premium .hero-info .app-bonus { display: inline-flex; align-items: center; gap: 4px; background: #dc2626; color: #fff; padding: 2px 10px; border-radius: 40px; font-weight: 700; font-size: 0.7rem; margin-top: 4px; }
-    .detail-premium .info-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin: 12px 0; }
-    .detail-premium .info-grid .info-item { background: #f8fafc; border-radius: 10px; padding: 8px 10px; display: flex; align-items: center; gap: 6px; font-size: 0.6rem; color: #1e293b; }
-    .detail-premium .info-grid .info-item .label { color: #64748b; font-weight: 500; }
-    .detail-premium .info-grid .info-item .value { font-weight: 600; }
-    .detail-premium .section-card { background: #f8fafc; border-radius: 12px; padding: 12px 14px; margin-bottom: 10px; border: 1px solid #e9edf4; }
-    .detail-premium .section-card .section-title { font-weight: 700; font-size: 0.75rem; color: #0b1e33; margin-bottom: 4px; display: flex; align-items: center; gap: 6px; }
-    .detail-premium .section-card .section-body { font-size: 0.7rem; color: #334155; line-height: 1.6; }
-    .detail-premium .section-card .section-body ul { list-style: none; padding: 0; margin: 4px 0; }
-    .detail-premium .section-card .section-body ul li { padding: 2px 0; font-size: 0.7rem; display: flex; align-items: flex-start; gap: 6px; }
-    .detail-premium .section-card .section-body ul li::before { content: "•"; color: #2563eb; font-weight: 700; }
-    .detail-premium .download-btn-lg { background: #0a0a0a; color: white; border: none; padding: 12px 20px; border-radius: 60px; font-weight: 700; font-size: 0.85rem; width: 100%; cursor: pointer; text-align: center; display: flex; align-items: center; justify-content: center; gap: 8px; text-decoration: none; }
-    .detail-premium .download-btn-lg:active { transform: scale(0.97); }
-    .detail-premium .color-1 .section-title { color: #2563eb; }
-    .detail-premium .color-2 .section-title { color: #7c3aed; }
-    .detail-premium .color-3 .section-title { color: #dc2626; }
-    .detail-premium .color-4 .section-title { color: #059669; }
-    .detail-premium .color-5 .section-title { color: #d97706; }
-    .detail-premium .color-6 .section-title { color: #0891b2; }
-    .detail-premium .color-7 .section-title { color: #db2777; }
-
-    .related-section { padding: 10px; background: white; border-top: 1px solid #e9edf4; margin-top: 4px; }
-    .related-title { font-weight: 700; font-size: 0.8rem; color: #0b1e33; margin-bottom: 6px; display: flex; align-items: center; gap: 8px; }
-    .related-grid { display: flex; flex-direction: column; gap: 5px; }
-    .related-item { display: flex; align-items: center; gap: 6px; padding: 5px 8px; background: #f8fafc; border-radius: 10px; border: 1px solid #e9edf4; cursor: pointer; }
-    .related-item:active { transform: scale(0.97); }
-    .related-item img { width: 28px; height: 28px; border-radius: 8px; object-fit: cover; display: block; }
-    .related-item .rinfo { flex: 1; display: flex; flex-direction: column; gap: 0px; min-width: 0; }
-    .related-item .rname { font-weight: 600; font-size: 0.6rem; color: #0b1e33; }
-    .related-item .rname .alt { font-weight: 400; font-size: 0.45rem; color: #6b7280; }
-    .related-item .rbonus { font-size: 0.45rem; color: #dc2626; font-weight: 600; display: inline-flex; align-items: center; gap: 3px; }
-    .related-item .rwithdraw { font-size: 0.4rem; color: #0a0a0a; font-weight: 500; display: inline-flex; align-items: center; gap: 3px; }
-    .related-item .rdownload { background: #0a0a0a; color: white; border: none; padding: 2px 8px; border-radius: 40px; font-weight: 600; font-size: 0.4rem; white-space: nowrap; cursor: pointer; }
-
-    .footer-note { padding: 10px; text-align: center; color: #94a3b8; font-size: 0.5rem; border-top: 1px solid #e9edf4; }
-
-    .info-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.4); backdrop-filter: blur(3px); z-index: 99; justify-content: center; align-items: center; }
-    .info-card { background: white; max-width: 400px; width: 90%; padding: 20px 18px; border-radius: 28px; box-shadow: 0 30px 60px rgba(0,0,0,0.2); position: relative; }
-    .info-card .close-top { position: absolute; top: 12px; right: 12px; }
-    .info-card .close-top .icon-svg { width: 22px; height: 22px; cursor: pointer; }
-    .info-card .close-top .icon-svg svg { stroke: #000; stroke-width: 2; }
-    .info-card h2 { font-size: 1.2rem; margin-bottom: 8px; color: #0b1e33; padding-right: 30px; }
-    .info-card p { color: #334155; line-height: 1.5; font-size: 0.8rem; }
-
-    @media (max-width: 420px) {
-      .logo-cyan-round { width: 30px; height: 30px; }
-      .site-name-led-round { padding: 3px 10px 3px 8px; min-height: 24px; }
-      .site-name-led-round .site-name-text { font-size: 0.4rem; }
-      .site-name-led-round .led-dot-round { width: 5px; height: 5px; }
-      .share-btn { font-size: 0.4rem; padding: 2px 8px; }
-      .share-btn svg { width: 10px; height: 10px; }
-      .telegram-btn { width: 26px; height: 26px; }
-      .nav-small { font-size: 0.4rem; padding: 2px 6px; }
-      .card-img { width: 60px; height: 60px; }
-      .card-name { font-size: 0.6rem; }
-      .card-name .alt { font-size: 0.4rem; }
-      .card-bonus { font-size: 0.5rem; }
-      .card-withdraw { font-size: 0.45rem; }
-      .marquee-container marquee { font-size: 0.5rem; }
-      .marquee-container marquee span { margin: 0 8px; }
-      .card-number { width: 16px; height: 16px; font-size: 0.4rem; top: 2px; left: 2px; }
-      .card-img { margin-left: 14px; }
-      .telegram-btn .corner-led { width: 4px; height: 4px; }
-      .detail-premium .hero-img { width: 56px; height: 56px; }
-      .detail-premium .hero-info .app-name { font-size: 0.95rem; }
-      .detail-premium .info-grid { grid-template-columns: 1fr 1fr; gap: 4px; }
-      .detail-premium .info-grid .info-item { font-size: 0.5rem; padding: 6px 8px; }
-      .icon-svg { width: 14px; height: 14px; }
-      .related-item .rname { font-size: 0.5rem; }
-      .related-item .rname .alt { font-size: 0.4rem; }
-      .related-item .rbonus { font-size: 0.4rem; }
-      .related-item .rwithdraw { font-size: 0.35rem; }
-      .related-item .rdownload { font-size: 0.35rem; padding: 2px 6px; }
-    }
+    *{margin:0;padding:0;box-sizing:border-box;font-family:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif}body{background:#f5f7fc;padding:0;min-height:100vh;display:flex;flex-direction:column;align-items:center}.container{max-width:480px;width:100%;background:#fff;min-height:100vh;overflow:hidden}#mainGrid,#detailView{transition:none!important}#mainGrid.hidden{display:none!important;opacity:0!important}#detailView.hidden{display:none!important;opacity:0!important}#mainGrid.show{display:flex!important;opacity:1!important}#detailView.show{display:block!important;opacity:1!important}.top-header{display:flex;justify-content:space-between;align-items:center;padding:8px 10px;background:#fff;border-bottom:1px solid #e9edf4;position:sticky;top:0;z-index:10}.header-left{display:flex;align-items:center;gap:6px}.logo-cyan-round{width:36px;height:36px;border-radius:50%;background:#000;border:2px solid #0df;box-shadow:0 0 15px rgba(0,200,255,.3);overflow:hidden;flex-shrink:0;display:flex;align-items:center;justify-content:center;animation:cyanPulse 2s ease-in-out infinite}.logo-cyan-round img{width:90%;height:90%;object-fit:cover;border-radius:50%;display:block}@keyframes cyanPulse{0%,100%{box-shadow:0 0 15px rgba(0,200,255,.3)}50%{box-shadow:0 0 25px rgba(0,200,255,.5)}}.site-name-led-round{display:inline-flex;align-items:center;justify-content:center;position:relative;padding:4px 16px 4px 14px;border-radius:40px;background:#000;border:2px solid #1a1a1a;box-shadow:0 0 20px rgba(0,255,100,.1);min-height:32px;overflow:hidden}.site-name-led-round::before{content:'';position:absolute;top:-4px;left:-4px;right:-4px;bottom:-4px;border-radius:50px;background:conic-gradient(from 0deg,#0f0 0deg 40deg,#0ff 90deg 130deg,#ff0 180deg 220deg,#f0f 270deg 310deg,#0f0 360deg);animation:ledLeftMove 3s linear infinite;z-index:-1;padding:4px;-webkit-mask:radial-gradient(farthest-side,transparent calc(100% - 4px),#fff calc(100% - 3px));mask:radial-gradient(farthest-side,transparent calc(100% - 4px),#fff calc(100% - 3px))}.site-name-led-round::after{content:'';position:absolute;top:-8px;left:-8px;right:-8px;bottom:-8px;border-radius:50px;background:conic-gradient(from 30deg,rgba(0,255,0,.15)0deg 30deg,rgba(0,255,255,.15)90deg 120deg,rgba(255,255,0,.15)180deg 210deg,rgba(255,0,255,.15)270deg 300deg,rgba(0,255,0,.15)360deg);animation:ledLeftMove 4s linear infinite reverse;z-index:-2;filter:blur(12px)}@keyframes ledLeftMove{0%{transform:translateX(-20px)}50%{transform:translateX(20px)}100%{transform:translateX(-20px)}}.site-name-led-round .led-dot-round{position:absolute;width:8px;height:8px;border-radius:50%;z-index:2;animation:ledDotLeftMove 3s ease-in-out infinite;box-shadow:0 0 12px currentColor}.site-name-led-round .led-dot-round.green{background:#0f0;color:#0f0;animation-delay:0s}.site-name-led-round .led-dot-round.cyan{background:#0ff;color:#0ff;animation-delay:.75s}.site-name-led-round .led-dot-round.yellow{background:#ff0;color:#ff0;animation-delay:1.5s}.site-name-led-round .led-dot-round.pink{background:#f0f;color:#f0f;animation-delay:2.25s}@keyframes ledDotLeftMove{0%{left:-4px;top:50%;transform:translateY(-50%)}50%{left:calc(100% - 4px);top:50%;transform:translateY(-50%)}100%{left:-4px;top:50%;transform:translateY(-50%)}}.site-name-led-round .site-name-text{font-weight:700;font-size:.5rem;color:#fff;letter-spacing:.2px;text-shadow:0 0 15px rgba(0,255,100,.15);white-space:nowrap;position:relative;z-index:1;padding:2px 0;line-height:1.3}.site-name-text .d1{color:#86efac;font-weight:800}.site-name-text .d2{color:#facc15;font-weight:800}.site-name-text .d3{color:#60a5fa;font-weight:800}.site-name-text .d4{color:#f472b6;font-weight:800}.site-name-text .sep{color:#6b7280;font-weight:400}.header-right{display:flex;align-items:center;gap:8px}.share-btn{background:#000;color:#fff;border:none;padding:4px 10px;border-radius:40px;font-weight:600;font-size:.5rem;cursor:pointer;display:flex;align-items:center;gap:3px;border:1px solid #222}.share-btn:active{transform:scale(.95)}.share-btn svg{width:12px;height:12px;fill:#fff}.telegram-btn{display:inline-block;width:32px;height:32px;border-radius:50%;overflow:visible;flex-shrink:0;position:relative;background:#000;border:2px solid #1a1a1a;box-shadow:0 0 10px rgba(0,255,100,.2);padding:2px}.telegram-btn::before{content:'';position:absolute;top:-3px;left:-3px;right:-3px;bottom:-3px;border-radius:50%;background:conic-gradient(from 0deg,#0f0 0deg 30deg,#0ff 90deg 120deg,#f0f 180deg 210deg,#ff0 270deg 300deg,#0f0 360deg);animation:ledSlowSpinRound 10s linear infinite;z-index:-1;padding:3px;-webkit-mask:radial-gradient(farthest-side,transparent calc(100% - 3px),#fff calc(100% - 2px));mask:radial-gradient(farthest-side,transparent calc(100% - 3px),#fff calc(100% - 2px))}.telegram-btn img{width:100%;height:100%;object-fit:cover;display:block;border-radius:50%;position:relative;z-index:1;background:#000}.telegram-btn .corner-led{position:absolute;width:5px;height:5px;border-radius:50%;z-index:2;animation:ledPulseSlow 2.5s ease-in-out infinite;box-shadow:0 0 6px currentColor}.telegram-btn .corner-led.tl{top:-1px;left:-1px;color:#0f0;background:#0f0;animation-delay:0s}.telegram-btn .corner-led.tr{top:-1px;right:-1px;color:#0ff;background:#0ff;animation-delay:.6s}.telegram-btn .corner-led.bl{bottom:-1px;left:-1px;color:#f0f;background:#f0f;animation-delay:1.2s}.telegram-btn .corner-led.br{bottom:-1px;right:-1px;color:#ff0;background:#ff0;animation-delay:1.8s}@keyframes ledPulseSlow{0%,100%{opacity:.5;transform:scale(.8)}50%{opacity:1;transform:scale(1.2);box-shadow:0 0 10px currentColor}}.marquee-container{background:linear-gradient(90deg,#1a2a6c,#b21f1f,#fdbb2d);padding:6px 0;overflow:hidden;border-bottom:1px solid #e9edf4}.marquee-container marquee{color:#fff;font-size:.65rem;font-weight:700;letter-spacing:.5px;text-shadow:0 1px 3px rgba(0,0,0,.3)}.marquee-container marquee span{margin:0 12px;display:inline-block}.marquee-container marquee .highlight{color:#facc15;background:rgba(0,0,0,.2);padding:2px 10px;border-radius:20px}.nav-row-small{display:flex;justify-content:space-around;align-items:center;background:#f8fafc;padding:4px 6px;border-bottom:1px solid #e9edf4;gap:2px}.nav-small{font-size:.5rem;font-weight:600;color:#1e293b;background:#fff;padding:3px 8px;border-radius:40px;border:1px solid #e2e8f0;cursor:pointer;white-space:nowrap;display:inline-flex;align-items:center;gap:4px}.nav-small:active{transform:scale(.95)}.nav-small.active{background:#1e293b;color:#fff;border-color:#1e293b}.game-detail-header{display:flex;justify-content:space-between;align-items:center;padding:8px 14px;background:#f8fafc;border-bottom:1px solid #e9edf4}.back-btn{background:#eef2ff;border:none;padding:3px 12px;border-radius:40px;font-weight:600;font-size:.6rem;color:#1e293b;cursor:pointer}.back-btn:active{transform:scale(.95)}.game-detail-title{font-weight:700;font-size:.6rem;color:#fff!important;background:#1e293b;padding:4px 12px;border-radius:40px;cursor:pointer;white-space:nowrap}.icon-svg{display:inline-flex;align-items:center;justify-content:center;flex-shrink:0;width:16px;height:16px;vertical-align:middle}.icon-svg svg{width:100%;height:100%;display:block;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}.icon-svg.small{width:14px;height:14px}.icon-svg.large{width:18px;height:18px}#mainGrid{display:flex;flex-direction:column;gap:6px;padding:8px}.card{background:#fff;border-radius:12px;padding:8px 10px;box-shadow:0 2px 8px rgba(0,0,0,.03);display:flex;align-items:center;gap:8px;border:1px solid #e9edf4;cursor:pointer;position:relative;overflow:hidden;width:100%}.card:active{transform:scale(.97);background:#fafcff}.card-number{position:absolute;top:3px;left:3px;background:#000;color:#fff;width:20px;height:20px;border-radius:50%;font-size:.5rem;font-weight:800;display:flex;align-items:center;justify-content:center;z-index:5;border:1.5px solid #333;box-shadow:0 2px 6px rgba(0,0,0,.3)}.card-img{width:80px;height:80px;border-radius:10px;background:#f0f4ff;flex-shrink:0;overflow:hidden;border:1px solid #e2e8f0;margin-left:18px}.card-img img{width:100%;height:100%;object-fit:cover;display:block}.card-info{flex:1;display:flex;flex-direction:column;gap:2px;min-width:0}.card-name{font-weight:700;font-size:.7rem;color:#0b1e33;display:flex;align-items:center;gap:3px;flex-wrap:wrap}.card-name .alt{font-weight:400;font-size:.5rem;color:#6b7280}.card-bonus{font-size:.55rem;color:#dc2626;font-weight:600;display:inline-flex;align-items:center;gap:4px}.card-withdraw{font-size:.5rem;color:#0a0a0a;font-weight:500;display:inline-flex;align-items:center;gap:4px}.card-download-sm{background:#0a0a0a;color:#fff;border:none;padding:3px 10px;border-radius:40px;font-weight:600;font-size:.45rem;white-space:nowrap;cursor:pointer;flex-shrink:0}.card-download-sm:active{transform:scale(.95)}.detail-premium{padding:14px}.detail-premium .hero-section{display:flex;gap:14px;align-items:center;margin-bottom:12px}.detail-premium .hero-img{width:72px;height:72px;border-radius:16px;overflow:hidden;border:1px solid #e2e8f0;flex-shrink:0}.detail-premium .hero-img img{width:100%;height:100%;object-fit:cover;display:block}.detail-premium .hero-info{flex:1}.detail-premium .hero-info .app-name{font-weight:800;font-size:1.1rem;color:#0b1e33}.detail-premium .hero-info .app-sub{font-size:.65rem;color:#64748b}.detail-premium .hero-info .app-bonus{display:inline-flex;align-items:center;gap:4px;background:#dc2626;color:#fff;padding:2px 10px;border-radius:40px;font-weight:700;font-size:.7rem;margin-top:4px}.detail-premium .info-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:12px 0}.detail-premium .info-grid .info-item{background:#f8fafc;border-radius:10px;padding:8px 10px;display:flex;align-items:center;gap:6px;font-size:.6rem;color:#1e293b}.detail-premium .info-grid .info-item .label{color:#64748b;font-weight:500}.detail-premium .info-grid .info-item .value{font-weight:600}.detail-premium .section-card{background:#f8fafc;border-radius:12px;padding:12px 14px;margin-bottom:10px;border:1px solid #e9edf4}.detail-premium .section-card .section-title{font-weight:700;font-size:.75rem;color:#0b1e33;margin-bottom:4px;display:flex;align-items:center;gap:6px}.detail-premium .section-card .section-body{font-size:.7rem;color:#334155;line-height:1.6}.detail-premium .section-card .section-body ul{list-style:none;padding:0;margin:4px 0}.detail-premium .section-card .section-body ul li{padding:2px 0;font-size:.7rem;display:flex;align-items:flex-start;gap:6px}.detail-premium .section-card .section-body ul li::before{content:"•";color:#2563eb;font-weight:700}.detail-premium .download-btn-lg{background:#0a0a0a;color:#fff;border:none;padding:12px 20px;border-radius:60px;font-weight:700;font-size:.85rem;width:100%;cursor:pointer;text-align:center;display:flex;align-items:center;justify-content:center;gap:8px;text-decoration:none}.detail-premium .download-btn-lg:active{transform:scale(.97)}.detail-premium .color-1 .section-title{color:#2563eb}.detail-premium .color-2 .section-title{color:#7c3aed}.detail-premium .color-3 .section-title{color:#dc2626}.detail-premium .color-4 .section-title{color:#059669}.detail-premium .color-5 .section-title{color:#d97706}.detail-premium .color-6 .section-title{color:#0891b2}.detail-premium .color-7 .section-title{color:#db2777}.related-section{padding:10px;background:#fff;border-top:1px solid #e9edf4;margin-top:4px}.related-title{font-weight:700;font-size:.8rem;color:#0b1e33;margin-bottom:6px;display:flex;align-items:center;gap:8px}.related-grid{display:flex;flex-direction:column;gap:5px}.related-item{display:flex;align-items:center;gap:6px;padding:5px 8px;background:#f8fafc;border-radius:10px;border:1px solid #e9edf4;cursor:pointer}.related-item:active{transform:scale(.97)}.related-item img{width:28px;height:28px;border-radius:8px;object-fit:cover;display:block}.related-item .rinfo{flex:1;display:flex;flex-direction:column;gap:0;min-width:0}.related-item .rname{font-weight:600;font-size:.6rem;color:#0b1e33}.related-item .rname .alt{font-weight:400;font-size:.45rem;color:#6b7280}.related-item .rbonus{font-size:.45rem;color:#dc2626;font-weight:600;display:inline-flex;align-items:center;gap:3px}.related-item .rwithdraw{font-size:.4rem;color:#0a0a0a;font-weight:500;display:inline-flex;align-items:center;gap:3px}.related-item .rdownload{background:#0a0a0a;color:#fff;border:none;padding:2px 8px;border-radius:40px;font-weight:600;font-size:.4rem;white-space:nowrap;cursor:pointer}.footer-note{padding:10px;text-align:center;color:#94a3b8;font-size:.5rem;border-top:1px solid #e9edf4}.info-overlay{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.4);backdrop-filter:blur(3px);z-index:99;justify-content:center;align-items:center}.info-card{background:#fff;max-width:400px;width:90%;padding:20px 18px;border-radius:28px;box-shadow:0 30px 60px rgba(0,0,0,.2);position:relative}.info-card .close-top{position:absolute;top:12px;right:12px}.info-card .close-top .icon-svg{width:22px;height:22px;cursor:pointer}.info-card .close-top .icon-svg svg{stroke:#000;stroke-width:2}.info-card h2{font-size:1.2rem;margin-bottom:8px;color:#0b1e33;padding-right:30px}.info-card p{color:#334155;line-height:1.5;font-size:.8rem}@media(max-width:420px){.logo-cyan-round{width:30px;height:30px}.site-name-led-round{padding:3px 10px 3px 8px;min-height:24px}.site-name-led-round .site-name-text{font-size:.4rem}.site-name-led-round .led-dot-round{width:5px;height:5px}.share-btn{font-size:.4rem;padding:2px 8px}.share-btn svg{width:10px;height:10px}.telegram-btn{width:26px;height:26px}.nav-small{font-size:.4rem;padding:2px 6px}.card-img{width:60px;height:60px}.card-name{font-size:.6rem}.card-name .alt{font-size:.4rem}.card-bonus{font-size:.5rem}.card-withdraw{font-size:.45rem}.marquee-container marquee{font-size:.5rem}.marquee-container marquee span{margin:0 8px}.card-number{width:16px;height:16px;font-size:.4rem;top:2px;left:2px}.card-img{margin-left:14px}.telegram-btn .corner-led{width:4px;height:4px}.detail-premium .hero-img{width:56px;height:56px}.detail-premium .hero-info .app-name{font-size:.95rem}.detail-premium .info-grid{grid-template-columns:1fr 1fr;gap:4px}.detail-premium .info-grid .info-item{font-size:.5rem;padding:6px 8px}.icon-svg{width:14px;height:14px}.related-item .rname{font-size:.5rem}.related-item .rname .alt{font-size:.4rem}.related-item .rbonus{font-size:.4rem}.related-item .rwithdraw{font-size:.35rem}.related-item .rdownload{font-size:.35rem;padding:2px 6px}}
   </style>
 </head>
 <body>
 <div class="container">
-  <!-- TOP HEADER -->
   <div class="top-header">
     <div class="header-left">
       <div class="logo-cyan-round"><img src="https://i.ibb.co/CssC2WbG/1000022725.jpg" alt="All Yono App Site" loading="eager" fetchpriority="high"></div>
@@ -189,8 +28,6 @@
       <button class="share-btn" id="shareBtn"><svg viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81 1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9c-1.66 0-3 1.34-3 3s1.34 3 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.16c-.05.21-.08.43-.08.65 0 1.61 1.31 2.92 2.92 2.92 1.61 0 2.92-1.31 2.92-2.92s-1.31-2.92-2.92-2.92z"/></svg> Share</button>
     </div>
   </div>
-
-  <!-- MARQUEE -->
   <div class="marquee-container">
     <marquee behavior="scroll" direction="left" scrollamount="5" truespeed>
       <span class="highlight">🏆 All Yono App Site</span>
@@ -210,19 +47,13 @@
       <span class="highlight">🔥 45+ Yono Games Download Now!</span>
     </marquee>
   </div>
-
-  <!-- NAV -->
   <div class="nav-row-small">
     <span class="nav-small active" id="homeNav"><span class="icon-svg"><svg viewBox="0 0 24 24"><path d="M3 12l9-9 9 9"/><path d="M5 10v10a1 1 0 001 1h3a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1h3a1 1 0 001-1V10"/></svg></span> Home</span>
     <span class="nav-small" data-target="about"><span class="icon-svg"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg></span> About</span>
     <span class="nav-small" data-target="contact"><span class="icon-svg"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg></span> Contact</span>
     <span class="nav-small" data-target="disclaimer"><span class="icon-svg"><svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="M12 8v4"/><path d="M12 16h.01"/></svg></span> Disclaimer</span>
   </div>
-
-  <!-- MAIN GRID -->
   <div id="mainGrid" class="show"></div>
-
-  <!-- DETAIL VIEW -->
   <div id="detailView" class="hidden" style="display:none;">
     <div class="game-detail-header">
       <button class="back-btn" id="backBtn">← Back</button>
@@ -230,11 +61,8 @@
     </div>
     <div id="detailContent" class="detail-premium"></div>
   </div>
-
   <div class="footer-note">All Yono App Site • All Yono Apk • All Yono New • All Yono Games • 45+ Games • ₹45 Bonus • ₹100 Withdrawal</div>
 </div>
-
-<!-- OVERLAY -->
 <div class="info-overlay" id="infoOverlay">
   <div class="info-card">
     <div class="close-top"><span class="icon-svg" id="overlayClose"><svg viewBox="0 0 24 24"><path d="M18 6L6 18"/><path d="M6 6l12 12"/></svg></span></div>
@@ -242,555 +70,34 @@
     <div id="overlayContent">Content goes here.</div>
   </div>
 </div>
-
 <script>
   (function() {
-    // --- UNIQUE DATA FOR ALL 55+ APPS WITH SEPARATE TITLES, SEO, AND BONUS INFO ---
+    // All 45 apps with unique SEO tags - each app has its own original set
     const gamesData = [
+      // 1. All Yono App Site
       { name: "All Yono App Site", altName: "All Yono Games", bonus: "₹45", withdrawal: "₹100", downloadUrl: "https://www.earntp.com/m/jm9n7r", img: "https://i.ibb.co/CssC2WbG/1000022725.jpg",
         title: "All Yono App Site APK – New Version Update",
-        seoDesc: "All Yono App Site APK – New Version Update. Download latest version with 45+ games, ₹45 bonus, ₹100 withdrawal. Best rummy, teen patti, slots app.",
-        desc: "All Yono App Site APK Download – Get ₹572 Instant Bonus! Play skill-based Rummy, Teen Patti & slots. Safe withdrawals from ₹100. Start earning real cash in minutes – download APK & claim your bonus today! Referral Bonus: ₹13",
+        seo: ["All Yono App Site", "All Yono Games", "Yono APK", "real cash gaming app", "Rummy app", "Teen Patti app", "slots game", "UPI withdrawal app", "online earning app", "casino games India", "best rummy app", "top casino games", "Yono 2025", "download Yono APK", "Yono bonus ₹45", "Yono withdrawal ₹100", "secure gaming platform", "45+ games", "daily bonus app", "referral rewards"],
+        desc: "All Yono App Site APK Download – Get ₹572 Instant Bonus! Play skill-based Rummy, Teen Patti & slots. Safe withdrawals from ₹100.",
         version: "3.2.1", size: "48 MB", downloads: "1.2M+", update: "Today", rating: "4.7",
         features: ["45+ games including Rummy, Teen Patti, Slots", "Fast UPI withdrawal", "Daily bonus & rewards", "Secure & trusted platform"],
-        gameInfo: "All Yono App Site is a popular real cash earning app in India where users can play games like rummy, slots, bingo, and spin games to win real money. New users can claim a signup bonus of up to ₹52, making it easy to get started and explore the platform. The app offers a smooth and secure experience with fast UPI deposits and withdrawals. The interface of All Yono App Site is simple and user-friendly, making it suitable for both beginners and experienced players. You can enjoy daily rewards, referral bonuses, and special events to increase your earnings. The minimum withdrawal starts from ₹118, and most transactions are processed quickly without delays. If you are looking for a trusted gaming app that combines entertainment with real earning opportunities, All Yono App Site is a great choice. Download the latest APK version today and start playing to earn real cash rewards from your mobile.",
-        faq: "Q: 1. What Is The All Yono App Site app APK? A: The All Yono App Site APP APK is an excellent application that offers users a sign-up bonus of ₹284 when they join. This game includes a fantastic bonus program, and you can learn more by reading the complete post. Additionally, All Yono App Site APK is a popular slots game with a minimum withdrawal amount of ₹100. Referral Bonus: ₹13",
+        gameInfo: "All Yono App Site is a popular real cash earning app in India with 45+ games.",
+        faq: "Q: What is All Yono App Site? A: A premium gaming platform.",
         tips: "Start with small bets, use welcome bonus wisely.",
-        rewards: "💰 Unlock ₹428 Bonus in All Yono App Site App! Enjoy thrilling games like Aviator, Rummy & more. Refer friends for extra cash. Fast, secure withdrawals via bank/UPI. Trusted by millions – start playing now! Referral Bonus: ₹17",
-        withdrawInfo: "UPI, Bank Transfer, Paytm - min ₹100, instant processing.",
-        howToDownload: "1. Tap the big Download button above.\n2. Allow installation from unknown sources.\n3. Open the downloaded APK and tap Install.\n4. Register with your mobile number.\n5. Claim your signup bonus instantly – up to ₹70!",
-        safety: "All Yono App Site is designed to provide a secure and reliable gaming experience. The app uses standard encryption and protected payment systems to help keep user data and transactions safe. Deposits and withdrawals are processed through commonly used methods such as UPI and bank transfer, offering a convenient experience for users in India. However, users are advised to play responsibly and review the app's terms and policies before using it.",
-        faq2: "Q: 2. How to Sign Up for All Yono App Site APK? A: To sign up for the All Yono App Site APK, follow these steps: • Click on the Download Button for the All Yono App Site APK. • Select OK to start the download. • Install the App application on your smartphone. • Open the new app and click on Play as Guest. • Click on the Profile Button and bind your mobile number. After completing these steps, you will receive a sign-up bonus of ₹796. Referral Bonus: ₹17",
-        faq3: "Q: 3. How Many Games Are Available In The All Yono App Site App? A: The All Yono App Site app offers support for 75+ different types of games. You can enjoy a variety of games such as Rummy, Teen Patti, 7 Up Down, Dragon vs Tiger, and many more.",
-        faq4: "Q: 4. What are some of the best features of the All Yono App Site app APK? A: • Enjoy a bonus of ₹572 for free in the APK. • Access to 20 gaming options. • Earn up to ₹428 for inviting friends. • Withdrawals can be made starting from a minimum of ₹612. • Click on the Profile Button and bind your mobile number. • The minimum deposit required is ₹388. Referral Bonus: ₹21",
-        welcomeBonus: "🎁 Welcome Bonus: ₹45 on signup + ₹572 instant bonus. Claim your reward now!"
+        rewards: "Unlock ₹428 Bonus in All Yono App Site App!",
+        withdrawInfo: "UPI, Bank Transfer, Paytm - min ₹100",
+        howToDownload: "1. Tap Download.\n2. Install APK.\n3. Register.\n4. Claim bonus.",
+        safety: "Secure and trusted platform with encryption.",
+        faq2: "Q: How to sign up? A: Download and register.",
+        faq3: "Q: Many games? A: Yes, 45+.",
+        faq4: "Q: Features? A: Many rewards.",
+        welcomeBonus: "🎁 Welcome Bonus: ₹45 on signup."
       },
-      { name: "567 Slots", altName: "567 Slots Game", bonus: "₹45", withdrawal: "₹100", downloadUrl: "https://join567slots0.com/?code=4NYF487URJ6&t=1781505684", img: "https://i.ibb.co/hFytMXY2/1000022725.jpg",
-        title: "567 Slots APK – Download Welcome Bonus",
-        seoDesc: "567 Slots APK – Download Welcome Bonus ₹45. Play 100+ slot themes, progressive jackpot, free spins. Best slots game in India.",
-        desc: "567 Slots Game - भारत का favourite slot game! Spin & win real cash. Get ₹45 welcome bonus.",
-        version: "2.5.0", size: "42 MB", downloads: "850K+", update: "Today", rating: "4.5",
-        features: ["100+ slot themes", "Progressive jackpot", "Daily free spins", "Fast withdrawal"],
-        gameInfo: "567 Slots offers classic and modern slot machines with high RTP. Play for fun or real cash. 567 Slots Game mein aapko 100+ themes milte hain aur progressive jackpot ka mauka.",
-        faq: "Q: Minimum deposit? A: ₹100. Q: Withdrawal time? A: 24-48 hrs. Q: Bonus? A: ₹45 welcome bonus.",
-        tips: "Use free spins first, then play with bonus. पहले free spins use karein, phir bonus ke saath khelein.",
-        rewards: "Daily spin bonus, loyalty rewards up to ₹500. हर दिन spin bonus aur ₹500 tak loyalty rewards.",
-        withdrawInfo: "UPI & Bank Transfer, min ₹100, processing within 24 hrs.",
-        howToDownload: "1. Tap Download button.\n2. Enable unknown sources.\n3. Install the APK.\n4. Sign up with your number.\n5. Get your ₹45 bonus!",
-        safety: "567 Slots uses secure payment gateways. Your data is protected with industry-standard encryption.",
-        welcomeBonus: "🎁 Welcome Bonus: ₹45 on signup + daily free spins. Start winning today!"
-      },
-      { name: "Saga Slots", altName: "Saga Slots APK", bonus: "₹40", withdrawal: "₹100", downloadUrl: "https://www.sagaslots5.com/?code=0QHJSERZYMV&t=1781505813", img: "https://i.ibb.co/20dzhBZf/1000022725.jpg",
-        title: "Install Saga Slots APK – Get Welcome Reward",
-        seoDesc: "Install Saga Slots APK – Get Welcome Reward ₹40. Story-based slots, multiplayer tournaments, daily missions. Download now!",
-        desc: "Saga Slots APK - epic slot adventure with huge bonuses. ₹40 signup bonus. एक epic slot adventure जहाँ huge bonuses milte hain.",
-        version: "3.0.2", size: "55 MB", downloads: "600K+", update: "Today", rating: "4.4",
-        features: ["Story-based slots", "Multiplayer tournaments", "Daily missions", "VIP rewards"],
-        gameInfo: "Saga Slots combines RPG elements with slots. Complete quests and earn extra rewards. RPG elements ke saath slots ka maza.",
-        faq: "Q: Is it legal? A: Yes, licensed. Q: Bonus wagering? A: 10x. Q: Withdrawal? A: ₹100 min.",
-        tips: "Complete daily missions for extra coins. Rozana missions complete karein extra coins ke liye.",
-        rewards: "Mission rewards up to ₹300, VIP cashback. Mission rewards ₹300 tak aur VIP cashback.",
-        withdrawInfo: "UPI, Paytm, min ₹100, 24-48 hrs.",
-        howToDownload: "1. Click Download.\n2. Allow installation.\n3. Install APK.\n4. Register.\n5. Claim ₹40 bonus.",
-        safety: "Saga Slots is a licensed platform with secure transactions and data protection.",
-        welcomeBonus: "🎁 Welcome Reward: ₹40 on signup + VIP cashback. Join the adventure now!"
-      },
-      { name: "Jaiho 91", altName: "Jaiho 91 Game", bonus: "₹50", withdrawal: "₹100", downloadUrl: "https://jaiho91bonus.vip/?code=C42T99ZQHAT&t=1781506067", img: "https://i.ibb.co/zV0C6Xkk/1000022725.jpg",
-        title: "Jaiho 91 APK – New User Sign Up Bonus Claim",
-        seoDesc: "Jaiho 91 APK – New User Sign Up Bonus ₹50. Teen Patti + Rummy combo, live tables, instant withdrawal. Download now!",
-        desc: "Jaiho 91 Game - teen patti aur rummy ka best combo! ₹50 bonus on signup. Teen Patti aur Rummy dono ek app mein.",
-        version: "4.1.0", size: "38 MB", downloads: "1.5M+", update: "Today", rating: "4.8",
-        features: ["Teen Patti + Rummy", "Live tables", "Instant withdrawal", "Referral bonus"],
-        gameInfo: "Jaiho 91 offers both Teen Patti and Rummy in one app. Play with players across India. पूरे India के players ke saath khelein.",
-        faq: "Q: Minimum age? A: 18+. Q: Withdrawal limit? A: ₹100 min. Q: Bonus? A: ₹50 welcome.",
-        tips: "Learn basic strategies for Teen Patti and Rummy. Teen Patti aur Rummy ki basic strategies seekhein.",
-        rewards: "Referral bonus ₹50, daily cashback. Referral bonus ₹50 aur daily cashback.",
-        withdrawInfo: "UPI, Bank, min ₹100, instant for verified users.",
-        howToDownload: "1. Tap Download.\n2. Enable unknown sources.\n3. Install APK.\n4. Register.\n5. Get ₹50 bonus!",
-        safety: "Jaiho 91 uses secure servers and encrypted transactions for user safety.",
-        welcomeBonus: "🎁 Sign Up Bonus: ₹50 on registration + referral rewards. Claim your bonus!"
-      },
-      { name: "Rummy Ludo", altName: "Rummy Ludo APK", bonus: "₹35", withdrawal: "₹100", downloadUrl: "https://rummyludoapp37.com/", img: "https://i.ibb.co/Z6Xy7y2x/1000022725.jpg",
-        title: "Rummy Ludo APK – Download Welcome Bonus",
-        seoDesc: "Rummy Ludo APK – Download Welcome Bonus ₹35. Play Rummy + Ludo multiplayer, tournaments, quick games. Install now!",
-        desc: "Rummy Ludo APK - Rummy aur Ludo dono ek app mein! ₹35 welcome bonus. दोनों games एक app mein.",
-        version: "2.0.8", size: "45 MB", downloads: "900K+", update: "Today", rating: "4.3",
-        features: ["Rummy + Ludo", "Multiplayer", "Quick games", "Daily tournaments"],
-        gameInfo: "Rummy Ludo combines classic card game with board game fun. Play with friends or strangers. दोस्तों या अजनबियों के साथ खेलें.",
-        faq: "Q: Free to play? A: Yes, with bonus. Q: Withdrawal? A: ₹100 min.",
-        tips: "Practice in free rooms before cash games. Cash games se pehle free rooms mein practice karein.",
-        rewards: "Tournament prizes up to ₹1000. Tournament prizes ₹1000 tak.",
-        withdrawInfo: "UPI, Paytm, min ₹100.",
-        howToDownload: "1. Click Download.\n2. Allow installation.\n3. Install APK.\n4. Sign up.\n5. Claim ₹35 bonus.",
-        safety: "Rummy Ludo provides a secure gaming environment with safe payment options.",
-        welcomeBonus: "🎁 Welcome Bonus: ₹35 on signup + tournament entries. Play and win big!"
-      },
-      { name: "ABC Rummy", altName: "ABC Rummy Game", bonus: "₹42", withdrawal: "₹100", downloadUrl: "https://d34i569g8ztoql.cloudfront.net/abcrummy_MeApp.apk", img: "https://i.ibb.co/Ldmd1DHH/1000022725.jpg",
-        title: "Download ABC Rummy – New Jackpots Claim Bonus",
-        seoDesc: "Download ABC Rummy – New Jackpots Claim ₹42 Bonus. Classic rummy, tournaments, fast deals, secure payments. Play now!",
-        desc: "ABC Rummy Game - India ka trusted rummy app. ₹42 signup bonus. भारत का भरोसेमंद rummy app.",
-        version: "1.9.3", size: "40 MB", downloads: "750K+", update: "Today", rating: "4.6",
-        features: ["Classic Rummy", "Tournaments", "Fast deals", "Secure payments"],
-        gameInfo: "ABC Rummy offers classic rummy experience with fast gameplay and secure transactions.",
-        faq: "Q: Is it safe? A: Yes. Q: Min withdrawal? A: ₹100.",
-        tips: "Play with small stakes first. पहले छोटे दांव लगाएं.",
-        rewards: "Daily bonus up to ₹200. हर दिन ₹200 तक बोनस.",
-        withdrawInfo: "UPI, Bank Transfer, min ₹100.",
-        howToDownload: "1. Tap Download.\n2. Install APK.\n3. Register.\n4. Claim ₹42 bonus.",
-        safety: "ABC Rummy uses encrypted transactions for user safety.",
-        welcomeBonus: "🎁 New Jackpots Bonus: ₹42 on signup + daily bonuses. Start winning today!"
-      },
-      { name: "Rummy 91", altName: "Rummy 91 APK", bonus: "₹38", withdrawal: "₹100", downloadUrl: "https://d16sfv4ssrmnvt.cloudfront.net/rummy91_AGENT.apk", img: "https://i.ibb.co/Fb2j77pp/1000022725.jpg",
-        title: "Rummy 91 APK – Fast Rummy Welcome Bonus",
-        seoDesc: "Rummy 91 APK – Fast Rummy Welcome Bonus ₹38. Multiplayer tables, daily challenges, VIP club. Download now!",
-        desc: "Rummy 91 APK - fast rummy with ₹38 bonus. तेज़ rummy game ₹38 bonus ke saath.",
-        version: "2.1.5", size: "38 MB", downloads: "680K+", update: "Today", rating: "4.4",
-        features: ["Fast rummy", "Multiplayer tables", "Daily challenges", "VIP club"],
-        gameInfo: "Rummy 91 provides fast-paced rummy action with multiple tables and daily challenges.",
-        faq: "Q: Minimum age? A: 18+. Q: Withdrawal? A: ₹100 min.",
-        tips: "Focus on sequences first. पहले sequences बनाने पर ध्यान दें.",
-        rewards: "VIP club rewards up to ₹500. VIP club में ₹500 तक rewards.",
-        withdrawInfo: "UPI, Paytm, min ₹100.",
-        howToDownload: "1. Download APK.\n2. Install.\n3. Register.\n4. Get ₹38 bonus.",
-        safety: "Rummy 91 ensures secure gaming with encrypted data.",
-        welcomeBonus: "🎁 Welcome Bonus: ₹38 on signup + VIP club access. Play fast and win!"
-      },
-      { name: "Love Rummy", altName: "Love Rummy Game", bonus: "₹36", withdrawal: "₹100", downloadUrl: "https://d34i569g8ztoql.cloudfront.net/loverummy_App.apk", img: "https://i.ibb.co/PZ2dpNJ9/1000022725.jpg",
-        title: "Love Rummy APK – Romantic Theme Welcome Bonus",
-        seoDesc: "Love Rummy APK – Romantic Theme Welcome Bonus ₹36. Play rummy with love, chat, daily gifts. Download now!",
-        desc: "Love Rummy Game - play with love, win with skill. ₹36 bonus. प्यार से खेलें, कौशल से जीतें.",
-        version: "1.7.2", size: "36 MB", downloads: "550K+", update: "Today", rating: "4.2",
-        features: ["Romantic themes", "Rummy variants", "Chat with players", "Daily gifts"],
-        gameInfo: "Love Rummy offers a unique romantic theme for rummy lovers. Play with style.",
-        faq: "Q: Is it free? A: Yes with bonus. Q: Min withdrawal? A: ₹100.",
-        tips: "Use chat to make friends and learn. चैट का उपयोग करें दोस्त बनाने और सीखने के लिए।",
-        rewards: "Daily gifts and bonus up to ₹150. हर दिन gifts और ₹150 तक bonus.",
-        withdrawInfo: "UPI, Bank, min ₹100.",
-        howToDownload: "1. Download APK.\n2. Install.\n3. Register.\n4. Claim ₹36 bonus.",
-        safety: "Love Rummy prioritizes user safety with secure payments.",
-        welcomeBonus: "🎁 Romantic Welcome: ₹36 on signup + daily gifts. Play with love!"
-      },
-      { name: "Spin Crush", altName: "Spin Crush APK", bonus: "₹30", withdrawal: "₹100", downloadUrl: "https://d292swwe9zki3u.cloudfront.net/spincrush_freecash.apk", img: "https://i.ibb.co/S4C26kVS/1000022725.jpg",
-        title: "Spin Crush APK – Crush Slots Welcome Bonus",
-        seoDesc: "Spin Crush APK – Crush Slots Welcome Bonus ₹30. Modern slots, free spins, level rewards, jackpot. Install now!",
-        desc: "Spin Crush APK - crush the slots with ₹30 bonus. स्लॉट्स को crush करें ₹30 bonus के साथ।",
-        version: "3.0.0", size: "50 MB", downloads: "480K+", update: "Today", rating: "4.3",
-        features: ["Modern slots", "Free spins", "Level rewards", "Jackpot"],
-        gameInfo: "Spin Crush brings modern slot gaming with level rewards and big jackpots.",
-        faq: "Q: Bonus wagering? A: 8x. Q: Min withdrawal? A: ₹100.",
-        tips: "Level up for better rewards. बेहतर rewards के लिए level up करें।",
-        rewards: "Level rewards up to ₹300. Level rewards ₹300 तक।",
-        withdrawInfo: "UPI, Paytm, min ₹100.",
-        howToDownload: "1. Download APK.\n2. Install.\n3. Register.\n4. Get ₹30 bonus.",
-        safety: "Spin Crush uses secure payment gateways.",
-        welcomeBonus: "🎁 Crush Slots Bonus: ₹30 on signup + free spins. Crush and win!"
-      },
-      { name: "Top Rummy", altName: "Top Rummy Game", bonus: "₹48", withdrawal: "₹100", downloadUrl: "https://th7.my/BY1JWS/3gvute0", img: "https://i.ibb.co/bRy3w8dN/1000022725.jpg",
-        title: "Top Rummy APK – Premium Rummy Welcome Bonus",
-        seoDesc: "Top Rummy APK – Premium Rummy Welcome Bonus ₹48. High stakes, tournaments, VIP support. Download now!",
-        desc: "Top Rummy Game - premium rummy experience with ₹48 bonus. प्रीमियम rummy experience ₹48 bonus के साथ।",
-        version: "2.8.1", size: "44 MB", downloads: "920K+", update: "Today", rating: "4.7",
-        features: ["Premium tables", "High stakes", "Tournaments", "VIP support"],
-        gameInfo: "Top Rummy offers premium rummy tables with high stakes and VIP support.",
-        faq: "Q: Is it safe? A: Yes. Q: Min withdrawal? A: ₹100.",
-        tips: "Start with lower stakes and move up. कम दांव से शुरू करें और ऊपर जाएं।",
-        rewards: "VIP rewards up to ₹1000. VIP rewards ₹1000 तक।",
-        withdrawInfo: "UPI, Bank, min ₹100.",
-        howToDownload: "1. Download APK.\n2. Install.\n3. Register.\n4. Claim ₹48 bonus.",
-        safety: "Top Rummy ensures secure and fair gameplay.",
-        welcomeBonus: "🎁 Premium Bonus: ₹48 on signup + VIP support. Play like a pro!"
-      },
-      { name: "Rummy 365", altName: "Rummy 365 APK", bonus: "₹44", withdrawal: "₹100", downloadUrl: "https://join567slots0.com/?code=4NYF487URJ6&t=1781505684", img: "https://i.ibb.co/Hf9bhrFm/1000022725.jpg",
-        title: "Rummy 365 APK – Year-Round Rummy Bonus",
-        seoDesc: "Rummy 365 APK – Year-Round Rummy Bonus ₹44. Seasonal events, daily bonuses, leaderboard. Download now!",
-        desc: "Rummy 365 APK - play rummy 365 days with ₹44 bonus. 365 दिन rummy खेलें ₹44 bonus के साथ।",
-        version: "1.5.0", size: "40 MB", downloads: "620K+", update: "Today", rating: "4.5",
-        features: ["Year-round games", "Seasonal events", "Daily bonuses", "Leaderboard"],
-        gameInfo: "Rummy 365 offers year-round rummy action with seasonal events and leaderboards.",
-        faq: "Q: Bonus? A: ₹44 welcome. Q: Withdrawal? A: ₹100 min.",
-        tips: "Play daily for leaderboard rewards. लीडरबोर्ड rewards के लिए रोज़ खेलें।",
-        rewards: "Seasonal bonuses up to ₹400. Seasonal bonuses ₹400 तक।",
-        withdrawInfo: "UPI, Paytm, min ₹100.",
-        howToDownload: "1. Download APK.\n2. Install.\n3. Register.\n4. Get ₹44 bonus.",
-        safety: "Rummy 365 provides secure gaming environment.",
-        welcomeBonus: "🎁 365 Bonus: ₹44 on signup + seasonal rewards. Play all year!"
-      },
-      { name: "Teen Patti Gold", altName: "Teen Patti Gold Game", bonus: "₹37", withdrawal: "₹100", downloadUrl: "https://www.earntp.com/gold/jm9n7r", img: "https://i.ibb.co/C5XcGXsJ/teen-patti-gold.jpg",
-        title: "Teen Patti Gold APK – Golden Welcome Bonus",
-        seoDesc: "Teen Patti Gold APK – Golden Welcome Bonus ₹37. Live dealers, golden tables, high stakes. Download now!",
-        desc: "Teen Patti Gold Game - the golden teen patti experience. ₹37 bonus. सुनहरा teen patti experience.",
-        version: "4.0.1", size: "52 MB", downloads: "2.1M+", update: "Today", rating: "4.9",
-        features: ["Golden tables", "Live dealers", "High stakes", "Exclusive rewards"],
-        gameInfo: "Teen Patti Gold offers a premium teen patti experience with live dealers and golden tables.",
-        faq: "Q: Is it legal? A: Yes. Q: Min withdrawal? A: ₹100.",
-        tips: "Bluff wisely in teen patti. Teen patti में समझदारी से bluff करें।",
-        rewards: "Exclusive gold rewards up to ₹800. Exclusive gold rewards ₹800 तक।",
-        withdrawInfo: "UPI, Bank, min ₹100.",
-        howToDownload: "1. Download APK.\n2. Install.\n3. Register.\n4. Claim ₹37 bonus.",
-        safety: "Teen Patti Gold uses encrypted transactions for safety.",
-        welcomeBonus: "🎁 Golden Bonus: ₹37 on signup + exclusive gold rewards. Play golden!"
-      },
-      { name: "Teen Patti Master", altName: "Teen Patti Master APK", bonus: "₹20", withdrawal: "₹100", downloadUrl: "https://www.earntp.com/m/jm9n7r", img: "https://i.ibb.co/JjrZjn2n/teen-patti-master.jpg",
-        title: "Teen Patti Master APK – Master Game Welcome Bonus",
-        seoDesc: "Teen Patti Master APK – Master Game Welcome Bonus ₹20. Practice mode, tournaments, quick play. Install now!",
-        desc: "Teen Patti Master APK - master the game with ₹20 bonus. मास्टर बनें ₹20 bonus के साथ।",
-        version: "3.5.0", size: "35 MB", downloads: "1.8M+", update: "Today", rating: "4.6",
-        features: ["Master tables", "Practice mode", "Tournaments", "Quick play"],
-        gameInfo: "Teen Patti Master helps you master the game with practice mode and tournaments.",
-        faq: "Q: Free to play? A: Yes. Q: Withdrawal? A: ₹100 min.",
-        tips: "Practice in practice mode first. पहले practice mode में अभ्यास करें।",
-        rewards: "Tournament prizes up to ₹500. Tournament prizes ₹500 तक।",
-        withdrawInfo: "UPI, Paytm, min ₹100.",
-        howToDownload: "1. Download APK.\n2. Install.\n3. Register.\n4. Get ₹20 bonus.",
-        safety: "Teen Patti Master ensures safe and fair gaming.",
-        welcomeBonus: "🎁 Master Bonus: ₹20 on signup + tournament entries. Master the game!"
-      },
-      { name: "Yono Rummy", altName: "Yono Rummy Game", bonus: "₹25", withdrawal: "₹100", downloadUrl: "https://yonorummy043.com/?code=VIPYQC5EE9X&t=1781107758", img: "https://i.ibb.co/zTFDGPpX/yono-rummy.jpg",
-        title: "Yono Rummy APK – Yono Style Welcome Bonus",
-        seoDesc: "Yono Rummy APK – Yono Style Welcome Bonus ₹25. Quick rounds, daily bonus, referral program. Download now!",
-        desc: "Yono Rummy Game - play rummy the Yono way. ₹25 bonus. Yono style में rummy खेलें।",
-        version: "2.0.0", size: "42 MB", downloads: "550K+", update: "Today", rating: "4.3",
-        features: ["Yono style", "Quick rounds", "Daily bonus", "Referral program"],
-        gameInfo: "Yono Rummy offers a unique Yono style rummy experience with quick rounds.",
-        faq: "Q: Bonus? A: ₹25. Q: Withdrawal? A: ₹100 min.",
-        tips: "Use referral program for extra bonus. Referral program का उपयोग करें extra bonus के लिए।",
-        rewards: "Referral bonus up to ₹100. Referral bonus ₹100 तक।",
-        withdrawInfo: "UPI, Bank, min ₹100.",
-        howToDownload: "1. Download APK.\n2. Install.\n3. Register.\n4. Claim ₹25 bonus.",
-        safety: "Yono Rummy provides secure gaming with data protection.",
-        welcomeBonus: "🎁 Yono Bonus: ₹25 on signup + referral rewards. Play Yono style!"
-      },
-      { name: "Slots Winner", altName: "Slots Winner APK", bonus: "₹40", withdrawal: "₹100", downloadUrl: "https://slotswinneri.com/?code=PGVC6CBNF53&t=1781107393", img: "https://i.ibb.co/NdbNBtx7/slots-winner.jpg",
-        title: "Slots Winner APK – Winning Slots Welcome Bonus",
-        seoDesc: "Slots Winner APK – Winning Slots Welcome Bonus ₹40. Jackpot, daily spins, bonus rounds. Install now!",
-        desc: "Slots Winner APK - become a slots winner with ₹40 bonus. स्लॉट्स विजेता बनें ₹40 bonus के साथ।",
-        version: "1.8.5", size: "48 MB", downloads: "720K+", update: "Today", rating: "4.5",
-        features: ["Winning slots", "Jackpot", "Daily spins", "Bonus rounds"],
-        gameInfo: "Slots Winner offers high-paying slot games with jackpot and bonus rounds.",
-        faq: "Q: Min deposit? A: ₹100. Q: Withdrawal? A: ₹100 min.",
-        tips: "Play bonus rounds for extra wins. Bonus rounds खेलें extra wins के लिए।",
-        rewards: "Jackpot up to ₹5000. Jackpot ₹5000 तक।",
-        withdrawInfo: "UPI, Paytm, min ₹100.",
-        howToDownload: "1. Download APK.\n2. Install.\n3. Register.\n4. Get ₹40 bonus.",
-        safety: "Slots Winner uses secure payment gateways for safety.",
-        welcomeBonus: "🎁 Winner Bonus: ₹40 on signup + jackpot chances. Become a winner!"
-      },
-      { name: "Good Slots", altName: "Good Slots Game", bonus: "₹15", withdrawal: "₹100", downloadUrl: "https://7sharegoodslots.vip?pid=320806209&channel=2010001&t=pdd2&pkg=com.1", img: "https://i.ibb.co/nq9kMKHZ/good-slots.jpg",
-        title: "Good Slots APK – Simple Slots Welcome Bonus",
-        seoDesc: "Good Slots APK – Simple Slots Welcome Bonus ₹15. Quick play, daily rewards, easy withdrawal. Download now!",
-        desc: "Good Slots Game - good slots, good wins. ₹15 bonus. अच्छे slots, अच्छी जीत।",
-        version: "1.2.0", size: "32 MB", downloads: "350K+", update: "Today", rating: "4.1",
-        features: ["Simple slots", "Quick play", "Daily rewards", "Easy withdrawal"],
-        gameInfo: "Good Slots offers simple and fun slot games with easy withdrawal options.",
-        faq: "Q: Is it safe? A: Yes. Q: Min withdrawal? A: ₹100.",
-        tips: "Start with small bets. छोटे दांव से शुरू करें।",
-        rewards: "Daily rewards up to ₹100. Daily rewards ₹100 तक।",
-        withdrawInfo: "UPI, Paytm, min ₹100.",
-        howToDownload: "1. Download APK.\n2. Install.\n3. Register.\n4. Claim ₹15 bonus.",
-        safety: "Good Slots ensures secure gaming with data protection.",
-        welcomeBonus: "🎁 Good Bonus: ₹15 on signup + daily rewards. Play good slots!"
-      }
-    ];
-
-    // Add remaining 43 apps with unique data
-    const moreApps = [
-      { name: "Diwa Slot", altName: "Diwa Slot APK", bonus: "₹50", withdrawal: "₹100", downloadUrl: "https://sharediwaslot1.vip?pid=483455673&channel=2010002&t=pdd2&pkg=com.diwaslotwhl.app", img: "https://i.ibb.co/BKB6QMbD/diwa-slot.jpg",
-        title: "Diwa Slot APK – Diwa Theme Welcome Bonus", seoDesc: "Diwa Slot APK – Diwa Theme Welcome Bonus ₹50. Big wins, free spins, VIP rewards. Install now!",
-        desc: "Diwa Slot APK - diwa slot with ₹50 bonus. दीवा स्लॉट ₹50 bonus के साथ।",
-        version: "2.2.0", size: "46 MB", downloads: "480K+", update: "Today", rating: "4.4",
-        features: ["Diwa themes", "Big wins", "Free spins", "VIP rewards"],
-        gameInfo: "Diwa Slot offers themed slot games with big win potential and VIP rewards.",
-        faq: "Q: Bonus? A: ₹50. Q: Withdrawal? A: ₹100 min.",
-        tips: "Use free spins wisely. Free spins का समझदारी से उपयोग करें।",
-        rewards: "VIP rewards up to ₹600. VIP rewards ₹600 तक।",
-        withdrawInfo: "UPI, Bank, min ₹100.",
-        howToDownload: "1. Download APK.\n2. Install.\n3. Register.\n4. Claim ₹50 bonus.",
-        safety: "Diwa Slot provides secure and encrypted transactions.",
-        welcomeBonus: "🎁 Diwa Bonus: ₹50 on signup + VIP rewards. Play diwa slots!"
-      },
-      { name: "GoGo Rummy", altName: "GoGo Rummy Game", bonus: "₹28", withdrawal: "₹100", downloadUrl: "https://www.gogorummyagent.com/?code=V4UTQA2VYMQ&t=1781196694", img: "https://i.ibb.co/Y7dzDP7z/gogo-rummy.jpg",
-        title: "GoGo Rummy APK – Fast Rummy Welcome Bonus", seoDesc: "GoGo Rummy APK – Fast Rummy Welcome Bonus ₹28. Multiplayer, daily challenges, bonus rounds. Download now!",
-        desc: "GoGo Rummy Game - go go with ₹28 bonus. ₹28 bonus के साथ आगे बढ़ें।",
-        version: "1.9.1", size: "38 MB", downloads: "580K+", update: "Today", rating: "4.3",
-        features: ["Fast rummy", "Multiplayer", "Daily challenges", "Bonus rounds"],
-        gameInfo: "GoGo Rummy offers fast-paced rummy with daily challenges and bonus rounds.",
-        faq: "Q: Is it free? A: Yes. Q: Withdrawal? A: ₹100 min.",
-        tips: "Complete daily challenges for bonus. Daily challenges complete करें bonus के लिए।",
-        rewards: "Challenge rewards up to ₹250. Challenge rewards ₹250 तक।",
-        withdrawInfo: "UPI, Paytm, min ₹100.",
-        howToDownload: "1. Download APK.\n2. Install.\n3. Register.\n4. Claim ₹28 bonus.",
-        safety: "GoGo Rummy ensures secure and fair gameplay.",
-        welcomeBonus: "🎁 GoGo Bonus: ₹28 on signup + challenge rewards. Go go and win!"
-      },
-      { name: "Joy Rummy", altName: "Joy Rummy APK", bonus: "₹35", withdrawal: "₹100", downloadUrl: "https://www.joyrummymax.com/?code=J5KFTAWJ9X5&t=1781198100", img: "https://i.ibb.co/nqD8CD8W/joy-rummy.jpg",
-        title: "Joy Rummy APK – Joyful Rummy Welcome Bonus", seoDesc: "Joy Rummy APK – Joyful Rummy Welcome Bonus ₹35. Social play, daily joy bonus, variants. Install now!",
-        desc: "Joy Rummy APK - play with joy, win with skill. ₹35 bonus. खुशी से खेलें, कौशल से जीतें।",
-        version: "2.3.0", size: "42 MB", downloads: "650K+", update: "Today", rating: "4.6",
-        features: ["Joyful themes", "Rummy variants", "Daily joy bonus", "Social play"],
-        gameInfo: "Joy Rummy brings joyful rummy experience with social play and daily bonuses.",
-        faq: "Q: Bonus? A: ₹35. Q: Withdrawal? A: ₹100 min.",
-        tips: "Play with friends for more fun. दोस्तों के साथ खेलें और मज़ा लें।",
-        rewards: "Joy bonus up to ₹200. Joy bonus ₹200 तक।",
-        withdrawInfo: "UPI, Bank, min ₹100.",
-        howToDownload: "1. Download APK.\n2. Install.\n3. Register.\n4. Claim ₹35 bonus.",
-        safety: "Joy Rummy provides secure gaming with encrypted data.",
-        welcomeBonus: "🎁 Joy Bonus: ₹35 on signup + daily joy rewards. Play with joy!"
-      },
-      { name: "Spin Gold", altName: "Spin Gold Game", bonus: "₹22", withdrawal: "₹100", downloadUrl: "https://uono-bingo101.com/?code=3WFQ231H9Y2&t=1781197828", img: "https://i.ibb.co/G3QnY0vY/spin-gold.jpg",
-        title: "Spin Gold APK – Gold Themed Welcome Bonus", seoDesc: "Spin Gold APK – Gold Themed Welcome Bonus ₹22. Bonus spins, daily gold, leaderboard. Download now!",
-        desc: "Spin Gold Game - spin to win gold. ₹22 bonus. स्पिन करें और सोना जीतें।",
-        version: "1.6.0", size: "36 MB", downloads: "420K+", update: "Today", rating: "4.2",
-        features: ["Gold slots", "Bonus spins", "Daily gold", "Leaderboard"],
-        gameInfo: "Spin Gold offers gold-themed slots with bonus spins and daily gold rewards.",
-        faq: "Q: Min deposit? A: ₹100. Q: Withdrawal? A: ₹100 min.",
-        tips: "Save bonus spins for big wins. बड़ी जीत के लिए bonus spins बचाएं।",
-        rewards: "Daily gold up to ₹150. Daily gold ₹150 तक।",
-        withdrawInfo: "UPI, Paytm, min ₹100.",
-        howToDownload: "1. Download APK.\n2. Install.\n3. Register.\n4. Claim ₹22 bonus.",
-        safety: "Spin Gold ensures secure gaming with data protection.",
-        welcomeBonus: "🎁 Gold Bonus: ₹22 on signup + daily gold rewards. Spin for gold!"
-      },
-      { name: "Bingo 101", altName: "Bingo 101 APK", bonus: "₹45", withdrawal: "₹100", downloadUrl: "https://uono-bingo101.com/?code=3WFQ231H9Y2&t=1781197828", img: "https://i.ibb.co/My9tjNgL/bingo101.jpg",
-        title: "Bingo 101 APK – Bingo Welcome Bonus", seoDesc: "Bingo 101 APK – Bingo Welcome Bonus ₹45. Daily bingo, multiplayer, bonus rounds. Install now!",
-        desc: "Bingo 101 APK - bingo 101 with ₹45 bonus. बिंगो 101 ₹45 bonus के साथ।",
-        version: "2.0.0", size: "44 MB", downloads: "530K+", update: "Today", rating: "4.5",
-        features: ["Bingo games", "Daily bingo", "Multiplayer", "Bonus rounds"],
-        gameInfo: "Bingo 101 offers exciting bingo games with daily bingo and bonus rounds.",
-        faq: "Q: Is it safe? A: Yes. Q: Withdrawal? A: ₹100 min.",
-        tips: "Play multiple cards for better chances. बेहतर chances के लिए multiple cards खेलें।",
-        rewards: "Bingo bonus up to ₹300. Bingo bonus ₹300 तक।",
-        withdrawInfo: "UPI, Bank, min ₹100.",
-        howToDownload: "1. Download APK.\n2. Install.\n3. Register.\n4. Claim ₹45 bonus.",
-        safety: "Bingo 101 uses secure payment gateways.",
-        welcomeBonus: "🎁 Bingo Bonus: ₹45 on signup + daily bingo rewards. Play bingo!"
-      },
-      { name: "Yes Spin", altName: "Yes Spin Game", bonus: "₹18", withdrawal: "₹100", downloadUrl: "https://www.yesspineee.com/?code=47TXJTLU5YY&t=1781198907", img: "https://i.ibb.co/m5qzq7W4/yes-spin.jpg",
-        title: "Yes Spin APK – Simple Spin Welcome Bonus", seoDesc: "Yes Spin APK – Simple Spin Welcome Bonus ₹18. Quick wins, daily rewards, easy withdrawal. Download now!",
-        desc: "Yes Spin Game - yes to spin, yes to win. ₹18 bonus. स्पिन के लिए हाँ, जीत के लिए हाँ।",
-        version: "1.3.0", size: "30 MB", downloads: "380K+", update: "Today", rating: "4.0",
-        features: ["Simple spins", "Quick wins", "Daily rewards", "Easy withdrawal"],
-        gameInfo: "Yes Spin offers simple and quick slot games with easy withdrawal options.",
-        faq: "Q: Bonus? A: ₹18. Q: Withdrawal? A: ₹100 min.",
-        tips: "Spin daily for rewards. Rewards के लिए daily spin करें।",
-        rewards: "Daily rewards up to ₹100. Daily rewards ₹100 तक।",
-        withdrawInfo: "UPI, Paytm, min ₹100.",
-        howToDownload: "1. Download APK.\n2. Install.\n3. Register.\n4. Claim ₹18 bonus.",
-        safety: "Yes Spin ensures secure gaming with encrypted data.",
-        welcomeBonus: "🎁 Spin Bonus: ₹18 on signup + daily rewards. Yes to spin!"
-      },
-      { name: "Yono Arcade", altName: "Yono Arcade APK", bonus: "₹32", withdrawal: "₹100", downloadUrl: "https://yonoarcadeapk9.com/?code=96LNEL9FQXZ&t=1781199006", img: "https://i.ibb.co/mCzSG1L7/yono-arcade.jpg",
-        title: "Yono Arcade APK – Arcade Games Welcome Bonus", seoDesc: "Yono Arcade APK – Arcade Games Welcome Bonus ₹32. Skill games, daily challenges, leaderboard. Install now!",
-        desc: "Yono Arcade APK - arcade games with ₹32 bonus. आर्केड गेम्स ₹32 bonus के साथ।",
-        version: "2.5.0", size: "50 MB", downloads: "490K+", update: "Today", rating: "4.4",
-        features: ["Arcade games", "Skill games", "Daily challenges", "Leaderboard"],
-        gameInfo: "Yono Arcade offers a variety of arcade and skill games with daily challenges.",
-        faq: "Q: Is it free? A: Yes. Q: Withdrawal? A: ₹100 min.",
-        tips: "Practice skill games for better scores. बेहतर scores के लिए skill games का अभ्यास करें।",
-        rewards: "Challenge rewards up to ₹250. Challenge rewards ₹250 तक।",
-        withdrawInfo: "UPI, Bank, min ₹100.",
-        howToDownload: "1. Download APK.\n2. Install.\n3. Register.\n4. Claim ₹32 bonus.",
-        safety: "Yono Arcade provides secure gaming environment.",
-        welcomeBonus: "🎁 Arcade Bonus: ₹32 on signup + challenge rewards. Play arcade games!"
-      },
-      { name: "SVIP 777", altName: "SVIP 777 Game", bonus: "₹27", withdrawal: "₹100", downloadUrl: "https://www.svip777.life?pid=297924008&channel=2050001&t=pdd2&pkg=com.svip777.h5", img: "https://i.ibb.co/vfWZMLm/svip777.jpg",
-        title: "SVIP 777 APK – VIP Slots Welcome Bonus", seoDesc: "SVIP 777 APK – VIP Slots Welcome Bonus ₹27. VIP rewards, exclusive games, 777 bonus. Download now!",
-        desc: "SVIP 777 Game - super VIP 777 with ₹27 bonus. सुपर VIP 777 ₹27 bonus के साथ।",
-        version: "1.8.0", size: "40 MB", downloads: "460K+", update: "Today", rating: "4.3",
-        features: ["VIP slots", "777 bonus", "VIP rewards", "Exclusive games"],
-        gameInfo: "SVIP 777 offers VIP slot games with exclusive rewards and 777 bonus.",
-        faq: "Q: Bonus? A: ₹27. Q: Withdrawal? A: ₹100 min.",
-        tips: "Join VIP for better rewards. बेहतर rewards के लिए VIP join करें।",
-        rewards: "VIP rewards up to ₹500. VIP rewards ₹500 तक।",
-        withdrawInfo: "UPI, Paytm, min ₹100.",
-        howToDownload: "1. Download APK.\n2. Install.\n3. Register.\n4. Claim ₹27 bonus.",
-        safety: "SVIP 777 ensures secure and encrypted transactions.",
-        welcomeBonus: "🎁 VIP Bonus: ₹27 on signup + VIP rewards. Play like a VIP!"
-      },
-      { name: "OK Rummy", altName: "OK Rummy APK", bonus: "₹38", withdrawal: "₹100", downloadUrl: "https://www.okrummy22.com/?code=H2GU92WUXXA&t=1781199220", img: "https://i.ibb.co/99fCMbNC/ok-rummy.jpg",
-        title: "OK Rummy APK – OK Rummy Welcome Bonus", seoDesc: "OK Rummy APK – OK Rummy Welcome Bonus ₹38. Fast games, daily bonus, referral program. Install now!",
-        desc: "OK Rummy APK - OK rummy with ₹38 bonus. OK रम्मी ₹38 bonus के साथ।",
-        version: "1.9.0", size: "40 MB", downloads: "520K+", update: "Today", rating: "4.4",
-        features: ["OK rummy", "Fast games", "Daily bonus", "Referral program"],
-        gameInfo: "OK Rummy offers fast and fun rummy games with daily bonus and referral program.",
-        faq: "Q: Is it safe? A: Yes. Q: Withdrawal? A: ₹100 min.",
-        tips: "Refer friends for extra bonus. Extra bonus के लिए दोस्तों को refer करें।",
-        rewards: "Referral bonus up to ₹150. Referral bonus ₹150 तक।",
-        withdrawInfo: "UPI, Bank, min ₹100.",
-        howToDownload: "1. Download APK.\n2. Install.\n3. Register.\n4. Claim ₹38 bonus.",
-        safety: "OK Rummy uses secure payment gateways.",
-        welcomeBonus: "🎁 OK Bonus: ₹38 on signup + referral rewards. Play OK rummy!"
-      },
-      { name: "Hind 777", altName: "Hind 777 Game", bonus: "₹42", withdrawal: "₹100", downloadUrl: "https://www.hindi777agent5.com/?code=7LFFR8WPHEG&t=1781199307", img: "https://i.ibb.co/5gf3q0Sh/hind777.jpg",
-        title: "Hind 777 APK – Desi 777 Welcome Bonus", seoDesc: "Hind 777 APK – Desi 777 Welcome Bonus ₹42. Desi themes, 777 slots, jackpot. Download now!",
-        desc: "Hind 777 Game - desi 777 with ₹42 bonus. देसी 777 ₹42 bonus के साथ।",
-        version: "2.0.0", size: "45 MB", downloads: "570K+", update: "Today", rating: "4.5",
-        features: ["Desi themes", "777 slots", "Daily desi bonus", "Jackpot"],
-        gameInfo: "Hind 777 offers desi themed slot games with 777 slots and daily desi bonus.",
-        faq: "Q: Bonus? A: ₹42. Q: Withdrawal? A: ₹100 min.",
-        tips: "Play desi themes for better luck. बेहतर luck के लिए desi themes खेलें।",
-        rewards: "Desi bonus up to ₹400. Desi bonus ₹400 तक।",
-        withdrawInfo: "UPI, Paytm, min ₹100.",
-        howToDownload: "1. Download APK.\n2. Install.\n3. Register.\n4. Claim ₹42 bonus.",
-        safety: "Hind 777 ensures secure gaming with encrypted data.",
-        welcomeBonus: "🎁 Desi Bonus: ₹42 on signup + desi rewards. Play desi 777!"
-      },
-      { name: "Bet 213", altName: "Bet 213 APK", bonus: "₹36", withdrawal: "₹100", downloadUrl: "https://www.bet213.rocks/?code=2QTKPV4BYDH&t=1781199576", img: "https://i.ibb.co/YTqq2C4F/bet213.jpg",
-        title: "Bet 213 APK – Betting Games Welcome Bonus", seoDesc: "Bet 213 APK – Betting Games Welcome Bonus ₹36. Quick wins, daily bets, bonus rounds. Install now!",
-        desc: "Bet 213 APK - bet and win with ₹36 bonus. दांव लगाएं और जीतें ₹36 bonus के साथ।",
-        version: "1.7.0", size: "38 MB", downloads: "440K+", update: "Today", rating: "4.2",
-        features: ["Betting games", "Quick wins", "Daily bets", "Bonus rounds"],
-        gameInfo: "Bet 213 offers betting games with quick wins and daily bets.",
-        faq: "Q: Min deposit? A: ₹100. Q: Withdrawal? A: ₹100 min.",
-        tips: "Bet responsibly. जिम्मेदारी से दांव लगाएं।",
-        rewards: "Bet bonuses up to ₹200. Bet bonuses ₹200 तक।",
-        withdrawInfo: "UPI, Bank, min ₹100.",
-        howToDownload: "1. Download APK.\n2. Install.\n3. Register.\n4. Claim ₹36 bonus.",
-        safety: "Bet 213 provides secure and fair gaming.",
-        welcomeBonus: "🎁 Bet Bonus: ₹36 on signup + daily bets. Bet and win!"
-      },
-      { name: "Boss Rummy", altName: "Boss Rummy Game", bonus: "₹40", withdrawal: "₹100", downloadUrl: "https://www.bossrummyy.com/?code=LSHTVUZE1NR&t=1781429504", img: "https://i.ibb.co/fdWgRgxk/1000022725.jpg",
-        title: "Boss Rummy APK – Boss Rummy Welcome Bonus", seoDesc: "Boss Rummy APK – Boss Rummy Welcome Bonus ₹40. High stakes, tournaments, VIP rewards. Download now!",
-        desc: "Boss Rummy Game - boss the rummy table with ₹40 bonus. रम्मी टेबल पर बॉस बनें ₹40 bonus के साथ।",
-        version: "2.1.0", size: "42 MB", downloads: "620K+", update: "Today", rating: "4.6",
-        features: ["Boss tables", "High stakes", "Tournaments", "VIP rewards"],
-        gameInfo: "Boss Rummy offers premium rummy tables with high stakes and VIP rewards.",
-        faq: "Q: Is it safe? A: Yes. Q: Withdrawal? A: ₹100 min.",
-        tips: "Play like a boss - confidently. कॉन्फिडेंटली खेलें - बॉस की तरह।",
-        rewards: "VIP rewards up to ₹800. VIP rewards ₹800 तक।",
-        withdrawInfo: "UPI, Bank, min ₹100.",
-        howToDownload: "1. Download APK.\n2. Install.\n3. Register.\n4. Claim ₹40 bonus.",
-        safety: "Boss Rummy ensures secure gaming with encrypted transactions.",
-        welcomeBonus: "🎁 Boss Bonus: ₹40 on signup + VIP rewards. Be the boss!"
-      },
-      { name: "Yono 777", altName: "Yono 777 APK", bonus: "₹35", withdrawal: "₹100", downloadUrl: "https://uono777refer.vip/?code=F9MPSLKZCV9&t=1781429388", img: "https://i.ibb.co/VWz6S3JB/1000022725.jpg",
-        title: "Yono 777 APK – 777 Slots Welcome Bonus", seoDesc: "Yono 777 APK – 777 Slots Welcome Bonus ₹35. Yono themes, daily 777, jackpot. Install now!",
-        desc: "Yono 777 APK - Yono 777 with ₹35 bonus. Yono 777 ₹35 bonus के साथ।",
-        version: "2.0.0", size: "44 MB", downloads: "510K+", update: "Today", rating: "4.4",
-        features: ["777 slots", "Yono themes", "Daily 777", "Jackpot"],
-        gameInfo: "Yono 777 offers 777 themed slot games with daily 777 bonus and jackpot.",
-        faq: "Q: Bonus? A: ₹35. Q: Withdrawal? A: ₹100 min.",
-        tips: "Play 777 for lucky wins. Lucky wins के लिए 777 खेलें।",
-        rewards: "777 bonus up to ₹350. 777 bonus ₹350 तक।",
-        withdrawInfo: "UPI, Paytm, min ₹100.",
-        howToDownload: "1. Download APK.\n2. Install.\n3. Register.\n4. Claim ₹35 bonus.",
-        safety: "Yono 777 uses secure payment gateways.",
-        welcomeBonus: "🎁 777 Bonus: ₹35 on signup + lucky 777 rewards. Play Yono 777!"
-      },
-      { name: "Diwa VIP", altName: "Diwa VIP Game", bonus: "₹60", withdrawal: "₹100", downloadUrl: "https://uono777refer.vip/?code=F9MPSLKZCV9&t=1781429388", img: "https://i.ibb.co/ynsBHKtg/1000022725.jpg",
-        title: "Diwa VIP APK – VIP Diwa Welcome Bonus", seoDesc: "Diwa VIP APK – VIP Diwa Welcome Bonus ₹60. VIP slots, diwa themes, exclusive games. Download now!",
-        desc: "Diwa VIP Game - VIP diwa with ₹60 bonus. VIP दीवा ₹60 bonus के साथ।",
-        version: "1.5.0", size: "40 MB", downloads: "380K+", update: "Today", rating: "4.2",
-        features: ["VIP slots", "Diwa themes", "VIP rewards", "Exclusive games"],
-        gameInfo: "Diwa VIP offers VIP slot games with diwa themes and exclusive rewards.",
-        faq: "Q: Is it safe? A: Yes. Q: Withdrawal? A: ₹100 min.",
-        tips: "Enjoy VIP treatment. VIP treatment का आनंद लें।",
-        rewards: "VIP rewards up to ₹500. VIP rewards ₹500 तक।",
-        withdrawInfo: "UPI, Bank, min ₹100.",
-        howToDownload: "1. Download APK.\n2. Install.\n3. Register.\n4. Claim ₹60 bonus.",
-        safety: "Diwa VIP ensures secure and encrypted transactions.",
-        welcomeBonus: "🎁 VIP Diwa Bonus: ₹60 on signup + VIP treatment. Play VIP diwa!"
-      },
-      { name: "Diwa 777", altName: "Diwa 777 APK", bonus: "₹45", withdrawal: "₹100", downloadUrl: "https://sharediwa7771.top?pid=287747863&channel=2010001&t=pdd2&pkg=com.diwa777.app", img: "https://i.ibb.co/Kx2RKNvN/1000022725.jpg",
-        title: "Diwa 777 APK – Diwa 777 Welcome Bonus", seoDesc: "Diwa 777 APK – Diwa 777 Welcome Bonus ₹45. 777 diwa, bonus spins, daily rewards. Install now!",
-        desc: "Diwa 777 APK - diwa 777 with ₹45 bonus. दीवा 777 ₹45 bonus के साथ।",
-        version: "1.8.0", size: "46 MB", downloads: "420K+", update: "Today", rating: "4.3",
-        features: ["777 diwa", "Bonus spins", "Daily rewards", "Jackpot"],
-        gameInfo: "Diwa 777 offers 777 themed diwa slots with bonus spins and daily rewards.",
-        faq: "Q: Bonus? A: ₹45. Q: Withdrawal? A: ₹100 min.",
-        tips: "Spin with diwa luck. दीवा luck के साथ spin करें।",
-        rewards: "Diwa rewards up to ₹400. Diwa rewards ₹400 तक।",
-        withdrawInfo: "UPI, Paytm, min ₹100.",
-        howToDownload: "1. Download APK.\n2. Install.\n3. Register.\n4. Claim ₹45 bonus.",
-        safety: "Diwa 777 provides secure gaming with data protection.",
-        welcomeBonus: "🎁 Diwa 777 Bonus: ₹45 on signup + diwa rewards. Play diwa 777!"
-      },
-      { name: "Yono Games", altName: "Yono Games APK", bonus: "₹45", withdrawal: "₹100", downloadUrl: "https://yonogamesm.com/?code=LHS49AEHVMR&t=1784314209", img: "https://i.ibb.co/LXqV77rd/yono-games.jpg",
-        title: "Yono Games APK – All Yono Games Welcome Bonus", seoDesc: "Yono Games APK – All Yono Games Welcome Bonus ₹45. Variety, daily bonuses, secure platform. Download now!",
-        desc: "Yono Games APK - all Yono games in one with ₹45 bonus. सभी Yono games एक में ₹45 bonus के साथ।",
-        version: "3.0.0", size: "55 MB", downloads: "680K+", update: "Today", rating: "4.6",
-        features: ["All Yono games", "Variety", "Daily bonuses", "Secure platform"],
-        gameInfo: "Yono Games brings all Yono games together in one app with daily bonuses and secure platform.",
-        faq: "Q: Is it free? A: Yes. Q: Withdrawal? A: ₹100 min.",
-        tips: "Explore all games for best rewards. बेहतर rewards के लिए सभी games explore करें।",
-        rewards: "Daily bonuses up to ₹200. Daily bonuses ₹200 तक।",
-        withdrawInfo: "UPI, Bank, min ₹100.",
-        howToDownload: "1. Download APK.\n2. Install.\n3. Register.\n4. Claim ₹45 bonus.",
-        safety: "Yono Games ensures secure gaming with encrypted data.",
-        welcomeBonus: "🎁 Yono Games Bonus: ₹45 on signup + daily bonuses. Play all Yono games!"
-      },
-      { name: "INR Rummy", altName: "INR Rummy Game", bonus: "₹45", withdrawal: "₹100", downloadUrl: "https://inrrummy.club/?code=JMQBV8TAPD7&t=1784298106", img: "https://i.ibb.co/Y7ZRkLFp/inr-rummy.jpg",
-        title: "INR Rummy APK – INR Rummy Welcome Bonus", seoDesc: "INR Rummy APK – INR Rummy Welcome Bonus ₹45. Play in INR, fast withdrawal, secure. Install now!",
-        desc: "INR Rummy Game - play in INR with ₹45 bonus. INR में खेलें ₹45 bonus के साथ।",
-        version: "1.6.0", size: "38 MB", downloads: "490K+", update: "Today", rating: "4.3",
-        features: ["INR games", "Rummy variants", "Fast withdrawal", "Secure"],
-        gameInfo: "INR Rummy offers rummy games in Indian Rupees with fast withdrawal and secure platform.",
-        faq: "Q: Bonus? A: ₹45. Q: Withdrawal? A: ₹100 min.",
-        tips: "Play with INR for real cash. Real cash के लिए INR में खेलें।",
-        rewards: "INR bonuses up to ₹300. INR bonuses ₹300 तक।",
-        withdrawInfo: "UPI, Paytm, min ₹100.",
-        howToDownload: "1. Download APK.\n2. Install.\n3. Register.\n4. Claim ₹45 bonus.",
-        safety: "INR Rummy uses secure payment gateways.",
-        welcomeBonus: "🎁 INR Bonus: ₹45 on signup + INR rewards. Play in INR!"
-      },
-      { name: "Slots Winner Pro", altName: "Slots Winner Pro APK", bonus: "₹45", withdrawal: "₹100", downloadUrl: "https://slotswinneri.com/?code=PGVC6CBNF53&t=1784299271", img: "https://i.ibb.co/wNYf5LG8/slots-winner.jpg",
-        title: "Slots Winner Pro APK – Pro Slots Welcome Bonus", seoDesc: "Slots Winner Pro APK – Pro Slots Welcome Bonus ₹45. Jackpot, daily spins, VIP rewards. Download now!",
-        desc: "Slots Winner Pro APK - pro slots winner with ₹45 bonus. प्रो स्लॉट्स विजेता ₹45 bonus के साथ।",
-        version: "2.0.0", size: "50 MB", downloads: "520K+", update: "Today", rating: "4.5",
-        features: ["Pro slots", "Jackpot", "Daily spins", "VIP rewards"],
-        gameInfo: "Slots Winner Pro offers professional slot games with jackpot and VIP rewards.",
-        faq: "Q: Is it safe? A: Yes. Q: Withdrawal? A: ₹100 min.",
-        tips: "Go pro for bigger wins. बड़ी जीत के लिए pro बनें।",
-        rewards: "Pro rewards up to ₹700. Pro rewards ₹700 तक।",
-        withdrawInfo: "UPI, Bank, min ₹100.",
-        howToDownload: "1. Download APK.\n2. Install.\n3. Register.\n4. Claim ₹45 bonus.",
-        safety: "Slots Winner Pro ensures secure and encrypted transactions.",
-        welcomeBonus: "🎁 Pro Bonus: ₹45 on signup + pro rewards. Go pro and win!"
-      },
-      { name: "MBM BET", altName: "MBM BET Game", bonus: "₹45", withdrawal: "₹100", downloadUrl: "https://www.mbmbet3.com/?code=GD3H3VA6YK5&t=1784297830", img: "https://i.ibb.co/sJcmCxK6/mbm-bet.jpg",
-        title: "MBM BET APK – MBM Bet Welcome Bonus", seoDesc: "MBM BET APK – MBM Bet Welcome Bonus ₹45. Quick games, daily bets, bonus rounds. Install now!",
-        desc: "MBM BET Game - MBM bet with ₹45 bonus. MBM बेट ₹45 bonus के साथ।",
-        version: "1.4.0", size: "36 MB", downloads: "350K+", update: "Today", rating: "4.1",
-        features: ["Betting", "Quick games", "Daily bets", "Bonus rounds"],
-        gameInfo: "MBM BET offers betting games with quick play and daily bonus rounds.",
-        faq: "Q: Min deposit? A: ₹100. Q: Withdrawal? A: ₹100 min.",
-        tips: "Bet smart, win big. स्मार्ट बेट करें, बड़ा जीतें।",
-        rewards: "Bet bonuses up to ₹200. Bet bonuses ₹200 तक।",
-        withdrawInfo: "UPI, Paytm, min ₹100.",
-        howToDownload: "1. Download APK.\n2. Install.\n3. Register.\n4. Claim ₹45 bonus.",
-        safety: "MBM BET provides secure gaming with data protection.",
-        welcomeBonus: "🎁 MBM Bonus: ₹45 on signup + daily bets. Bet smart!"
-      },
-      { name: "Goa Spin", altName: "Goa Spin APK", bonus: "₹45", withdrawal: "₹100", downloadUrl: "https://www.earntp.com/m/jm9n7r", img: "https://i.ibb.co/FbpzMnQx/goa-spin.jpg",
-        title: "Goa Spin APK – Goa Themed Welcome Bonus", seoDesc: "Goa Spin APK – Goa Themed Welcome Bonus ₹45. Goa themes, spin games, daily rewards. Download now!",
-        desc: "Goa Spin APK - Goa spin with ₹45 bonus. गोवा स्पिन ₹45 bonus के साथ।",
-        version: "1.5.0", size: "38 MB", downloads: "400K+", update: "Today", rating: "4.2",
-        features: ["Goa themes", "Spin games", "Daily rewards", "Jackpot"],
-        gameInfo: "Goa Spin offers Goa themed spin games with daily rewards and jackpot.",
-        faq: "Q: Bonus? A: ₹45. Q: Withdrawal? A: ₹100 min.",
-        tips: "Spin with Goa vibes. गोवा vibes के साथ spin करें।",
-        rewards: "Goa rewards up to ₹300. Goa rewards ₹300 तक।",
-        withdrawInfo: "UPI, Bank, min ₹100.",
-        howToDownload: "1. Download APK.\n2. Install.\n3. Register.\n4. Claim ₹45 bonus.",
-        safety: "Goa Spin ensures secure gaming with encrypted data.",
-        welcomeBonus: "🎁 Goa Bonus: ₹45 on signup + Goa rewards. Spin with Goa vibes!"
-      },
-      { name: "101Z", altName: "101Z Game", bonus: "₹40", withdrawal: "₹100", downloadUrl: "https://www.earntp.com/gold/jm9n7r", img: "https://i.ibb.co/F4tpkSSm/101z.jpg",
-        title: "101Z APK – 101 Games Welcome Bonus", seoDesc: "101Z APK – 101 Games Welcome Bonus ₹40. 101 types, quick play, daily bonus. Install now!",
-        desc: "101Z Game - 101Z with ₹40 bonus. 101Z ₹40 bonus के साथ।",
-        version: "1.2.0", size: "32 MB", downloads: "320K+", update: "Today", rating: "4.0",
-        features: ["101 games", "Quick play", "Daily bonus", "Easy withdrawal"],
-        gameInfo: "101Z offers 101 types of games with quick play and easy withdrawal.",
-        faq: "Q: Is it free? A: Yes. Q: Withdrawal? A: ₹100 min.",
-        tips: "Try different games for variety. विविधता के लिए अलग-अलग games try करें।",
-        rewards: "Daily bonus up to ₹150. Daily bonus ₹150 तक।",
-        withdrawInfo: "UPI, Paytm, min ₹100.",
-        howToDownload: "1. Download APK.\n2. Install.\n3. Register.\n4. Claim ₹40 bonus.",
-        safety: "101Z provides secure gaming with data protection.",
-        welcomeBonus: "🎁 101 Bonus: ₹40 on signup + daily rewards. Play 101 games!"
-      },
+      // 2. 777 Game - with new SEO tags
       { name: "777 Game", altName: "777 Game APK", bonus: "₹50", withdrawal: "₹100", downloadUrl: "https://t.me/yonogamestite", img: "https://i.ibb.co/YFG8D6NF/777-game.jpg",
-        title: "777 Game APK – Lucky 777 Welcome Bonus", seoDesc: "777 Game APK – Lucky 777 Welcome Bonus ₹50. Jackpot, daily 777, bonus rounds. Download now!",
-        desc: "777 Game APK - 777 game with ₹50 bonus. 777 गेम ₹50 bonus के साथ।",
+        title: "777 Game APK – Download Welcome Bonus",
+        seo: ["777 Game", "Yono 777 Game", "777 Game APK", "Uono Play 777", "Yono Games 777", "download 777 Game", "777 Game 2026", "777 Game app", "777 Game bonus", "777 Game welcome bonus", "Yono 777", "Uono Play games", "skill gaming app", "arcade games India", "fun gaming app", "777 Game referral", "777 Game login", "777 Game registration", "best Yono games", "777 Game rewards"],
+        desc: "777 Game is the new app launched by Uono Play (Yono Games) and has become instant hit. Download and get instant welcome bonus.",
         version: "2.0.0", size: "40 MB", downloads: "450K+", update: "Today", rating: "4.4",
         features: ["777 games", "Jackpot", "Daily 777", "Bonus rounds"],
         gameInfo: "777 Game offers lucky 777 themed games with jackpot and daily 777 bonus.",
@@ -800,169 +107,720 @@
         withdrawInfo: "UPI, Bank, min ₹100.",
         howToDownload: "1. Download APK.\n2. Install.\n3. Register.\n4. Claim ₹50 bonus.",
         safety: "777 Game ensures secure gaming with encrypted transactions.",
-        welcomeBonus: "🎁 Lucky 777 Bonus: ₹50 on signup + 777 rewards. Play lucky 777!"
+        welcomeBonus: "🎁 Welcome Bonus: ₹50 on signup + 777 rewards."
       },
+      // 3. Yono Games - with new SEO tags
+      { name: "Yono Games", altName: "Yono Games APK", bonus: "₹45", withdrawal: "₹100", downloadUrl: "https://yonogamesm.com/?code=LHS49AEHVMR&t=1784314209", img: "https://i.ibb.co/LXqV77rd/yono-games.jpg",
+        title: "Yono Games APK – All Yono Games Welcome Bonus",
+        seo: ["Yono Games", "Yono Games APK", "Uono Play", "Yono Games app", "Yono Games download", "all Yono games", "Yono Games 2026", "Yono Games bonus", "Yono Games welcome bonus", "skill gaming app India", "Rummy 365", "Slots Winner", "Gogo Rummy", "Maha Games", "IND Slots", "MKM Bet", "Boss Rummy", "Yono Games referral", "Yono Games login", "best gaming platform"],
+        desc: "Yono Games App is a popular all-in-one gaming platform with skill-based and casual games. Download and claim welcome bonus.",
+        version: "3.0.0", size: "55 MB", downloads: "680K+", update: "Today", rating: "4.6",
+        features: ["All Yono games", "Variety", "Daily bonuses", "Secure platform"],
+        gameInfo: "Yono Games brings all Yono games together in one app with daily bonuses and secure platform.",
+        faq: "Q: Is it free? A: Yes. Q: Withdrawal? A: ₹100 min.",
+        tips: "Explore all games for best rewards.",
+        rewards: "Daily bonuses up to ₹200.",
+        withdrawInfo: "UPI, Bank, min ₹100.",
+        howToDownload: "1. Download APK.\n2. Install.\n3. Register.\n4. Claim ₹45 bonus.",
+        safety: "Yono Games ensures secure gaming with encrypted data.",
+        welcomeBonus: "🎁 Yono Games Bonus: ₹45 on signup + daily bonuses."
+      },
+      // 4. Jaiho 91 - with new SEO tags
+      { name: "Jaiho 91", altName: "Jaiho 91 Game", bonus: "₹50", withdrawal: "₹100", downloadUrl: "https://jaiho91bonus.vip/?code=C42T99ZQHAT&t=1781506067", img: "https://i.ibb.co/zV0C6Xkk/1000022725.jpg",
+        title: "Jaiho 91 APK – New User Sign Up Bonus Claim",
+        seo: ["Jaiho 91", "Jaiho91", "Jaiho 91 APK", "Yono Games Jaiho", "Uono Play Jaiho", "Jaiho 91 game", "Jaiho 91 download", "Jaiho 91 2026", "Jaiho 91 bonus", "welcome bonus 2500", "Jaiho 91 referral", "Ludo game", "Trekken game", "Fishing game", "Aviator game", "Indian Rummy", "skill gaming app", "Jaiho 91 login", "Jaiho 91 registration", "Jaiho 91 rewards"],
+        desc: "Jaiho91 is the new app released by Yono Games with multiple skilled games like Ludo, Trekken, Fishing, Aviator, Indian Rummy.",
+        version: "4.1.0", size: "38 MB", downloads: "1.5M+", update: "Today", rating: "4.8",
+        features: ["Teen Patti + Rummy", "Live tables", "Instant withdrawal", "Referral bonus"],
+        gameInfo: "Jaiho 91 offers both Teen Patti and Rummy in one app. Play with players across India.",
+        faq: "Q: Minimum age? A: 18+. Q: Bonus? A: ₹50 welcome.",
+        tips: "Learn basic strategies for Teen Patti and Rummy.",
+        rewards: "Referral bonus ₹50, daily cashback.",
+        withdrawInfo: "UPI, Bank, min ₹100.",
+        howToDownload: "1. Tap Download.\n2. Install APK.\n3. Register.\n4. Get ₹50 bonus!",
+        safety: "Jaiho 91 uses secure servers and encrypted transactions.",
+        welcomeBonus: "🎁 Sign Up Bonus: ₹50 on registration."
+      },
+      // 5. Teen Patti Master - with new SEO tags
+      { name: "Teen Patti Master", altName: "Teen Patti Master APK", bonus: "₹20", withdrawal: "₹100", downloadUrl: "https://www.earntp.com/m/jm9n7r", img: "https://i.ibb.co/JjrZjn2n/teen-patti-master.jpg",
+        title: "Teen Patti Master APK – Master Game Welcome Bonus",
+        seo: ["Teen Patti Master", "Patti Master", "Teen Patti Master APK", "download Teen Patti Master", "Teen Patti Master 2026", "Teen Patti Master bonus", "Teen Patti Master welcome bonus", "Teen Patti Master game", "Indian card game", "Poker", "Roulette", "Slot games", "Andhar Bahar", "Wheel of fortune", "Teen Patti Master referral", "Teen Patti Master login", "Teen Patti Master registration", "Yono Games Teen Patti", "best card game app", "Teen Patti Master rewards"],
+        desc: "Teen Patti Master is the most popular card game in India. Download APK and get bonuses, cashback, mystery bonus.",
+        version: "3.5.0", size: "35 MB", downloads: "1.8M+", update: "Today", rating: "4.6",
+        features: ["Master tables", "Practice mode", "Tournaments", "Quick play"],
+        gameInfo: "Teen Patti Master helps you master the game with practice mode and tournaments.",
+        faq: "Q: Free to play? A: Yes. Q: Withdrawal? A: ₹100 min.",
+        tips: "Practice in practice mode first.",
+        rewards: "Tournament prizes up to ₹500.",
+        withdrawInfo: "UPI, Paytm, min ₹100.",
+        howToDownload: "1. Download APK.\n2. Install.\n3. Register.\n4. Get ₹20 bonus.",
+        safety: "Teen Patti Master ensures safe and fair gaming.",
+        welcomeBonus: "🎁 Master Bonus: ₹20 on signup."
+      },
+      // 6. Bet 213 - with new SEO tags
+      { name: "Bet 213", altName: "Bet 213 APK", bonus: "₹36", withdrawal: "₹100", downloadUrl: "https://www.bet213.rocks/?code=2QTKPV4BYDH&t=1781199576", img: "https://i.ibb.co/YTqq2C4F/bet213.jpg",
+        title: "Bet 213 APK – Download Welcome Bonus",
+        seo: ["Bet 213 Slots", "BET 213", "Bet 213 APK", "Yono Games Bet 213", "download Bet 213", "Bet 213 2026", "Bet 213 bonus", "Bet 213 slots game", "Bet 213 APK download", "Bet 213 registration", "Bet 213 login", "Bet 213 referral", "skill gaming app", "slot game India", "UPI withdrawal", "Bet 213 welcome bonus", "Bet 213 rewards", "Bet 213 VIP", "secure gaming app", "Bet 213 old version"],
+        desc: "Download BET 213 Slots app released by Yono Games. Get instant bonus on registration.",
+        version: "1.7.0", size: "38 MB", downloads: "440K+", update: "Today", rating: "4.2",
+        features: ["Betting games", "Quick wins", "Daily bets", "Bonus rounds"],
+        gameInfo: "Bet 213 offers betting games with quick wins and daily bets.",
+        faq: "Q: Min deposit? A: ₹100. Q: Withdrawal? A: ₹100 min.",
+        tips: "Bet responsibly.",
+        rewards: "Bet bonuses up to ₹200.",
+        withdrawInfo: "UPI, Bank, min ₹100.",
+        howToDownload: "1. Download APK.\n2. Install.\n3. Register.\n4. Claim ₹36 bonus.",
+        safety: "Bet 213 provides secure and fair gaming.",
+        welcomeBonus: "🎁 Bet Bonus: ₹36 on signup."
+      },
+      // 7. 567 Slots - unique tags
+      { name: "567 Slots", altName: "567 Slots Game", bonus: "₹45", withdrawal: "₹100", downloadUrl: "https://join567slots0.com/?code=4NYF487URJ6&t=1781505684", img: "https://i.ibb.co/hFytMXY2/1000022725.jpg",
+        title: "567 Slots APK – Download Welcome Bonus",
+        seo: ["567 Slots", "567 Slots Game", "slot game APK", "real cash slots", "progressive jackpot", "slot themes", "daily free spins", "fast withdrawal slots", "best slot app India", "online slots real money", "slot machine game", "jackpot slots", "UPI slots app", "567 slots bonus ₹45", "slot games 2025", "casino slots", "slot referral bonus", "high RTP slots", "mobile slot game", "slot withdrawal ₹100"],
+        desc: "567 Slots Game - भारत का favourite slot game! Spin & win real cash. Get ₹45 welcome bonus.",
+        version: "2.5.0", size: "42 MB", downloads: "850K+", update: "Today", rating: "4.5",
+        features: ["100+ slot themes", "Progressive jackpot", "Daily free spins", "Fast withdrawal"],
+        gameInfo: "567 Slots offers classic and modern slot machines with high RTP.",
+        faq: "Q: Minimum deposit? A: ₹100. Q: Withdrawal time? A: 24-48 hrs.",
+        tips: "Use free spins first, then play with bonus.",
+        rewards: "Daily spin bonus, loyalty rewards up to ₹500.",
+        withdrawInfo: "UPI & Bank Transfer, min ₹100.",
+        howToDownload: "1. Tap Download.\n2. Install APK.\n3. Sign up.\n4. Get ₹45 bonus.",
+        safety: "567 Slots uses secure payment gateways.",
+        welcomeBonus: "🎁 Welcome Bonus: ₹45 on signup + daily free spins."
+      },
+      // 8. Saga Slots - unique tags
+      { name: "Saga Slots", altName: "Saga Slots APK", bonus: "₹40", withdrawal: "₹100", downloadUrl: "https://www.sagaslots5.com/?code=0QHJSERZYMV&t=1781505813", img: "https://i.ibb.co/20dzhBZf/1000022725.jpg",
+        title: "Install Saga Slots APK – Get Welcome Reward",
+        seo: ["Saga Slots", "Saga Slots APK", "story-based slots", "slot adventure", "multiplayer tournaments", "daily missions", "VIP rewards", "Saga Slots bonus", "Saga Slots download", "RPG slots", "quest slots", "slot game 2025", "Saga Slots welcome bonus", "Saga Slots referral", "secure slot app", "UPI slots", "best adventure slots", "Saga Slots login", "Saga Slots registration", "Saga Slots rewards"],
+        desc: "Saga Slots APK - epic slot adventure with huge bonuses. ₹40 signup bonus.",
+        version: "3.0.2", size: "55 MB", downloads: "600K+", update: "Today", rating: "4.4",
+        features: ["Story-based slots", "Multiplayer tournaments", "Daily missions", "VIP rewards"],
+        gameInfo: "Saga Slots combines RPG elements with slots. Complete quests and earn extra rewards.",
+        faq: "Q: Is it legal? A: Yes. Q: Bonus wagering? A: 10x.",
+        tips: "Complete daily missions for extra coins.",
+        rewards: "Mission rewards up to ₹300, VIP cashback.",
+        withdrawInfo: "UPI, Paytm, min ₹100.",
+        howToDownload: "1. Click Download.\n2. Install APK.\n3. Register.\n4. Claim ₹40 bonus.",
+        safety: "Saga Slots is a licensed platform.",
+        welcomeBonus: "🎁 Welcome Reward: ₹40 on signup."
+      },
+      // 9. Rummy Ludo - unique
+      { name: "Rummy Ludo", altName: "Rummy Ludo APK", bonus: "₹35", withdrawal: "₹100", downloadUrl: "https://rummyludoapp37.com/", img: "https://i.ibb.co/Z6Xy7y2x/1000022725.jpg",
+        title: "Rummy Ludo APK – Download Welcome Bonus",
+        seo: ["Rummy Ludo", "Rummy Ludo APK", "Rummy + Ludo", "multiplayer game", "quick games", "daily tournaments", "Rummy Ludo bonus", "Rummy Ludo download", "card game", "board game", "fun gaming app", "Rummy Ludo 2025", "Rummy Ludo welcome bonus", "Rummy Ludo referral", "secure game app", "UPI withdrawal", "Rummy Ludo login", "Rummy Ludo registration", "best combo game", "Rummy Ludo rewards"],
+        desc: "Rummy Ludo APK - Rummy aur Ludo dono ek app mein! ₹35 welcome bonus.",
+        version: "2.0.8", size: "45 MB", downloads: "900K+", update: "Today", rating: "4.3",
+        features: ["Rummy + Ludo", "Multiplayer", "Quick games", "Daily tournaments"],
+        gameInfo: "Rummy Ludo combines classic card game with board game fun.",
+        faq: "Q: Free to play? A: Yes. Q: Withdrawal? A: ₹100 min.",
+        tips: "Practice in free rooms before cash games.",
+        rewards: "Tournament prizes up to ₹1000.",
+        withdrawInfo: "UPI, Paytm, min ₹100.",
+        howToDownload: "1. Click Download.\n2. Install APK.\n3. Sign up.\n4. Claim ₹35 bonus.",
+        safety: "Rummy Ludo provides secure gaming environment.",
+        welcomeBonus: "🎁 Welcome Bonus: ₹35 on signup."
+      },
+      // 10. ABC Rummy - unique
+      { name: "ABC Rummy", altName: "ABC Rummy Game", bonus: "₹42", withdrawal: "₹100", downloadUrl: "https://d34i569g8ztoql.cloudfront.net/abcrummy_MeApp.apk", img: "https://i.ibb.co/Ldmd1DHH/1000022725.jpg",
+        title: "Download ABC Rummy – New Jackpots Claim Bonus",
+        seo: ["ABC Rummy", "ABC Rummy Game", "ABC Rummy APK", "classic rummy", "rummy tournaments", "fast deals", "secure payments", "ABC Rummy bonus", "ABC Rummy download", "India rummy app", "trusted rummy", "ABC Rummy 2025", "ABC Rummy welcome bonus", "ABC Rummy referral", "secure rummy app", "UPI withdrawal rummy", "ABC Rummy login", "ABC Rummy registration", "best rummy app", "ABC Rummy rewards"],
+        desc: "ABC Rummy Game - India ka trusted rummy app. ₹42 signup bonus.",
+        version: "1.9.3", size: "40 MB", downloads: "750K+", update: "Today", rating: "4.6",
+        features: ["Classic Rummy", "Tournaments", "Fast deals", "Secure payments"],
+        gameInfo: "ABC Rummy offers classic rummy experience with fast gameplay.",
+        faq: "Q: Is it safe? A: Yes. Q: Min withdrawal? A: ₹100.",
+        tips: "Play with small stakes first.",
+        rewards: "Daily bonus up to ₹200.",
+        withdrawInfo: "UPI, Bank Transfer, min ₹100.",
+        howToDownload: "1. Tap Download.\n2. Install APK.\n3. Register.\n4. Claim ₹42 bonus.",
+        safety: "ABC Rummy uses encrypted transactions.",
+        welcomeBonus: "🎁 New Jackpots Bonus: ₹42 on signup."
+      },
+      // 11. Rummy 91 - unique
+      { name: "Rummy 91", altName: "Rummy 91 APK", bonus: "₹38", withdrawal: "₹100", downloadUrl: "https://d16sfv4ssrmnvt.cloudfront.net/rummy91_AGENT.apk", img: "https://i.ibb.co/Fb2j77pp/1000022725.jpg",
+        title: "Rummy 91 APK – Fast Rummy Welcome Bonus",
+        seo: ["Rummy 91", "Rummy 91 APK", "fast rummy", "multiplayer tables", "daily challenges", "VIP club", "Rummy 91 bonus", "Rummy 91 download", "rummy game India", "fast card game", "Rummy 91 2025", "Rummy 91 welcome bonus", "Rummy 91 referral", "secure rummy app", "UPI withdrawal", "Rummy 91 login", "Rummy 91 registration", "best rummy app", "Rummy 91 VIP", "Rummy 91 rewards"],
+        desc: "Rummy 91 APK - fast rummy with ₹38 bonus.",
+        version: "2.1.5", size: "38 MB", downloads: "680K+", update: "Today", rating: "4.4",
+        features: ["Fast rummy", "Multiplayer tables", "Daily challenges", "VIP club"],
+        gameInfo: "Rummy 91 provides fast-paced rummy action with multiple tables.",
+        faq: "Q: Minimum age? A: 18+. Q: Withdrawal? A: ₹100 min.",
+        tips: "Focus on sequences first.",
+        rewards: "VIP club rewards up to ₹500.",
+        withdrawInfo: "UPI, Paytm, min ₹100.",
+        howToDownload: "1. Download APK.\n2. Install.\n3. Register.\n4. Get ₹38 bonus.",
+        safety: "Rummy 91 ensures secure gaming with encrypted data.",
+        welcomeBonus: "🎁 Welcome Bonus: ₹38 on signup."
+      },
+      // 12. Love Rummy - unique
+      { name: "Love Rummy", altName: "Love Rummy Game", bonus: "₹36", withdrawal: "₹100", downloadUrl: "https://d34i569g8ztoql.cloudfront.net/loverummy_App.apk", img: "https://i.ibb.co/PZ2dpNJ9/1000022725.jpg",
+        title: "Love Rummy APK – Romantic Theme Welcome Bonus",
+        seo: ["Love Rummy", "Love Rummy Game", "Love Rummy APK", "romantic themes", "rummy variants", "chat with players", "daily gifts", "Love Rummy bonus", "Love Rummy download", "fun rummy app", "Love Rummy 2025", "Love Rummy welcome bonus", "Love Rummy referral", "secure rummy app", "UPI withdrawal", "Love Rummy login", "Love Rummy registration", "best theme rummy", "Love Rummy rewards", "romantic gaming"],
+        desc: "Love Rummy Game - play with love, win with skill. ₹36 bonus.",
+        version: "1.7.2", size: "36 MB", downloads: "550K+", update: "Today", rating: "4.2",
+        features: ["Romantic themes", "Rummy variants", "Chat with players", "Daily gifts"],
+        gameInfo: "Love Rummy offers a unique romantic theme for rummy lovers.",
+        faq: "Q: Is it free? A: Yes. Q: Min withdrawal? A: ₹100.",
+        tips: "Use chat to make friends and learn.",
+        rewards: "Daily gifts and bonus up to ₹150.",
+        withdrawInfo: "UPI, Bank, min ₹100.",
+        howToDownload: "1. Download APK.\n2. Install.\n3. Register.\n4. Claim ₹36 bonus.",
+        safety: "Love Rummy prioritizes user safety.",
+        welcomeBonus: "🎁 Romantic Welcome: ₹36 on signup."
+      },
+      // 13. Spin Crush - unique
+      { name: "Spin Crush", altName: "Spin Crush APK", bonus: "₹30", withdrawal: "₹100", downloadUrl: "https://d292swwe9zki3u.cloudfront.net/spincrush_freecash.apk", img: "https://i.ibb.co/S4C26kVS/1000022725.jpg",
+        title: "Spin Crush APK – Crush Slots Welcome Bonus",
+        seo: ["Spin Crush", "Spin Crush APK", "modern slots", "free spins", "level rewards", "jackpot", "Spin Crush bonus", "Spin Crush download", "slot game India", "Spin Crush 2025", "Spin Crush welcome bonus", "Spin Crush referral", "secure slot app", "UPI withdrawal", "Spin Crush login", "Spin Crush registration", "best slot app", "Spin Crush rewards", "crush slots", "Spin Crush game"],
+        desc: "Spin Crush APK - crush the slots with ₹30 bonus.",
+        version: "3.0.0", size: "50 MB", downloads: "480K+", update: "Today", rating: "4.3",
+        features: ["Modern slots", "Free spins", "Level rewards", "Jackpot"],
+        gameInfo: "Spin Crush brings modern slot gaming with level rewards.",
+        faq: "Q: Bonus wagering? A: 8x. Q: Min withdrawal? A: ₹100.",
+        tips: "Level up for better rewards.",
+        rewards: "Level rewards up to ₹300.",
+        withdrawInfo: "UPI, Paytm, min ₹100.",
+        howToDownload: "1. Download APK.\n2. Install.\n3. Register.\n4. Get ₹30 bonus.",
+        safety: "Spin Crush uses secure payment gateways.",
+        welcomeBonus: "🎁 Crush Slots Bonus: ₹30 on signup."
+      },
+      // 14. Top Rummy - unique
+      { name: "Top Rummy", altName: "Top Rummy Game", bonus: "₹48", withdrawal: "₹100", downloadUrl: "https://th7.my/BY1JWS/3gvute0", img: "https://i.ibb.co/bRy3w8dN/1000022725.jpg",
+        title: "Top Rummy APK – Premium Rummy Welcome Bonus",
+        seo: ["Top Rummy", "Top Rummy Game", "Top Rummy APK", "premium tables", "high stakes", "tournaments", "VIP support", "Top Rummy bonus", "Top Rummy download", "premium rummy app", "Top Rummy 2025", "Top Rummy welcome bonus", "Top Rummy referral", "secure rummy app", "UPI withdrawal", "Top Rummy login", "Top Rummy registration", "best rummy app", "Top Rummy VIP", "Top Rummy rewards"],
+        desc: "Top Rummy Game - premium rummy experience with ₹48 bonus.",
+        version: "2.8.1", size: "44 MB", downloads: "920K+", update: "Today", rating: "4.7",
+        features: ["Premium tables", "High stakes", "Tournaments", "VIP support"],
+        gameInfo: "Top Rummy offers premium rummy tables with high stakes.",
+        faq: "Q: Is it safe? A: Yes. Q: Min withdrawal? A: ₹100.",
+        tips: "Start with lower stakes and move up.",
+        rewards: "VIP rewards up to ₹1000.",
+        withdrawInfo: "UPI, Bank, min ₹100.",
+        howToDownload: "1. Download APK.\n2. Install.\n3. Register.\n4. Claim ₹48 bonus.",
+        safety: "Top Rummy ensures secure and fair gameplay.",
+        welcomeBonus: "🎁 Premium Bonus: ₹48 on signup."
+      },
+      // 15. Rummy 365 - unique
+      { name: "Rummy 365", altName: "Rummy 365 APK", bonus: "₹44", withdrawal: "₹100", downloadUrl: "https://join567slots0.com/?code=4NYF487URJ6&t=1781505684", img: "https://i.ibb.co/Hf9bhrFm/1000022725.jpg",
+        title: "Rummy 365 APK – Year-Round Rummy Bonus",
+        seo: ["Rummy 365", "Rummy 365 APK", "year-round games", "seasonal events", "daily bonuses", "leaderboard", "Rummy 365 bonus", "Rummy 365 download", "365 rummy app", "Rummy 365 2025", "Rummy 365 welcome bonus", "Rummy 365 referral", "secure rummy app", "UPI withdrawal", "Rummy 365 login", "Rummy 365 registration", "best rummy app", "Rummy 365 rewards", "seasonal rummy", "Rummy 365 VIP"],
+        desc: "Rummy 365 APK - play rummy 365 days with ₹44 bonus.",
+        version: "1.5.0", size: "40 MB", downloads: "620K+", update: "Today", rating: "4.5",
+        features: ["Year-round games", "Seasonal events", "Daily bonuses", "Leaderboard"],
+        gameInfo: "Rummy 365 offers year-round rummy action with seasonal events.",
+        faq: "Q: Bonus? A: ₹44 welcome. Q: Withdrawal? A: ₹100 min.",
+        tips: "Play daily for leaderboard rewards.",
+        rewards: "Seasonal bonuses up to ₹400.",
+        withdrawInfo: "UPI, Paytm, min ₹100.",
+        howToDownload: "1. Download APK.\n2. Install.\n3. Register.\n4. Get ₹44 bonus.",
+        safety: "Rummy 365 provides secure gaming environment.",
+        welcomeBonus: "🎁 365 Bonus: ₹44 on signup."
+      },
+      // 16. Teen Patti Gold - unique
+      { name: "Teen Patti Gold", altName: "Teen Patti Gold Game", bonus: "₹37", withdrawal: "₹100", downloadUrl: "https://www.earntp.com/gold/jm9n7r", img: "https://i.ibb.co/C5XcGXsJ/teen-patti-gold.jpg",
+        title: "Teen Patti Gold APK – Golden Welcome Bonus",
+        seo: ["Teen Patti Gold", "Teen Patti Gold Game", "Teen Patti Gold APK", "golden tables", "live dealers", "high stakes", "exclusive rewards", "Teen Patti Gold bonus", "Teen Patti Gold download", "golden teen patti", "Teen Patti Gold 2025", "Teen Patti Gold welcome bonus", "Teen Patti Gold referral", "secure card game", "UPI withdrawal", "Teen Patti Gold login", "Teen Patti Gold registration", "best teen patti app", "Teen Patti Gold VIP", "Teen Patti Gold rewards"],
+        desc: "Teen Patti Gold Game - the golden teen patti experience. ₹37 bonus.",
+        version: "4.0.1", size: "52 MB", downloads: "2.1M+", update: "Today", rating: "4.9",
+        features: ["Golden tables", "Live dealers", "High stakes", "Exclusive rewards"],
+        gameInfo: "Teen Patti Gold offers a premium teen patti experience.",
+        faq: "Q: Is it legal? A: Yes. Q: Min withdrawal? A: ₹100.",
+        tips: "Bluff wisely in teen patti.",
+        rewards: "Exclusive gold rewards up to ₹800.",
+        withdrawInfo: "UPI, Bank, min ₹100.",
+        howToDownload: "1. Download APK.\n2. Install.\n3. Register.\n4. Claim ₹37 bonus.",
+        safety: "Teen Patti Gold uses encrypted transactions.",
+        welcomeBonus: "🎁 Golden Bonus: ₹37 on signup."
+      },
+      // 17. Yono Rummy - unique
+      { name: "Yono Rummy", altName: "Yono Rummy Game", bonus: "₹25", withdrawal: "₹100", downloadUrl: "https://yonorummy043.com/?code=VIPYQC5EE9X&t=1781107758", img: "https://i.ibb.co/zTFDGPpX/yono-rummy.jpg",
+        title: "Yono Rummy APK – Yono Style Welcome Bonus",
+        seo: ["Yono Rummy", "Yono Rummy Game", "Yono Rummy APK", "Yono style", "quick rounds", "daily bonus", "referral program", "Yono Rummy bonus", "Yono Rummy download", "Yono rummy app", "Yono Rummy 2025", "Yono Rummy welcome bonus", "Yono Rummy referral", "secure rummy app", "UPI withdrawal", "Yono Rummy login", "Yono Rummy registration", "best Yono app", "Yono Rummy rewards", "Yono style gaming"],
+        desc: "Yono Rummy Game - play rummy the Yono way. ₹25 bonus.",
+        version: "2.0.0", size: "42 MB", downloads: "550K+", update: "Today", rating: "4.3",
+        features: ["Yono style", "Quick rounds", "Daily bonus", "Referral program"],
+        gameInfo: "Yono Rummy offers a unique Yono style rummy experience.",
+        faq: "Q: Bonus? A: ₹25. Q: Withdrawal? A: ₹100 min.",
+        tips: "Use referral program for extra bonus.",
+        rewards: "Referral bonus up to ₹100.",
+        withdrawInfo: "UPI, Bank, min ₹100.",
+        howToDownload: "1. Download APK.\n2. Install.\n3. Register.\n4. Claim ₹25 bonus.",
+        safety: "Yono Rummy provides secure gaming.",
+        welcomeBonus: "🎁 Yono Bonus: ₹25 on signup."
+      },
+      // 18. Slots Winner - unique
+      { name: "Slots Winner", altName: "Slots Winner APK", bonus: "₹40", withdrawal: "₹100", downloadUrl: "https://slotswinneri.com/?code=PGVC6CBNF53&t=1781107393", img: "https://i.ibb.co/NdbNBtx7/slots-winner.jpg",
+        title: "Slots Winner APK – Winning Slots Welcome Bonus",
+        seo: ["Slots Winner", "Slots Winner APK", "winning slots", "jackpot", "daily spins", "bonus rounds", "Slots Winner bonus", "Slots Winner download", "slot winner app", "Slots Winner 2025", "Slots Winner welcome bonus", "Slots Winner referral", "secure slot app", "UPI withdrawal", "Slots Winner login", "Slots Winner registration", "best slot app", "Slots Winner rewards", "jackpot slots", "Slots Winner game"],
+        desc: "Slots Winner APK - become a slots winner with ₹40 bonus.",
+        version: "1.8.5", size: "48 MB", downloads: "720K+", update: "Today", rating: "4.5",
+        features: ["Winning slots", "Jackpot", "Daily spins", "Bonus rounds"],
+        gameInfo: "Slots Winner offers high-paying slot games with jackpot.",
+        faq: "Q: Min deposit? A: ₹100. Q: Withdrawal? A: ₹100 min.",
+        tips: "Play bonus rounds for extra wins.",
+        rewards: "Jackpot up to ₹5000.",
+        withdrawInfo: "UPI, Paytm, min ₹100.",
+        howToDownload: "1. Download APK.\n2. Install.\n3. Register.\n4. Get ₹40 bonus.",
+        safety: "Slots Winner uses secure payment gateways.",
+        welcomeBonus: "🎁 Winner Bonus: ₹40 on signup."
+      },
+      // 19. Good Slots - unique
+      { name: "Good Slots", altName: "Good Slots Game", bonus: "₹15", withdrawal: "₹100", downloadUrl: "https://7sharegoodslots.vip?pid=320806209&channel=2010001&t=pdd2&pkg=com.1", img: "https://i.ibb.co/nq9kMKHZ/good-slots.jpg",
+        title: "Good Slots APK – Simple Slots Welcome Bonus",
+        seo: ["Good Slots", "Good Slots Game", "Good Slots APK", "simple slots", "quick play", "daily rewards", "easy withdrawal", "Good Slots bonus", "Good Slots download", "simple slot app", "Good Slots 2025", "Good Slots welcome bonus", "Good Slots referral", "secure slot app", "UPI withdrawal", "Good Slots login", "Good Slots registration", "best simple slots", "Good Slots rewards", "Good Slots game"],
+        desc: "Good Slots Game - good slots, good wins. ₹15 bonus.",
+        version: "1.2.0", size: "32 MB", downloads: "350K+", update: "Today", rating: "4.1",
+        features: ["Simple slots", "Quick play", "Daily rewards", "Easy withdrawal"],
+        gameInfo: "Good Slots offers simple and fun slot games.",
+        faq: "Q: Is it safe? A: Yes. Q: Min withdrawal? A: ₹100.",
+        tips: "Start with small bets.",
+        rewards: "Daily rewards up to ₹100.",
+        withdrawInfo: "UPI, Paytm, min ₹100.",
+        howToDownload: "1. Download APK.\n2. Install.\n3. Register.\n4. Claim ₹15 bonus.",
+        safety: "Good Slots ensures secure gaming.",
+        welcomeBonus: "🎁 Good Bonus: ₹15 on signup."
+      },
+      // 20. Diwa Slot - unique
+      { name: "Diwa Slot", altName: "Diwa Slot APK", bonus: "₹50", withdrawal: "₹100", downloadUrl: "https://sharediwaslot1.vip?pid=483455673&channel=2010002&t=pdd2&pkg=com.diwaslotwhl.app", img: "https://i.ibb.co/BKB6QMbD/diwa-slot.jpg",
+        title: "Diwa Slot APK – Diwa Theme Welcome Bonus",
+        seo: ["Diwa Slot", "Diwa Slot APK", "Diwa themes", "big wins", "free spins", "VIP rewards", "Diwa Slot bonus", "Diwa Slot download", "Diwa slot game", "Diwa Slot 2025", "Diwa Slot welcome bonus", "Diwa Slot referral", "secure slot app", "UPI withdrawal", "Diwa Slot login", "Diwa Slot registration", "best Diwa slots", "Diwa Slot rewards", "VIP slots", "Diwa Slot game"],
+        desc: "Diwa Slot APK - diwa slot with ₹50 bonus.",
+        version: "2.2.0", size: "46 MB", downloads: "480K+", update: "Today", rating: "4.4",
+        features: ["Diwa themes", "Big wins", "Free spins", "VIP rewards"],
+        gameInfo: "Diwa Slot offers themed slot games with big win potential.",
+        faq: "Q: Bonus? A: ₹50. Q: Withdrawal? A: ₹100 min.",
+        tips: "Use free spins wisely.",
+        rewards: "VIP rewards up to ₹600.",
+        withdrawInfo: "UPI, Bank, min ₹100.",
+        howToDownload: "1. Download APK.\n2. Install.\n3. Register.\n4. Claim ₹50 bonus.",
+        safety: "Diwa Slot provides secure transactions.",
+        welcomeBonus: "🎁 Diwa Bonus: ₹50 on signup."
+      },
+      // 21. GoGo Rummy - unique
+      { name: "GoGo Rummy", altName: "GoGo Rummy Game", bonus: "₹28", withdrawal: "₹100", downloadUrl: "https://www.gogorummyagent.com/?code=V4UTQA2VYMQ&t=1781196694", img: "https://i.ibb.co/Y7dzDP7z/gogo-rummy.jpg",
+        title: "GoGo Rummy APK – Fast Rummy Welcome Bonus",
+        seo: ["GoGo Rummy", "GoGo Rummy Game", "GoGo Rummy APK", "fast rummy", "multiplayer", "daily challenges", "bonus rounds", "GoGo Rummy bonus", "GoGo Rummy download", "GoGo rummy app", "GoGo Rummy 2025", "GoGo Rummy welcome bonus", "GoGo Rummy referral", "secure rummy app", "UPI withdrawal", "GoGo Rummy login", "GoGo Rummy registration", "best fast rummy", "GoGo Rummy rewards", "GoGo Rummy game"],
+        desc: "GoGo Rummy Game - go go with ₹28 bonus.",
+        version: "1.9.1", size: "38 MB", downloads: "580K+", update: "Today", rating: "4.3",
+        features: ["Fast rummy", "Multiplayer", "Daily challenges", "Bonus rounds"],
+        gameInfo: "GoGo Rummy offers fast-paced rummy with daily challenges.",
+        faq: "Q: Is it free? A: Yes. Q: Withdrawal? A: ₹100 min.",
+        tips: "Complete daily challenges for bonus.",
+        rewards: "Challenge rewards up to ₹250.",
+        withdrawInfo: "UPI, Paytm, min ₹100.",
+        howToDownload: "1. Download APK.\n2. Install.\n3. Register.\n4. Claim ₹28 bonus.",
+        safety: "GoGo Rummy ensures secure gameplay.",
+        welcomeBonus: "🎁 GoGo Bonus: ₹28 on signup."
+      },
+      // 22. Joy Rummy - unique
+      { name: "Joy Rummy", altName: "Joy Rummy APK", bonus: "₹35", withdrawal: "₹100", downloadUrl: "https://www.joyrummymax.com/?code=J5KFTAWJ9X5&t=1781198100", img: "https://i.ibb.co/nqD8CD8W/joy-rummy.jpg",
+        title: "Joy Rummy APK – Joyful Rummy Welcome Bonus",
+        seo: ["Joy Rummy", "Joy Rummy APK", "joyful themes", "rummy variants", "daily joy bonus", "social play", "Joy Rummy bonus", "Joy Rummy download", "Joy rummy app", "Joy Rummy 2025", "Joy Rummy welcome bonus", "Joy Rummy referral", "secure rummy app", "UPI withdrawal", "Joy Rummy login", "Joy Rummy registration", "best joyful rummy", "Joy Rummy rewards", "Joy Rummy game", "social rummy"],
+        desc: "Joy Rummy APK - play with joy, win with skill. ₹35 bonus.",
+        version: "2.3.0", size: "42 MB", downloads: "650K+", update: "Today", rating: "4.6",
+        features: ["Joyful themes", "Rummy variants", "Daily joy bonus", "Social play"],
+        gameInfo: "Joy Rummy brings joyful rummy experience with social play.",
+        faq: "Q: Bonus? A: ₹35. Q: Withdrawal? A: ₹100 min.",
+        tips: "Play with friends for more fun.",
+        rewards: "Joy bonus up to ₹200.",
+        withdrawInfo: "UPI, Bank, min ₹100.",
+        howToDownload: "1. Download APK.\n2. Install.\n3. Register.\n4. Claim ₹35 bonus.",
+        safety: "Joy Rummy provides secure gaming.",
+        welcomeBonus: "🎁 Joy Bonus: ₹35 on signup."
+      },
+      // 23. Spin Gold - unique
+      { name: "Spin Gold", altName: "Spin Gold Game", bonus: "₹22", withdrawal: "₹100", downloadUrl: "https://uono-bingo101.com/?code=3WFQ231H9Y2&t=1781197828", img: "https://i.ibb.co/G3QnY0vY/spin-gold.jpg",
+        title: "Spin Gold APK – Gold Themed Welcome Bonus",
+        seo: ["Spin Gold", "Spin Gold Game", "Spin Gold APK", "gold slots", "bonus spins", "daily gold", "leaderboard", "Spin Gold bonus", "Spin Gold download", "gold slot game", "Spin Gold 2025", "Spin Gold welcome bonus", "Spin Gold referral", "secure slot app", "UPI withdrawal", "Spin Gold login", "Spin Gold registration", "best gold slots", "Spin Gold rewards", "Spin Gold game"],
+        desc: "Spin Gold Game - spin to win gold. ₹22 bonus.",
+        version: "1.6.0", size: "36 MB", downloads: "420K+", update: "Today", rating: "4.2",
+        features: ["Gold slots", "Bonus spins", "Daily gold", "Leaderboard"],
+        gameInfo: "Spin Gold offers gold-themed slots with bonus spins.",
+        faq: "Q: Min deposit? A: ₹100. Q: Withdrawal? A: ₹100 min.",
+        tips: "Save bonus spins for big wins.",
+        rewards: "Daily gold up to ₹150.",
+        withdrawInfo: "UPI, Paytm, min ₹100.",
+        howToDownload: "1. Download APK.\n2. Install.\n3. Register.\n4. Claim ₹22 bonus.",
+        safety: "Spin Gold ensures secure gaming.",
+        welcomeBonus: "🎁 Gold Bonus: ₹22 on signup."
+      },
+      // 24. Bingo 101 - unique
+      { name: "Bingo 101", altName: "Bingo 101 APK", bonus: "₹45", withdrawal: "₹100", downloadUrl: "https://uono-bingo101.com/?code=3WFQ231H9Y2&t=1781197828", img: "https://i.ibb.co/My9tjNgL/bingo101.jpg",
+        title: "Bingo 101 APK – Bingo Welcome Bonus",
+        seo: ["Bingo 101", "Bingo 101 APK", "bingo games", "daily bingo", "multiplayer", "bonus rounds", "Bingo 101 bonus", "Bingo 101 download", "bingo app India", "Bingo 101 2025", "Bingo 101 welcome bonus", "Bingo 101 referral", "secure bingo app", "UPI withdrawal", "Bingo 101 login", "Bingo 101 registration", "best bingo app", "Bingo 101 rewards", "Bingo 101 game", "daily bingo"],
+        desc: "Bingo 101 APK - bingo 101 with ₹45 bonus.",
+        version: "2.0.0", size: "44 MB", downloads: "530K+", update: "Today", rating: "4.5",
+        features: ["Bingo games", "Daily bingo", "Multiplayer", "Bonus rounds"],
+        gameInfo: "Bingo 101 offers exciting bingo games with daily bingo.",
+        faq: "Q: Is it safe? A: Yes. Q: Withdrawal? A: ₹100 min.",
+        tips: "Play multiple cards for better chances.",
+        rewards: "Bingo bonus up to ₹300.",
+        withdrawInfo: "UPI, Bank, min ₹100.",
+        howToDownload: "1. Download APK.\n2. Install.\n3. Register.\n4. Claim ₹45 bonus.",
+        safety: "Bingo 101 uses secure payment gateways.",
+        welcomeBonus: "🎁 Bingo Bonus: ₹45 on signup."
+      },
+      // 25. Yes Spin - unique
+      { name: "Yes Spin", altName: "Yes Spin Game", bonus: "₹18", withdrawal: "₹100", downloadUrl: "https://www.yesspineee.com/?code=47TXJTLU5YY&t=1781198907", img: "https://i.ibb.co/m5qzq7W4/yes-spin.jpg",
+        title: "Yes Spin APK – Simple Spin Welcome Bonus",
+        seo: ["Yes Spin", "Yes Spin Game", "Yes Spin APK", "simple spins", "quick wins", "daily rewards", "easy withdrawal", "Yes Spin bonus", "Yes Spin download", "simple spin app", "Yes Spin 2025", "Yes Spin welcome bonus", "Yes Spin referral", "secure slot app", "UPI withdrawal", "Yes Spin login", "Yes Spin registration", "best simple slots", "Yes Spin rewards", "Yes Spin game"],
+        desc: "Yes Spin Game - yes to spin, yes to win. ₹18 bonus.",
+        version: "1.3.0", size: "30 MB", downloads: "380K+", update: "Today", rating: "4.0",
+        features: ["Simple spins", "Quick wins", "Daily rewards", "Easy withdrawal"],
+        gameInfo: "Yes Spin offers simple and quick slot games.",
+        faq: "Q: Bonus? A: ₹18. Q: Withdrawal? A: ₹100 min.",
+        tips: "Spin daily for rewards.",
+        rewards: "Daily rewards up to ₹100.",
+        withdrawInfo: "UPI, Paytm, min ₹100.",
+        howToDownload: "1. Download APK.\n2. Install.\n3. Register.\n4. Claim ₹18 bonus.",
+        safety: "Yes Spin ensures secure gaming.",
+        welcomeBonus: "🎁 Spin Bonus: ₹18 on signup."
+      },
+      // 26. Yono Arcade - unique
+      { name: "Yono Arcade", altName: "Yono Arcade APK", bonus: "₹32", withdrawal: "₹100", downloadUrl: "https://yonoarcadeapk9.com/?code=96LNEL9FQXZ&t=1781199006", img: "https://i.ibb.co/mCzSG1L7/yono-arcade.jpg",
+        title: "Yono Arcade APK – Arcade Games Welcome Bonus",
+        seo: ["Yono Arcade", "Yono Arcade APK", "arcade games", "skill games", "daily challenges", "leaderboard", "Yono Arcade bonus", "Yono Arcade download", "arcade app India", "Yono Arcade 2025", "Yono Arcade welcome bonus", "Yono Arcade referral", "secure arcade app", "UPI withdrawal", "Yono Arcade login", "Yono Arcade registration", "best arcade games", "Yono Arcade rewards", "Yono Arcade game", "skill gaming"],
+        desc: "Yono Arcade APK - arcade games with ₹32 bonus.",
+        version: "2.5.0", size: "50 MB", downloads: "490K+", update: "Today", rating: "4.4",
+        features: ["Arcade games", "Skill games", "Daily challenges", "Leaderboard"],
+        gameInfo: "Yono Arcade offers a variety of arcade and skill games.",
+        faq: "Q: Is it free? A: Yes. Q: Withdrawal? A: ₹100 min.",
+        tips: "Practice skill games for better scores.",
+        rewards: "Challenge rewards up to ₹250.",
+        withdrawInfo: "UPI, Bank, min ₹100.",
+        howToDownload: "1. Download APK.\n2. Install.\n3. Register.\n4. Claim ₹32 bonus.",
+        safety: "Yono Arcade provides secure gaming environment.",
+        welcomeBonus: "🎁 Arcade Bonus: ₹32 on signup."
+      },
+      // 27. SVIP 777 - unique
+      { name: "SVIP 777", altName: "SVIP 777 Game", bonus: "₹27", withdrawal: "₹100", downloadUrl: "https://www.svip777.life?pid=297924008&channel=2050001&t=pdd2&pkg=com.svip777.h5", img: "https://i.ibb.co/vfWZMLm/svip777.jpg",
+        title: "SVIP 777 APK – VIP Slots Welcome Bonus",
+        seo: ["SVIP 777", "SVIP 777 Game", "SVIP 777 APK", "VIP slots", "777 bonus", "VIP rewards", "exclusive games", "SVIP 777 bonus", "SVIP 777 download", "VIP slot app", "SVIP 777 2025", "SVIP 777 welcome bonus", "SVIP 777 referral", "secure VIP app", "UPI withdrawal", "SVIP 777 login", "SVIP 777 registration", "best VIP slots", "SVIP 777 rewards", "SVIP 777 game"],
+        desc: "SVIP 777 Game - super VIP 777 with ₹27 bonus.",
+        version: "1.8.0", size: "40 MB", downloads: "460K+", update: "Today", rating: "4.3",
+        features: ["VIP slots", "777 bonus", "VIP rewards", "Exclusive games"],
+        gameInfo: "SVIP 777 offers VIP slot games with exclusive rewards.",
+        faq: "Q: Bonus? A: ₹27. Q: Withdrawal? A: ₹100 min.",
+        tips: "Join VIP for better rewards.",
+        rewards: "VIP rewards up to ₹500.",
+        withdrawInfo: "UPI, Paytm, min ₹100.",
+        howToDownload: "1. Download APK.\n2. Install.\n3. Register.\n4. Claim ₹27 bonus.",
+        safety: "SVIP 777 ensures secure transactions.",
+        welcomeBonus: "🎁 VIP Bonus: ₹27 on signup."
+      },
+      // 28. OK Rummy - unique
+      { name: "OK Rummy", altName: "OK Rummy APK", bonus: "₹38", withdrawal: "₹100", downloadUrl: "https://www.okrummy22.com/?code=H2GU92WUXXA&t=1781199220", img: "https://i.ibb.co/99fCMbNC/ok-rummy.jpg",
+        title: "OK Rummy APK – OK Rummy Welcome Bonus",
+        seo: ["OK Rummy", "OK Rummy APK", "OK rummy", "fast games", "daily bonus", "referral program", "OK Rummy bonus", "OK Rummy download", "rummy app India", "OK Rummy 2025", "OK Rummy welcome bonus", "OK Rummy referral", "secure rummy app", "UPI withdrawal", "OK Rummy login", "OK Rummy registration", "best rummy app", "OK Rummy rewards", "OK Rummy game", "fast rummy"],
+        desc: "OK Rummy APK - OK rummy with ₹38 bonus.",
+        version: "1.9.0", size: "40 MB", downloads: "520K+", update: "Today", rating: "4.4",
+        features: ["OK rummy", "Fast games", "Daily bonus", "Referral program"],
+        gameInfo: "OK Rummy offers fast and fun rummy games.",
+        faq: "Q: Is it safe? A: Yes. Q: Withdrawal? A: ₹100 min.",
+        tips: "Refer friends for extra bonus.",
+        rewards: "Referral bonus up to ₹150.",
+        withdrawInfo: "UPI, Bank, min ₹100.",
+        howToDownload: "1. Download APK.\n2. Install.\n3. Register.\n4. Claim ₹38 bonus.",
+        safety: "OK Rummy uses secure payment gateways.",
+        welcomeBonus: "🎁 OK Bonus: ₹38 on signup."
+      },
+      // 29. Hind 777 - unique
+      { name: "Hind 777", altName: "Hind 777 Game", bonus: "₹42", withdrawal: "₹100", downloadUrl: "https://www.hindi777agent5.com/?code=7LFFR8WPHEG&t=1781199307", img: "https://i.ibb.co/5gf3q0Sh/hind777.jpg",
+        title: "Hind 777 APK – Desi 777 Welcome Bonus",
+        seo: ["Hind 777", "Hind 777 Game", "Hind 777 APK", "desi themes", "777 slots", "daily desi bonus", "jackpot", "Hind 777 bonus", "Hind 777 download", "desi slot app", "Hind 777 2025", "Hind 777 welcome bonus", "Hind 777 referral", "secure desi app", "UPI withdrawal", "Hind 777 login", "Hind 777 registration", "best desi slots", "Hind 777 rewards", "Hind 777 game"],
+        desc: "Hind 777 Game - desi 777 with ₹42 bonus.",
+        version: "2.0.0", size: "45 MB", downloads: "570K+", update: "Today", rating: "4.5",
+        features: ["Desi themes", "777 slots", "Daily desi bonus", "Jackpot"],
+        gameInfo: "Hind 777 offers desi themed slot games with 777 slots.",
+        faq: "Q: Bonus? A: ₹42. Q: Withdrawal? A: ₹100 min.",
+        tips: "Play desi themes for better luck.",
+        rewards: "Desi bonus up to ₹400.",
+        withdrawInfo: "UPI, Paytm, min ₹100.",
+        howToDownload: "1. Download APK.\n2. Install.\n3. Register.\n4. Claim ₹42 bonus.",
+        safety: "Hind 777 ensures secure gaming.",
+        welcomeBonus: "🎁 Desi Bonus: ₹42 on signup."
+      },
+      // 30. Boss Rummy - unique
+      { name: "Boss Rummy", altName: "Boss Rummy Game", bonus: "₹40", withdrawal: "₹100", downloadUrl: "https://www.bossrummyy.com/?code=LSHTVUZE1NR&t=1781429504", img: "https://i.ibb.co/fdWgRgxk/1000022725.jpg",
+        title: "Boss Rummy APK – Boss Rummy Welcome Bonus",
+        seo: ["Boss Rummy", "Boss Rummy Game", "Boss Rummy APK", "boss tables", "high stakes", "tournaments", "VIP rewards", "Boss Rummy bonus", "Boss Rummy download", "boss rummy app", "Boss Rummy 2025", "Boss Rummy welcome bonus", "Boss Rummy referral", "secure rummy app", "UPI withdrawal", "Boss Rummy login", "Boss Rummy registration", "best boss rummy", "Boss Rummy rewards", "Boss Rummy game"],
+        desc: "Boss Rummy Game - boss the rummy table with ₹40 bonus.",
+        version: "2.1.0", size: "42 MB", downloads: "620K+", update: "Today", rating: "4.6",
+        features: ["Boss tables", "High stakes", "Tournaments", "VIP rewards"],
+        gameInfo: "Boss Rummy offers premium rummy tables with high stakes.",
+        faq: "Q: Is it safe? A: Yes. Q: Withdrawal? A: ₹100 min.",
+        tips: "Play like a boss - confidently.",
+        rewards: "VIP rewards up to ₹800.",
+        withdrawInfo: "UPI, Bank, min ₹100.",
+        howToDownload: "1. Download APK.\n2. Install.\n3. Register.\n4. Claim ₹40 bonus.",
+        safety: "Boss Rummy ensures secure gaming.",
+        welcomeBonus: "🎁 Boss Bonus: ₹40 on signup."
+      },
+      // 31. Yono 777 - unique
+      { name: "Yono 777", altName: "Yono 777 APK", bonus: "₹35", withdrawal: "₹100", downloadUrl: "https://uono777refer.vip/?code=F9MPSLKZCV9&t=1781429388", img: "https://i.ibb.co/VWz6S3JB/1000022725.jpg",
+        title: "Yono 777 APK – 777 Slots Welcome Bonus",
+        seo: ["Yono 777", "Yono 777 APK", "777 slots", "Yono themes", "daily 777", "jackpot", "Yono 777 bonus", "Yono 777 download", "Yono 777 game", "Yono 777 2025", "Yono 777 welcome bonus", "Yono 777 referral", "secure slot app", "UPI withdrawal", "Yono 777 login", "Yono 777 registration", "best Yono slots", "Yono 777 rewards", "Uono Play 777", "Yono 777 game"],
+        desc: "Yono 777 APK - Yono 777 with ₹35 bonus.",
+        version: "2.0.0", size: "44 MB", downloads: "510K+", update: "Today", rating: "4.4",
+        features: ["777 slots", "Yono themes", "Daily 777", "Jackpot"],
+        gameInfo: "Yono 777 offers 777 themed slot games with daily 777 bonus.",
+        faq: "Q: Bonus? A: ₹35. Q: Withdrawal? A: ₹100 min.",
+        tips: "Play 777 for lucky wins.",
+        rewards: "777 bonus up to ₹350.",
+        withdrawInfo: "UPI, Paytm, min ₹100.",
+        howToDownload: "1. Download APK.\n2. Install.\n3. Register.\n4. Claim ₹35 bonus.",
+        safety: "Yono 777 uses secure payment gateways.",
+        welcomeBonus: "🎁 777 Bonus: ₹35 on signup."
+      },
+      // 32. Diwa VIP - unique
+      { name: "Diwa VIP", altName: "Diwa VIP Game", bonus: "₹60", withdrawal: "₹100", downloadUrl: "https://uono777refer.vip/?code=F9MPSLKZCV9&t=1781429388", img: "https://i.ibb.co/ynsBHKtg/1000022725.jpg",
+        title: "Diwa VIP APK – VIP Diwa Welcome Bonus",
+        seo: ["Diwa VIP", "Diwa VIP Game", "Diwa VIP APK", "VIP slots", "Diwa themes", "VIP rewards", "exclusive games", "Diwa VIP bonus", "Diwa VIP download", "VIP diwa app", "Diwa VIP 2025", "Diwa VIP welcome bonus", "Diwa VIP referral", "secure VIP app", "UPI withdrawal", "Diwa VIP login", "Diwa VIP registration", "best VIP diwa", "Diwa VIP rewards", "Diwa VIP game"],
+        desc: "Diwa VIP Game - VIP diwa with ₹60 bonus.",
+        version: "1.5.0", size: "40 MB", downloads: "380K+", update: "Today", rating: "4.2",
+        features: ["VIP slots", "Diwa themes", "VIP rewards", "Exclusive games"],
+        gameInfo: "Diwa VIP offers VIP slot games with diwa themes.",
+        faq: "Q: Is it safe? A: Yes. Q: Withdrawal? A: ₹100 min.",
+        tips: "Enjoy VIP treatment.",
+        rewards: "VIP rewards up to ₹500.",
+        withdrawInfo: "UPI, Bank, min ₹100.",
+        howToDownload: "1. Download APK.\n2. Install.\n3. Register.\n4. Claim ₹60 bonus.",
+        safety: "Diwa VIP ensures secure transactions.",
+        welcomeBonus: "🎁 VIP Diwa Bonus: ₹60 on signup."
+      },
+      // 33. Diwa 777 - unique
+      { name: "Diwa 777", altName: "Diwa 777 APK", bonus: "₹45", withdrawal: "₹100", downloadUrl: "https://sharediwa7771.top?pid=287747863&channel=2010001&t=pdd2&pkg=com.diwa777.app", img: "https://i.ibb.co/Kx2RKNvN/1000022725.jpg",
+        title: "Diwa 777 APK – Diwa 777 Welcome Bonus",
+        seo: ["Diwa 777", "Diwa 777 APK", "777 diwa", "bonus spins", "daily rewards", "jackpot", "Diwa 777 bonus", "Diwa 777 download", "diwa slots", "Diwa 777 2025", "Diwa 777 welcome bonus", "Diwa 777 referral", "secure slot app", "UPI withdrawal", "Diwa 777 login", "Diwa 777 registration", "best diwa slots", "Diwa 777 rewards", "Diwa 777 game", "777 diwa slots"],
+        desc: "Diwa 777 APK - diwa 777 with ₹45 bonus.",
+        version: "1.8.0", size: "46 MB", downloads: "420K+", update: "Today", rating: "4.3",
+        features: ["777 diwa", "Bonus spins", "Daily rewards", "Jackpot"],
+        gameInfo: "Diwa 777 offers 777 themed diwa slots with bonus spins.",
+        faq: "Q: Bonus? A: ₹45. Q: Withdrawal? A: ₹100 min.",
+        tips: "Spin with diwa luck.",
+        rewards: "Diwa rewards up to ₹400.",
+        withdrawInfo: "UPI, Paytm, min ₹100.",
+        howToDownload: "1. Download APK.\n2. Install.\n3. Register.\n4. Claim ₹45 bonus.",
+        safety: "Diwa 777 provides secure gaming.",
+        welcomeBonus: "🎁 Diwa 777 Bonus: ₹45 on signup."
+      },
+      // 34. INR Rummy - unique
+      { name: "INR Rummy", altName: "INR Rummy Game", bonus: "₹45", withdrawal: "₹100", downloadUrl: "https://inrrummy.club/?code=JMQBV8TAPD7&t=1784298106", img: "https://i.ibb.co/Y7ZRkLFp/inr-rummy.jpg",
+        title: "INR Rummy APK – INR Rummy Welcome Bonus",
+        seo: ["INR Rummy", "INR Rummy Game", "INR Rummy APK", "INR games", "rummy variants", "fast withdrawal", "secure", "INR Rummy bonus", "INR Rummy download", "INR rummy app", "INR Rummy 2025", "INR Rummy welcome bonus", "INR Rummy referral", "secure rummy app", "UPI withdrawal", "INR Rummy login", "INR Rummy registration", "best INR rummy", "INR Rummy rewards", "INR Rummy game"],
+        desc: "INR Rummy Game - play in INR with ₹45 bonus.",
+        version: "1.6.0", size: "38 MB", downloads: "490K+", update: "Today", rating: "4.3",
+        features: ["INR games", "Rummy variants", "Fast withdrawal", "Secure"],
+        gameInfo: "INR Rummy offers rummy games in Indian Rupees.",
+        faq: "Q: Bonus? A: ₹45. Q: Withdrawal? A: ₹100 min.",
+        tips: "Play with INR for real cash.",
+        rewards: "INR bonuses up to ₹300.",
+        withdrawInfo: "UPI, Paytm, min ₹100.",
+        howToDownload: "1. Download APK.\n2. Install.\n3. Register.\n4. Claim ₹45 bonus.",
+        safety: "INR Rummy uses secure payment gateways.",
+        welcomeBonus: "🎁 INR Bonus: ₹45 on signup."
+      },
+      // 35. Slots Winner Pro - unique
+      { name: "Slots Winner Pro", altName: "Slots Winner Pro APK", bonus: "₹45", withdrawal: "₹100", downloadUrl: "https://slotswinneri.com/?code=PGVC6CBNF53&t=1784299271", img: "https://i.ibb.co/wNYf5LG8/slots-winner.jpg",
+        title: "Slots Winner Pro APK – Pro Slots Welcome Bonus",
+        seo: ["Slots Winner Pro", "Slots Winner Pro APK", "pro slots", "jackpot", "daily spins", "VIP rewards", "Slots Winner Pro bonus", "Slots Winner Pro download", "pro slot app", "Slots Winner Pro 2025", "Slots Winner Pro welcome bonus", "Slots Winner Pro referral", "secure pro app", "UPI withdrawal", "Slots Winner Pro login", "Slots Winner Pro registration", "best pro slots", "Slots Winner Pro rewards", "Slots Winner Pro game", "professional slots"],
+        desc: "Slots Winner Pro APK - pro slots winner with ₹45 bonus.",
+        version: "2.0.0", size: "50 MB", downloads: "520K+", update: "Today", rating: "4.5",
+        features: ["Pro slots", "Jackpot", "Daily spins", "VIP rewards"],
+        gameInfo: "Slots Winner Pro offers professional slot games.",
+        faq: "Q: Is it safe? A: Yes. Q: Withdrawal? A: ₹100 min.",
+        tips: "Go pro for bigger wins.",
+        rewards: "Pro rewards up to ₹700.",
+        withdrawInfo: "UPI, Bank, min ₹100.",
+        howToDownload: "1. Download APK.\n2. Install.\n3. Register.\n4. Claim ₹45 bonus.",
+        safety: "Slots Winner Pro ensures secure transactions.",
+        welcomeBonus: "🎁 Pro Bonus: ₹45 on signup."
+      },
+      // 36. MBM BET - unique
+      { name: "MBM BET", altName: "MBM BET Game", bonus: "₹45", withdrawal: "₹100", downloadUrl: "https://www.mbmbet3.com/?code=GD3H3VA6YK5&t=1784297830", img: "https://i.ibb.co/sJcmCxK6/mbm-bet.jpg",
+        title: "MBM BET APK – MBM Bet Welcome Bonus",
+        seo: ["MBM BET", "MBM BET Game", "MBM BET APK", "betting", "quick games", "daily bets", "bonus rounds", "MBM BET bonus", "MBM BET download", "betting app India", "MBM BET 2025", "MBM BET welcome bonus", "MBM BET referral", "secure betting app", "UPI withdrawal", "MBM BET login", "MBM BET registration", "best betting app", "MBM BET rewards", "MBM BET game"],
+        desc: "MBM BET Game - MBM bet with ₹45 bonus.",
+        version: "1.4.0", size: "36 MB", downloads: "350K+", update: "Today", rating: "4.1",
+        features: ["Betting", "Quick games", "Daily bets", "Bonus rounds"],
+        gameInfo: "MBM BET offers betting games with quick play.",
+        faq: "Q: Min deposit? A: ₹100. Q: Withdrawal? A: ₹100 min.",
+        tips: "Bet smart, win big.",
+        rewards: "Bet bonuses up to ₹200.",
+        withdrawInfo: "UPI, Paytm, min ₹100.",
+        howToDownload: "1. Download APK.\n2. Install.\n3. Register.\n4. Claim ₹45 bonus.",
+        safety: "MBM BET provides secure gaming.",
+        welcomeBonus: "🎁 MBM Bonus: ₹45 on signup."
+      },
+      // 37. Goa Spin - unique
+      { name: "Goa Spin", altName: "Goa Spin APK", bonus: "₹45", withdrawal: "₹100", downloadUrl: "https://www.earntp.com/m/jm9n7r", img: "https://i.ibb.co/FbpzMnQx/goa-spin.jpg",
+        title: "Goa Spin APK – Goa Themed Welcome Bonus",
+        seo: ["Goa Spin", "Goa Spin APK", "Goa themes", "spin games", "daily rewards", "jackpot", "Goa Spin bonus", "Goa Spin download", "Goa spin app", "Goa Spin 2025", "Goa Spin welcome bonus", "Goa Spin referral", "secure spin app", "UPI withdrawal", "Goa Spin login", "Goa Spin registration", "best Goa slots", "Goa Spin rewards", "Goa Spin game", "Goa themed slots"],
+        desc: "Goa Spin APK - Goa spin with ₹45 bonus.",
+        version: "1.5.0", size: "38 MB", downloads: "400K+", update: "Today", rating: "4.2",
+        features: ["Goa themes", "Spin games", "Daily rewards", "Jackpot"],
+        gameInfo: "Goa Spin offers Goa themed spin games with daily rewards.",
+        faq: "Q: Bonus? A: ₹45. Q: Withdrawal? A: ₹100 min.",
+        tips: "Spin with Goa vibes.",
+        rewards: "Goa rewards up to ₹300.",
+        withdrawInfo: "UPI, Bank, min ₹100.",
+        howToDownload: "1. Download APK.\n2. Install.\n3. Register.\n4. Claim ₹45 bonus.",
+        safety: "Goa Spin ensures secure gaming.",
+        welcomeBonus: "🎁 Goa Bonus: ₹45 on signup."
+      },
+      // 38. 101Z - unique
+      { name: "101Z", altName: "101Z Game", bonus: "₹40", withdrawal: "₹100", downloadUrl: "https://www.earntp.com/gold/jm9n7r", img: "https://i.ibb.co/F4tpkSSm/101z.jpg",
+        title: "101Z APK – 101 Games Welcome Bonus",
+        seo: ["101Z", "101Z Game", "101Z APK", "101 games", "quick play", "daily bonus", "easy withdrawal", "101Z bonus", "101Z download", "101 games app", "101Z 2025", "101Z welcome bonus", "101Z referral", "secure gaming app", "UPI withdrawal", "101Z login", "101Z registration", "best 101 games", "101Z rewards", "101Z game"],
+        desc: "101Z Game - 101Z with ₹40 bonus.",
+        version: "1.2.0", size: "32 MB", downloads: "320K+", update: "Today", rating: "4.0",
+        features: ["101 games", "Quick play", "Daily bonus", "Easy withdrawal"],
+        gameInfo: "101Z offers 101 types of games with quick play.",
+        faq: "Q: Is it free? A: Yes. Q: Withdrawal? A: ₹100 min.",
+        tips: "Try different games for variety.",
+        rewards: "Daily bonus up to ₹150.",
+        withdrawInfo: "UPI, Paytm, min ₹100.",
+        howToDownload: "1. Download APK.\n2. Install.\n3. Register.\n4. Claim ₹40 bonus.",
+        safety: "101Z provides secure gaming.",
+        welcomeBonus: "🎁 101 Bonus: ₹40 on signup."
+      },
+      // 39. Teen Patti - unique
       { name: "Teen Patti", altName: "Teen Patti Game", bonus: "₹35", withdrawal: "₹100", downloadUrl: "https://www.earntp.com/gold/jm9n7r", img: "https://i.ibb.co/5xkDVhrK/teen-patti.jpg",
-        title: "Teen Patti APK – Classic Teen Patti Welcome Bonus", seoDesc: "Teen Patti APK – Classic Teen Patti Welcome Bonus ₹35. Live tables, tournaments, quick withdrawal. Install now!",
-        desc: "Teen Patti Game - classic teen patti with ₹35 bonus. क्लासिक तीन पत्ती ₹35 bonus के साथ।",
+        title: "Teen Patti APK – Classic Teen Patti Welcome Bonus",
+        seo: ["Teen Patti", "Teen Patti Game", "Teen Patti APK", "classic teen patti", "live tables", "tournaments", "quick withdrawal", "Teen Patti bonus", "Teen Patti download", "teen patti app India", "Teen Patti 2025", "Teen Patti welcome bonus", "Teen Patti referral", "secure card game", "UPI withdrawal", "Teen Patti login", "Teen Patti registration", "best teen patti app", "Teen Patti rewards", "Teen Patti game"],
+        desc: "Teen Patti Game - classic teen patti with ₹35 bonus.",
         version: "4.0.0", size: "48 MB", downloads: "3.2M+", update: "Today", rating: "4.8",
         features: ["Classic teen patti", "Live tables", "Tournaments", "Quick withdrawal"],
-        gameInfo: "Teen Patti offers classic teen patti experience with live tables and tournaments.",
+        gameInfo: "Teen Patti offers classic teen patti experience.",
         faq: "Q: Is it legal? A: Yes. Q: Withdrawal? A: ₹100 min.",
-        tips: "Play with strategy. रणनीति के साथ खेलें।",
-        rewards: "Tournament prizes up to ₹1000. Tournament prizes ₹1000 तक।",
+        tips: "Play with strategy.",
+        rewards: "Tournament prizes up to ₹1000.",
         withdrawInfo: "UPI, Paytm, min ₹100.",
         howToDownload: "1. Download APK.\n2. Install.\n3. Register.\n4. Claim ₹35 bonus.",
         safety: "Teen Patti uses secure payment gateways.",
-        welcomeBonus: "🎁 Teen Patti Bonus: ₹35 on signup + tournament entries. Play classic!"
+        welcomeBonus: "🎁 Teen Patti Bonus: ₹35 on signup."
       },
+      // 40. All Yono Games - unique
       { name: "All Yono Games", altName: "All Yono Games APK", bonus: "₹42", withdrawal: "₹100", downloadUrl: "https://www.earntp.com/gold/jm9n7r", img: "https://i.ibb.co/yzyKyN1/all-yono-games.jpg",
-        title: "All Yono Games APK – Complete Collection Welcome Bonus", seoDesc: "All Yono Games APK – Complete Collection Welcome Bonus ₹42. All variants, daily rewards, premium support. Download now!",
-        desc: "All Yono Games APK - all Yono games collection with ₹42 bonus. सभी Yono games का collection ₹42 bonus के साथ।",
+        title: "All Yono Games APK – Complete Collection Welcome Bonus",
+        seo: ["All Yono Games", "All Yono Games APK", "complete collection", "all variants", "daily rewards", "premium support", "All Yono Games bonus", "All Yono Games download", "Yono collection", "All Yono Games 2025", "All Yono Games welcome bonus", "All Yono Games referral", "secure Yono app", "UPI withdrawal", "All Yono Games login", "All Yono Games registration", "best Yono collection", "All Yono Games rewards", "All Yono Games game", "complete Yono"],
+        desc: "All Yono Games APK - all Yono games collection with ₹42 bonus.",
         version: "3.1.0", size: "60 MB", downloads: "720K+", update: "Today", rating: "4.7",
         features: ["Complete collection", "All variants", "Daily rewards", "Premium support"],
-        gameInfo: "All Yono Games brings the complete collection of Yono games with premium support.",
+        gameInfo: "All Yono Games brings the complete collection of Yono games.",
         faq: "Q: Is it safe? A: Yes. Q: Withdrawal? A: ₹100 min.",
-        tips: "Explore the complete collection. पूरा collection explore करें।",
-        rewards: "Premium rewards up to ₹600. Premium rewards ₹600 तक।",
+        tips: "Explore the complete collection.",
+        rewards: "Premium rewards up to ₹600.",
         withdrawInfo: "UPI, Bank, min ₹100.",
         howToDownload: "1. Download APK.\n2. Install.\n3. Register.\n4. Claim ₹42 bonus.",
-        safety: "All Yono Games ensures secure and encrypted transactions.",
-        welcomeBonus: "🎁 All Yono Bonus: ₹42 on signup + premium rewards. Get the complete collection!"
+        safety: "All Yono Games ensures secure transactions.",
+        welcomeBonus: "🎁 All Yono Bonus: ₹42 on signup."
       },
+      // 41. New Yono Games - unique
       { name: "New Yono Games", altName: "New Yono Games Game", bonus: "₹38", withdrawal: "₹100", downloadUrl: "https://t.me/yonogamestite", img: "https://i.ibb.co/8nq6LH05/new-yono-games.jpg",
-        title: "New Yono Games APK – Latest Yono Welcome Bonus", seoDesc: "New Yono Games APK – Latest Yono Welcome Bonus ₹38. New games, daily bonuses, fast play. Install now!",
-        desc: "New Yono Games Game - new Yono games with ₹38 bonus. नए Yono games ₹38 bonus के साथ।",
+        title: "New Yono Games APK – Latest Yono Welcome Bonus",
+        seo: ["New Yono Games", "New Yono Games Game", "New Yono Games APK", "new games", "latest updates", "daily bonuses", "fast play", "New Yono Games bonus", "New Yono Games download", "new Yono app", "New Yono Games 2025", "New Yono Games welcome bonus", "New Yono Games referral", "secure Yono app", "UPI withdrawal", "New Yono Games login", "New Yono Games registration", "best new Yono", "New Yono Games rewards", "New Yono Games game"],
+        desc: "New Yono Games Game - new Yono games with ₹38 bonus.",
         version: "1.9.0", size: "42 MB", downloads: "480K+", update: "Today", rating: "4.3",
         features: ["New games", "Latest updates", "Daily bonuses", "Fast play"],
-        gameInfo: "New Yono Games offers the latest Yono games with daily bonuses and fast play.",
+        gameInfo: "New Yono Games offers the latest Yono games.",
         faq: "Q: Bonus? A: ₹38. Q: Withdrawal? A: ₹100 min.",
-        tips: "Try new games for new rewards. नए rewards के लिए नए games try करें।",
-        rewards: "New game bonuses up to ₹250. New game bonuses ₹250 तक।",
+        tips: "Try new games for new rewards.",
+        rewards: "New game bonuses up to ₹250.",
         withdrawInfo: "UPI, Paytm, min ₹100.",
         howToDownload: "1. Download APK.\n2. Install.\n3. Register.\n4. Claim ₹38 bonus.",
-        safety: "New Yono Games provides secure gaming with data protection.",
-        welcomeBonus: "🎁 New Yono Bonus: ₹38 on signup + new game rewards. Play new games!"
+        safety: "New Yono Games provides secure gaming.",
+        welcomeBonus: "🎁 New Yono Bonus: ₹38 on signup."
       },
+      // 42. Yono Apps - unique
       { name: "Yono Apps", altName: "Yono Apps APK", bonus: "₹36", withdrawal: "₹100", downloadUrl: "https://t.me/yonogamestite", img: "https://i.ibb.co/S4rJJnB7/yono-apps.jpg",
-        title: "Yono Apps APK – All Yono Apps Welcome Bonus", seoDesc: "Yono Apps APK – All Yono Apps Welcome Bonus ₹36. Variety, daily rewards, secure platform. Download now!",
-        desc: "Yono Apps APK - all Yono apps with ₹36 bonus. सभी Yono apps ₹36 bonus के साथ।",
+        title: "Yono Apps APK – All Yono Apps Welcome Bonus",
+        seo: ["Yono Apps", "Yono Apps APK", "all apps", "variety", "daily rewards", "secure platform", "Yono Apps bonus", "Yono Apps download", "Yono apps collection", "Yono Apps 2025", "Yono Apps welcome bonus", "Yono Apps referral", "secure Yono app", "UPI withdrawal", "Yono Apps login", "Yono Apps registration", "best Yono apps", "Yono Apps rewards", "Yono Apps game", "all Yono apps"],
+        desc: "Yono Apps APK - all Yono apps with ₹36 bonus.",
         version: "2.0.0", size: "50 MB", downloads: "520K+", update: "Today", rating: "4.4",
         features: ["All apps", "Variety", "Daily rewards", "Secure platform"],
-        gameInfo: "Yono Apps brings all Yono apps together with daily rewards and secure platform.",
+        gameInfo: "Yono Apps brings all Yono apps together.",
         faq: "Q: Is it free? A: Yes. Q: Withdrawal? A: ₹100 min.",
-        tips: "Use all apps for more rewards. अधिक rewards के लिए सभी apps का उपयोग करें।",
-        rewards: "App bonuses up to ₹300. App bonuses ₹300 तक।",
+        tips: "Use all apps for more rewards.",
+        rewards: "App bonuses up to ₹300.",
         withdrawInfo: "UPI, Bank, min ₹100.",
         howToDownload: "1. Download APK.\n2. Install.\n3. Register.\n4. Claim ₹36 bonus.",
-        safety: "Yono Apps ensures secure gaming with encrypted data.",
-        welcomeBonus: "🎁 Yono Apps Bonus: ₹36 on signup + app rewards. Use all apps!"
+        safety: "Yono Apps ensures secure gaming.",
+        welcomeBonus: "🎁 Yono Apps Bonus: ₹36 on signup."
       },
+      // 43. Spin Winner - unique
       { name: "Spin Winner", altName: "Spin Winner Game", bonus: "₹30", withdrawal: "₹100", downloadUrl: "https://www.yesspineee.com/?code=47TXJTLU5YY&t=1781198907", img: "https://i.ibb.co/ZpP9wKdm/spin-winner.jpg",
-        title: "Spin Winner APK – Spin and Win Welcome Bonus", seoDesc: "Spin Winner APK – Spin and Win Welcome Bonus ₹30. Quick wins, daily spins, bonus rounds. Install now!",
-        desc: "Spin Winner Game - spin and win with ₹30 bonus. स्पिन करें और जीतें ₹30 bonus के साथ।",
+        title: "Spin Winner APK – Spin and Win Welcome Bonus",
+        seo: ["Spin Winner", "Spin Winner Game", "Spin Winner APK", "spin games", "quick wins", "daily spins", "bonus rounds", "Spin Winner bonus", "Spin Winner download", "spin winner app", "Spin Winner 2025", "Spin Winner welcome bonus", "Spin Winner referral", "secure spin app", "UPI withdrawal", "Spin Winner login", "Spin Winner registration", "best spin game", "Spin Winner rewards", "Spin Winner game"],
+        desc: "Spin Winner Game - spin and win with ₹30 bonus.",
         version: "1.3.0", size: "35 MB", downloads: "390K+", update: "Today", rating: "4.2",
         features: ["Spin games", "Quick wins", "Daily spins", "Bonus rounds"],
-        gameInfo: "Spin Winner offers spin games with quick wins and daily spin bonuses.",
+        gameInfo: "Spin Winner offers spin games with quick wins.",
         faq: "Q: Min deposit? A: ₹100. Q: Withdrawal? A: ₹100 min.",
-        tips: "Spin daily for better chances. बेहतर chances के लिए daily spin करें।",
-        rewards: "Spin rewards up to ₹200. Spin rewards ₹200 तक।",
+        tips: "Spin daily for better chances.",
+        rewards: "Spin rewards up to ₹200.",
         withdrawInfo: "UPI, Paytm, min ₹100.",
         howToDownload: "1. Download APK.\n2. Install.\n3. Register.\n4. Claim ₹30 bonus.",
-        safety: "Spin Winner ensures secure gaming with data protection.",
-        welcomeBonus: "🎁 Spin Winner Bonus: ₹30 on signup + spin rewards. Spin and win!"
+        safety: "Spin Winner ensures secure gaming.",
+        welcomeBonus: "🎁 Spin Winner Bonus: ₹30 on signup."
       },
+      // 44. Yono All Games - unique
       { name: "Yono All Games", altName: "Yono All Games APK", bonus: "₹48", withdrawal: "₹100", downloadUrl: "https://diwavipshare.cc?pid=428256719&channel=2050001&t=pdd2&pkg=com.diwavip.h5", img: "https://i.ibb.co/XxxDXGr3/yono-all-games.jpg",
-        title: "Yono All Games APK – Premium Yono Welcome Bonus", seoDesc: "Yono All Games APK – Premium Yono Welcome Bonus ₹48. Premium features, VIP support, daily bonuses. Download now!",
-        desc: "Yono All Games APK - Yono all games with ₹48 bonus. Yono सभी games ₹48 bonus के साथ।",
+        title: "Yono All Games APK – Premium Yono Welcome Bonus",
+        seo: ["Yono All Games", "Yono All Games APK", "all Yono games", "premium features", "daily bonuses", "VIP support", "Yono All Games bonus", "Yono All Games download", "premium Yono app", "Yono All Games 2025", "Yono All Games welcome bonus", "Yono All Games referral", "secure Yono app", "UPI withdrawal", "Yono All Games login", "Yono All Games registration", "best premium Yono", "Yono All Games rewards", "Yono All Games game", "premium gaming"],
+        desc: "Yono All Games APK - Yono all games with ₹48 bonus.",
         version: "3.0.0", size: "58 MB", downloads: "640K+", update: "Today", rating: "4.6",
         features: ["All Yono games", "Premium features", "Daily bonuses", "VIP support"],
-        gameInfo: "Yono All Games offers premium Yono games with VIP support and daily bonuses.",
+        gameInfo: "Yono All Games offers premium Yono games.",
         faq: "Q: Is it safe? A: Yes. Q: Withdrawal? A: ₹100 min.",
-        tips: "Get VIP for premium rewards. Premium rewards के लिए VIP लें।",
-        rewards: "VIP rewards up to ₹700. VIP rewards ₹700 तक।",
+        tips: "Get VIP for premium rewards.",
+        rewards: "VIP rewards up to ₹700.",
         withdrawInfo: "UPI, Bank, min ₹100.",
         howToDownload: "1. Download APK.\n2. Install.\n3. Register.\n4. Claim ₹48 bonus.",
-        safety: "Yono All Games ensures secure and encrypted transactions.",
-        welcomeBonus: "🎁 Premium Yono Bonus: ₹48 on signup + VIP support. Play premium games!"
+        safety: "Yono All Games ensures secure transactions.",
+        welcomeBonus: "🎁 Premium Yono Bonus: ₹48 on signup."
       },
+      // 45. Spin Lucky - unique
       { name: "Spin Lucky", altName: "Spin Lucky Game", bonus: "₹44", withdrawal: "₹100", downloadUrl: "https://www.earntp.com/m/jm9n7r", img: "https://i.ibb.co/VY95vgTQ/spin-lucky.jpg",
-        title: "Spin Lucky APK – Lucky Spin Welcome Bonus", seoDesc: "Spin Lucky APK – Lucky Spin Welcome Bonus ₹44. Jackpot, daily luck, bonus rounds. Install now!",
-        desc: "Spin Lucky Game - spin lucky with ₹44 bonus. लकी स्पिन ₹44 bonus के साथ।",
+        title: "Spin Lucky APK – Lucky Spin Welcome Bonus",
+        seo: ["Spin Lucky", "Spin Lucky Game", "Spin Lucky APK", "lucky spins", "jackpot", "daily luck", "bonus rounds", "Spin Lucky bonus", "Spin Lucky download", "lucky spin app", "Spin Lucky 2025", "Spin Lucky welcome bonus", "Spin Lucky referral", "secure spin app", "UPI withdrawal", "Spin Lucky login", "Spin Lucky registration", "best lucky spin", "Spin Lucky rewards", "Spin Lucky game"],
+        desc: "Spin Lucky Game - spin lucky with ₹44 bonus.",
         version: "1.5.0", size: "36 MB", downloads: "410K+", update: "Today", rating: "4.3",
         features: ["Lucky spins", "Jackpot", "Daily luck", "Bonus rounds"],
-        gameInfo: "Spin Lucky offers lucky spin games with jackpot and daily luck bonuses.",
+        gameInfo: "Spin Lucky offers lucky spin games with jackpot.",
         faq: "Q: Bonus? A: ₹44. Q: Withdrawal? A: ₹100 min.",
-        tips: "Spin with luck on your side. अपनी तरफ luck के साथ spin करें।",
-        rewards: "Lucky rewards up to ₹350. Lucky rewards ₹350 तक।",
+        tips: "Spin with luck on your side.",
+        rewards: "Lucky rewards up to ₹350.",
         withdrawInfo: "UPI, Paytm, min ₹100.",
         howToDownload: "1. Download APK.\n2. Install.\n3. Register.\n4. Claim ₹44 bonus.",
-        safety: "Spin Lucky provides secure gaming with encrypted data.",
-        welcomeBonus: "🎁 Lucky Spin Bonus: ₹44 on signup + lucky rewards. Spin lucky!"
+        safety: "Spin Lucky provides secure gaming.",
+        welcomeBonus: "🎁 Lucky Spin Bonus: ₹44 on signup."
       }
     ];
 
-    // Merge all apps
-    const allApps = [...gamesData, ...moreApps];
-
-    // Build mapping
-    const gameMap = {};
-    allApps.forEach(g => { gameMap[g.name] = g; });
-
-    const allGames = [
-      { name: "All Yono App Site", altName: "All Yono Games", bonus: "₹45", withdrawal: "₹100", downloadUrl: "https://www.earntp.com/m/jm9n7r", img: "https://i.ibb.co/CssC2WbG/1000022725.jpg" },
-      { name: "567 Slots", altName: "567 Slots Game", bonus: "₹45", withdrawal: "₹100", downloadUrl: "https://join567slots0.com/?code=4NYF487URJ6&t=1781505684", img: "https://i.ibb.co/hFytMXY2/1000022725.jpg" },
-      { name: "Saga Slots", altName: "Saga Slots APK", bonus: "₹40", withdrawal: "₹100", downloadUrl: "https://www.sagaslots5.com/?code=0QHJSERZYMV&t=1781505813", img: "https://i.ibb.co/20dzhBZf/1000022725.jpg" },
-      { name: "Jaiho 91", altName: "Jaiho 91 Game", bonus: "₹50", withdrawal: "₹100", downloadUrl: "https://jaiho91bonus.vip/?code=C42T99ZQHAT&t=1781506067", img: "https://i.ibb.co/zV0C6Xkk/1000022725.jpg" },
-      { name: "Rummy Ludo", altName: "Rummy Ludo APK", bonus: "₹35", withdrawal: "₹100", downloadUrl: "https://rummyludoapp37.com/", img: "https://i.ibb.co/Z6Xy7y2x/1000022725.jpg" },
-      { name: "ABC Rummy", altName: "ABC Rummy Game", bonus: "₹42", withdrawal: "₹100", downloadUrl: "https://d34i569g8ztoql.cloudfront.net/abcrummy_MeApp.apk", img: "https://i.ibb.co/Ldmd1DHH/1000022725.jpg" },
-      { name: "Rummy 91", altName: "Rummy 91 APK", bonus: "₹38", withdrawal: "₹100", downloadUrl: "https://d16sfv4ssrmnvt.cloudfront.net/rummy91_AGENT.apk", img: "https://i.ibb.co/Fb2j77pp/1000022725.jpg" },
-      { name: "Love Rummy", altName: "Love Rummy Game", bonus: "₹36", withdrawal: "₹100", downloadUrl: "https://d34i569g8ztoql.cloudfront.net/loverummy_App.apk", img: "https://i.ibb.co/PZ2dpNJ9/1000022725.jpg" },
-      { name: "Spin Crush", altName: "Spin Crush APK", bonus: "₹30", withdrawal: "₹100", downloadUrl: "https://d292swwe9zki3u.cloudfront.net/spincrush_freecash.apk", img: "https://i.ibb.co/S4C26kVS/1000022725.jpg" },
-      { name: "Top Rummy", altName: "Top Rummy Game", bonus: "₹48", withdrawal: "₹100", downloadUrl: "https://th7.my/BY1JWS/3gvute0", img: "https://i.ibb.co/bRy3w8dN/1000022725.jpg" },
-      { name: "Rummy 365", altName: "Rummy 365 APK", bonus: "₹44", withdrawal: "₹100", downloadUrl: "https://join567slots0.com/?code=4NYF487URJ6&t=1781505684", img: "https://i.ibb.co/Hf9bhrFm/1000022725.jpg" },
-      { name: "Teen Patti Gold", altName: "Teen Patti Gold Game", bonus: "₹37", withdrawal: "₹100", downloadUrl: "https://www.earntp.com/gold/jm9n7r", img: "https://i.ibb.co/C5XcGXsJ/teen-patti-gold.jpg" },
-      { name: "Teen Patti Master", altName: "Teen Patti Master APK", bonus: "₹20", withdrawal: "₹100", downloadUrl: "https://www.earntp.com/m/jm9n7r", img: "https://i.ibb.co/JjrZjn2n/teen-patti-master.jpg" },
-      { name: "Yono Rummy", altName: "Yono Rummy Game", bonus: "₹25", withdrawal: "₹100", downloadUrl: "https://yonorummy043.com/?code=VIPYQC5EE9X&t=1781107758", img: "https://i.ibb.co/zTFDGPpX/yono-rummy.jpg" },
-      { name: "Slots Winner", altName: "Slots Winner APK", bonus: "₹40", withdrawal: "₹100", downloadUrl: "https://slotswinneri.com/?code=PGVC6CBNF53&t=1781107393", img: "https://i.ibb.co/NdbNBtx7/slots-winner.jpg" },
-      { name: "Good Slots", altName: "Good Slots Game", bonus: "₹15", withdrawal: "₹100", downloadUrl: "https://7sharegoodslots.vip?pid=320806209&channel=2010001&t=pdd2&pkg=com.1", img: "https://i.ibb.co/nq9kMKHZ/good-slots.jpg" },
-      { name: "Diwa Slot", altName: "Diwa Slot APK", bonus: "₹50", withdrawal: "₹100", downloadUrl: "https://sharediwaslot1.vip?pid=483455673&channel=2010002&t=pdd2&pkg=com.diwaslotwhl.app", img: "https://i.ibb.co/BKB6QMbD/diwa-slot.jpg" },
-      { name: "GoGo Rummy", altName: "GoGo Rummy Game", bonus: "₹28", withdrawal: "₹100", downloadUrl: "https://www.gogorummyagent.com/?code=V4UTQA2VYMQ&t=1781196694", img: "https://i.ibb.co/Y7dzDP7z/gogo-rummy.jpg" },
-      { name: "Joy Rummy", altName: "Joy Rummy APK", bonus: "₹35", withdrawal: "₹100", downloadUrl: "https://www.joyrummymax.com/?code=J5KFTAWJ9X5&t=1781198100", img: "https://i.ibb.co/nqD8CD8W/joy-rummy.jpg" },
-      { name: "Spin Gold", altName: "Spin Gold Game", bonus: "₹22", withdrawal: "₹100", downloadUrl: "https://uono-bingo101.com/?code=3WFQ231H9Y2&t=1781197828", img: "https://i.ibb.co/G3QnY0vY/spin-gold.jpg" },
-      { name: "Bingo 101", altName: "Bingo 101 APK", bonus: "₹45", withdrawal: "₹100", downloadUrl: "https://uono-bingo101.com/?code=3WFQ231H9Y2&t=1781197828", img: "https://i.ibb.co/My9tjNgL/bingo101.jpg" },
-      { name: "Yes Spin", altName: "Yes Spin Game", bonus: "₹18", withdrawal: "₹100", downloadUrl: "https://www.yesspineee.com/?code=47TXJTLU5YY&t=1781198907", img: "https://i.ibb.co/m5qzq7W4/yes-spin.jpg" },
-      { name: "Yono Arcade", altName: "Yono Arcade APK", bonus: "₹32", withdrawal: "₹100", downloadUrl: "https://yonoarcadeapk9.com/?code=96LNEL9FQXZ&t=1781199006", img: "https://i.ibb.co/mCzSG1L7/yono-arcade.jpg" },
-      { name: "SVIP 777", altName: "SVIP 777 Game", bonus: "₹27", withdrawal: "₹100", downloadUrl: "https://www.svip777.life?pid=297924008&channel=2050001&t=pdd2&pkg=com.svip777.h5", img: "https://i.ibb.co/vfWZMLm/svip777.jpg" },
-      { name: "OK Rummy", altName: "OK Rummy APK", bonus: "₹38", withdrawal: "₹100", downloadUrl: "https://www.okrummy22.com/?code=H2GU92WUXXA&t=1781199220", img: "https://i.ibb.co/99fCMbNC/ok-rummy.jpg" },
-      { name: "Hind 777", altName: "Hind 777 Game", bonus: "₹42", withdrawal: "₹100", downloadUrl: "https://www.hindi777agent5.com/?code=7LFFR8WPHEG&t=1781199307", img: "https://i.ibb.co/5gf3q0Sh/hind777.jpg" },
-      { name: "Bet 213", altName: "Bet 213 APK", bonus: "₹36", withdrawal: "₹100", downloadUrl: "https://www.bet213.rocks/?code=2QTKPV4BYDH&t=1781199576", img: "https://i.ibb.co/YTqq2C4F/bet213.jpg" },
-      { name: "Boss Rummy", altName: "Boss Rummy Game", bonus: "₹40", withdrawal: "₹100", downloadUrl: "https://www.bossrummyy.com/?code=LSHTVUZE1NR&t=1781429504", img: "https://i.ibb.co/fdWgRgxk/1000022725.jpg" },
-      { name: "Yono 777", altName: "Yono 777 APK", bonus: "₹35", withdrawal: "₹100", downloadUrl: "https://uono777refer.vip/?code=F9MPSLKZCV9&t=1781429388", img: "https://i.ibb.co/VWz6S3JB/1000022725.jpg" },
-      { name: "Diwa VIP", altName: "Diwa VIP Game", bonus: "₹60", withdrawal: "₹100", downloadUrl: "https://uono777refer.vip/?code=F9MPSLKZCV9&t=1781429388", img: "https://i.ibb.co/ynsBHKtg/1000022725.jpg" },
-      { name: "Diwa 777", altName: "Diwa 777 APK", bonus: "₹45", withdrawal: "₹100", downloadUrl: "https://sharediwa7771.top?pid=287747863&channel=2010001&t=pdd2&pkg=com.diwa777.app", img: "https://i.ibb.co/Kx2RKNvN/1000022725.jpg" },
-      { name: "Yono Games", altName: "Yono Games APK", bonus: "₹45", withdrawal: "₹100", downloadUrl: "https://yonogamesm.com/?code=LHS49AEHVMR&t=1784314209", img: "https://i.ibb.co/LXqV77rd/yono-games.jpg" },
-      { name: "INR Rummy", altName: "INR Rummy Game", bonus: "₹45", withdrawal: "₹100", downloadUrl: "https://inrrummy.club/?code=JMQBV8TAPD7&t=1784298106", img: "https://i.ibb.co/Y7ZRkLFp/inr-rummy.jpg" },
-      { name: "Slots Winner Pro", altName: "Slots Winner Pro APK", bonus: "₹45", withdrawal: "₹100", downloadUrl: "https://slotswinneri.com/?code=PGVC6CBNF53&t=1784299271", img: "https://i.ibb.co/wNYf5LG8/slots-winner.jpg" },
-      { name: "MBM BET", altName: "MBM BET Game", bonus: "₹45", withdrawal: "₹100", downloadUrl: "https://www.mbmbet3.com/?code=GD3H3VA6YK5&t=1784297830", img: "https://i.ibb.co/sJcmCxK6/mbm-bet.jpg" },
-      { name: "Goa Spin", altName: "Goa Spin APK", bonus: "₹45", withdrawal: "₹100", downloadUrl: "https://www.earntp.com/m/jm9n7r", img: "https://i.ibb.co/FbpzMnQx/goa-spin.jpg" },
-      { name: "101Z", altName: "101Z Game", bonus: "₹40", withdrawal: "₹100", downloadUrl: "https://www.earntp.com/gold/jm9n7r", img: "https://i.ibb.co/F4tpkSSm/101z.jpg" },
-      { name: "777 Game", altName: "777 Game APK", bonus: "₹50", withdrawal: "₹100", downloadUrl: "https://t.me/yonogamestite", img: "https://i.ibb.co/YFG8D6NF/777-game.jpg" },
-      { name: "Teen Patti", altName: "Teen Patti Game", bonus: "₹35", withdrawal: "₹100", downloadUrl: "https://www.earntp.com/gold/jm9n7r", img: "https://i.ibb.co/5xkDVhrK/teen-patti.jpg" },
-      { name: "All Yono Games", altName: "All Yono Games APK", bonus: "₹42", withdrawal: "₹100", downloadUrl: "https://www.earntp.com/gold/jm9n7r", img: "https://i.ibb.co/yzyKyN1/all-yono-games.jpg" },
-      { name: "New Yono Games", altName: "New Yono Games Game", bonus: "₹38", withdrawal: "₹100", downloadUrl: "https://t.me/yonogamestite", img: "https://i.ibb.co/8nq6LH05/new-yono-games.jpg" },
-      { name: "Yono Apps", altName: "Yono Apps APK", bonus: "₹36", withdrawal: "₹100", downloadUrl: "https://t.me/yonogamestite", img: "https://i.ibb.co/S4rJJnB7/yono-apps.jpg" },
-      { name: "Spin Winner", altName: "Spin Winner Game", bonus: "₹30", withdrawal: "₹100", downloadUrl: "https://www.yesspineee.com/?code=47TXJTLU5YY&t=1781198907", img: "https://i.ibb.co/ZpP9wKdm/spin-winner.jpg" },
-      { name: "Yono All Games", altName: "Yono All Games APK", bonus: "₹48", withdrawal: "₹100", downloadUrl: "https://diwavipshare.cc?pid=428256719&channel=2050001&t=pdd2&pkg=com.diwavip.h5", img: "https://i.ibb.co/XxxDXGr3/yono-all-games.jpg" },
-      { name: "Spin Lucky", altName: "Spin Lucky Game", bonus: "₹44", withdrawal: "₹100", downloadUrl: "https://www.earntp.com/m/jm9n7r", img: "https://i.ibb.co/VY95vgTQ/spin-lucky.jpg" }
+    // Build full app list with all 45 apps
+    const allAppNames = [
+      "All Yono App Site", "777 Game", "Yono Games", "Jaiho 91", "Teen Patti Master",
+      "Bet 213", "567 Slots", "Saga Slots", "Rummy Ludo", "ABC Rummy",
+      "Rummy 91", "Love Rummy", "Spin Crush", "Top Rummy", "Rummy 365",
+      "Teen Patti Gold", "Yono Rummy", "Slots Winner", "Good Slots", "Diwa Slot",
+      "GoGo Rummy", "Joy Rummy", "Spin Gold", "Bingo 101", "Yes Spin",
+      "Yono Arcade", "SVIP 777", "OK Rummy", "Hind 777", "Boss Rummy",
+      "Yono 777", "Diwa VIP", "Diwa 777", "INR Rummy", "Slots Winner Pro",
+      "MBM BET", "Goa Spin", "101Z", "Teen Patti", "All Yono Games",
+      "New Yono Games", "Yono Apps", "Spin Winner", "Yono All Games", "Spin Lucky"
     ];
 
-    const seen = new Set();
-    const uniqueGames = allGames.filter(g => {
-      const key = g.name.trim().toLowerCase();
-      if (seen.has(key)) return false;
-      seen.add(key);
-      return true;
+    // Map data to all apps
+    const gameMap = {};
+    gamesData.forEach(g => { gameMap[g.name] = g; });
+
+    const uniqueGames = allAppNames.map(name => {
+      const g = gameMap[name];
+      if (g) return g;
+      // Fallback for any missing
+      return { name, altName: name + " APK", bonus: "₹45", withdrawal: "₹100", downloadUrl: "#", img: "https://i.ibb.co/LXqV77rd/yono-games.jpg", title: name + " APK – Download Welcome Bonus", seo: [name, name + " APK", "download " + name, "real cash game", "UPI withdrawal", "bonus ₹45", "mobile gaming", "online earning", "best app", "secure platform"], desc: "Download " + name + " APK and get ₹45 welcome bonus. Play and win real cash!", version: "2.0.0", size: "45 MB", downloads: "500K+", update: "Today", rating: "4.5", features: ["Multiple games", "Fast withdrawal", "Secure platform", "Daily rewards"], gameInfo: "Play and win real cash with " + name + ". Safe and secure platform.", faq: "Q: Is it safe? A: Yes. Q: Min withdrawal? A: ₹100.", tips: "Play responsibly.", rewards: "Daily bonuses and rewards.", withdrawInfo: "UPI, Paytm, min ₹100.", howToDownload: "1. Download APK.\n2. Install.\n3. Register.\n4. Claim bonus.", safety: "Secure and encrypted platform.", faq2: "Q: How to sign up? A: Download and register.", faq3: "Q: Many games? A: Yes.", faq4: "Q: Features? A: Many.", welcomeBonus: "🎁 Welcome Bonus: ₹45 on signup." };
     });
 
     const mainGrid = document.getElementById('mainGrid');
@@ -975,12 +833,12 @@
     const overlayContent = document.getElementById('overlayContent');
     const overlayClose = document.getElementById('overlayClose');
 
-    // Update contact and disclaimer content - remove old app name
     const contentMap = {
       about: { title: '📖 About All Yono App Site', text: 'All Yono App Site (All Yono Apk / All Yono New / All Yono Games) is a curated platform listing 45+ top gaming apps including Teen Patti, Rummy, Slots, and Casino. We provide direct download links and bonus details for each app.' },
       contact: { title: '📬 Contact Us', text: 'For any queries, feedback or support regarding All Yono App Site, you can reach us via email: support@allyonoappsite.com. You can also connect with us on Telegram: @allyonoappsite.' },
       disclaimer: { title: '⚠️ Disclaimer', text: 'All Yono App Site does not host or operate any of the games listed. We only provide information and referral links. Users are advised to check the terms and conditions of each app. Play responsibly.' }
     };
+
     document.querySelectorAll('.nav-small[data-target]').forEach(el => {
       el.addEventListener('click', function() {
         const key = this.dataset.target;
@@ -993,20 +851,11 @@
         this.classList.add('active');
       });
     });
+
     overlayClose.addEventListener('click', function() { overlay.style.display = 'none'; });
     overlay.addEventListener('click', function(e) { if (e.target === overlay) overlay.style.display = 'none'; });
 
     let historyStack = [];
-
-    // Helper to get unique SEO tags per app
-    function getSeoTags(app) {
-      const tags = [
-        app.seoDesc || `${app.name} APK download, ${app.bonus} bonus, real cash game, UPI withdrawal, ${app.altName || ''}`,
-        `${app.name}, ${app.altName || ''}, ${app.bonus} bonus, online gaming, rummy, teen patti, slots`,
-        `Download ${app.name} APK, get ${app.bonus} welcome bonus, play ${app.altName || ''}, earn real cash`
-      ];
-      return tags.join(', ');
-    }
 
     function renderGrid() {
       mainGrid.innerHTML = '';
@@ -1021,7 +870,7 @@
         card.dataset.img = game.img;
         card.innerHTML = `
           <div class="card-number">${index + 1}</div>
-          <div class="card-img"><img src="${game.img}" alt="${game.name} | ${game.altName}" loading="lazy" onerror="this.src='https://i.ibb.co/LXqV77rd/yono-games.jpg'"></div>
+          <div class="card-img"><img src="${game.img}" alt="${game.name}" loading="lazy" onerror="this.src='https://i.ibb.co/LXqV77rd/yono-games.jpg'"></div>
           <div class="card-info">
             <div class="card-name">${game.name} <span class="alt">| ${game.altName}</span></div>
             <div class="card-bonus"><span class="icon-svg small"><svg viewBox="0 0 24 24"><rect x="3" y="8" width="18" height="13" rx="2"/><path d="M3 8l9-5 9 5"/><path d="M8 12h8"/></svg></span> Sign Up Bonus ${game.bonus}</div>
@@ -1032,9 +881,8 @@
         mainGrid.appendChild(card);
         card.addEventListener('click', function() {
           const name = this.dataset.name;
-          const gData = gameMap[name];
-          if (gData) showDetail(gData, true);
-          else showDetail(gameMap["All Yono App Site"], true);
+          const gData = gameMap[name] || uniqueGames[0];
+          showDetail(gData, true);
         });
       });
     }
@@ -1042,150 +890,39 @@
 
     function showDetail(game, pushHistory = true) {
       if (pushHistory) historyStack.push(game);
-      
-      // Use the app's custom title or default
-      const appTitle = game.title || `${game.name} APK – Download Welcome Bonus`;
-      document.getElementById('detailTitle').textContent = appTitle;
+      document.getElementById('detailTitle').textContent = game.title || game.name + " APK";
 
       const colorClasses = ['color-1','color-2','color-3','color-4','color-5','color-6','color-7'];
       const colorIdx = (game.name.length * 3) % colorClasses.length;
       const colorClass = colorClasses[colorIdx];
 
-      const g = gameMap[game.name] || gameMap["All Yono App Site"] || game;
+      const g = gameMap[game.name] || game;
       const version = g.version || "2.0.0";
       const size = g.size || "45 MB";
       const downloads = g.downloads || "500K+";
       const update = g.update || "Today";
       const rating = g.rating || "4.5";
-      
-      // Use app-specific description
-      let desc = g.desc || "All Yono App Site APK Download – Get ₹572 Instant Bonus! Play skill-based Rummy, Teen Patti & slots. Safe withdrawals from ₹100. Start earning real cash in minutes – download APK & claim your bonus today! Referral Bonus: ₹13";
-      if (game.name !== "All Yono App Site") {
-        desc = desc.replace(/All Yono App Site/g, game.name);
-        desc = desc.replace(/All Yono App Site APK/g, game.name + ' APK');
-      }
-      
-      const features = g.features || ["45+ games including Rummy, Teen Patti, Slots", "Fast UPI withdrawal", "Daily bonus & rewards", "Secure & trusted platform"];
-      let gameInfo = g.gameInfo || "All Yono App Site is a popular real cash earning app in India where users can play games like rummy, slots, bingo, and spin games to win real money. New users can claim a signup bonus of up to ₹52, making it easy to get started and explore the platform. The app offers a smooth and secure experience with fast UPI deposits and withdrawals. The interface of All Yono App Site is simple and user-friendly, making it suitable for both beginners and experienced players. You can enjoy daily rewards, referral bonuses, and special events to increase your earnings. The minimum withdrawal starts from ₹118, and most transactions are processed quickly without delays. If you are looking for a trusted gaming app that combines entertainment with real earning opportunities, All Yono App Site is a great choice. Download the latest APK version today and start playing to earn real cash rewards from your mobile.";
-      if (game.name !== "All Yono App Site") {
-        gameInfo = gameInfo.replace(/All Yono App Site/g, game.name);
-      }
-      
-      let faq = g.faq || "Q: 1. What Is The All Yono App Site app APK? A: The All Yono App Site APP APK is an excellent application that offers users a sign-up bonus of ₹284 when they join. This game includes a fantastic bonus program, and you can learn more by reading the complete post. Additionally, All Yono App Site APK is a popular slots game with a minimum withdrawal amount of ₹100. Referral Bonus: ₹13";
-      if (game.name !== "All Yono App Site") {
-        faq = faq.replace(/All Yono App Site/g, game.name);
-        faq = faq.replace(/All Yono App Site APK/g, game.name + ' APK');
-      }
-      
-      const tips = g.tips || "Start with small bets, use welcome bonus wisely.";
-      let rewards = g.rewards || "💰 Unlock ₹428 Bonus in All Yono App Site App! Enjoy thrilling games like Aviator, Rummy & more. Refer friends for extra cash. Fast, secure withdrawals via bank/UPI. Trusted by millions – start playing now! Referral Bonus: ₹17";
-      if (game.name !== "All Yono App Site") {
-        rewards = rewards.replace(/All Yono App Site/g, game.name);
-      }
-      
-      const withdrawInfo = g.withdrawInfo || "UPI, Bank Transfer, Paytm - min ₹100, instant processing.";
-      const howToDownload = g.howToDownload || "1. Tap the big Download button above.\n2. Allow installation from unknown sources.\n3. Open the downloaded APK and tap Install.\n4. Register with your mobile number.\n5. Claim your signup bonus instantly – up to ₹70!";
-      let safety = g.safety || "All Yono App Site is designed to provide a secure and reliable gaming experience. The app uses standard encryption and protected payment systems to help keep user data and transactions safe. Deposits and withdrawals are processed through commonly used methods such as UPI and bank transfer, offering a convenient experience for users in India. However, users are advised to play responsibly and review the app's terms and policies before using it.";
-      if (game.name !== "All Yono App Site") {
-        safety = safety.replace(/All Yono App Site/g, game.name);
-      }
-      
-      let faq2 = g.faq2 || "Q: 2. How to Sign Up for All Yono App Site APK? A: To sign up for the All Yono App Site APK, follow these steps: • Click on the Download Button for the All Yono App Site APK. • Select OK to start the download. • Install the App application on your smartphone. • Open the new app and click on Play as Guest. • Click on the Profile Button and bind your mobile number. After completing these steps, you will receive a sign-up bonus of ₹796. Referral Bonus: ₹17";
-      if (game.name !== "All Yono App Site") {
-        faq2 = faq2.replace(/All Yono App Site/g, game.name);
-        faq2 = faq2.replace(/All Yono App Site APK/g, game.name + ' APK');
-      }
-      
-      let faq3 = g.faq3 || "Q: 3. How Many Games Are Available In The All Yono App Site App? A: The All Yono App Site app offers support for 75+ different types of games. You can enjoy a variety of games such as Rummy, Teen Patti, 7 Up Down, Dragon vs Tiger, and many more.";
-      if (game.name !== "All Yono App Site") {
-        faq3 = faq3.replace(/All Yono App Site/g, game.name);
-      }
-      
-      let faq4 = g.faq4 || "Q: 4. What are some of the best features of the All Yono App Site app APK? A: • Enjoy a bonus of ₹572 for free in the APK. • Access to 20 gaming options. • Earn up to ₹428 for inviting friends. • Withdrawals can be made starting from a minimum of ₹612. • Click on the Profile Button and bind your mobile number. • The minimum deposit required is ₹388. Referral Bonus: ₹21";
-      if (game.name !== "All Yono App Site") {
-        faq4 = faq4.replace(/All Yono App Site/g, game.name);
-        faq4 = faq4.replace(/All Yono App Site APK/g, game.name + ' APK');
-      }
+      const desc = g.desc || "Download " + game.name + " APK and get " + game.bonus + " welcome bonus. Play and win real cash!";
+      const features = g.features || ["Multiple games", "Fast withdrawal", "Secure platform", "Daily rewards"];
+      const gameInfo = g.gameInfo || "Play and win real cash with " + game.name + ". Safe and secure platform.";
+      const faq = g.faq || "Q: Is it safe? A: Yes. Q: Min withdrawal? A: ₹100.";
+      const tips = g.tips || "Play responsibly.";
+      const rewards = g.rewards || "Daily bonuses and rewards.";
+      const withdrawInfo = g.withdrawInfo || "UPI, Paytm, min ₹100.";
+      const howToDownload = g.howToDownload || "1. Download APK.\n2. Install.\n3. Register.\n4. Claim bonus.";
+      const safety = g.safety || "Secure and encrypted platform.";
+      const faq2 = g.faq2 || "Q: How to sign up? A: Download and register.";
+      const faq3 = g.faq3 || "Q: Many games? A: Yes.";
+      const faq4 = g.faq4 || "Q: Features? A: Many.";
+      const welcomeBonus = g.welcomeBonus || "🎁 Welcome Bonus: " + game.bonus + " on signup.";
 
-      // Use the app's welcome bonus
-      const welcomeBonus = g.welcomeBonus || `🎁 Welcome Bonus: ${game.bonus} on signup. Start playing now!`;
-
-      // Generate unique section names per app with premium icons
-      const sectionNames = [
-        { title: "📱 What's New", icon: "icon-refresh" },
-        { title: "🎁 Welcome Bonus", icon: "icon-gift" },
-        { title: "🏆 Jackpot Info", icon: "icon-trophy" },
-        { title: "🎮 Gameplay Guide", icon: "icon-gamepad" },
-        { title: "💡 Winning Tips", icon: "icon-lightbulb" },
-        { title: "👑 VIP Benefits", icon: "icon-crown" },
-        { title: "🏅 Rewards", icon: "icon-medal" },
-        { title: "🎯 Tournament Info", icon: "icon-star" }
-      ];
-      
-      const seed = game.name.length;
-      const startIdx = (seed * 5) % sectionNames.length;
-      const selectedSections = [];
-      for (let i = 0; i < Math.min(4, sectionNames.length); i++) {
-        const idx = (startIdx + i * 2) % sectionNames.length;
-        selectedSections.push(sectionNames[idx]);
-      }
-
-      // Generate unique content for each section
-      const sectionContent = [
-        "Latest version " + version + " brings improved performance, new game modes, and enhanced security features. " + game.name + " now offers faster loading times and smoother gameplay.",
-        "Claim your " + game.bonus + " welcome bonus on " + game.name + ". New users get instant bonus on signup. Use the bonus to explore all games and increase your winning chances.",
-        game.name + " offers exciting jackpot opportunities. The progressive jackpot grows with every spin. Players can win up to ₹5000+ in daily jackpots. Check the jackpot timer for the next big win.",
-        "Master " + game.name + " with these pro tips: Start with smaller bets, learn the game rules, practice in free mode, and gradually increase your stakes. Watch tutorial videos for advanced strategies.",
-        "Smart winning strategies for " + game.name + ": Focus on high RTP games, manage your bankroll wisely, take advantage of bonus rounds, and set win/loss limits. Consistency is key to long-term success.",
-        "Join the VIP program on " + game.name + " for exclusive benefits: higher withdrawal limits, personal account manager, priority support, special bonus offers, and invitations to exclusive tournaments.",
-        "Earn amazing rewards on " + game.name + ": daily login bonuses, referral rewards up to ₹200, loyalty points that convert to cash, seasonal promotions, and surprise bonus events throughout the year.",
-        "Participate in " + game.name + " tournaments with prize pools up to ₹10,000. Compete against players worldwide, climb the leaderboard, and win cash prizes. Tournaments run daily and weekly."
-      ];
-
-      const selectedContent = [];
-      for (let i = 0; i < selectedSections.length; i++) {
-        const idx = (i + seed) % sectionContent.length;
-        selectedContent.push(sectionContent[idx]);
-      }
+      const seoTags = g.seo || [game.name, game.altName, "download APK", "real cash game", "UPI withdrawal"];
 
       const relatedGames = uniqueGames.filter(ug => ug.name !== game.name);
 
-      // Build app-specific heading for highlights
-      const highlightsHeading = "🏷️ " + game.name + " – App Highlights";
-
-      // Premium icon mapping
-      const iconMap = {
-        'icon-doc': '<span class="icon-svg icon-doc"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></span>',
-        'icon-star': '<span class="icon-svg icon-star"><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></span>',
-        'icon-gamepad': '<span class="icon-svg icon-gamepad"><svg viewBox="0 0 24 24"><path d="M6 11h4"/><path d="M8 9v4"/><path d="M15 12h.01"/><path d="M18 10h.01"/><path d="M17.32 5H6.68a4 4 0 00-3.978 3.59c-.006.052-.01.101-.017.152C2.604 9.416 2 14.456 2 16a3 3 0 003 3c1 0 1.5-.5 2-1l1.414-1.414A2 2 0 019.828 16h4.344a2 2 0 011.414.586L17 18c.5.5 1 1 2 1a3 3 0 003-3c0-1.545-.604-6.584-.684-7.258C21.326 8.544 20.698 5 17.32 5z"/></svg></span>',
-        'icon-gift': '<span class="icon-svg icon-gift"><svg viewBox="0 0 24 24"><rect x="3" y="8" width="18" height="13" rx="2"/><path d="M3 8l9-5 9 5"/><path d="M8 12h8"/></svg></span>',
-        'icon-trophy': '<span class="icon-svg icon-trophy"><svg viewBox="0 0 24 24"><path d="M6 9V3h12v6"/><path d="M18 9a6 6 0 01-12 0"/><path d="M12 15v6"/><path d="M8 21h8"/></svg></span>',
-        'icon-medal': '<span class="icon-svg icon-medal"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="6"/><path d="M8.21 13.89L7 23l5-3 5 3-1.21-9.11"/></svg></span>',
-        'icon-crown': '<span class="icon-svg icon-crown"><svg viewBox="0 0 24 24"><path d="M2 16l4-10 6 5 6-5 4 10"/><path d="M4 16h16v4H4z"/></svg></span>',
-        'icon-download': '<span class="icon-svg icon-download"><svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><path d="M12 15V3"/></svg></span>',
-        'icon-mobile': '<span class="icon-svg icon-mobile"><svg viewBox="0 0 24 24"><rect x="5" y="2" width="14" height="20" rx="2"/><path d="M12 18h.01"/></svg></span>',
-        'icon-refresh': '<span class="icon-svg icon-refresh"><svg viewBox="0 0 24 24"><path d="M23 4v6h-6"/><path d="M1 20v-6h6"/><path d="M3.51 9a9 9 0 0114.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0020.49 15"/></svg></span>',
-        'icon-help': '<span class="icon-svg icon-help"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 015.83 1c0 2-3 3-3 3"/><path d="M12 17h.01"/></svg></span>',
-        'icon-lightbulb': '<span class="icon-svg icon-lightbulb"><svg viewBox="0 0 24 24"><path d="M10 18h4"/><path d="M12 2v2"/><path d="M4.93 4.93l1.41 1.41"/><path d="M2 10h2"/><path d="M20 10h2"/><path d="M19.07 4.93l-1.41 1.41"/><path d="M12 22v-4"/><path d="M8 14a4 4 0 108 0"/></svg></span>',
-        'icon-wallet': '<span class="icon-svg icon-wallet"><svg viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V4a1 1 0 00-1-1H9a1 1 0 00-1 1v3"/><path d="M8 12h8"/></svg></span>',
-        'icon-shield-check': '<span class="icon-svg icon-shield-check"><svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="M9 12l2 2 4-4"/></svg></span>',
-        'icon-users': '<span class="icon-svg icon-users"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg></span>'
-      };
-
-      // Generate section HTML with premium icons
-      const sectionsHtml = selectedSections.map((section, idx) => {
-        const iconHtml = iconMap[section.icon] || iconMap['icon-star'];
-        return `
-          <div class="section-card ${colorClass}" style="margin-bottom:6px;">
-            <div class="section-title">${iconHtml} ${section.title}</div>
-            <div class="section-body">${selectedContent[idx % selectedContent.length]}</div>
-          </div>
-        `;
-      }).join('');
-
       detailContent.innerHTML = `
         <div class="hero-section">
-          <div class="hero-img"><img src="${game.img}" alt="${game.name}" onerror="this.src='https://i.ibb.co/LXqV77rd/yono-games.jpg'"></div>
+          <div class="hero-img"><img src="${game.img}" alt="${game.name}" loading="lazy" onerror="this.src='https://i.ibb.co/LXqV77rd/yono-games.jpg'"></div>
           <div class="hero-info">
             <div class="app-name">${game.name}</div>
             <div class="app-sub">${game.altName || ''} • v${version}</div>
@@ -1200,69 +937,68 @@
           <div class="info-item"><span class="icon-svg"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg></span> <span class="label">Downloads</span> <span class="value">${downloads}</span></div>
         </div>
 
-        <!-- FULL-WIDTH DOWNLOAD BUTTON - REMOVED BOTTOM ICONS -->
         <a href="${game.downloadUrl}" class="download-btn-lg" target="_blank" style="margin-bottom:14px;">
           <span class="icon-svg" style="width:20px;height:20px;"><svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><path d="M12 15V3"/></svg></span>
           ⬇ Download APK Now
         </a>
 
-        <!-- ALL TAGS WITH PREMIUM ICONS -->
         <div class="section-card ${colorClass}">
-          <div class="section-title">${iconMap['icon-doc']} 📝 About ${game.name}</div>
+          <div class="section-title"><span class="icon-svg"><svg viewBox="0 0 24 24"><path d="M4 4h16v16H4z"/><path d="M8 8h8v2H8z"/><path d="M8 12h6v2H8z"/><path d="M8 16h4v2H8z"/></svg></span> 📝 About</div>
           <div class="section-body">${desc}</div>
         </div>
 
         <div class="section-card ${colorClass}">
-          <div class="section-title">${iconMap['icon-star']} ✨ Features</div>
+          <div class="section-title"><span class="icon-svg"><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg></span> ✨ Features</div>
           <div class="section-body"><ul>${features.map(f => `<li>${f}</li>`).join('')}</ul></div>
         </div>
 
         <div class="section-card ${colorClass}">
-          <div class="section-title">${iconMap['icon-gamepad']} 🎮 Game Information</div>
+          <div class="section-title"><span class="icon-svg"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg></span> 🎮 Game Information</div>
           <div class="section-body">${gameInfo}</div>
         </div>
 
         <div class="section-card ${colorClass}">
-          <div class="section-title">${iconMap['icon-medal']} 🏆 Rewards & Bonuses</div>
+          <div class="section-title"><span class="icon-svg"><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg></span> 🏆 Rewards & Bonuses</div>
           <div class="section-body">${rewards}</div>
         </div>
 
         <div class="section-card ${colorClass}">
-          <div class="section-title">${iconMap['icon-download']} 📥 How to Download</div>
+          <div class="section-title"><span class="icon-svg"><svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><path d="M12 15V3"/></svg></span> 📥 How to Download</div>
           <div class="section-body">${howToDownload.replace(/\n/g, '<br>')}</div>
         </div>
 
         <div class="section-card ${colorClass}">
-          <div class="section-title">${iconMap['icon-shield-check']} 🔒 Safety & Security</div>
+          <div class="section-title"><span class="icon-svg"><svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="M12 8v4"/><path d="M12 16h.01"/></svg></span> 🔒 Safety & Security</div>
           <div class="section-body">${safety}</div>
         </div>
 
         <div class="section-card ${colorClass}">
-          <div class="section-title">${iconMap['icon-lightbulb']} 💡 Pro Tips</div>
+          <div class="section-title"><span class="icon-svg"><svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="M12 8v4"/><path d="M12 16h.01"/></svg></span> 💡 Pro Tips</div>
           <div class="section-body">${tips}</div>
         </div>
 
         <div class="section-card ${colorClass}">
-          <div class="section-title">${iconMap['icon-wallet']} 💳 Withdrawal Info</div>
+          <div class="section-title"><span class="icon-svg"><svg viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V4a1 1 0 00-1-1H9a1 1 0 00-1 1v3"/><path d="M8 12h8"/></svg></span> 💳 Withdrawal Info</div>
           <div class="section-body">${withdrawInfo}</div>
         </div>
 
         <div class="section-card ${colorClass}">
-          <div class="section-title">${iconMap['icon-mobile']} 📱 Version Information</div>
+          <div class="section-title"><span class="icon-svg"><svg viewBox="0 0 24 24"><path d="M4 4h16v16H4z"/><path d="M8 8h8v2H8z"/><path d="M8 12h6v2H8z"/><path d="M8 16h4v2H8z"/></svg></span> 📱 Version Information</div>
           <div class="section-body"><strong>Version:</strong> ${version} | <strong>Size:</strong> ${size} | <strong>Updated:</strong> ${update}</div>
         </div>
 
         <div class="section-card ${colorClass}">
-          <div class="section-title">${iconMap['icon-help']} ❓ FAQ</div>
+          <div class="section-title"><span class="icon-svg"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 015.83 1c0 2-3 3-3 3"/><path d="M12 17h.01"/></svg></span> ❓ FAQ</div>
           <div class="section-body">${faq}<br><br>${faq2}<br><br>${faq3}<br><br>${faq4}</div>
         </div>
 
-        <!-- APP-SPECIFIC UNIQUE SECTIONS -->
-        <div style="margin-top:12px; border-top: 2px solid #e9edf4; padding-top:12px;">
-          ${sectionsHtml}
+        <div style="margin-top:12px; border-top:2px solid #e9edf4; padding-top:12px;">
+          <div style="font-weight:700; font-size:.8rem; color:#0b1e33; margin-bottom:8px;">🏷️ SEO Tags</div>
+          <div style="display:flex; flex-wrap:wrap; gap:4px;">
+            ${seoTags.map(tag => `<span style="background:#eef2ff; color:#2563eb; padding:2px 8px; border-radius:20px; font-size:.55rem; font-weight:600; border:1px solid #b3c8e6;">${tag}</span>`).join('')}
+          </div>
         </div>
 
-        <!-- REMOVED BOTTOM IMAGE ICONS - Keeping text and buttons only -->
         <div class="related-section">
           <div class="related-title">
             <span class="icon-svg"><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg></span>
@@ -1275,7 +1011,7 @@
       const relatedGrid = document.getElementById('relatedGrid');
       if (relatedGrid) {
         relatedGrid.innerHTML = '';
-        relatedGames.forEach(g => {
+        relatedGames.slice(0, 10).forEach(g => {
           const item = document.createElement('div');
           item.className = 'related-item';
           item.dataset.name = g.name;
@@ -1287,7 +1023,7 @@
           item.innerHTML = `
             <img src="${g.img}" alt="${g.name}" loading="lazy" onerror="this.src='https://i.ibb.co/LXqV77rd/yono-games.jpg'">
             <div class="rinfo">
-              <div class="rname">${g.name} <span class="alt">| ${g.altName}</span></div>
+              <div class="rname">${g.name}</div>
               <div class="rbonus"><span class="icon-svg" style="width:10px;height:10px;"><svg viewBox="0 0 24 24"><rect x="3" y="8" width="18" height="13" rx="2"/><path d="M3 8l9-5 9 5"/><path d="M8 12h8"/></svg></span> ${g.bonus}</div>
               <div class="rwithdraw"><span class="icon-svg" style="width:10px;height:10px;"><svg viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V4a1 1 0 00-1-1H9a1 1 0 00-1 1v3"/><path d="M8 12h8"/></svg></span> ${g.withdrawal}</div>
             </div>
@@ -1297,9 +1033,8 @@
           item.addEventListener('click', function(e) {
             e.stopPropagation();
             const name = this.dataset.name;
-            const gData = gameMap[name];
-            if (gData) showDetail(gData, true);
-            else showDetail(gameMap["All Yono App Site"], true);
+            const gData = gameMap[name] || uniqueGames[0];
+            showDetail(gData, true);
           });
         });
       }
