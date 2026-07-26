@@ -165,7 +165,11 @@
       border-radius: 50%; position: relative; flex-shrink: 0; background: #000; border: 2px solid #1a1a1a;
       box-shadow: 0 0 15px rgba(0,255,0,0.1);
     }
-    .led-icon .inner-icon { font-size: 0.65rem; font-weight: 700; color: #fff; z-index: 2; position: relative; text-shadow: 0 0 8px currentColor; }
+    .led-icon .inner-icon { 
+      font-size: 0.65rem; font-weight: 700; color: #fff; z-index: 2; position: relative; 
+      display: flex; align-items: center; justify-content: center;
+    }
+    .led-icon .inner-icon svg { width: 16px; height: 16px; stroke: #fff; stroke-width: 2; fill: none; stroke-linecap: round; stroke-linejoin: round; }
     .led-icon.green-cyan::before {
       content: ''; position: absolute; inset: -3px; border-radius: 50%;
       background: conic-gradient(from 0deg, #00ff00 0deg 60deg, #00ffff 120deg 180deg, #00ff00 240deg 300deg, #00ff00 360deg);
@@ -236,7 +240,8 @@
     .toc-header:active { transform: scale(0.97); }
     .toc-header .toc-left { display: flex; align-items: center; gap: 8px; }
     .toc-header .toc-left .toc-icon { display: inline-flex; align-items: center; justify-content: center; width: 24px; height: 24px; border-radius: 50%; background: #000; border: 2px solid #1a1a1a; box-shadow: 0 0 15px rgba(255,0,0,0.1); }
-    .toc-header .toc-left .toc-icon .inner { font-size: 0.6rem; font-weight: 800; color: #fff; }
+    .toc-header .toc-left .toc-icon .inner { display: flex; align-items: center; justify-content: center; }
+    .toc-header .toc-left .toc-icon .inner svg { width: 14px; height: 14px; stroke: #fff; stroke-width: 2; fill: none; stroke-linecap: round; stroke-linejoin: round; }
     .toc-header .toc-left .toc-title { font-weight: 700; font-size: 0.85rem; color: #0b1e33; }
     .toc-header .toc-right { font-size: 1.2rem; color: #64748b; transition: transform 0.3s ease; }
     .toc-header .toc-right.open { transform: rotate(180deg); }
@@ -254,7 +259,6 @@
     .game-tags-section .game-tags-title { font-weight: 700; font-size: 0.85rem; color: #0b1e33; margin-bottom: 8px; display: flex; align-items: center; gap: 8px; }
     .game-tags-container { display: flex; flex-wrap: wrap; gap: 8px; }
     
-    /* Premium Loader Round Tag Style */
     .game-tag {
       display: inline-flex;
       align-items: center;
@@ -276,7 +280,6 @@
     .game-tag:active { transform: scale(0.95); background: #1a2a4a; }
     .game-tag:hover { border-color: rgba(0,200,255,0.3); box-shadow: 0 2px 20px rgba(0,200,255,0.1); }
     
-    /* Loader Circle Icon - 360° rotating */
     .tag-loader {
       display: inline-flex;
       align-items: center;
@@ -365,7 +368,6 @@
     .icon-svg.small { width: 14px; height: 14px; }
     .icon-svg.large { width: 18px; height: 18px; }
 
-    /* Unique layout classes for different app pages */
     .layout-left .detail-top { flex-direction: row; }
     .layout-right .detail-top { flex-direction: row-reverse; }
     .layout-center .detail-top { flex-direction: column; text-align: center; }
@@ -408,7 +410,7 @@
       .card-img { margin-left: 14px; width: 34px; height: 34px; }
       .telegram-btn .corner-led { width: 4px; height: 4px; }
       .led-icon { width: 20px; height: 20px; }
-      .led-icon .inner-icon { font-size: 0.45rem; }
+      .led-icon .inner-icon svg { width: 12px; height: 12px; }
       .game-tag { font-size: 0.45rem; padding: 4px 10px 4px 8px; gap: 5px; }
       .game-tag .tag-loader { width: 14px; height: 14px; }
       .related-item .rname { font-size: 0.5rem; }
@@ -584,7 +586,7 @@
 
     <div class="tag-section" id="tagSection">
       <div class="tag-title" id="tagSectionTitle">
-        <span class="led-icon green-cyan glow-bg"><span class="inner-icon">📢</span></span>
+        <span class="led-icon green-cyan glow-bg"><span class="inner-icon"><svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><path d="M12 15V3"/></svg></span></span>
         <span>Top Offers</span>
       </div>
       <div class="tag-grid" id="tagGridContainer"></div>
@@ -593,7 +595,7 @@
     <div class="toc-section">
       <div class="toc-header" id="tocToggle">
         <div class="toc-left">
-          <span class="toc-icon"><span class="inner">📋</span></span>
+          <span class="toc-icon"><span class="inner"><svg viewBox="0 0 24 24"><path d="M4 6h16"/><path d="M4 12h16"/><path d="M4 18h16"/></svg></span></span>
           <span class="toc-title">Table of Contents</span>
         </div>
         <div class="toc-right" id="tocArrow">▼</div>
@@ -650,20 +652,20 @@
 
     <div class="faq-section">
       <div class="faq-title">
-        <span class="led-icon red-yellow glow-bg"><span class="inner-icon">❓</span></span>
+        <span class="led-icon red-yellow glow-bg"><span class="inner-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 015.83 1c0 2-3 3-3 3"/><path d="M12 17h.01"/></svg></span></span>
         <span>Frequently Asked Questions</span>
       </div>
       <div class="faq-grid">
-        <div class="faq-box"><div class="faq-q"><span class="led-icon white-red glow-bg" style="width:20px;height:20px;"><span class="inner-icon" style="font-size:0.5rem;">Q</span></span> 1. What Is The <span id="faq1Name">Game Name</span> app APK?</div><div class="faq-a" id="faq1Content">The <span id="faq1Name2">Game Name</span> APP APK is an excellent application that offers users a sign-up bonus of ₹<span id="faq1Bonus">700</span> when they join. This game includes a fantastic bonus program, and you can learn more by reading the complete post. Additionally, <span id="faq1Name3">Game Name</span> APK is a popular slots game with a minimum withdrawal amount of ₹100. Referral Bonus: ₹<span id="faq1Ref">25</span></div></div>
-        <div class="faq-box"><div class="faq-q"><span class="led-icon white-red glow-bg" style="width:20px;height:20px;"><span class="inner-icon" style="font-size:0.5rem;">Q</span></span> 2. How to Sign Up for <span id="faq2Name">Game Name</span> APK?</div><div class="faq-a" id="faq2Content">To sign up for the <span id="faq2Name2">Game Name</span> APK, follow these steps:<br><strong>•</strong> Click on the Download Button for the <span id="faq2Name3">Game Name</span> APK.<br><strong>•</strong> Select OK to start the download.<br><strong>•</strong> Install the App application on your smartphone.<br><strong>•</strong> Open the new app and click on Play as Guest.<br><strong>•</strong> Click on the Profile Button and bind your mobile number.<br>After completing these steps, you will receive a sign-up bonus of ₹<span id="faq2Bonus">500</span>. Referral Bonus: ₹<span id="faq2Ref">18</span></div></div>
-        <div class="faq-box"><div class="faq-q"><span class="led-icon white-red glow-bg" style="width:20px;height:20px;"><span class="inner-icon" style="font-size:0.5rem;">Q</span></span> 3. How Many Games Are Available In The <span id="faq3Name">Game Name</span> App?</div><div class="faq-a" id="faq3Content">The <span id="faq3Name2">Game Name</span> app offers support for 75+ different types of games. You can enjoy a variety of games such as Rummy, Teen Patti, 7 Up Down, Dragon vs Tiger, and many more.</div></div>
-        <div class="faq-box"><div class="faq-q"><span class="led-icon white-red glow-bg" style="width:20px;height:20px;"><span class="inner-icon" style="font-size:0.5rem;">Q</span></span> 4. What are some of the best features of the <span id="faq4Name">Game Name</span> app APK?</div><div class="faq-a" id="faq4Content"><strong>•</strong> Enjoy a bonus of ₹<span id="faq4Bonus">51</span> for free in the APK.<br><strong>•</strong> Access to 20 gaming options.<br><strong>•</strong> Earn up to ₹<span id="faq4Bonus2">150</span> for inviting friends.<br><strong>•</strong> Withdrawals can be made starting from a minimum of ₹<span id="faq4Withdraw">500</span>.<br><strong>•</strong> Click on the Profile Button and bind your mobile number.<br><strong>•</strong> The minimum deposit required is ₹<span id="faq4Deposit">100</span>. Referral Bonus: ₹<span id="faq4Ref">22</span></div></div>
+        <div class="faq-box"><div class="faq-q"><span class="led-icon white-red glow-bg" style="width:20px;height:20px;"><span class="inner-icon" style="font-size:0.5rem;"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 8h.01"/></svg></span></span> 1. What Is The <span id="faq1Name">Game Name</span> app APK?</div><div class="faq-a" id="faq1Content">The <span id="faq1Name2">Game Name</span> APP APK is an excellent application that offers users a sign-up bonus of ₹<span id="faq1Bonus">700</span> when they join. This game includes a fantastic bonus program, and you can learn more by reading the complete post. Additionally, <span id="faq1Name3">Game Name</span> APK is a popular slots game with a minimum withdrawal amount of ₹100. Referral Bonus: ₹<span id="faq1Ref">25</span></div></div>
+        <div class="faq-box"><div class="faq-q"><span class="led-icon white-red glow-bg" style="width:20px;height:20px;"><span class="inner-icon" style="font-size:0.5rem;"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 8h.01"/></svg></span></span> 2. How to Sign Up for <span id="faq2Name">Game Name</span> APK?</div><div class="faq-a" id="faq2Content">To sign up for the <span id="faq2Name2">Game Name</span> APK, follow these steps:<br><strong>•</strong> Click on the Download Button for the <span id="faq2Name3">Game Name</span> APK.<br><strong>•</strong> Select OK to start the download.<br><strong>•</strong> Install the App application on your smartphone.<br><strong>•</strong> Open the new app and click on Play as Guest.<br><strong>•</strong> Click on the Profile Button and bind your mobile number.<br>After completing these steps, you will receive a sign-up bonus of ₹<span id="faq2Bonus">500</span>. Referral Bonus: ₹<span id="faq2Ref">18</span></div></div>
+        <div class="faq-box"><div class="faq-q"><span class="led-icon white-red glow-bg" style="width:20px;height:20px;"><span class="inner-icon" style="font-size:0.5rem;"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 8h.01"/></svg></span></span> 3. How Many Games Are Available In The <span id="faq3Name">Game Name</span> App?</div><div class="faq-a" id="faq3Content">The <span id="faq3Name2">Game Name</span> app offers support for 75+ different types of games. You can enjoy a variety of games such as Rummy, Teen Patti, 7 Up Down, Dragon vs Tiger, and many more.</div></div>
+        <div class="faq-box"><div class="faq-q"><span class="led-icon white-red glow-bg" style="width:20px;height:20px;"><span class="inner-icon" style="font-size:0.5rem;"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 8h.01"/></svg></span></span> 4. What are some of the best features of the <span id="faq4Name">Game Name</span> app APK?</div><div class="faq-a" id="faq4Content"><strong>•</strong> Enjoy a bonus of ₹<span id="faq4Bonus">51</span> for free in the APK.<br><strong>•</strong> Access to 20 gaming options.<br><strong>•</strong> Earn up to ₹<span id="faq4Bonus2">150</span> for inviting friends.<br><strong>•</strong> Withdrawals can be made starting from a minimum of ₹<span id="faq4Withdraw">500</span>.<br><strong>•</strong> Click on the Profile Button and bind your mobile number.<br><strong>•</strong> The minimum deposit required is ₹<span id="faq4Deposit">100</span>. Referral Bonus: ₹<span id="faq4Ref">22</span></div></div>
       </div>
     </div>
 
     <div class="game-tags-section">
       <div class="game-tags-title">
-        <span class="led-icon green-cyan glow-bg"><span class="inner-icon">🏷️</span></span>
+        <span class="led-icon green-cyan glow-bg"><span class="inner-icon"><svg viewBox="0 0 24 24"><path d="M20.59 13.41l-7.17 7.17a2 2 0 01-2.83 0L2 12V2h10l8.59 8.59a2 2 0 010 2.82z"/><path d="M7 7h.01"/></svg></span></span>
         <span>Tags – All Yono Games</span>
       </div>
       <div class="game-tags-container" id="gameTagsContainer"></div>
@@ -917,11 +919,11 @@
 
       const tagContainer = document.getElementById('tagGridContainer');
       const tagVariants = [
-        { head: '🏆', title: gName + ' APK Download – Get ₹' + b.tag1 + ' Instant Bonus!', content: 'Play skill-based Rummy, Teen Patti & slots. Safe withdrawals from ₹100. Start earning real cash in minutes – download APK & claim your bonus today! Referral Bonus: ₹' + b.ref1 },
-        { head: '💰', title: 'Unlock ₹' + b.tag2 + ' Bonus in ' + gName + ' App!', content: 'Enjoy thrilling games like Aviator, Rummy & more. Refer friends for extra cash. Fast, secure withdrawals via bank/UPI. Trusted by millions – start playing now! Referral Bonus: ₹' + b.ref2 },
-        { head: '🎁', title: gName + ' – Signup for ₹' + b.tag3 + '-₹' + b.tag3b + ' Free Bonus', content: 'Play 20+ exciting games including Dragon vs Tiger & slots. Minimum deposit ₹100, instant payouts. Download now & earn real money daily! Referral Bonus: ₹' + b.ref3 },
-        { head: '🎰', title: 'Experience ' + gName + ' – ₹' + b.tag4 + ' Welcome Bonus on Download', content: 'Build sequences, join cash tournaments & daily mystery rewards. Safe, fun, and secure gaming – start winning real cash today! Referral Bonus: ₹' + b.ref4 },
-        { head: '🇮🇳', title: 'Dive into ' + gName + ' – India\'s Top Online Gaming App', content: 'Get ₹' + b.tag5 + ' signup bonus, play Rummy, Teen Patti, slots & Aviator. Withdraw from ₹100, join 1Cr+ players & claim daily bonuses. Download APK now! Referral Bonus: ₹' + b.ref5 }
+        { head: '<svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>', title: gName + ' APK Download – Get ₹' + b.tag1 + ' Instant Bonus!', content: 'Play skill-based Rummy, Teen Patti & slots. Safe withdrawals from ₹100. Start earning real cash in minutes – download APK & claim your bonus today! Referral Bonus: ₹' + b.ref1 },
+        { head: '<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M8 12h8"/></svg>', title: 'Unlock ₹' + b.tag2 + ' Bonus in ' + gName + ' App!', content: 'Enjoy thrilling games like Aviator, Rummy & more. Refer friends for extra cash. Fast, secure withdrawals via bank/UPI. Trusted by millions – start playing now! Referral Bonus: ₹' + b.ref2 },
+        { head: '<svg viewBox="0 0 24 24"><rect x="3" y="8" width="18" height="13" rx="2"/><path d="M3 8l9-5 9 5"/><path d="M8 12h8"/></svg>', title: gName + ' – Signup for ₹' + b.tag3 + '-₹' + b.tag3b + ' Free Bonus', content: 'Play 20+ exciting games including Dragon vs Tiger & slots. Minimum deposit ₹100, instant payouts. Download now & earn real money daily! Referral Bonus: ₹' + b.ref3 },
+        { head: '<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 8v8"/><path d="M8 12h8"/></svg>', title: 'Experience ' + gName + ' – ₹' + b.tag4 + ' Welcome Bonus on Download', content: 'Build sequences, join cash tournaments & daily mystery rewards. Safe, fun, and secure gaming – start winning real cash today! Referral Bonus: ₹' + b.ref4 },
+        { head: '<svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/><path d="M12 8v8"/><path d="M8 12h8"/></svg>', title: 'Dive into ' + gName + ' – India\'s Top Online Gaming App', content: 'Get ₹' + b.tag5 + ' signup bonus, play Rummy, Teen Patti, slots & Aviator. Withdraw from ₹100, join 1Cr+ players & claim daily bonuses. Download APK now! Referral Bonus: ₹' + b.ref5 }
       ];
       const shuffled = tagVariants.sort(() => (gName.length * 7) % 3 - 1.5);
       tagContainer.innerHTML = '';
@@ -967,13 +969,11 @@
       document.getElementById('faq4Deposit').textContent = b.faq4d;
       document.getElementById('faq4Ref').textContent = b.refFaq4;
 
-      // Tags with premium loader icon - single original name only
       const tagsContainer = document.getElementById('gameTagsContainer');
       tagsContainer.innerHTML = '';
       uniqueGames.forEach(g => {
         const tag = document.createElement('span');
         tag.className = 'game-tag';
-        // Use only the original game name (no dual name)
         const displayName = g.name;
         tag.innerHTML = `
           <span class="tag-loader">
