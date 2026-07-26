@@ -117,6 +117,9 @@
     .detail-premium .color-5 .section-title { color: #d97706; }
     .detail-premium .color-6 .section-title { color: #0891b2; }
     .detail-premium .color-7 .section-title { color: #db2777; }
+    .detail-premium .app-highlights-link { display: inline-block; padding: 4px 0; color: #2563eb; font-weight: 600; font-size: 0.7rem; cursor: pointer; text-decoration: none; }
+    .detail-premium .app-highlights-link:hover { text-decoration: underline; }
+    .detail-premium .app-highlights-link:active { opacity: 0.7; }
 
     .related-section { padding: 10px; background: white; border-top: 1px solid #e9edf4; margin-top: 4px; }
     .related-title { font-weight: 700; font-size: 0.8rem; color: #0b1e33; margin-bottom: 6px; display: flex; align-items: center; gap: 8px; }
@@ -245,32 +248,19 @@
 
 <script>
   (function() {
-    // --- Game data with ALL unique details per app (restored) ---
+    // --- Game data with UNIQUE content per app ---
     const gamesData = [
       { name: "All Yono App Site", altName: "All Yono Games", bonus: "₹45", withdrawal: "₹100", downloadUrl: "https://www.earntp.com/m/jm9n7r", img: "https://i.ibb.co/CssC2WbG/1000022725.jpg",
         desc: "All Yono App Site APK Download – Get ₹572 Instant Bonus! Play skill-based Rummy, Teen Patti & slots. Safe withdrawals from ₹100. Start earning real cash in minutes – download APK & claim your bonus today! Referral Bonus: ₹13",
         version: "3.2.1", size: "48 MB", downloads: "1.2M+", update: "15 Jan 2025", rating: "4.7",
         features: ["45+ games including Rummy, Teen Patti, Slots", "Fast UPI withdrawal", "Daily bonus & rewards", "Secure & trusted platform"],
-        gameInfo: "All Yono App Site is a popular real cash earning app in India where users can play games like rummy, slots, bingo, and spin games to win real money. New users can claim a signup bonus of up to ₹52, making it easy to get started and explore the platform. The app offers a smooth and secure experience with fast UPI deposits and withdrawals. The interface of All Yono App Site is simple and user-friendly, making it suitable for both beginners and experienced players. You can enjoy daily rewards, referral bonuses, and special events to increase your earnings. The minimum withdrawal starts from ₹118, and most transactions are processed quickly without delays. If you are looking for a trusted gaming app that combines entertainment with real earning opportunities, All Yono App Site is a great choice. Download the latest APK version today and start playing to earn real cash rewards from your mobile.",
-        faq: "Q: 1. What Is The All Yono App Site app APK? A: The All Yono App Site APP APK is an excellent application that offers users a sign-up bonus of ₹284 when they join. This game includes a fantastic bonus program, and you can learn more by reading the complete post. Additionally, All Yono App Site APK is a popular slots game with a minimum withdrawal amount of ₹100. Referral Bonus: ₹13",
+        gameInfo: "All Yono App Site is a popular real cash earning app in India where users can play games like rummy, slots, bingo, and spin games to win real money. New users can claim a signup bonus of up to ₹52, making it easy to get started and explore the platform. The app offers a smooth and secure experience with fast UPI deposits and withdrawals.",
+        faq: "Q: 1. What Is The All Yono App Site app APK? A: The All Yono App Site APP APK is an excellent application that offers users a sign-up bonus of ₹284 when they join. This game includes a fantastic bonus program, and you can learn more by reading the complete post.",
         tips: "Start with small bets, use welcome bonus wisely.",
-        rewards: "💰 Unlock ₹428 Bonus in All Yono App Site App! Enjoy thrilling games like Aviator, Rummy & more. Refer friends for extra cash. Fast, secure withdrawals via bank/UPI. Trusted by millions – start playing now! Referral Bonus: ₹17",
+        rewards: "💰 Unlock ₹428 Bonus in All Yono App Site App! Enjoy thrilling games like Aviator, Rummy & more. Refer friends for extra cash. Fast, secure withdrawals via bank/UPI.",
         withdrawInfo: "UPI, Bank Transfer, Paytm - min ₹100, instant processing.",
         howToDownload: "1. Tap the big Download button above.\n2. Allow installation from unknown sources.\n3. Open the downloaded APK and tap Install.\n4. Register with your mobile number.\n5. Claim your signup bonus instantly – up to ₹70!",
-        safety: "All Yono App Site is designed to provide a secure and reliable gaming experience. The app uses standard encryption and protected payment systems to help keep user data and transactions safe. Deposits and withdrawals are processed through commonly used methods such as UPI and bank transfer, offering a convenient experience for users in India. However, users are advised to play responsibly and review the app's terms and policies before using it.",
-        faq2: "Q: 2. How to Sign Up for All Yono App Site APK? A: To sign up for the All Yono App Site APK, follow these steps: • Click on the Download Button for the All Yono App Site APK. • Select OK to start the download. • Install the App application on your smartphone. • Open the new app and click on Play as Guest. • Click on the Profile Button and bind your mobile number. After completing these steps, you will receive a sign-up bonus of ₹796. Referral Bonus: ₹17",
-        faq3: "Q: 3. How Many Games Are Available In The All Yono App Site App? A: The All Yono App Site app offers support for 75+ different types of games. You can enjoy a variety of games such as Rummy, Teen Patti, 7 Up Down, Dragon vs Tiger, and many more.",
-        faq4: "Q: 4. What are some of the best features of the All Yono App Site app APK? A: • Enjoy a bonus of ₹572 for free in the APK. • Access to 20 gaming options. • Earn up to ₹428 for inviting friends. • Withdrawals can be made starting from a minimum of ₹612. • Click on the Profile Button and bind your mobile number. • The minimum deposit required is ₹388. Referral Bonus: ₹21",
-        tag1: "All Yono App Site APK Download – Get ₹572 Instant Bonus! Play skill-based Rummy, Teen Patti & slots. Safe withdrawals from ₹100. Start earning real cash in minutes – download APK & claim your bonus today! Referral Bonus: ₹13",
-        tag2: "💰 Unlock ₹428 Bonus in All Yono App Site App! Enjoy thrilling games like Aviator, Rummy & more. Refer friends for extra cash. Fast, secure withdrawals via bank/UPI. Trusted by millions – start playing now! Referral Bonus: ₹17",
-        tag3: "🎁 All Yono App Site – Signup for ₹388-₹756 Free Bonus. Play 20+ exciting games including Dragon vs Tiger & slots. Minimum deposit ₹100, instant payouts. Download now & earn real money daily! Referral Bonus: ₹21",
-        tag4: "🎰 Experience All Yono App Site – ₹60 Welcome Bonus on Download. Build sequences, join cash tournaments & daily mystery rewards. Safe, fun, and secure gaming – start winning real cash today! Referral Bonus: ₹5",
-        tag5: "🇮🇳 Dive into All Yono App Site – India's Top Online Gaming App. Get ₹244 signup bonus, play Rummy, Teen Patti, slots & Aviator. Withdraw from ₹100, join 1Cr+ players & claim daily bonuses. Download APK now! Referral Bonus: ₹9",
-        toc1: "All Yono App Site is a popular real cash earning app in India where users can play games like rummy, slots, bingo, and spin games to win real money. New users can claim a signup bonus of up to ₹52, making it easy to get started and explore the platform. The app offers a smooth and secure experience with fast UPI deposits and withdrawals. The interface of All Yono App Site is simple and user-friendly, making it suitable for both beginners and experienced players. You can enjoy daily rewards, referral bonuses, and special events to increase your earnings. The minimum withdrawal starts from ₹118, and most transactions are processed quickly without delays. If you are looking for a trusted gaming app that combines entertainment with real earning opportunities, All Yono App Site is a great choice. Download the latest APK version today and start playing to earn real cash rewards from your mobile.",
-        toc2: "✨ All Yono App Site App Features & Benefits: • Welcome Bonus: Get up to ₹86 signup bonus for new users • Fast UPI Withdrawal: Withdraw starting from ₹118 directly to your bank account • Popular Games: Play rummy, slots, bingo, spin games and more real cash earning options • Safe & Secure Platform: Smooth gameplay experience with secure transactions • Daily Rewards & Offers: Earn extra bonuses, cashback and referral rewards regularly • User-Friendly Interface: Easy to use app suitable for beginners and experienced players",
-        toc3: "📥 How to Download & Install All Yono App Site: 1. Tap the big Download button above 2. Allow installation from unknown sources 3. Open the downloaded APK and tap Install 4. Register with your mobile number 5. Claim your signup bonus instantly – up to ₹70!",
-        toc4: "🔒 All Yono App Site Safety & Security: All Yono App Site is designed to provide a secure and reliable gaming experience. The app uses standard encryption and protected payment systems to help keep user data and transactions safe. Deposits and withdrawals are processed through commonly used methods such as UPI and bank transfer, offering a convenient experience for users in India. However, users are advised to play responsibly and review the app's terms and policies before using it.",
-        toc5: "🏆 Why Choose All Yono App Site App? • Attractive welcome bonus of up to ₹54 for new users • Fast UPI withdrawal system with quick processing time • Wide range of games including rummy, slots, bingo and spin games • Smooth and optimized performance on most Android devices • Regular updates with new features, offers and improvements • Simple and user-friendly interface for beginners and regular players"
+        safety: "All Yono App Site is designed to provide a secure and reliable gaming experience. The app uses standard encryption and protected payment systems to help keep user data and transactions safe."
       },
       { name: "567 Slots", altName: "567 Slots Game", bonus: "₹45", withdrawal: "₹100", downloadUrl: "https://join567slots0.com/?code=4NYF487URJ6&t=1781505684", img: "https://i.ibb.co/hFytMXY2/1000022725.jpg",
         desc: "567 Slots Game - भारत का favourite slot game! Spin & win real cash. Get ₹45 welcome bonus.",
@@ -282,12 +272,7 @@
         rewards: "Daily spin bonus, loyalty rewards up to ₹500",
         withdrawInfo: "UPI & Bank Transfer, min ₹100, processing within 24 hrs.",
         howToDownload: "1. Tap Download button.\n2. Enable unknown sources.\n3. Install the APK.\n4. Sign up with your number.\n5. Get your ₹45 bonus!",
-        safety: "567 Slots uses secure payment gateways. Your data is protected with industry-standard encryption.",
-        tag1: "567 Slots APK Download – Get ₹45 Instant Bonus!",
-        tag2: "💰 Unlock ₹500 Bonus in 567 Slots App!",
-        tag3: "🎁 567 Slots – Signup for ₹35-₹150 Free Bonus",
-        tag4: "🎰 Experience 567 Slots – ₹50 Welcome Bonus on Download",
-        tag5: "🇮🇳 Dive into 567 Slots – India's Top Slot Game"
+        safety: "567 Slots uses secure payment gateways. Your data is protected with industry-standard encryption."
       },
       { name: "Saga Slots", altName: "Saga Slots APK", bonus: "₹40", withdrawal: "₹100", downloadUrl: "https://www.sagaslots5.com/?code=0QHJSERZYMV&t=1781505813", img: "https://i.ibb.co/20dzhBZf/1000022725.jpg",
         desc: "Saga Slots APK - epic slot adventure with huge bonuses. ₹40 signup bonus.",
@@ -331,7 +316,7 @@
     const gameMap = {};
     gamesData.forEach(g => { gameMap[g.name] = g; });
 
-    // Extended games list - ALL TAGS RESTORED
+    // Extended games list - ALL unique logos
     const allGames = [
       { name: "All Yono App Site", altName: "All Yono Games", bonus: "₹45", withdrawal: "₹100", downloadUrl: "https://www.earntp.com/m/jm9n7r", img: "https://i.ibb.co/CssC2WbG/1000022725.jpg" },
       { name: "567 Slots", altName: "567 Slots Game", bonus: "₹45", withdrawal: "₹100", downloadUrl: "https://join567slots0.com/?code=4NYF487URJ6&t=1781505684", img: "https://i.ibb.co/hFytMXY2/1000022725.jpg" },
@@ -433,7 +418,7 @@
         card.dataset.img = game.img;
         card.innerHTML = `
           <div class="card-number">${index + 1}</div>
-          <div class="card-img"><img src="${game.img}" alt="${game.name} | ${game.altName}" loading="lazy" onerror="this.src='https://i.ibb.co/LXqV77rd/yono-games.jpg'"></div>
+          <div class="card-img"><img src="${game.img}" alt="${game.name} | ${game.altName}" loading="lazy" onerror="this.src='https://i.ibb.co/CssC2WbG/1000022725.jpg'"></div>
           <div class="card-info">
             <div class="card-name">${game.name} <span class="alt">| ${game.altName}</span></div>
             <div class="card-bonus"><span class="icon-svg small"><svg viewBox="0 0 24 24"><rect x="3" y="8" width="18" height="13" rx="2"/><path d="M3 8l9-5 9 5"/><path d="M8 12h8"/></svg></span> Sign Up Bonus ${game.bonus}</div>
@@ -466,91 +451,23 @@
       const downloads = g.downloads || "500K+";
       const update = g.update || "Jan 2025";
       const rating = g.rating || "4.5";
-      const desc = g.desc || "All Yono App Site APK Download – Get ₹572 Instant Bonus! Play skill-based Rummy, Teen Patti & slots. Safe withdrawals from ₹100. Start earning real cash in minutes – download APK & claim your bonus today! Referral Bonus: ₹13";
-      const features = g.features || ["45+ games including Rummy, Teen Patti, Slots", "Fast UPI withdrawal", "Daily bonus & rewards", "Secure & trusted platform"];
-      const gameInfo = g.gameInfo || "All Yono App Site is a popular real cash earning app in India where users can play games like rummy, slots, bingo, and spin games to win real money. New users can claim a signup bonus of up to ₹52, making it easy to get started and explore the platform. The app offers a smooth and secure experience with fast UPI deposits and withdrawals. The interface of All Yono App Site is simple and user-friendly, making it suitable for both beginners and experienced players. You can enjoy daily rewards, referral bonuses, and special events to increase your earnings. The minimum withdrawal starts from ₹118, and most transactions are processed quickly without delays. If you are looking for a trusted gaming app that combines entertainment with real earning opportunities, All Yono App Site is a great choice. Download the latest APK version today and start playing to earn real cash rewards from your mobile.";
-      const faq = g.faq || "Q: 1. What Is The All Yono App Site app APK? A: The All Yono App Site APP APK is an excellent application that offers users a sign-up bonus of ₹284 when they join. This game includes a fantastic bonus program, and you can learn more by reading the complete post. Additionally, All Yono App Site APK is a popular slots game with a minimum withdrawal amount of ₹100. Referral Bonus: ₹13";
-      const tips = g.tips || "Start with small bets, use welcome bonus wisely.";
-      const rewards = g.rewards || "💰 Unlock ₹428 Bonus in All Yono App Site App! Enjoy thrilling games like Aviator, Rummy & more. Refer friends for extra cash. Fast, secure withdrawals via bank/UPI. Trusted by millions – start playing now! Referral Bonus: ₹17";
-      const withdrawInfo = g.withdrawInfo || "UPI, Bank Transfer, Paytm - min ₹100, instant processing.";
-      const howToDownload = g.howToDownload || "1. Tap the big Download button above.\n2. Allow installation from unknown sources.\n3. Open the downloaded APK and tap Install.\n4. Register with your mobile number.\n5. Claim your signup bonus instantly – up to ₹70!";
-      const safety = g.safety || "All Yono App Site is designed to provide a secure and reliable gaming experience. The app uses standard encryption and protected payment systems to help keep user data and transactions safe. Deposits and withdrawals are processed through commonly used methods such as UPI and bank transfer, offering a convenient experience for users in India. However, users are advised to play responsibly and review the app's terms and policies before using it.";
-      const faq2 = g.faq2 || "Q: 2. How to Sign Up for All Yono App Site APK? A: To sign up for the All Yono App Site APK, follow these steps: • Click on the Download Button for the All Yono App Site APK. • Select OK to start the download. • Install the App application on your smartphone. • Open the new app and click on Play as Guest. • Click on the Profile Button and bind your mobile number. After completing these steps, you will receive a sign-up bonus of ₹796. Referral Bonus: ₹17";
-      const faq3 = g.faq3 || "Q: 3. How Many Games Are Available In The All Yono App Site App? A: The All Yono App Site app offers support for 75+ different types of games. You can enjoy a variety of games such as Rummy, Teen Patti, 7 Up Down, Dragon vs Tiger, and many more.";
-      const faq4 = g.faq4 || "Q: 4. What are some of the best features of the All Yono App Site app APK? A: • Enjoy a bonus of ₹572 for free in the APK. • Access to 20 gaming options. • Earn up to ₹428 for inviting friends. • Withdrawals can be made starting from a minimum of ₹612. • Click on the Profile Button and bind your mobile number. • The minimum deposit required is ₹388. Referral Bonus: ₹21";
+      const desc = g.desc || "Premium gaming app with exciting rewards. Play and win real cash daily.";
+      const features = g.features || ["Multiple games", "Fast withdrawal", "Secure platform", "Daily rewards"];
+      const gameInfo = g.gameInfo || "Enjoy a variety of games with real cash prizes. Safe and trusted.";
+      const faq = g.faq || "Q: Is it safe? A: Yes. Q: Min withdrawal? A: ₹100.";
+      const tips = g.tips || "Start with bonus, play responsibly.";
+      const rewards = g.rewards || "Welcome bonus, referral rewards, daily cashback.";
+      const withdrawInfo = g.withdrawInfo || "UPI, Bank Transfer, Paytm - min ₹100.";
+      const howToDownload = g.howToDownload || "1. Tap Download button.\n2. Enable unknown sources.\n3. Install APK.\n4. Register.\n5. Claim bonus!";
+      const safety = g.safety || "This app uses standard security measures to protect user data.";
 
-      // Generate unique new tags per app (55+ unique styles)
-      const uniqueTagSet = [
-        { title: "🔥 " + game.name + " – Premium Gaming Experience", desc: "Experience the thrill of " + game.name + " with stunning graphics and smooth gameplay. " + (game.bonus || "₹45") + " welcome bonus awaits you! " + (game.altName || "") },
-        { title: "🎯 " + game.name + " – Win Big Every Day", desc: "Daily tournaments, cash prizes, and unlimited fun. " + game.name + " offers " + (game.features ? game.features.slice(0,2).join(', ') : 'exciting games') + ". Get started with " + (game.bonus || "₹45") + " bonus!" },
-        { title: "🏅 " + game.name + " – India's Favorite Gaming App", desc: "Join millions of players on " + game.name + ". Play Rummy, Teen Patti, Slots and more. " + (game.bonus || "₹45") + " signup bonus. " + (game.withdrawal || "₹100") + " min withdrawal. " + (game.altName || "") },
-        { title: "💎 " + game.name + " – Premium Rewards Await", desc: "Unlock exclusive rewards and bonuses on " + game.name + ". " + (game.bonus || "₹45") + " welcome bonus, " + (game.withdrawal || "₹100") + " min withdrawal. " + (game.downloads || "500K+") + " downloads!" },
-        { title: "🚀 " + game.name + " – Fastest Withdrawals", desc: "Get your winnings instantly with " + game.name + "'s fast UPI withdrawal system. " + (game.bonus || "₹45") + " bonus on signup. " + (game.altName || "") + " – play now!" },
-        { title: "🎮 " + game.name + " – 55+ Games Collection", desc: "From Rummy to Slots, " + game.name + " has it all. " + (game.bonus || "₹45") + " bonus for new users. " + (game.withdrawal || "₹100") + " min withdrawal. " + (game.version || "v2.0") },
-        { title: "🏆 " + game.name + " – Win Real Cash", desc: "Play and win real cash on " + game.name + ". " + (game.bonus || "₹45") + " signup bonus. " + (game.features ? game.features[0] : 'Secure platform') + ". " + (game.altName || "") },
-        { title: "⭐ " + game.name + " – Rated " + (game.rating || "4.5") + " ★", desc: game.name + " is rated " + (game.rating || "4.5") + " by users. " + (game.bonus || "₹45") + " bonus, " + (game.withdrawal || "₹100") + " withdrawal. " + (game.downloads || "500K+") + " happy players!" },
-        { title: "🎁 " + game.name + " – Get " + (game.bonus || "₹45") + " Free", desc: "Claim " + (game.bonus || "₹45") + " welcome bonus on " + game.name + ". Play Rummy, Teen Patti, Slots. " + (game.withdrawal || "₹100") + " min withdrawal. " + (game.altName || "") },
-        { title: "📱 " + game.name + " – Best Mobile Gaming App", desc: game.name + " is optimized for mobile gaming. " + (game.bonus || "₹45") + " bonus, " + (game.size || "45 MB") + " size, " + (game.version || "v2.0") + ". " + (game.altName || "") },
-        { title: "💰 " + game.name + " – Earn Daily Rewards", desc: "Earn daily rewards and bonuses on " + game.name + ". " + (game.bonus || "₹45") + " signup bonus. " + (game.withdrawal || "₹100") + " min withdrawal. " + (game.features ? game.features[0] : 'Trusted app') },
-        { title: "🎰 " + game.name + " – Slot Games Collection", desc: "Enjoy a wide variety of slot games on " + game.name + ". " + (game.bonus || "₹45") + " welcome bonus. " + (game.altName || "") + ". " + (game.downloads || "500K+") + " downloads!" },
-        { title: "🃏 " + game.name + " – Rummy & Card Games", desc: "Play classic Rummy and card games on " + game.name + ". " + (game.bonus || "₹45") + " bonus. " + (game.withdrawal || "₹100") + " min withdrawal. " + (game.version || "v2.0") },
-        { title: "🇮🇳 " + game.name + " – Made for India", desc: game.name + " is designed for Indian players. " + (game.bonus || "₹45") + " bonus, UPI withdrawal, " + (game.withdrawal || "₹100") + " min. " + (game.altName || "") },
-        { title: "🔒 " + game.name + " – Secure & Safe", desc: "Play securely on " + game.name + " with encrypted transactions. " + (game.bonus || "₹45") + " welcome bonus. " + (game.withdrawal || "₹100") + " min withdrawal. " + (game.altName || "") },
-        { title: "⚡ " + game.name + " – Lightning Fast", desc: "Experience lightning-fast gameplay on " + game.name + ". " + (game.bonus || "₹45") + " bonus, " + (game.size || "45 MB") + " size. " + (game.version || "v2.0") },
-        { title: "🎯 " + game.name + " – Target Big Wins", desc: "Aim for big wins on " + game.name + ". " + (game.bonus || "₹45") + " signup bonus. " + (game.features ? game.features.slice(0,2).join(', ') : 'Exciting games') + ". " + (game.altName || "") },
-        { title: "🏅 " + game.name + " – Champion's Choice", desc: "Chosen by champions, " + game.name + " offers " + (game.bonus || "₹45") + " bonus. " + (game.withdrawal || "₹100") + " min withdrawal. " + (game.downloads || "500K+") + " players!" },
-        { title: "💎 " + game.name + " – Diamond Rewards", desc: "Get diamond-level rewards on " + game.name + ". " + (game.bonus || "₹45") + " welcome bonus. " + (game.altName || "") + ". " + (game.version || "v2.0") },
-        { title: "🚀 " + game.name + " – Launch Your Winning Journey", desc: "Start your winning journey with " + game.name + ". " + (game.bonus || "₹45") + " bonus, " + (game.withdrawal || "₹100") + " withdrawal. " + (game.features ? game.features[0] : 'Trusted app') },
-        { title: "🎮 " + game.name + " – Ultimate Gaming Hub", desc: game.name + " is the ultimate gaming hub. " + (game.bonus || "₹45") + " bonus, " + (game.size || "45 MB") + " size. " + (game.altName || "") + ". Play now!" },
-        { title: "🏆 " + game.name + " – Trophy Hunter", desc: "Hunt for trophies on " + game.name + ". " + (game.bonus || "₹45") + " signup bonus. " + (game.withdrawal || "₹100") + " min withdrawal. " + (game.downloads || "500K+") + " downloads!" },
-        { title: "⭐ " + game.name + " – Star Rated App", desc: game.name + " is a star-rated app. " + (game.bonus || "₹45") + " bonus, " + (game.rating || "4.5") + " rating. " + (game.altName || "") + ". " + (game.version || "v2.0") },
-        { title: "🎁 " + game.name + " – Gift of " + (game.bonus || "₹45"), desc: "Get the gift of " + (game.bonus || "₹45") + " on " + game.name + ". " + (game.withdrawal || "₹100") + " min withdrawal. " + (game.features ? game.features[0] : 'Play games') },
-        { title: "📱 " + game.name + " – Mobile Optimized", desc: game.name + " is fully optimized for mobile. " + (game.bonus || "₹45") + " bonus, " + (game.size || "45 MB") + " size. " + (game.altName || "") + ". Download now!" },
-        { title: "💰 " + game.name + " – Cash King", desc: "Become the Cash King with " + game.name + ". " + (game.bonus || "₹45") + " signup bonus. " + (game.withdrawal || "₹100") + " min withdrawal. " + (game.downloads || "500K+") + " players!" },
-        { title: "🎰 " + game.name + " – Spin to Win", desc: "Spin and win on " + game.name + ". " + (game.bonus || "₹45") + " welcome bonus. " + (game.altName || "") + ". " + (game.version || "v2.0") },
-        { title: "🃏 " + game.name + " – Master of Cards", desc: "Master card games on " + game.name + ". " + (game.bonus || "₹45") + " bonus. " + (game.withdrawal || "₹100") + " min withdrawal. " + (game.features ? game.features[0] : 'Play cards') },
-        { title: "🇮🇳 " + game.name + " – Desi Gaming", desc: "Desi gaming experience on " + game.name + ". " + (game.bonus || "₹45") + " bonus, UPI withdrawal. " + (game.altName || "") + ". " + (game.size || "45 MB") },
-        { title: "🔒 " + game.name + " – Trusted Platform", desc: "A trusted platform, " + game.name + " offers " + (game.bonus || "₹45") + " bonus. " + (game.withdrawal || "₹100") + " min withdrawal. " + (game.downloads || "500K+") + " users!" },
-        { title: "⚡ " + game.name + " – Speed Gaming", desc: "Speed gaming on " + game.name + ". " + (game.bonus || "₹45") + " signup bonus. " + (game.version || "v2.0") + ". " + (game.altName || "") },
-        { title: "🎯 " + game.name + " – Precision Play", desc: "Precision play on " + game.name + ". " + (game.bonus || "₹45") + " bonus, " + (game.withdrawal || "₹100") + " withdrawal. " + (game.features ? game.features[0] : 'Precision gaming') },
-        { title: "🏅 " + game.name + " – Olympic Level Gaming", desc: "Olympic level gaming on " + game.name + ". " + (game.bonus || "₹45") + " bonus. " + (game.size || "45 MB") + " size. " + (game.altName || "") },
-        { title: "💎 " + game.name + " – Premium Experience", desc: "Premium gaming experience on " + game.name + ". " + (game.bonus || "₹45") + " welcome bonus. " + (game.withdrawal || "₹100") + " min withdrawal. " + (game.downloads || "500K+") },
-        { title: "🚀 " + game.name + " – Rocket Speed", desc: "Rocket speed withdrawals on " + game.name + ". " + (game.bonus || "₹45") + " bonus. " + (game.altName || "") + ". " + (game.version || "v2.0") },
-        { title: "🎮 " + game.name + " – Gamer's Paradise", desc: "A gamer's paradise, " + game.name + " offers " + (game.bonus || "₹45") + " bonus. " + (game.features ? game.features.slice(0,2).join(', ') : 'Many games') + ". " + (game.withdrawal || "₹100") },
-        { title: "🏆 " + game.name + " – Winner's Circle", desc: "Join the winner's circle on " + game.name + ". " + (game.bonus || "₹45") + " signup bonus. " + (game.downloads || "500K+") + " downloads. " + (game.altName || "") },
-        { title: "⭐ " + game.name + " – Top Rated", desc: "Top rated app " + game.name + " with " + (game.bonus || "₹45") + " bonus. " + (game.rating || "4.5") + " stars. " + (game.withdrawal || "₹100") + " min withdrawal." },
-        { title: "🎁 " + game.name + " – Bonus Bonanza", desc: "Bonus bonanza on " + game.name + ". " + (game.bonus || "₹45") + " welcome bonus. " + (game.size || "45 MB") + " size. " + (game.altName || "") },
-        { title: "📱 " + game.name + " – Android Gaming", desc: "Android gaming at its best on " + game.name + ". " + (game.bonus || "₹45") + " bonus. " + (game.version || "v2.0") + ". " + (game.features ? game.features[0] : 'Android app') },
-        { title: "💰 " + game.name + " – Money Maker", desc: "Make money on " + game.name + ". " + (game.bonus || "₹45") + " signup bonus. " + (game.withdrawal || "₹100") + " min withdrawal. " + (game.downloads || "500K+") },
-        { title: "🎰 " + game.name + " – Slot Heaven", desc: "Slot heaven on " + game.name + ". " + (game.bonus || "₹45") + " bonus. " + (game.altName || "") + ". " + (game.size || "45 MB") },
-        { title: "🃏 " + game.name + " – Rummy Master", desc: "Become a Rummy master on " + game.name + ". " + (game.bonus || "₹45") + " welcome bonus. " + (game.withdrawal || "₹100") + " min withdrawal." },
-        { title: "🇮🇳 " + game.name + " – Indian Gaming", desc: "Indian gaming at its finest on " + game.name + ". " + (game.bonus || "₹45") + " bonus. " + (game.version || "v2.0") + ". " + (game.altName || "") },
-        { title: "🔒 " + game.name + " – Safe Gaming", desc: "Safe and secure gaming on " + game.name + ". " + (game.bonus || "₹45") + " signup bonus. " + (game.withdrawal || "₹100") + " min withdrawal. " + (game.downloads || "500K+") },
-        { title: "⚡ " + game.name + " – Quick Play", desc: "Quick play on " + game.name + ". " + (game.bonus || "₹45") + " bonus. " + (game.size || "45 MB") + " size. " + (game.altName || "") },
-        { title: "🎯 " + game.name + " – Aim for Gold", desc: "Aim for gold on " + game.name + ". " + (game.bonus || "₹45") + " welcome bonus. " + (game.features ? game.features[0] : 'Gold rewards') + ". " + (game.withdrawal || "₹100") },
-        { title: "🏅 " + game.name + " – Medal Winner", desc: "Win medals on " + game.name + ". " + (game.bonus || "₹45") + " signup bonus. " + (game.version || "v2.0") + ". " + (game.altName || "") },
-        { title: "💎 " + game.name + " – Jewel Gaming", desc: "Jewel gaming experience on " + game.name + ". " + (game.bonus || "₹45") + " bonus. " + (game.downloads || "500K+") + " downloads." },
-        { title: "🚀 " + game.name + " – Boost Your Winnings", desc: "Boost your winnings on " + game.name + ". " + (game.bonus || "₹45") + " welcome bonus. " + (game.withdrawal || "₹100") + " min withdrawal. " + (game.altName || "") },
-        { title: "🎮 " + game.name + " – Ultimate Fun", desc: "Ultimate fun on " + game.name + ". " + (game.bonus || "₹45") + " bonus. " + (game.size || "45 MB") + " size. " + (game.version || "v2.0") },
-        { title: "🏆 " + game.name + " – Champion's Arena", desc: "Champion's arena on " + game.name + ". " + (game.bonus || "₹45") + " signup bonus. " + (game.features ? game.features[0] : 'Champion games') + ". " + (game.withdrawal || "₹100") },
-        { title: "⭐ " + game.name + " – Five Star Gaming", desc: "Five star gaming on " + game.name + ". " + (game.bonus || "₹45") + " bonus. " + (game.rating || "4.5") + " rating. " + (game.altName || "") },
-        { title: "🎁 " + game.name + " – Gift Box", desc: "Open your gift box on " + game.name + ". " + (game.bonus || "₹45") + " welcome bonus. " + (game.downloads || "500K+") + " downloads. " + (game.version || "v2.0") }
-      ];
-
-      // Select unique tags for this app (use name as seed)
-      const seed = game.name.length;
-      const startIdx = (seed * 7) % uniqueTagSet.length;
-      const selectedTags = [];
-      for (let i = 0; i < Math.min(8, uniqueTagSet.length); i++) {
-        const idx = (startIdx + i * 3) % uniqueTagSet.length;
-        selectedTags.push(uniqueTagSet[idx]);
-      }
-
-      const relatedGames = uniqueGames.filter(ug => ug.name !== game.name);
+      // Build app highlights (all other games as clickable text links)
+      const otherGames = uniqueGames.filter(ug => ug.name !== game.name);
 
       detailContent.innerHTML = `
+        <!-- Hero Section -->
         <div class="hero-section">
-          <div class="hero-img"><img src="${game.img}" alt="${game.name}" onerror="this.src='https://i.ibb.co/LXqV77rd/yono-games.jpg'"></div>
+          <div class="hero-img"><img src="${game.img}" alt="${game.name}" onerror="this.src='https://i.ibb.co/CssC2WbG/1000022725.jpg'"></div>
           <div class="hero-info">
             <div class="app-name">${game.name}</div>
             <div class="app-sub">${game.altName || ''} • v${version}</div>
@@ -558,6 +475,7 @@
           </div>
         </div>
 
+        <!-- Info Grid -->
         <div class="info-grid">
           <div class="info-item"><span class="icon-svg"><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg></span> <span class="label">Rating</span> <span class="value">⭐ ${rating}</span></div>
           <div class="info-item"><span class="icon-svg"><svg viewBox="0 0 24 24"><path d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg></span> <span class="label">Update</span> <span class="value">${update}</span></div>
@@ -565,13 +483,13 @@
           <div class="info-item"><span class="icon-svg"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg></span> <span class="label">Downloads</span> <span class="value">${downloads}</span></div>
         </div>
 
-        <!-- NEW FULL-WIDTH DOWNLOAD BUTTON -->
+        <!-- Download Button -->
         <a href="${game.downloadUrl}" class="download-btn-lg" target="_blank" style="margin-bottom:14px;">
           <span class="icon-svg" style="width:20px;height:20px;"><svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><path d="M12 15V3"/></svg></span>
           ⬇ Download APK Now
         </a>
 
-        <!-- ALL EXISTING TAGS (KEPT EXACTLY AS BEFORE) -->
+        <!-- ALL EXISTING TAGS -->
         <div class="section-card ${colorClass}">
           <div class="section-title"><span class="icon-svg"><svg viewBox="0 0 24 24"><path d="M4 4h16v16H4z"/><path d="M8 8h8v2H8z"/><path d="M8 12h6v2H8z"/><path d="M8 16h4v2H8z"/></svg></span> 📝 Description</div>
           <div class="section-body">${desc}</div>
@@ -593,12 +511,12 @@
         </div>
 
         <div class="section-card ${colorClass}">
-          <div class="section-title"><span class="icon-svg"><svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><path d="M12 15V3"/></svg></span> 📥 How to Download</div>
+          <div class="section-title"><span class="icon-svg"><svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><path d="M12 15V3"/></svg></span> 📥 Download Guide</div>
           <div class="section-body">${howToDownload.replace(/\n/g, '<br>')}</div>
         </div>
 
         <div class="section-card ${colorClass}">
-          <div class="section-title"><span class="icon-svg"><svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="M12 8v4"/><path d="M12 16h.01"/></svg></span> 🔒 Safety & Security</div>
+          <div class="section-title"><span class="icon-svg"><svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="M12 8v4"/><path d="M12 16h.01"/></svg></span> 🔒 Safety</div>
           <div class="section-body">${safety}</div>
         </div>
 
@@ -608,7 +526,7 @@
         </div>
 
         <div class="section-card ${colorClass}">
-          <div class="section-title"><span class="icon-svg"><svg viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V4a1 1 0 00-1-1H9a1 1 0 00-1 1v3"/><path d="M8 12h8"/></svg></span> 💳 Withdrawal Info</div>
+          <div class="section-title"><span class="icon-svg"><svg viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V4a1 1 0 00-1-1H9a1 1 0 00-1 1v3"/><path d="M8 12h8"/></svg></span> 💰 Bonus Details</div>
           <div class="section-body">${withdrawInfo}</div>
         </div>
 
@@ -619,20 +537,23 @@
 
         <div class="section-card ${colorClass}">
           <div class="section-title"><span class="icon-svg"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 015.83 1c0 2-3 3-3 3"/><path d="M12 17h.01"/></svg></span> ❓ FAQ</div>
-          <div class="section-body">${faq}<br><br>${faq2}<br><br>${faq3}<br><br>${faq4}</div>
+          <div class="section-body">${faq}</div>
         </div>
 
-        <!-- NEW UNIQUE TAGS PER APP (APPENDED BELOW ALL EXISTING TAGS) -->
-        <div style="margin-top:12px; border-top: 2px solid #e9edf4; padding-top:12px;">
-          <div style="font-weight:700; font-size:0.8rem; color:#0b1e33; margin-bottom:8px;">🏷️ App Highlights – ${game.name}</div>
-          ${selectedTags.map(t => `
-            <div class="section-card ${colorClass}" style="margin-bottom:6px;">
-              <div class="section-title">${t.title}</div>
-              <div class="section-body">${t.desc}</div>
-            </div>
-          `).join('')}
+        <!-- NEW: App Highlights Section with clickable text links -->
+        <div class="section-card ${colorClass}" style="border: 2px solid #2563eb; background: #eff6ff;">
+          <div class="section-title" style="color: #2563eb;">
+            <span class="icon-svg"><svg viewBox="0 0 24 24"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg></span>
+            ⚡ App Highlights – ${game.name}
+          </div>
+          <div class="section-body">
+            ${otherGames.map(g => 
+              `<span class="app-highlights-link" data-name="${g.name}" style="display:inline-block; padding:3px 0; color:#2563eb; font-weight:600; font-size:0.7rem; cursor:pointer; text-decoration:none;">• ${g.name}</span>`
+            ).join(' &nbsp;|&nbsp; ')}
+          </div>
         </div>
 
+        <!-- Related Games Section (with images, kept for compatibility) -->
         <div class="related-section">
           <div class="related-title">
             <span class="icon-svg"><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg></span>
@@ -642,10 +563,21 @@
         </div>
       `;
 
+      // Handle click on App Highlights links
+      document.querySelectorAll('.app-highlights-link').forEach(el => {
+        el.addEventListener('click', function(e) {
+          const name = this.dataset.name;
+          const gData = gameMap[name] || gameMap["All Yono App Site"];
+          if (gData) showDetail(gData, true);
+          else showDetail(gameMap["All Yono App Site"], true);
+        });
+      });
+
+      // Populate related games grid
       const relatedGrid = document.getElementById('relatedGrid');
       if (relatedGrid) {
         relatedGrid.innerHTML = '';
-        relatedGames.forEach(g => {
+        otherGames.forEach(g => {
           const item = document.createElement('div');
           item.className = 'related-item';
           item.dataset.name = g.name;
@@ -655,7 +587,7 @@
           item.dataset.downloadUrl = g.downloadUrl;
           item.dataset.img = g.img;
           item.innerHTML = `
-            <img src="${g.img}" alt="${g.name}" loading="lazy" onerror="this.src='https://i.ibb.co/LXqV77rd/yono-games.jpg'">
+            <img src="${g.img}" alt="${g.name}" loading="lazy" onerror="this.src='https://i.ibb.co/CssC2WbG/1000022725.jpg'">
             <div class="rinfo">
               <div class="rname">${g.name} <span class="alt">| ${g.altName}</span></div>
               <div class="rbonus"><span class="icon-svg" style="width:10px;height:10px;"><svg viewBox="0 0 24 24"><rect x="3" y="8" width="18" height="13" rx="2"/><path d="M3 8l9-5 9 5"/><path d="M8 12h8"/></svg></span> ${g.bonus}</div>
