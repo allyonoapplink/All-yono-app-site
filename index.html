@@ -142,7 +142,6 @@
     .detail-info .game-meta-detail .votes { background: #fce4ec; color: #d81b60; padding: 2px 8px; border-radius: 40px; border: 1px solid #ff4081; box-shadow: 0 0 10px rgba(255,64,129,0.2); animation: metaGlowPink 2s ease-in-out infinite 0.8s; font-weight: 600; display: inline-flex; align-items: center; gap: 3px; }
     .detail-info .game-meta-detail .bonus-badge { background: #ffebee; color: #d50000; padding: 2px 8px; border-radius: 40px; border: 1px solid #ff1744; box-shadow: 0 0 10px rgba(255,23,68,0.2); animation: metaGlowRed 2s ease-in-out infinite 1.2s; font-weight: 600; display: inline-flex; align-items: center; gap: 3px; }
 
-    /* Premium Update New Version Section */
     .version-section { display: flex; align-items: center; justify-content: space-between; padding: 6px 12px; background: #f8fafc; border-radius: 30px; border: 1px solid #e9edf4; margin-top: 8px; }
     .version-left { display: flex; align-items: center; gap: 6px; font-size: 0.65rem; color: #1e293b; font-weight: 600; }
     .version-left .refresh-icon { display: inline-flex; align-items: center; justify-content: center; width: 18px; height: 18px; color: #2563eb; }
@@ -253,11 +252,74 @@
 
     .game-tags-section { padding: 10px; background: white; border-top: 1px solid #e9edf4; }
     .game-tags-section .game-tags-title { font-weight: 700; font-size: 0.85rem; color: #0b1e33; margin-bottom: 8px; display: flex; align-items: center; gap: 8px; }
-    .game-tags-container { display: flex; flex-wrap: wrap; gap: 6px; }
-    .game-tag { background: #eef2ff; color: #2563eb; padding: 4px 10px; border-radius: 40px; font-size: 0.55rem; font-weight: 600; border: 1px solid #b3c8e6; cursor: pointer; display: inline-flex; align-items: center; gap: 4px; }
-    .game-tag:active { transform: scale(0.95); background: #dbeafe; }
-    .game-tag .tag-icon { display: inline-flex; align-items: center; justify-content: center; width: 14px; height: 14px; flex-shrink: 0; }
-    .game-tag .tag-icon svg { width: 12px; height: 12px; stroke: currentColor; stroke-width: 2; fill: none; stroke-linecap: round; stroke-linejoin: round; }
+    .game-tags-container { display: flex; flex-wrap: wrap; gap: 8px; }
+    
+    /* Premium Loader Round Tag Style */
+    .game-tag {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 6px 14px 6px 10px;
+      background: #0b1e33;
+      color: #ffffff;
+      border-radius: 50px;
+      font-size: 0.55rem;
+      font-weight: 600;
+      border: 1.5px solid rgba(255,255,255,0.1);
+      cursor: pointer;
+      transition: all 0.2s ease;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.15), inset 0 1px 0 rgba(255,255,255,0.05);
+      position: relative;
+      letter-spacing: 0.3px;
+    }
+    .game-tag:active { transform: scale(0.95); background: #1a2a4a; }
+    .game-tag:hover { border-color: rgba(0,200,255,0.3); box-shadow: 0 2px 20px rgba(0,200,255,0.1); }
+    
+    /* Loader Circle Icon - 360° rotating */
+    .tag-loader {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 18px;
+      height: 18px;
+      flex-shrink: 0;
+      position: relative;
+    }
+    .tag-loader svg {
+      width: 100%;
+      height: 100%;
+      animation: loaderSpin 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
+      transform-origin: center center;
+    }
+    .tag-loader .loader-ring {
+      fill: none;
+      stroke: #60a5fa;
+      stroke-width: 2.5;
+      stroke-linecap: round;
+      stroke-dasharray: 40, 120;
+      stroke-dashoffset: 0;
+      animation: loaderDash 1.5s ease-in-out infinite;
+    }
+    .tag-loader .loader-ring-bg {
+      fill: none;
+      stroke: rgba(255,255,255,0.08);
+      stroke-width: 2.5;
+    }
+    @keyframes loaderSpin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+    @keyframes loaderDash {
+      0% { stroke-dashoffset: 0; }
+      50% { stroke-dashoffset: -80; }
+      100% { stroke-dashoffset: -160; }
+    }
+
+    .game-tag .tag-text {
+      white-space: nowrap;
+      color: #e2e8f0;
+    }
 
     .related-section { padding: 10px; background: white; border-top: 1px solid #e9edf4; }
     .related-title { font-weight: 700; font-size: 0.8rem; color: #0b1e33; margin-bottom: 6px; display: flex; align-items: center; gap: 8px; }
@@ -347,7 +409,8 @@
       .telegram-btn .corner-led { width: 4px; height: 4px; }
       .led-icon { width: 20px; height: 20px; }
       .led-icon .inner-icon { font-size: 0.45rem; }
-      .game-tag { font-size: 0.45rem; padding: 3px 8px; }
+      .game-tag { font-size: 0.45rem; padding: 4px 10px 4px 8px; gap: 5px; }
+      .game-tag .tag-loader { width: 14px; height: 14px; }
       .related-item .rname { font-size: 0.5rem; }
       .footer-links a { font-size: 0.45rem; padding: 2px 8px; }
       .layout-center .detail-top { flex-direction: column; }
@@ -497,7 +560,6 @@
               <span class="icon-svg" style="width:12px;height:12px;"><svg viewBox="0 0 24 24"><rect x="3" y="8" width="18" height="13" rx="2"/><path d="M3 8l9-5 9 5"/><path d="M8 12h8"/></svg></span> ₹30
             </span>
           </div>
-          <!-- Premium Update New Version Section -->
           <div class="version-section">
             <div class="version-left">
               <span class="refresh-icon">
@@ -520,7 +582,6 @@
       </div>
     </div>
 
-    <!-- TAG SECTION - Will be dynamically generated with unique layouts -->
     <div class="tag-section" id="tagSection">
       <div class="tag-title" id="tagSectionTitle">
         <span class="led-icon green-cyan glow-bg"><span class="inner-icon">📢</span></span>
@@ -603,12 +664,11 @@
     <div class="game-tags-section">
       <div class="game-tags-title">
         <span class="led-icon green-cyan glow-bg"><span class="inner-icon">🏷️</span></span>
-        <span>Tags – All Yono Games (Dual Names)</span>
+        <span>Tags – All Yono Games</span>
       </div>
       <div class="game-tags-container" id="gameTagsContainer"></div>
     </div>
 
-    <!-- RELATED SECTION -->
     <div class="related-section">
       <div class="related-title">
         <span class="icon-svg"><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg></span>
@@ -640,7 +700,6 @@
 
 <script>
   (function() {
-    // Game data with unique bonus amounts and layout styles
     const games = [
       { name: "All Yono App Site", altName: "All Yono Games", bonus: "₹58", withdrawal: "₹100", downloadUrl: "https://www.earntp.com/m/jm9n7r", img: "https://i.ibb.co/CssC2WbG/1000022725.jpg", version: "v3.2.1", layout: "left", bg: "bg-gradient-1", border: "border-style-1" },
       { name: "567 Slots", altName: "567 Slots Game", bonus: "₹72", withdrawal: "₹100", downloadUrl: "https://join567slots0.com/?code=4NYF487URJ6&t=1781505684", img: "https://i.ibb.co/hFytMXY2/1000022725.jpg", version: "v2.5.0", layout: "right", bg: "bg-gradient-2", border: "border-style-2" },
@@ -838,7 +897,6 @@
     function showDetail(game, pushHistory = true) {
       if (pushHistory) historyStack.push(game);
 
-      // Apply unique layout, background, border
       const detailCard = document.getElementById('detailCard');
       detailCard.className = 'detail-card ' + (game.layout || 'left') + ' ' + (game.bg || 'bg-gradient-1') + ' ' + (game.border || 'border-style-1');
 
@@ -857,7 +915,6 @@
       const gName = game.name;
       const b = getUniqueBonuses(gName);
 
-      // Generate unique tags for each app
       const tagContainer = document.getElementById('tagGridContainer');
       const tagVariants = [
         { head: '🏆', title: gName + ' APK Download – Get ₹' + b.tag1 + ' Instant Bonus!', content: 'Play skill-based Rummy, Teen Patti & slots. Safe withdrawals from ₹100. Start earning real cash in minutes – download APK & claim your bonus today! Referral Bonus: ₹' + b.ref1 },
@@ -866,7 +923,6 @@
         { head: '🎰', title: 'Experience ' + gName + ' – ₹' + b.tag4 + ' Welcome Bonus on Download', content: 'Build sequences, join cash tournaments & daily mystery rewards. Safe, fun, and secure gaming – start winning real cash today! Referral Bonus: ₹' + b.ref4 },
         { head: '🇮🇳', title: 'Dive into ' + gName + ' – India\'s Top Online Gaming App', content: 'Get ₹' + b.tag5 + ' signup bonus, play Rummy, Teen Patti, slots & Aviator. Withdraw from ₹100, join 1Cr+ players & claim daily bonuses. Download APK now! Referral Bonus: ₹' + b.ref5 }
       ];
-      // Shuffle tags uniquely based on game name
       const shuffled = tagVariants.sort(() => (gName.length * 7) % 3 - 1.5);
       tagContainer.innerHTML = '';
       shuffled.forEach(t => {
@@ -911,27 +967,23 @@
       document.getElementById('faq4Deposit').textContent = b.faq4d;
       document.getElementById('faq4Ref').textContent = b.refFaq4;
 
-      // Generate unique tags with premium SVG icons
+      // Tags with premium loader icon - single original name only
       const tagsContainer = document.getElementById('gameTagsContainer');
       tagsContainer.innerHTML = '';
       uniqueGames.forEach(g => {
         const tag = document.createElement('span');
         tag.className = 'game-tag';
-        const iconMap = {
-          'a': '<svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>',
-          'r': '<svg viewBox="0 0 24 24"><path d="M4 4h11a4 4 0 010 8H4"/><path d="M4 12h8a4 4 0 010 8H4"/><path d="M4 4v16"/></svg>',
-          's': '<svg viewBox="0 0 24 24"><path d="M12 2v4"/><path d="M12 18v4"/><path d="M4.93 4.93l2.83 2.83"/><path d="M16.24 16.24l2.83 2.83"/><path d="M2 12h4"/><path d="M18 12h4"/><path d="M4.93 19.07l2.83-2.83"/><path d="M16.24 7.76l2.83-2.83"/></svg>',
-          'b': '<svg viewBox="0 0 24 24"><path d="M4 4h7a4 4 0 010 8H4"/><path d="M4 12h9a4 4 0 010 8H4"/><path d="M4 4v16"/></svg>',
-          'j': '<svg viewBox="0 0 24 24"><path d="M12 4v16"/><path d="M8 8h8"/><path d="M8 16h8"/></svg>',
-          't': '<svg viewBox="0 0 24 24"><path d="M4 4h16"/><path d="M12 4v16"/></svg>',
-          'y': '<svg viewBox="0 0 24 24"><path d="M12 2v20"/><path d="M4 10l8 6 8-6"/></svg>',
-          'd': '<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M8 12h8"/></svg>',
-          'g': '<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M8 8h8"/><path d="M8 12h6"/><path d="M8 16h4"/></svg>',
-          'l': '<svg viewBox="0 0 24 24"><path d="M4 4h16"/><path d="M4 12h12"/><path d="M4 20h8"/></svg>'
-        };
-        const firstChar = g.name.charAt(0).toLowerCase();
-        const iconSvg = iconMap[firstChar] || iconMap['a'];
-        tag.innerHTML = '<span class="tag-icon">' + iconSvg + '</span> ' + g.name + ' | ' + (g.altName || g.name);
+        // Use only the original game name (no dual name)
+        const displayName = g.name;
+        tag.innerHTML = `
+          <span class="tag-loader">
+            <svg viewBox="0 0 50 50">
+              <circle class="loader-ring-bg" cx="25" cy="25" r="20"/>
+              <circle class="loader-ring" cx="25" cy="25" r="20"/>
+            </svg>
+          </span>
+          <span class="tag-text">${displayName}</span>
+        `;
         tag.dataset.name = g.name;
         tag.dataset.altName = g.altName || g.name;
         tag.dataset.bonus = g.bonus;
