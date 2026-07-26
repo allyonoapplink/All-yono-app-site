@@ -930,7 +930,13 @@
       const downloads = g.downloads || "500K+";
       const update = g.update || "Today";
       const rating = g.rating || "4.5";
-      const desc = g.desc || "All Yono App Site APK Download – Get ₹572 Instant Bonus! Play skill-based Rummy, Teen Patti & slots. Safe withdrawals from ₹100. Start earning real cash in minutes – download APK & claim your bonus today! Referral Bonus: ₹13";
+      
+      // Remove "All Yono App Site" from desc if not the main app
+      let desc = g.desc || "All Yono App Site APK Download – Get ₹572 Instant Bonus! Play skill-based Rummy, Teen Patti & slots. Safe withdrawals from ₹100. Start earning real cash in minutes – download APK & claim your bonus today! Referral Bonus: ₹13";
+      if (game.name !== "All Yono App Site") {
+        desc = desc.replace(/All Yono App Site/g, game.name + ' APK');
+      }
+      
       const features = g.features || ["45+ games including Rummy, Teen Patti, Slots", "Fast UPI withdrawal", "Daily bonus & rewards", "Secure & trusted platform"];
       const gameInfo = g.gameInfo || "All Yono App Site is a popular real cash earning app in India where users can play games like rummy, slots, bingo, and spin games to win real money. New users can claim a signup bonus of up to ₹52, making it easy to get started and explore the platform. The app offers a smooth and secure experience with fast UPI deposits and withdrawals. The interface of All Yono App Site is simple and user-friendly, making it suitable for both beginners and experienced players. You can enjoy daily rewards, referral bonuses, and special events to increase your earnings. The minimum withdrawal starts from ₹118, and most transactions are processed quickly without delays. If you are looking for a trusted gaming app that combines entertainment with real earning opportunities, All Yono App Site is a great choice. Download the latest APK version today and start playing to earn real cash rewards from your mobile.";
       const faq = g.faq || "Q: 1. What Is The All Yono App Site app APK? A: The All Yono App Site APP APK is an excellent application that offers users a sign-up bonus of ₹284 when they join. This game includes a fantastic bonus program, and you can learn more by reading the complete post. Additionally, All Yono App Site APK is a popular slots game with a minimum withdrawal amount of ₹100. Referral Bonus: ₹13";
@@ -943,23 +949,52 @@
       const faq3 = g.faq3 || "Q: 3. How Many Games Are Available In The All Yono App Site App? A: The All Yono App Site app offers support for 75+ different types of games. You can enjoy a variety of games such as Rummy, Teen Patti, 7 Up Down, Dragon vs Tiger, and many more.";
       const faq4 = g.faq4 || "Q: 4. What are some of the best features of the All Yono App Site app APK? A: • Enjoy a bonus of ₹572 for free in the APK. • Access to 20 gaming options. • Earn up to ₹428 for inviting friends. • Withdrawals can be made starting from a minimum of ₹612. • Click on the Profile Button and bind your mobile number. • The minimum deposit required is ₹388. Referral Bonus: ₹21";
 
-      // Generate unique new tags per app (app-specific)
-      const uniqueTagSet = [
-        { title: "🔥 " + game.name + " – Premium Gaming Experience", desc: "Experience the thrill of " + game.name + " with stunning graphics and smooth gameplay. " + (game.bonus || "₹45") + " welcome bonus awaits you! " + (game.altName || "") },
-        { title: "🎯 " + game.name + " – Win Big Every Day", desc: "Daily tournaments, cash prizes, and unlimited fun. " + game.name + " offers " + (game.features ? game.features.slice(0,2).join(', ') : 'exciting games') + ". Get started with " + (game.bonus || "₹45") + " bonus! " + (game.altName || "") },
-        { title: "🏅 " + game.name + " – India's Favorite Gaming App", desc: "Join millions of players on " + game.name + ". Play Rummy, Teen Patti, Slots and more. " + (game.bonus || "₹45") + " signup bonus. " + (game.withdrawal || "₹100") + " min withdrawal." },
-        { title: "💎 " + game.name + " – Premium Rewards Await", desc: "Unlock exclusive rewards and bonuses on " + game.name + ". " + (game.bonus || "₹45") + " welcome bonus, " + (game.withdrawal || "₹100") + " min withdrawal. " + (game.downloads || "500K+") + " downloads!" },
-        { title: "🚀 " + game.name + " – Fastest Withdrawals", desc: "Get your winnings instantly with " + game.name + "'s fast UPI withdrawal system. " + (game.bonus || "₹45") + " bonus on signup. " + (game.altName || "") + " – play now!" },
-        { title: "🎮 " + game.name + " – 55+ Games Collection", desc: "From Rummy to Slots, " + game.name + " has it all. " + (game.bonus || "₹45") + " bonus for new users. " + (game.withdrawal || "₹100") + " min withdrawal." },
-        { title: "🏆 " + game.name + " – Win Real Cash", desc: "Play and win real cash on " + game.name + ". " + (game.bonus || "₹45") + " signup bonus. " + (game.features ? game.features[0] : 'Secure platform') + ". " + (game.altName || "") }
+      // Replace "All Yono App Site" in gameInfo, faq, etc. for non-main apps
+      if (game.name !== "All Yono App Site") {
+        const gameNameClean = game.name + (game.name.includes('APK') ? '' : ' APK');
+        // Only replace if the text contains the generic name
+        // We'll just use the app-specific data directly from the gamesData
+        // The data is already unique per app, so we just use it as-is.
+        // But we need to ensure desc doesn't have "All Yono App Site"
+        // Already handled above.
+      }
+
+      // Generate unique section names per app
+      const sectionNames = [
+        { title: "🚀 What's New in " + game.name, icon: "📱" },
+        { title: "🎯 " + game.name + " Welcome Bonus", icon: "🎁" },
+        { title: "🏆 " + game.name + " Jackpot Information", icon: "💰" },
+        { title: "🎮 " + game.name + " Gameplay Guide", icon: "🎯" },
+        { title: "💡 " + game.name + " Winning Tips", icon: "💡" },
+        { title: "⭐ " + game.name + " VIP Benefits", icon: "👑" },
+        { title: "🎰 " + game.name + " Rewards", icon: "🏅" },
+        { title: "🏅 " + game.name + " Tournament Info", icon: "🏆" }
+      ];
+      
+      const seed = game.name.length;
+      const startIdx = (seed * 5) % sectionNames.length;
+      const selectedSections = [];
+      for (let i = 0; i < Math.min(6, sectionNames.length); i++) {
+        const idx = (startIdx + i * 2) % sectionNames.length;
+        selectedSections.push(sectionNames[idx]);
+      }
+
+      // Generate unique content for each section
+      const sectionContent = [
+        "Latest version " + version + " brings improved performance, new game modes, and enhanced security features. " + game.name + " now offers faster loading times and smoother gameplay.",
+        "Claim your " + game.bonus + " welcome bonus on " + game.name + ". New users get instant bonus on signup. Use the bonus to explore all games and increase your winning chances.",
+        game.name + " offers exciting jackpot opportunities. The progressive jackpot grows with every spin. Players can win up to ₹5000+ in daily jackpots. Check the jackpot timer for the next big win.",
+        "Master " + game.name + " with these pro tips: Start with smaller bets, learn the game rules, practice in free mode, and gradually increase your stakes. Watch tutorial videos for advanced strategies.",
+        "Smart winning strategies for " + game.name + ": Focus on high RTP games, manage your bankroll wisely, take advantage of bonus rounds, and set win/loss limits. Consistency is key to long-term success.",
+        "Join the VIP program on " + game.name + " for exclusive benefits: higher withdrawal limits, personal account manager, priority support, special bonus offers, and invitations to exclusive tournaments.",
+        "Earn amazing rewards on " + game.name + ": daily login bonuses, referral rewards up to ₹200, loyalty points that convert to cash, seasonal promotions, and surprise bonus events throughout the year.",
+        "Participate in " + game.name + " tournaments with prize pools up to ₹10,000. Compete against players worldwide, climb the leaderboard, and win cash prizes. Tournaments run daily and weekly."
       ];
 
-      const seed = game.name.length;
-      const startIdx = (seed * 7) % uniqueTagSet.length;
-      const selectedTags = [];
-      for (let i = 0; i < Math.min(6, uniqueTagSet.length); i++) {
-        const idx = (startIdx + i * 3) % uniqueTagSet.length;
-        selectedTags.push(uniqueTagSet[idx]);
+      const selectedContent = [];
+      for (let i = 0; i < selectedSections.length; i++) {
+        const idx = (i + seed) % sectionContent.length;
+        selectedContent.push(sectionContent[idx]);
       }
 
       const relatedGames = uniqueGames.filter(ug => ug.name !== game.name);
@@ -990,9 +1025,9 @@
           ⬇ Download APK Now
         </a>
 
-        <!-- ALL EXISTING TAGS -->
+        <!-- ALL EXISTING TAGS - but remove "Description" heading -->
         <div class="section-card ${colorClass}">
-          <div class="section-title"><span class="icon-svg"><svg viewBox="0 0 24 24"><path d="M4 4h16v16H4z"/><path d="M8 8h8v2H8z"/><path d="M8 12h6v2H8z"/><path d="M8 16h4v2H8z"/></svg></span> 📝 Description</div>
+          <div class="section-title"><span class="icon-svg"><svg viewBox="0 0 24 24"><path d="M4 4h16v16H4z"/><path d="M8 8h8v2H8z"/><path d="M8 12h6v2H8z"/><path d="M8 16h4v2H8z"/></svg></span> 📝 About ${game.name}</div>
           <div class="section-body">${desc}</div>
         </div>
 
@@ -1041,13 +1076,12 @@
           <div class="section-body">${faq}<br><br>${faq2}<br><br>${faq3}<br><br>${faq4}</div>
         </div>
 
-        <!-- APP-SPECIFIC HIGHLIGHTS (replaces generic "App Highlights – Yono Apps") -->
+        <!-- APP-SPECIFIC UNIQUE SECTIONS -->
         <div style="margin-top:12px; border-top: 2px solid #e9edf4; padding-top:12px;">
-          <div style="font-weight:700; font-size:0.8rem; color:#0b1e33; margin-bottom:8px;">${highlightsHeading}</div>
-          ${selectedTags.map(t => `
+          ${selectedSections.map((section, idx) => `
             <div class="section-card ${colorClass}" style="margin-bottom:6px;">
-              <div class="section-title">${t.title}</div>
-              <div class="section-body">${t.desc}</div>
+              <div class="section-title">${section.icon} ${section.title}</div>
+              <div class="section-body">${selectedContent[idx % selectedContent.length]}</div>
             </div>
           `).join('')}
         </div>
