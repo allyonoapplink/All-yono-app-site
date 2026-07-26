@@ -877,52 +877,51 @@
 
       const tagsContainer = document.getElementById('gameTagsContainer');
       tagsContainer.innerHTML = '';
-      uniqueGames.forEach(g => {
-        const tag = document.createElement('span');
-        tag.className = 'game-tag';
-        // Use premium SVG icons based on first letter (no image icons or emojis)
-        const iconMap = {
-          'a': '<svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>',
-          'r': '<svg viewBox="0 0 24 24"><path d="M4 4h11a4 4 0 010 8H4"/><path d="M4 12h8a4 4 0 010 8H4"/><path d="M4 4v16"/></svg>',
-          's': '<svg viewBox="0 0 24 24"><path d="M12 2v4"/><path d="M12 18v4"/><path d="M4.93 4.93l2.83 2.83"/><path d="M16.24 16.24l2.83 2.83"/><path d="M2 12h4"/><path d="M18 12h4"/><path d="M4.93 19.07l2.83-2.83"/><path d="M16.24 7.76l2.83-2.83"/></svg>',
-          'b': '<svg viewBox="0 0 24 24"><path d="M4 4h7a4 4 0 010 8H4"/><path d="M4 12h9a4 4 0 010 8H4"/><path d="M4 4v16"/></svg>',
-          'j': '<svg viewBox="0 0 24 24"><path d="M12 4v16"/><path d="M8 8h8"/><path d="M8 16h8"/></svg>',
-          't': '<svg viewBox="0 0 24 24"><path d="M4 4h16"/><path d="M12 4v16"/></svg>',
-          'y': '<svg viewBox="0 0 24 24"><path d="M12 2v20"/><path d="M4 10l8 6 8-6"/></svg>',
-          'd': '<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M8 12h8"/></svg>',
-          'g': '<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M8 8h8"/><path d="M8 12h6"/><path d="M8 16h4"/></svg>',
-          'l': '<svg viewBox="0 0 24 24"><path d="M4 4h16"/><path d="M4 12h12"/><path d="M4 20h8"/></svg>'
-        };
-        const firstChar = g.name.charAt(0).toLowerCase();
-        const iconSvg = iconMap[firstChar] || iconMap['a'];
-        tag.innerHTML = '<span class="tag-icon">' + iconSvg + '</span> ' + g.name + ' | ' + (g.altName || g.name);
-        tag.dataset.name = g.name;
-        tag.dataset.altName = g.altName || g.name;
-        tag.dataset.bonus = g.bonus;
-        tag.dataset.withdrawal = g.withdrawal;
-        tag.dataset.downloadUrl = g.downloadUrl;
-        tag.dataset.img = g.img;
-        tag.dataset.rating = g.rating || getRandomRating();
-        tag.dataset.size = g.size || getRandomSize();
-        tag.dataset.votes = g.votes || getRandomVotes();
-        tag.dataset.version = g.version || 'v2.0.0';
-        tag.addEventListener('click', function(e) {
-          e.stopPropagation();
-          showDetail({
-            name: this.dataset.name,
-            altName: this.dataset.altName,
-            bonus: this.dataset.bonus,
-            withdrawal: this.dataset.withdrawal,
-            downloadUrl: this.dataset.downloadUrl,
-            img: this.dataset.img,
-            rating: this.dataset.rating,
-            size: this.dataset.size,
-            votes: this.dataset.votes,
-            version: this.dataset.version
-          }, true);
-        });
-        tagsContainer.appendChild(tag);
+      // Show only the current game's original name as a tag (no dual names)
+      const currentGameTag = document.createElement('span');
+      currentGameTag.className = 'game-tag';
+      // Use a unique icon based on the game name
+      const iconMap = {
+        'a': '<svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>',
+        'r': '<svg viewBox="0 0 24 24"><path d="M4 4h11a4 4 0 010 8H4"/><path d="M4 12h8a4 4 0 010 8H4"/><path d="M4 4v16"/></svg>',
+        's': '<svg viewBox="0 0 24 24"><path d="M12 2v4"/><path d="M12 18v4"/><path d="M4.93 4.93l2.83 2.83"/><path d="M16.24 16.24l2.83 2.83"/><path d="M2 12h4"/><path d="M18 12h4"/><path d="M4.93 19.07l2.83-2.83"/><path d="M16.24 7.76l2.83-2.83"/></svg>',
+        'b': '<svg viewBox="0 0 24 24"><path d="M4 4h7a4 4 0 010 8H4"/><path d="M4 12h9a4 4 0 010 8H4"/><path d="M4 4v16"/></svg>',
+        'j': '<svg viewBox="0 0 24 24"><path d="M12 4v16"/><path d="M8 8h8"/><path d="M8 16h8"/></svg>',
+        't': '<svg viewBox="0 0 24 24"><path d="M4 4h16"/><path d="M12 4v16"/></svg>',
+        'y': '<svg viewBox="0 0 24 24"><path d="M12 2v20"/><path d="M4 10l8 6 8-6"/></svg>',
+        'd': '<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M8 12h8"/></svg>',
+        'g': '<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M8 8h8"/><path d="M8 12h6"/><path d="M8 16h4"/></svg>',
+        'l': '<svg viewBox="0 0 24 24"><path d="M4 4h16"/><path d="M4 12h12"/><path d="M4 20h8"/></svg>'
+      };
+      const firstChar = gName.charAt(0).toLowerCase();
+      const iconSvg = iconMap[firstChar] || iconMap['a'];
+      currentGameTag.innerHTML = '<span class="tag-icon">' + iconSvg + '</span> ' + gName + ' | ' + (game.altName || gName);
+      currentGameTag.dataset.name = gName;
+      currentGameTag.dataset.altName = game.altName || gName;
+      currentGameTag.dataset.bonus = game.bonus;
+      currentGameTag.dataset.withdrawal = game.withdrawal;
+      currentGameTag.dataset.downloadUrl = game.downloadUrl;
+      currentGameTag.dataset.img = game.img;
+      currentGameTag.dataset.rating = game.rating || getRandomRating();
+      currentGameTag.dataset.size = game.size || getRandomSize();
+      currentGameTag.dataset.votes = game.votes || getRandomVotes();
+      currentGameTag.dataset.version = game.version || 'v2.0.0';
+      currentGameTag.addEventListener('click', function(e) {
+        e.stopPropagation();
+        showDetail({
+          name: this.dataset.name,
+          altName: this.dataset.altName,
+          bonus: this.dataset.bonus,
+          withdrawal: this.dataset.withdrawal,
+          downloadUrl: this.dataset.downloadUrl,
+          img: this.dataset.img,
+          rating: this.dataset.rating,
+          size: this.dataset.size,
+          votes: this.dataset.votes,
+          version: this.dataset.version
+        }, true);
       });
+      tagsContainer.appendChild(currentGameTag);
 
       const relatedGrid = document.getElementById('relatedGrid');
       relatedGrid.innerHTML = '';
