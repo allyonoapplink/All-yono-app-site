@@ -1,3 +1,4 @@
+000000
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -1016,14 +1017,13 @@
     };
 
     // ============================================================
-    // NAVIGATION STATE - with proper history API
+    // NAVIGATION STATE - proper history API with scroll restoration
     // ============================================================
     let overlayStack = [];
-    let pageStack = []; // { type: 'home' | 'detail' | 'overlay', scrollY, game? }
+    let pageStack = []; // { type: 'home' | 'detail', scrollY, game? }
     let currentPageType = 'home';
     let currentGame = null;
     let isBackNavigation = false;
-    let isInitialized = false;
 
     // ============================================================
     // SCROLL HELPERS
@@ -1035,13 +1035,15 @@
     function restoreScroll(scrollY) {
       if (scrollY !== undefined && scrollY !== null && scrollY > 0) {
         window.scrollTo({ top: scrollY, behavior: 'smooth' });
+      } else {
+        scrollToTop();
       }
     }
 
     // ============================================================
     // FUNCTIONS
     // ============================================================
-    function goHome(restoreScrollPosition = 0) {
+    function goHome(restoreScrollPosition) {
       // Close overlay if any
       if (overlay.style.display === 'flex') {
         overlay.style.display = 'none';
@@ -1061,14 +1063,14 @@
       currentPageType = 'home';
       currentGame = null;
 
-      // Update pageStack: push home if not already there, or update
+      // Update pageStack
       if (pageStack.length === 0 || pageStack[pageStack.length - 1].type !== 'home') {
-        pageStack.push({ type: 'home', scrollY: 0 });
+        pageStack.push({ type: 'home', scrollY: restoreScrollPosition || 0 });
       } else {
-        pageStack[pageStack.length - 1].scrollY = restoreScrollPosition;
+        pageStack[pageStack.length - 1].scrollY = restoreScrollPosition || 0;
       }
 
-      if (restoreScrollPosition > 0) {
+      if (restoreScrollPosition && restoreScrollPosition > 0) {
         restoreScroll(restoreScrollPosition);
       } else {
         scrollToTop();
@@ -1090,7 +1092,7 @@
       const page = pageMap[key];
       if (!page) return;
 
-      // Save current scroll state
+      // Save current scroll state before opening overlay
       if (currentPageType === 'home') {
         const currentScroll = window.scrollY;
         if (pageStack.length > 0 && pageStack[pageStack.length - 1].type === 'home') {
@@ -1108,7 +1110,6 @@
       overlay.style.display = 'flex';
       overlayStack.push(key);
 
-      // Push history state
       history.pushState({ overlay: key }, '', '#overlay');
 
       fetch(page.file)
@@ -1141,12 +1142,10 @@
       if (overlay.style.display === 'flex') {
         overlay.style.display = 'none';
         if (overlayStack.length > 0) {
-          // Remove all overlay history entries
           const overlayCount = overlayStack.length;
           history.go(-overlayCount);
           overlayStack = [];
         }
-        // Reset to home
         goHome(0);
       }
     }
@@ -1184,16 +1183,15 @@
             scrollToTop();
           }
         } else {
-          // Only one overlay - close and go home
           closeOverlayAndGoHome();
         }
       }
     }
 
     // ============================================================
-    // SHOW DETAIL - with proper history push
+    // SHOW DETAIL - with proper history push and scroll restoration
     // ============================================================
-    function showDetail(game, pushHistory = true) {
+    function showDetail(game, pushHistory) {
       // Save current scroll state of the page we are leaving
       if (currentPageType === 'home') {
         const currentScroll = window.scrollY;
@@ -1468,7 +1466,7 @@
       currentPageType = 'detail';
       currentGame = game;
 
-      // Restore scroll if it's a back navigation or after push
+      // Restore scroll position
       if (!pushHistory) {
         // Back navigation - restore scroll from the stack entry
         const lastEntry = pageStack[pageStack.length - 1];
@@ -1478,7 +1476,6 @@
           scrollToTop();
         }
       } else {
-        // New navigation - scroll to top
         scrollToTop();
       }
     }
@@ -1524,13 +1521,9 @@
               scrollToTop();
             }
           } else {
-            // Close overlay and go home
-            overlay.style.display = 'none';
-            overlayStack = [];
-            goHome(0);
+            closeOverlayAndGoHome();
           }
         } else {
-          // Overlay state but overlay not visible - reset
           overlayStack = [];
           goHome(0);
         }
@@ -1587,7 +1580,6 @@
           // Go to previous detail
           const prevGame = prevEntry.game;
           if (prevGame) {
-            // Show detail without pushing history (restoring scroll will happen inside)
             showDetail(prevGame, false);
           } else {
             goHome(0);
@@ -1608,7 +1600,6 @@
         return;
       }
       if (detailView.style.display === 'block') {
-        // If detail is open but no state, go home
         goHome(0);
         isBackNavigation = false;
         return;
@@ -1619,18 +1610,15 @@
       if (window.scrollY > 0) {
         // Scroll to top smoothly and replace state to consume this back action
         window.scrollTo({ top: 0, behavior: 'smooth' });
-        // Update the home entry scroll to 0
         if (pageStack.length > 0 && pageStack[pageStack.length - 1].type === 'home') {
           pageStack[pageStack.length - 1].scrollY = 0;
         }
-        // Replace current state with the same state to consume this back action
         history.replaceState({ type: 'home' }, '', ' ');
         isBackNavigation = false;
         return;
       }
 
       // Already at top - let the browser exit naturally
-      // Do nothing, allow the browser to handle the back navigation
       isBackNavigation = false;
     });
 
@@ -1665,13 +1653,11 @@
       });
     });
 
-    // ✖ Close button: always go Home
     overlayCloseBtn.addEventListener('click', function(e) {
       e.preventDefault();
       closeOverlayAndGoHome();
     });
 
-    // Click outside overlay to close and go Home
     overlay.addEventListener('click', function(e) {
       if (e.target === overlay) {
         closeOverlayAndGoHome();
@@ -1682,7 +1668,6 @@
       goHome(0);
     });
 
-    // Back button in detail view - uses history.back()
     backBtn.addEventListener('click', function() {
       if (overlay.style.display === 'flex') {
         history.back();
@@ -1761,7 +1746,6 @@
     // ============================================================
     // INIT
     // ============================================================
-    // Initialize pageStack with home entry
     pageStack = [{ type: 'home', scrollY: 0 }];
     currentPageType = 'home';
     currentGame = null;
@@ -1771,14 +1755,12 @@
     footerLinks.forEach(l => l.classList.remove('active'));
     document.querySelector('.fn-link[data-target="home"]')?.classList.add('active');
 
-    // Set initial history state
     history.replaceState({ type: 'home' }, '', ' ');
 
-    console.log('✅ History API navigation with scroll restoration fully implemented.');
+    console.log('✅ History API navigation with scroll restoration working.');
     console.log('✅ Home → App → Related → Next App creates new history entries.');
     console.log('✅ Back button restores exact scroll position of previous page.');
     console.log('✅ Home page scrolls to top on Back, then exits on next Back.');
-    console.log('✅ ✖ button on About/Contact/Disclaimer returns to Home.');
   })();
 </script>
 </body>
