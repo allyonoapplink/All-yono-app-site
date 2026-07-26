@@ -1,4 +1,4 @@
-00000000000000
+00000000000000ppppllllll
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -1023,6 +1023,13 @@
     if (!window.detailHistoryStack) window.detailHistoryStack = [];
 
     // ============================================================
+    // SCROLL TO TOP HELPERS
+    // ============================================================
+    function scrollToTop() {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    // ============================================================
     // FUNCTIONS
     // ============================================================
     function goHome() {
@@ -1039,13 +1046,11 @@
         mainGrid.classList.add('show');
         window.detailHistoryStack = [];
       }
-      window.scrollTo({ top: 0 });
-      // Reset active states
+      scrollToTop();
       document.querySelectorAll('.nav-small').forEach(l => l.classList.remove('active'));
       document.getElementById('homeNav').classList.add('active');
       footerLinks.forEach(l => l.classList.remove('active'));
       document.querySelector('.fn-link[data-target="home"]')?.classList.add('active');
-      // Update history to home state
       if (window.location.hash) {
         history.replaceState(null, '', ' ');
       }
@@ -1060,10 +1065,8 @@
       overlay.style.display = 'flex';
       overlayStack.push(key);
 
-      // Push history state for overlay
       history.pushState({ overlay: key }, '', '#overlay');
 
-      // Load content
       fetch(page.file)
         .then(res => {
           if (!res.ok) throw new Error('File not found');
@@ -1083,26 +1086,25 @@
           overlayContent.innerHTML = '<p style="color:#94a3b8;">📄 ' + page.title + ' content will appear here.<br>Create <strong>' + page.file + '</strong> to add your custom content.</p>';
         });
 
-      // Update active states
       document.querySelectorAll('.nav-small').forEach(l => l.classList.remove('active'));
       document.querySelectorAll('.nav-small[data-target="' + key + '"]').forEach(l => l.classList.add('active'));
       footerLinks.forEach(l => l.classList.remove('active'));
       document.querySelectorAll('.fn-link[data-target="' + key + '"]').forEach(l => l.classList.add('active'));
+      scrollToTop();
     }
 
     function closeOverlay() {
       if (overlay.style.display === 'flex') {
         overlay.style.display = 'none';
         if (overlayStack.length > 0) overlayStack.pop();
-        // Remove the overlay state from history
         if (window.location.hash === '#overlay') {
           history.back();
         }
-        // Reset active states to home
         document.querySelectorAll('.nav-small').forEach(l => l.classList.remove('active'));
         document.getElementById('homeNav').classList.add('active');
         footerLinks.forEach(l => l.classList.remove('active'));
         document.querySelector('.fn-link[data-target="home"]')?.classList.add('active');
+        scrollToTop();
       }
     }
 
@@ -1176,11 +1178,6 @@
         faq4 = faq4.replace(/All Yono App Site APK/g, game.name + ' APK');
       }
 
-      // Build detail HTML (icon mapping and sections omitted for brevity, but identical to original)
-      // In the final code, this part is exactly as provided.
-      // For the sake of completeness, I'll include the full HTML building logic.
-
-      // Icon map (same as before)
       const iconMap = {
         'icon-doc': '<span class="icon-svg icon-doc"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></span>',
         'icon-star': '<span class="icon-svg icon-star"><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></span>',
@@ -1199,7 +1196,6 @@
         'icon-users': '<span class="icon-svg icon-users"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg></span>'
       };
 
-      // Generate sections
       const sectionNames = [
         { title: "📱 What's New", icon: "icon-refresh" },
         { title: "🎁 Welcome Bonus", icon: "icon-gift" },
@@ -1367,19 +1363,19 @@
       detailView.style.display = 'block';
       detailView.classList.remove('hidden');
       detailView.classList.add('show');
-      window.scrollTo({ top: 0 });
+      scrollToTop();
     }
 
     // ============================================================
-    // POPSTATE HANDLER - for back button
+    // POPSTATE HANDLER - FIXED BACK NAVIGATION
     // ============================================================
     window.addEventListener('popstate', function(e) {
       const state = e.state;
 
-      // If we have a state with overlay, close overlay
+      // If we have an overlay state
       if (state && state.overlay) {
         if (overlay.style.display === 'flex') {
-          // If multiple overlays, we want to go back one level
+          // If multiple overlays, go back one level
           if (overlayStack.length > 1) {
             overlayStack.pop();
             const prevKey = overlayStack[overlayStack.length - 1];
@@ -1404,21 +1400,25 @@
                 .catch(() => {
                   overlayContent.innerHTML = '<p style="color:#94a3b8;">📄 Create <strong>' + prevPage.file + '</strong> to add custom content.</p>';
                 });
-              // Update active states
               document.querySelectorAll('.nav-small').forEach(l => l.classList.remove('active'));
               document.querySelectorAll('.nav-small[data-target="' + prevKey + '"]').forEach(l => l.classList.add('active'));
               footerLinks.forEach(l => l.classList.remove('active'));
               document.querySelectorAll('.fn-link[data-target="' + prevKey + '"]').forEach(l => l.classList.add('active'));
+              scrollToTop();
             }
           } else {
-            // Close the last overlay and go home
+            // Only one overlay - close it and go to Home
             closeOverlay();
           }
+        } else {
+          // Overlay state but overlay not visible - reset
+          if (overlayStack.length > 0) overlayStack = [];
+          goHome();
         }
         return;
       }
 
-      // If we have a state with detail, close detail view
+      // If we have a detail state
       if (state && state.detail) {
         if (detailView.style.display === 'block') {
           if (window.detailHistoryStack.length > 1) {
@@ -1432,20 +1432,34 @@
           } else {
             goHome();
           }
+        } else {
+          // Detail state but detail not visible - reset
+          if (window.detailHistoryStack.length > 0) window.detailHistoryStack = [];
+          goHome();
         }
         return;
       }
 
-      // If state is null or we're at the root, go home
+      // If state is null or we're at root, go home (this handles exit)
       if (!state) {
-        goHome();
+        // If overlay is open, close it first
+        if (overlay.style.display === 'flex') {
+          closeOverlay();
+          return;
+        }
+        // If detail is open, close it
+        if (detailView.style.display === 'block') {
+          goHome();
+          return;
+        }
+        // Otherwise, we're at home - let the browser handle exit
+        // Don't do anything, let the browser exit naturally
       }
     });
 
     // ============================================================
     // EVENT LISTENERS
     // ============================================================
-    // Top nav
     document.querySelectorAll('.nav-small[data-target]').forEach(el => {
       el.addEventListener('click', function(e) {
         e.preventDefault();
@@ -1460,7 +1474,6 @@
       });
     });
 
-    // Footer nav
     footerLinks.forEach(el => {
       el.addEventListener('click', function(e) {
         e.preventDefault();
@@ -1475,20 +1488,16 @@
       });
     });
 
-    // Overlay close button (✖) - returns to Home (close all overlays)
     overlayCloseBtn.addEventListener('click', function(e) {
       e.preventDefault();
       if (overlay.style.display === 'flex') {
-        // Close all overlays and go home
         if (overlayStack.length > 0) {
-          // Remove all overlay states from history
           history.go(-overlayStack.length);
         }
         closeOverlay();
       }
     });
 
-    // Click outside overlay to close
     overlay.addEventListener('click', function(e) {
       if (e.target === overlay) {
         if (overlay.style.display === 'flex') {
@@ -1499,12 +1508,10 @@
       }
     });
 
-    // Home nav
     homeNav.addEventListener('click', function() {
       goHome();
     });
 
-    // Back button in detail view - calls history.back()
     backBtn.addEventListener('click', function() {
       if (overlay.style.display === 'flex') {
         history.back();
@@ -1521,7 +1528,6 @@
       goHome();
     });
 
-    // Share button
     document.getElementById('shareBtn').addEventListener('click', function() {
       const shareUrl = 'https://www.earntp.com/gold/jm9n7r';
       if (navigator.share) {
@@ -1531,7 +1537,6 @@
       }
     });
 
-    // Detail title click to open download
     document.getElementById('detailTitle').addEventListener('click', function() {
       const btn = document.querySelector('.download-btn-lg');
       if (btn) window.open(btn.href, '_blank');
@@ -1575,16 +1580,16 @@
     // ============================================================
     // INIT
     // ============================================================
-    // Set initial active states
     document.querySelectorAll('.nav-small').forEach(l => l.classList.remove('active'));
     document.getElementById('homeNav').classList.add('active');
     footerLinks.forEach(l => l.classList.remove('active'));
     document.querySelector('.fn-link[data-target="home"]')?.classList.add('active');
 
-    // Push initial state
     history.replaceState(null, '', ' ');
 
-    console.log('✅ Back navigation fixed: each Back press closes one page at a time.');
+    console.log('✅ Navigation fixed: About/Contact/Disclaimer return to Home on Back.');
+    console.log('✅ Multiple pages close one at a time with Back button.');
+    console.log('✅ Scroll to top on back navigation.');
   })();
 </script>
 </body>
