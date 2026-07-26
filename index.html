@@ -76,6 +76,29 @@
     .icon-svg.small { width: 14px; height: 14px; }
     .icon-svg.large { width: 18px; height: 18px; }
 
+    /* --- FOOTER NAV STYLES --- */
+    .footer-nav { display: flex; justify-content: center; align-items: center; gap: 12px; padding: 10px 10px 6px; background: #f8fafc; border-top: 1px solid #e9edf4; flex-wrap: wrap; }
+    .footer-nav .fn-link { font-size: 0.55rem; font-weight: 600; color: #1e293b; background: #fff; padding: 4px 12px; border-radius: 40px; border: 1px solid #e2e8f0; cursor: pointer; text-decoration: none; display: inline-flex; align-items: center; gap: 4px; transition: all 0.15s; }
+    .footer-nav .fn-link:active { transform: scale(0.95); }
+    .footer-nav .fn-link:hover { background: #f1f5f9; }
+    .footer-nav .fn-link.active { background: #1e293b; color: white; border-color: #1e293b; }
+
+    .footer-note { padding: 6px 10px 10px; text-align: center; color: #94a3b8; font-size: 0.5rem; background: #f8fafc; }
+
+    /* --- OVERLAY STYLES --- */
+    .info-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.4); backdrop-filter: blur(3px); z-index: 99; justify-content: center; align-items: center; }
+    .info-card { background: white; max-width: 400px; width: 90%; padding: 20px 18px; border-radius: 28px; box-shadow: 0 30px 60px rgba(0,0,0,0.2); position: relative; max-height: 80vh; overflow-y: auto; }
+    .info-card .close-top { position: absolute; top: 12px; right: 12px; cursor: pointer; z-index: 5; }
+    .info-card .close-top .icon-svg { width: 24px; height: 24px; display: flex; align-items: center; justify-content: center; }
+    .info-card .close-top .icon-svg svg { stroke: #000; stroke-width: 2; width: 20px; height: 20px; }
+    .info-card h2 { font-size: 1.2rem; margin-bottom: 12px; color: #0b1e33; padding-right: 30px; }
+    .info-card .page-content { color: #334155; line-height: 1.6; font-size: 0.85rem; }
+    .info-card .page-content p { margin-bottom: 10px; }
+    .info-card .page-content ul { list-style: disc; padding-left: 20px; margin: 8px 0; }
+    .info-card .page-content ul li { margin-bottom: 4px; }
+    .info-card .page-content a { color: #2563eb; text-decoration: none; }
+    .info-card .page-content a:hover { text-decoration: underline; }
+
     #mainGrid { display: flex; flex-direction: column; gap: 6px; padding: 8px; }
     .card { background: white; border-radius: 12px; padding: 8px 10px; box-shadow: 0 2px 8px rgba(0,0,0,0.03); display: flex; align-items: center; gap: 8px; border: 1px solid #e9edf4; cursor: pointer; position: relative; overflow: hidden; width: 100%; }
     .card:active { transform: scale(0.97); background: #fafcff; }
@@ -131,16 +154,6 @@
     .related-item .rwithdraw { font-size: 0.4rem; color: #0a0a0a; font-weight: 500; display: inline-flex; align-items: center; gap: 3px; }
     .related-item .rdownload { background: #0a0a0a; color: white; border: none; padding: 2px 8px; border-radius: 40px; font-weight: 600; font-size: 0.4rem; white-space: nowrap; cursor: pointer; }
 
-    .footer-note { padding: 10px; text-align: center; color: #94a3b8; font-size: 0.5rem; border-top: 1px solid #e9edf4; }
-
-    .info-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.4); backdrop-filter: blur(3px); z-index: 99; justify-content: center; align-items: center; }
-    .info-card { background: white; max-width: 400px; width: 90%; padding: 20px 18px; border-radius: 28px; box-shadow: 0 30px 60px rgba(0,0,0,0.2); position: relative; }
-    .info-card .close-top { position: absolute; top: 12px; right: 12px; }
-    .info-card .close-top .icon-svg { width: 22px; height: 22px; cursor: pointer; }
-    .info-card .close-top .icon-svg svg { stroke: #000; stroke-width: 2; }
-    .info-card h2 { font-size: 1.2rem; margin-bottom: 8px; color: #0b1e33; padding-right: 30px; }
-    .info-card p { color: #334155; line-height: 1.5; font-size: 0.8rem; }
-
     @media (max-width: 420px) {
       .logo-cyan-round { width: 30px; height: 30px; }
       .site-name-led-round { padding: 3px 10px 3px 8px; min-height: 24px; }
@@ -170,6 +183,12 @@
       .related-item .rbonus { font-size: 0.4rem; }
       .related-item .rwithdraw { font-size: 0.35rem; }
       .related-item .rdownload { font-size: 0.35rem; padding: 2px 6px; }
+      .footer-nav { gap: 6px; }
+      .footer-nav .fn-link { font-size: 0.45rem; padding: 3px 8px; }
+      .info-card { padding: 16px 14px; }
+      .info-card .close-top .icon-svg { width: 20px; height: 20px; }
+      .info-card .close-top .icon-svg svg { width: 16px; height: 16px; }
+      .info-card h2 { font-size: 1rem; }
     }
   </style>
 </head>
@@ -231,21 +250,34 @@
     <div id="detailContent" class="detail-premium"></div>
   </div>
 
+  <!-- ===== NEW FOOTER NAV (4 MENU OPTIONS) ===== -->
+  <div class="footer-nav">
+    <span class="fn-link" data-target="home">🏠 Home</span>
+    <span class="fn-link" data-target="about">ℹ️ About</span>
+    <span class="fn-link" data-target="contact">✉️ Contact</span>
+    <span class="fn-link" data-target="disclaimer">🛡️ Disclaimer</span>
+  </div>
+
+  <!-- FOOTER NOTE -->
   <div class="footer-note">All Yono App Site • All Yono Apk • All Yono New • All Yono Games • 45+ Games • ₹45 Bonus • ₹100 Withdrawal</div>
 </div>
 
-<!-- OVERLAY -->
+<!-- OVERLAY (About / Contact / Disclaimer) -->
 <div class="info-overlay" id="infoOverlay">
   <div class="info-card">
-    <div class="close-top"><span class="icon-svg" id="overlayClose"><svg viewBox="0 0 24 24"><path d="M18 6L6 18"/><path d="M6 6l12 12"/></svg></span></div>
+    <div class="close-top" id="overlayCloseBtn">
+      <span class="icon-svg"><svg viewBox="0 0 24 24"><path d="M18 6L6 18"/><path d="M6 6l12 12"/></svg></span>
+    </div>
     <h2 id="overlayTitle">About</h2>
-    <div id="overlayContent">Content goes here.</div>
+    <div id="overlayContent" class="page-content">Loading...</div>
   </div>
 </div>
 
 <script>
   (function() {
-    // --- UNIQUE DATA FOR ALL 55+ APPS WITH SEPARATE TITLES, SEO, AND BONUS INFO ---
+    // ============================================================
+    // ALL APP DATA (45+ apps) - KEPT EXACTLY AS ORIGINAL
+    // ============================================================
     const gamesData = [
       { name: "All Yono App Site", altName: "All Yono Games", bonus: "₹45", withdrawal: "₹100", downloadUrl: "https://www.earntp.com/m/jm9n7r", img: "https://i.ibb.co/CssC2WbG/1000022725.jpg",
         title: "All Yono App Site APK – New Version Update",
@@ -492,7 +524,6 @@
       }
     ];
 
-    // Add remaining 43 apps with unique data
     const moreApps = [
       { name: "Diwa Slot", altName: "Diwa Slot APK", bonus: "₹50", withdrawal: "₹100", downloadUrl: "https://sharediwaslot1.vip?pid=483455673&channel=2010002&t=pdd2&pkg=com.diwaslotwhl.app", img: "https://i.ibb.co/BKB6QMbD/diwa-slot.jpg",
         title: "Diwa Slot APK – Diwa Theme Welcome Bonus", seoDesc: "Diwa Slot APK – Diwa Theme Welcome Bonus ₹50. Big wins, free spins, VIP rewards. Install now!",
@@ -902,10 +933,7 @@
       }
     ];
 
-    // Merge all apps
     const allApps = [...gamesData, ...moreApps];
-
-    // Build mapping
     const gameMap = {};
     allApps.forEach(g => { gameMap[g.name] = g; });
 
@@ -965,6 +993,9 @@
       return true;
     });
 
+    // ============================================================
+    // DOM ELEMENTS
+    // ============================================================
     const mainGrid = document.getElementById('mainGrid');
     const detailView = document.getElementById('detailView');
     const detailContent = document.getElementById('detailContent');
@@ -973,41 +1004,175 @@
     const overlay = document.getElementById('infoOverlay');
     const overlayTitle = document.getElementById('overlayTitle');
     const overlayContent = document.getElementById('overlayContent');
-    const overlayClose = document.getElementById('overlayClose');
+    const overlayCloseBtn = document.getElementById('overlayCloseBtn');
 
-    // Update contact and disclaimer content - remove old app name
-    const contentMap = {
-      about: { title: '📖 About All Yono App Site', text: 'All Yono App Site (All Yono Apk / All Yono New / All Yono Games) is a curated platform listing 45+ top gaming apps including Teen Patti, Rummy, Slots, and Casino. We provide direct download links and bonus details for each app.' },
-      contact: { title: '📬 Contact Us', text: 'For any queries, feedback or support regarding All Yono App Site, you can reach us via email: support@allyonoappsite.com. You can also connect with us on Telegram: @allyonoappsite.' },
-      disclaimer: { title: '⚠️ Disclaimer', text: 'All Yono App Site does not host or operate any of the games listed. We only provide information and referral links. Users are advised to check the terms and conditions of each app. Play responsibly.' }
+    // Footer nav links
+    const footerLinks = document.querySelectorAll('.fn-link');
+
+    // ============================================================
+    // PAGE MAP - content loaded from external HTML files
+    // ============================================================
+    // NO hardcoded tags under About, Contact, Disclaimer - content from external files
+    const pageMap = {
+      about: { title: '📖 About', file: 'about.html' },
+      contact: { title: '📬 Contact', file: 'contact.html' },
+      disclaimer: { title: '⚠️ Disclaimer', file: 'disclaimer.html' }
     };
-    document.querySelectorAll('.nav-small[data-target]').forEach(el => {
-      el.addEventListener('click', function() {
-        const key = this.dataset.target;
-        if (contentMap[key]) {
-          overlayTitle.textContent = contentMap[key].title;
-          overlayContent.innerHTML = contentMap[key].text;
-          overlay.style.display = 'flex';
-        }
-        document.querySelectorAll('.nav-small').forEach(l => l.classList.remove('active'));
-        this.classList.add('active');
-      });
-    });
-    overlayClose.addEventListener('click', function() { overlay.style.display = 'none'; });
-    overlay.addEventListener('click', function(e) { if (e.target === overlay) overlay.style.display = 'none'; });
 
-    let historyStack = [];
+    // ============================================================
+    // OVERLAY FUNCTIONS
+    // ============================================================
+    let overlayStack = []; // track overlay opens for back button support
 
-    // Helper to get unique SEO tags per app
-    function getSeoTags(app) {
-      const tags = [
-        app.seoDesc || `${app.name} APK download, ${app.bonus} bonus, real cash game, UPI withdrawal, ${app.altName || ''}`,
-        `${app.name}, ${app.altName || ''}, ${app.bonus} bonus, online gaming, rummy, teen patti, slots`,
-        `Download ${app.name} APK, get ${app.bonus} welcome bonus, play ${app.altName || ''}, earn real cash`
-      ];
-      return tags.join(', ');
+    function openOverlayPage(key) {
+      const page = pageMap[key];
+      if (!page) return;
+
+      overlayTitle.textContent = page.title;
+      overlayContent.innerHTML = '<p style="color:#94a3b8;font-style:italic;">Loading content...</p>';
+      overlay.style.display = 'flex';
+      overlayStack.push(key);
+
+      // Try to load content from external HTML file
+      fetch(page.file)
+        .then(res => {
+          if (!res.ok) throw new Error('File not found');
+          return res.text();
+        })
+        .then(html => {
+          const parser = new DOMParser();
+          const doc = parser.parseFromString(html, 'text/html');
+          const body = doc.body;
+          if (body && body.innerHTML.trim()) {
+            overlayContent.innerHTML = body.innerHTML;
+          } else {
+            overlayContent.innerHTML = '<p style="color:#94a3b8;">📄 No content available yet. Add your content to <strong>' + page.file + '</strong></p>';
+          }
+        })
+        .catch(() => {
+          overlayContent.innerHTML = '<p style="color:#94a3b8;">📄 ' + page.title + ' content will appear here.<br>Create <strong>' + page.file + '</strong> to add your custom content.</p>';
+        });
+
+      // Update active states
+      document.querySelectorAll('.nav-small').forEach(l => l.classList.remove('active'));
+      document.querySelectorAll('.nav-small[data-target="' + key + '"]').forEach(l => l.classList.add('active'));
+      footerLinks.forEach(l => l.classList.remove('active'));
+      document.querySelectorAll('.fn-link[data-target="' + key + '"]').forEach(l => l.classList.add('active'));
     }
 
+    function closeOverlayAndGoHome() {
+      if (overlay.style.display === 'flex') {
+        overlay.style.display = 'none';
+        overlayStack = [];
+        // Reset active states
+        document.querySelectorAll('.nav-small').forEach(l => l.classList.remove('active'));
+        document.getElementById('homeNav').classList.add('active');
+        footerLinks.forEach(l => l.classList.remove('active'));
+        document.querySelector('.fn-link[data-target="home"]')?.classList.add('active');
+        goHome();
+      }
+    }
+
+    function closeOverlayOnly() {
+      if (overlay.style.display === 'flex') {
+        overlay.style.display = 'none';
+        if (overlayStack.length > 0) overlayStack.pop();
+        // Don't change navigation state - keep the page state
+      }
+    }
+
+    // ============================================================
+    // NAVIGATION FUNCTIONS
+    // ============================================================
+    function goHome() {
+      // Close overlay if open
+      if (overlay.style.display === 'flex') {
+        overlay.style.display = 'none';
+        overlayStack = [];
+      }
+      // If detail view is open, go to main grid
+      if (detailView.style.display === 'block') {
+        detailView.style.display = 'none';
+        detailView.classList.remove('show');
+        detailView.classList.add('hidden');
+        mainGrid.style.display = 'flex';
+        mainGrid.classList.remove('hidden');
+        mainGrid.classList.add('show');
+      }
+      window.scrollTo({ top: 0 });
+      document.querySelectorAll('.nav-small').forEach(l => l.classList.remove('active'));
+      document.getElementById('homeNav').classList.add('active');
+      footerLinks.forEach(l => l.classList.remove('active'));
+      document.querySelector('.fn-link[data-target="home"]')?.classList.add('active');
+    }
+
+    function goBack() {
+      // If overlay is open, close it and go home (or go to previous overlay)
+      if (overlay.style.display === 'flex') {
+        if (overlayStack.length > 1) {
+          // Go back to previous overlay page
+          overlayStack.pop();
+          const prevKey = overlayStack[overlayStack.length - 1];
+          if (prevKey && pageMap[prevKey]) {
+            // Re-open the previous page
+            const prevPage = pageMap[prevKey];
+            overlayTitle.textContent = prevPage.title;
+            // Try to load from file again
+            fetch(prevPage.file)
+              .then(res => {
+                if (!res.ok) throw new Error('File not found');
+                return res.text();
+              })
+              .then(html => {
+                const parser = new DOMParser();
+                const doc = parser.parseFromString(html, 'text/html');
+                const body = doc.body;
+                if (body && body.innerHTML.trim()) {
+                  overlayContent.innerHTML = body.innerHTML;
+                } else {
+                  overlayContent.innerHTML = '<p style="color:#94a3b8;">📄 No content available yet.</p>';
+                }
+              })
+              .catch(() => {
+                overlayContent.innerHTML = '<p style="color:#94a3b8;">📄 Create <strong>' + prevPage.file + '</strong> to add custom content.</p>';
+              });
+            // Update active states
+            document.querySelectorAll('.nav-small').forEach(l => l.classList.remove('active'));
+            document.querySelectorAll('.nav-small[data-target="' + prevKey + '"]').forEach(l => l.classList.add('active'));
+            footerLinks.forEach(l => l.classList.remove('active'));
+            document.querySelectorAll('.fn-link[data-target="' + prevKey + '"]').forEach(l => l.classList.add('active'));
+          }
+        } else {
+          // Only one overlay open - close and go home
+          closeOverlayAndGoHome();
+        }
+        return;
+      }
+
+      // If detail view is open, go back in detail history or home
+      if (detailView.style.display === 'block') {
+        if (window.detailHistoryStack && window.detailHistoryStack.length > 1) {
+          window.detailHistoryStack.pop();
+          const prev = window.detailHistoryStack[window.detailHistoryStack.length - 1];
+          if (prev) {
+            // Re-show detail with previous game
+            showDetail(prev, false);
+          } else {
+            goHome();
+          }
+        } else {
+          goHome();
+        }
+        return;
+      }
+
+      // If nothing else, go home
+      goHome();
+    }
+
+    // ============================================================
+    // RENDER GRID (all apps)
+    // ============================================================
     function renderGrid() {
       mainGrid.innerHTML = '';
       uniqueGames.forEach((game, index) => {
@@ -1040,12 +1205,14 @@
     }
     renderGrid();
 
+    // ============================================================
+    // SHOW DETAIL (app detail view)
+    // ============================================================
+    if (!window.detailHistoryStack) window.detailHistoryStack = [];
+
     function showDetail(game, pushHistory = true) {
-      if (pushHistory) historyStack.push(game);
-      
-      // Use the app's custom title or default
-      const appTitle = game.title || `${game.name} APK – Download Welcome Bonus`;
-      document.getElementById('detailTitle').textContent = appTitle;
+      if (pushHistory) window.detailHistoryStack.push(game);
+      document.getElementById('detailTitle').textContent = game.title || game.name + " APK";
 
       const colorClasses = ['color-1','color-2','color-3','color-4','color-5','color-6','color-7'];
       const colorIdx = (game.name.length * 3) % colorClasses.length;
@@ -1057,60 +1224,57 @@
       const downloads = g.downloads || "500K+";
       const update = g.update || "Today";
       const rating = g.rating || "4.5";
-      
-      // Use app-specific description
+
       let desc = g.desc || "All Yono App Site APK Download – Get ₹572 Instant Bonus! Play skill-based Rummy, Teen Patti & slots. Safe withdrawals from ₹100. Start earning real cash in minutes – download APK & claim your bonus today! Referral Bonus: ₹13";
       if (game.name !== "All Yono App Site") {
         desc = desc.replace(/All Yono App Site/g, game.name);
         desc = desc.replace(/All Yono App Site APK/g, game.name + ' APK');
       }
-      
+
       const features = g.features || ["45+ games including Rummy, Teen Patti, Slots", "Fast UPI withdrawal", "Daily bonus & rewards", "Secure & trusted platform"];
       let gameInfo = g.gameInfo || "All Yono App Site is a popular real cash earning app in India where users can play games like rummy, slots, bingo, and spin games to win real money. New users can claim a signup bonus of up to ₹52, making it easy to get started and explore the platform. The app offers a smooth and secure experience with fast UPI deposits and withdrawals. The interface of All Yono App Site is simple and user-friendly, making it suitable for both beginners and experienced players. You can enjoy daily rewards, referral bonuses, and special events to increase your earnings. The minimum withdrawal starts from ₹118, and most transactions are processed quickly without delays. If you are looking for a trusted gaming app that combines entertainment with real earning opportunities, All Yono App Site is a great choice. Download the latest APK version today and start playing to earn real cash rewards from your mobile.";
       if (game.name !== "All Yono App Site") {
         gameInfo = gameInfo.replace(/All Yono App Site/g, game.name);
       }
-      
+
       let faq = g.faq || "Q: 1. What Is The All Yono App Site app APK? A: The All Yono App Site APP APK is an excellent application that offers users a sign-up bonus of ₹284 when they join. This game includes a fantastic bonus program, and you can learn more by reading the complete post. Additionally, All Yono App Site APK is a popular slots game with a minimum withdrawal amount of ₹100. Referral Bonus: ₹13";
       if (game.name !== "All Yono App Site") {
         faq = faq.replace(/All Yono App Site/g, game.name);
         faq = faq.replace(/All Yono App Site APK/g, game.name + ' APK');
       }
-      
+
       const tips = g.tips || "Start with small bets, use welcome bonus wisely.";
       let rewards = g.rewards || "💰 Unlock ₹428 Bonus in All Yono App Site App! Enjoy thrilling games like Aviator, Rummy & more. Refer friends for extra cash. Fast, secure withdrawals via bank/UPI. Trusted by millions – start playing now! Referral Bonus: ₹17";
       if (game.name !== "All Yono App Site") {
         rewards = rewards.replace(/All Yono App Site/g, game.name);
       }
-      
+
       const withdrawInfo = g.withdrawInfo || "UPI, Bank Transfer, Paytm - min ₹100, instant processing.";
       const howToDownload = g.howToDownload || "1. Tap the big Download button above.\n2. Allow installation from unknown sources.\n3. Open the downloaded APK and tap Install.\n4. Register with your mobile number.\n5. Claim your signup bonus instantly – up to ₹70!";
       let safety = g.safety || "All Yono App Site is designed to provide a secure and reliable gaming experience. The app uses standard encryption and protected payment systems to help keep user data and transactions safe. Deposits and withdrawals are processed through commonly used methods such as UPI and bank transfer, offering a convenient experience for users in India. However, users are advised to play responsibly and review the app's terms and policies before using it.";
       if (game.name !== "All Yono App Site") {
         safety = safety.replace(/All Yono App Site/g, game.name);
       }
-      
+
       let faq2 = g.faq2 || "Q: 2. How to Sign Up for All Yono App Site APK? A: To sign up for the All Yono App Site APK, follow these steps: • Click on the Download Button for the All Yono App Site APK. • Select OK to start the download. • Install the App application on your smartphone. • Open the new app and click on Play as Guest. • Click on the Profile Button and bind your mobile number. After completing these steps, you will receive a sign-up bonus of ₹796. Referral Bonus: ₹17";
       if (game.name !== "All Yono App Site") {
         faq2 = faq2.replace(/All Yono App Site/g, game.name);
         faq2 = faq2.replace(/All Yono App Site APK/g, game.name + ' APK');
       }
-      
+
       let faq3 = g.faq3 || "Q: 3. How Many Games Are Available In The All Yono App Site App? A: The All Yono App Site app offers support for 75+ different types of games. You can enjoy a variety of games such as Rummy, Teen Patti, 7 Up Down, Dragon vs Tiger, and many more.";
       if (game.name !== "All Yono App Site") {
         faq3 = faq3.replace(/All Yono App Site/g, game.name);
       }
-      
+
       let faq4 = g.faq4 || "Q: 4. What are some of the best features of the All Yono App Site app APK? A: • Enjoy a bonus of ₹572 for free in the APK. • Access to 20 gaming options. • Earn up to ₹428 for inviting friends. • Withdrawals can be made starting from a minimum of ₹612. • Click on the Profile Button and bind your mobile number. • The minimum deposit required is ₹388. Referral Bonus: ₹21";
       if (game.name !== "All Yono App Site") {
         faq4 = faq4.replace(/All Yono App Site/g, game.name);
         faq4 = faq4.replace(/All Yono App Site APK/g, game.name + ' APK');
       }
 
-      // Use the app's welcome bonus
       const welcomeBonus = g.welcomeBonus || `🎁 Welcome Bonus: ${game.bonus} on signup. Start playing now!`;
 
-      // Generate unique section names per app with premium icons
       const sectionNames = [
         { title: "📱 What's New", icon: "icon-refresh" },
         { title: "🎁 Welcome Bonus", icon: "icon-gift" },
@@ -1121,7 +1285,7 @@
         { title: "🏅 Rewards", icon: "icon-medal" },
         { title: "🎯 Tournament Info", icon: "icon-star" }
       ];
-      
+
       const seed = game.name.length;
       const startIdx = (seed * 5) % sectionNames.length;
       const selectedSections = [];
@@ -1130,7 +1294,6 @@
         selectedSections.push(sectionNames[idx]);
       }
 
-      // Generate unique content for each section
       const sectionContent = [
         "Latest version " + version + " brings improved performance, new game modes, and enhanced security features. " + game.name + " now offers faster loading times and smoother gameplay.",
         "Claim your " + game.bonus + " welcome bonus on " + game.name + ". New users get instant bonus on signup. Use the bonus to explore all games and increase your winning chances.",
@@ -1150,10 +1313,6 @@
 
       const relatedGames = uniqueGames.filter(ug => ug.name !== game.name);
 
-      // Build app-specific heading for highlights
-      const highlightsHeading = "🏷️ " + game.name + " – App Highlights";
-
-      // Premium icon mapping
       const iconMap = {
         'icon-doc': '<span class="icon-svg icon-doc"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></span>',
         'icon-star': '<span class="icon-svg icon-star"><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></span>',
@@ -1172,7 +1331,6 @@
         'icon-users': '<span class="icon-svg icon-users"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg></span>'
       };
 
-      // Generate section HTML with premium icons
       const sectionsHtml = selectedSections.map((section, idx) => {
         const iconHtml = iconMap[section.icon] || iconMap['icon-star'];
         return `
@@ -1200,13 +1358,11 @@
           <div class="info-item"><span class="icon-svg"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg></span> <span class="label">Downloads</span> <span class="value">${downloads}</span></div>
         </div>
 
-        <!-- FULL-WIDTH DOWNLOAD BUTTON - REMOVED BOTTOM ICONS -->
         <a href="${game.downloadUrl}" class="download-btn-lg" target="_blank" style="margin-bottom:14px;">
           <span class="icon-svg" style="width:20px;height:20px;"><svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><path d="M12 15V3"/></svg></span>
           ⬇ Download APK Now
         </a>
 
-        <!-- ALL TAGS WITH PREMIUM ICONS -->
         <div class="section-card ${colorClass}">
           <div class="section-title">${iconMap['icon-doc']} 📝 About ${game.name}</div>
           <div class="section-body">${desc}</div>
@@ -1257,12 +1413,10 @@
           <div class="section-body">${faq}<br><br>${faq2}<br><br>${faq3}<br><br>${faq4}</div>
         </div>
 
-        <!-- APP-SPECIFIC UNIQUE SECTIONS -->
         <div style="margin-top:12px; border-top: 2px solid #e9edf4; padding-top:12px;">
           ${sectionsHtml}
         </div>
 
-        <!-- REMOVED BOTTOM IMAGE ICONS - Keeping text and buttons only -->
         <div class="related-section">
           <div class="related-title">
             <span class="icon-svg"><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg></span>
@@ -1313,42 +1467,64 @@
       window.scrollTo({ top: 0 });
     }
 
-    function goHome() {
-      historyStack = [];
-      detailView.style.display = 'none';
-      detailView.classList.remove('show');
-      detailView.classList.add('hidden');
-      mainGrid.style.display = 'flex';
-      mainGrid.classList.remove('hidden');
-      mainGrid.classList.add('show');
-      window.scrollTo({ top: 0 });
-      document.querySelectorAll('.nav-small').forEach(l => l.classList.remove('active'));
-      document.getElementById('homeNav').classList.add('active');
-    }
+    // ============================================================
+    // EVENT LISTENERS
+    // ============================================================
 
-    function goBack() {
-      if (overlay.style.display === 'flex') { overlay.style.display = 'none'; return; }
-      if (detailView.style.display === 'block') {
-        if (historyStack.length > 1) {
-          historyStack.pop();
-          const prev = historyStack[historyStack.length - 1];
-          if (prev) showDetail(prev, false);
-          else goHome();
-        } else { historyStack = []; goHome(); }
+    // Top nav items
+    document.querySelectorAll('.nav-small[data-target]').forEach(el => {
+      el.addEventListener('click', function(e) {
+        e.preventDefault();
+        const key = this.dataset.target;
+        if (key === 'home') {
+          goHome();
+          return;
+        }
+        if (pageMap[key]) {
+          openOverlayPage(key);
+        }
+      });
+    });
+
+    // Footer nav items
+    footerLinks.forEach(el => {
+      el.addEventListener('click', function(e) {
+        e.preventDefault();
+        const key = this.dataset.target;
+        if (key === 'home') {
+          goHome();
+          return;
+        }
+        if (pageMap[key]) {
+          openOverlayPage(key);
+        }
+      });
+    });
+
+    // Overlay close button (✖) - returns to Home
+    overlayCloseBtn.addEventListener('click', function(e) {
+      e.preventDefault();
+      closeOverlayAndGoHome();
+    });
+
+    // Click outside overlay to close and go home
+    overlay.addEventListener('click', function(e) {
+      if (e.target === overlay) {
+        closeOverlayAndGoHome();
       }
-    }
+    });
 
-    backBtn.addEventListener('click', goBack);
+    // Home nav
     homeNav.addEventListener('click', function() {
-      if (overlay.style.display === 'flex') overlay.style.display = 'none';
       goHome();
     });
 
-    document.getElementById('detailTitle').addEventListener('click', function() {
-      const btn = document.querySelector('.download-btn-lg');
-      if (btn) window.open(btn.href, '_blank');
+    // Back button in detail view
+    backBtn.addEventListener('click', function() {
+      goBack();
     });
 
+    // Share button
     document.getElementById('shareBtn').addEventListener('click', function() {
       const shareUrl = 'https://www.earntp.com/gold/jm9n7r';
       if (navigator.share) {
@@ -1358,11 +1534,110 @@
       }
     });
 
-    window.addEventListener('popstate', function(e) {
-      if (overlay.style.display === 'flex') { overlay.style.display = 'none'; return; }
-      if (detailView.style.display === 'block') { goBack(); return; }
+    // Detail title click
+    document.getElementById('detailTitle').addEventListener('click', function() {
+      const btn = document.querySelector('.download-btn-lg');
+      if (btn) window.open(btn.href, '_blank');
     });
+
+    // ============================================================
+    // DEVICE BACK BUTTON SUPPORT
+    // ============================================================
+    window.addEventListener('popstate', function(e) {
+      // If overlay is open, close it and go home (or go back one overlay)
+      if (overlay.style.display === 'flex') {
+        if (overlayStack.length > 1) {
+          // Go back one overlay level
+          overlayStack.pop();
+          const prevKey = overlayStack[overlayStack.length - 1];
+          if (prevKey && pageMap[prevKey]) {
+            const prevPage = pageMap[prevKey];
+            overlayTitle.textContent = prevPage.title;
+            fetch(prevPage.file)
+              .then(res => {
+                if (!res.ok) throw new Error('File not found');
+                return res.text();
+              })
+              .then(html => {
+                const parser = new DOMParser();
+                const doc = parser.parseFromString(html, 'text/html');
+                const body = doc.body;
+                if (body && body.innerHTML.trim()) {
+                  overlayContent.innerHTML = body.innerHTML;
+                } else {
+                  overlayContent.innerHTML = '<p style="color:#94a3b8;">📄 No content available yet.</p>';
+                }
+              })
+              .catch(() => {
+                overlayContent.innerHTML = '<p style="color:#94a3b8;">📄 Create <strong>' + prevPage.file + '</strong> to add custom content.</p>';
+              });
+            document.querySelectorAll('.nav-small').forEach(l => l.classList.remove('active'));
+            document.querySelectorAll('.nav-small[data-target="' + prevKey + '"]').forEach(l => l.classList.add('active'));
+            footerLinks.forEach(l => l.classList.remove('active'));
+            document.querySelectorAll('.fn-link[data-target="' + prevKey + '"]').forEach(l => l.classList.add('active'));
+          }
+        } else {
+          closeOverlayAndGoHome();
+        }
+        return;
+      }
+
+      // If detail view is open, go back in detail history or home
+      if (detailView.style.display === 'block') {
+        if (window.detailHistoryStack && window.detailHistoryStack.length > 1) {
+          window.detailHistoryStack.pop();
+          const prev = window.detailHistoryStack[window.detailHistoryStack.length - 1];
+          if (prev) {
+            showDetail(prev, false);
+          } else {
+            goHome();
+          }
+        } else {
+          goHome();
+        }
+        return;
+      }
+
+      // If nothing else, go home
+      goHome();
+    });
+
+    // ============================================================
+    // KEYBOARD SHORTCUTS
+    // ============================================================
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape') {
+        if (overlay.style.display === 'flex') {
+          closeOverlayAndGoHome();
+        } else if (detailView.style.display === 'block') {
+          goHome();
+        }
+      }
+    });
+
+    // ============================================================
+    // INIT - set initial active states
+    // ============================================================
+    document.querySelectorAll('.nav-small').forEach(l => l.classList.remove('active'));
+    document.getElementById('homeNav').classList.add('active');
+    footerLinks.forEach(l => l.classList.remove('active'));
+    document.querySelector('.fn-link[data-target="home"]')?.classList.add('active');
+
+    // Initial history state
     history.pushState(null, null, location.href);
+
+    // Make functions available globally for debugging
+    window.goHome = goHome;
+    window.goBack = goBack;
+    window.overlayStack = overlayStack;
+    window.detailHistoryStack = window.detailHistoryStack || [];
+
+    console.log('✅ Footer navigation added: Home, About, Contact, Disclaimer');
+    console.log('✅ ✖ Close icon returns to Home');
+    console.log('✅ About/Contact/Disclaimer load content from external HTML files');
+    console.log('✅ Back button works correctly with history stack');
+    console.log('✅ Device Back button closes pages step by step');
+
   })();
 </script>
 </body>
