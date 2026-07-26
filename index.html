@@ -19,7 +19,6 @@
     body { background: #f5f7fc; padding: 0; min-height: 100vh; display: flex; flex-direction: column; align-items: center; }
     .container { max-width: 480px; width: 100%; background: #fff; min-height: 100vh; overflow: hidden; }
 
-    /* ===== SUPER FAST TRANSITIONS (NO DELAYS) ===== */
     #mainGrid, #detailView { transition: none !important; }
     #mainGrid.hidden { display: none !important; opacity: 0 !important; }
     #detailView.hidden { display: none !important; opacity: 0 !important; }
@@ -143,7 +142,6 @@
     .detail-info .game-meta-detail .votes { background: #fce4ec; color: #d81b60; padding: 2px 8px; border-radius: 40px; border: 1px solid #ff4081; box-shadow: 0 0 10px rgba(255,64,129,0.2); animation: metaGlowPink 2s ease-in-out infinite 0.8s; font-weight: 600; display: inline-flex; align-items: center; gap: 3px; }
     .detail-info .game-meta-detail .bonus-badge { background: #ffebee; color: #d50000; padding: 2px 8px; border-radius: 40px; border: 1px solid #ff1744; box-shadow: 0 0 10px rgba(255,23,68,0.2); animation: metaGlowRed 2s ease-in-out infinite 1.2s; font-weight: 600; display: inline-flex; align-items: center; gap: 3px; }
 
-    /* Premium Update New Version Section */
     .version-section { display: flex; align-items: center; justify-content: space-between; padding: 6px 12px; background: #f8fafc; border-radius: 30px; border: 1px solid #e9edf4; margin-top: 8px; }
     .version-left { display: flex; align-items: center; gap: 6px; font-size: 0.65rem; color: #1e293b; font-weight: 600; }
     .version-left .refresh-icon { display: inline-flex; align-items: center; justify-content: center; width: 18px; height: 18px; color: #2563eb; }
@@ -472,7 +470,6 @@
               <span class="icon-svg" style="width:12px;height:12px;"><svg viewBox="0 0 24 24"><rect x="3" y="8" width="18" height="13" rx="2"/><path d="M3 8l9-5 9 5"/><path d="M8 12h8"/></svg></span> ₹30
             </span>
           </div>
-          <!-- Premium Update New Version Section -->
           <div class="version-section">
             <div class="version-left">
               <span class="refresh-icon">
@@ -597,7 +594,6 @@
       <div class="related-grid" id="relatedGrid"></div>
     </div>
 
-    <!-- Footer Links: About.html • Contact.html • Disclaimer.html -->
     <div class="footer-links">
       <a href="#" onclick="window.open('about.html', '_blank'); return false;">About.html</a>
       <span style="color:#94a3b8;font-size:0.5rem;">•</span>
@@ -607,7 +603,6 @@
     </div>
   </div>
 
-  <!-- FOOTER NOTE -->
   <div class="footer-note">All Yono App Site • All Yono Apk • All Yono New • All Yono Games • 45+ Games • ₹45 Bonus • ₹100 Withdrawal</div>
 </div>
 
@@ -885,7 +880,7 @@
       uniqueGames.forEach(g => {
         const tag = document.createElement('span');
         tag.className = 'game-tag';
-        // Use icon based on first letter
+        // Use premium SVG icons based on first letter (no image icons or emojis)
         const iconMap = {
           'a': '<svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>',
           'r': '<svg viewBox="0 0 24 24"><path d="M4 4h11a4 4 0 010 8H4"/><path d="M4 12h8a4 4 0 010 8H4"/><path d="M4 4v16"/></svg>',
