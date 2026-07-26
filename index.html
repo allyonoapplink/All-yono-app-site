@@ -1,3 +1,4 @@
+00000000000000
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -1054,7 +1055,6 @@
       const page = pageMap[key];
       if (!page) return;
 
-      // If overlay already open, push state for new overlay
       overlayTitle.textContent = page.title;
       overlayContent.innerHTML = '<p style="color:#94a3b8;font-style:italic;">Loading content...</p>';
       overlay.style.display = 'flex';
@@ -1106,216 +1106,6 @@
       }
     }
 
-    function showDetail(game, pushHistory = true) {
-      if (pushHistory) {
-        window.detailHistoryStack.push(game);
-        history.pushState({ detail: game.name }, '', '#detail');
-      }
-      // ... (full showDetail implementation would go here)
-      // For brevity, the actual showDetail function is included in the full code.
-      // I'll provide the complete function in the final answer.
-    }
-
-    // ============================================================
-    // FIXED POPSTATE HANDLER - allows exit on null state
-    // ============================================================
-    window.addEventListener('popstate', function(e) {
-      const state = e.state;
-
-      // If we have a state with overlay, close one overlay level
-      if (state && state.overlay) {
-        if (overlay.style.display === 'flex') {
-          if (overlayStack.length > 1) {
-            // Go back one level
-            overlayStack.pop();
-            const prevKey = overlayStack[overlayStack.length - 1];
-            if (prevKey && pageMap[prevKey]) {
-              const prevPage = pageMap[prevKey];
-              overlayTitle.textContent = prevPage.title;
-              fetch(prevPage.file)
-                .then(res => {
-                  if (!res.ok) throw new Error('File not found');
-                  return res.text();
-                })
-                .then(html => {
-                  const parser = new DOMParser();
-                  const doc = parser.parseFromString(html, 'text/html');
-                  const body = doc.body;
-                  if (body && body.innerHTML.trim()) {
-                    overlayContent.innerHTML = body.innerHTML;
-                  } else {
-                    overlayContent.innerHTML = '<p style="color:#94a3b8;">📄 No content available yet.</p>';
-                  }
-                })
-                .catch(() => {
-                  overlayContent.innerHTML = '<p style="color:#94a3b8;">📄 Create <strong>' + prevPage.file + '</strong> to add custom content.</p>';
-                });
-              // Update active states
-              document.querySelectorAll('.nav-small').forEach(l => l.classList.remove('active'));
-              document.querySelectorAll('.nav-small[data-target="' + prevKey + '"]').forEach(l => l.classList.add('active'));
-              footerLinks.forEach(l => l.classList.remove('active'));
-              document.querySelectorAll('.fn-link[data-target="' + prevKey + '"]').forEach(l => l.classList.add('active'));
-            }
-          } else {
-            // Last overlay - close it and go home
-            closeOverlay();
-          }
-        }
-        return;
-      }
-
-      // If we have a state with detail, close one detail level
-      if (state && state.detail) {
-        if (detailView.style.display === 'block') {
-          if (window.detailHistoryStack.length > 1) {
-            window.detailHistoryStack.pop();
-            const prev = window.detailHistoryStack[window.detailHistoryStack.length - 1];
-            if (prev) {
-              showDetail(prev, false);
-            } else {
-              goHome();
-            }
-          } else {
-            goHome();
-          }
-        }
-        return;
-      }
-
-      // If state is null (no overlay or detail), do NOTHING - allow browser default (exit)
-      // This lets the user exit the website when on the home page.
-      // No action needed.
-    });
-
-    // ============================================================
-    // EVENT LISTENERS
-    // ============================================================
-    // Top nav
-    document.querySelectorAll('.nav-small[data-target]').forEach(el => {
-      el.addEventListener('click', function(e) {
-        e.preventDefault();
-        const key = this.dataset.target;
-        if (key === 'home') {
-          goHome();
-          return;
-        }
-        if (pageMap[key]) {
-          openOverlayPage(key);
-        }
-      });
-    });
-
-    // Footer nav
-    footerLinks.forEach(el => {
-      el.addEventListener('click', function(e) {
-        e.preventDefault();
-        const key = this.dataset.target;
-        if (key === 'home') {
-          goHome();
-          return;
-        }
-        if (pageMap[key]) {
-          openOverlayPage(key);
-        }
-      });
-    });
-
-    // Overlay close button (✖) - returns to Home immediately (closes all overlays)
-    overlayCloseBtn.addEventListener('click', function(e) {
-      e.preventDefault();
-      if (overlay.style.display === 'flex') {
-        // Remove all overlay states from history
-        if (overlayStack.length > 0) {
-          history.go(-overlayStack.length);
-        }
-        closeOverlay();
-      }
-    });
-
-    // Click outside overlay to close one level (mimics back)
-    overlay.addEventListener('click', function(e) {
-      if (e.target === overlay) {
-        if (overlay.style.display === 'flex') {
-          if (overlayStack.length > 0) {
-            history.back();
-          }
-        }
-      }
-    });
-
-    // Home nav
-    homeNav.addEventListener('click', function() {
-      goHome();
-    });
-
-    // Back button in detail view - triggers popstate via history.back()
-    backBtn.addEventListener('click', function() {
-      if (overlay.style.display === 'flex') {
-        history.back();
-        return;
-      }
-      if (detailView.style.display === 'block') {
-        if (window.detailHistoryStack.length > 1) {
-          history.back();
-        } else {
-          goHome();
-        }
-        return;
-      }
-      goHome();
-    });
-
-    // Share button
-    document.getElementById('shareBtn').addEventListener('click', function() {
-      const shareUrl = 'https://www.earntp.com/gold/jm9n7r';
-      if (navigator.share) {
-        navigator.share({ title: 'All Yono App Site', text: 'Download 45+ Yono Games with dual names. Get ₹45 Bonus & ₹100 Withdrawal.', url: shareUrl }).catch(() => {});
-      } else {
-        navigator.clipboard.writeText(shareUrl).then(() => alert('Link copied!')).catch(() => prompt('Copy link:', shareUrl));
-      }
-    });
-
-    // Detail title click to open download
-    document.getElementById('detailTitle').addEventListener('click', function() {
-      const btn = document.querySelector('.download-btn-lg');
-      if (btn) window.open(btn.href, '_blank');
-    });
-
-    // ============================================================
-    // RENDER GRID
-    // ============================================================
-    function renderGrid() {
-      mainGrid.innerHTML = '';
-      uniqueGames.forEach((game, index) => {
-        const card = document.createElement('div');
-        card.className = 'card';
-        card.dataset.name = game.name;
-        card.dataset.altName = game.altName || game.name;
-        card.dataset.bonus = game.bonus;
-        card.dataset.withdrawal = game.withdrawal;
-        card.dataset.downloadUrl = game.downloadUrl;
-        card.dataset.img = game.img;
-        card.innerHTML = `
-          <div class="card-number">${index + 1}</div>
-          <div class="card-img"><img src="${game.img}" alt="${game.name} | ${game.altName}" loading="lazy" onerror="this.src='https://i.ibb.co/LXqV77rd/yono-games.jpg'"></div>
-          <div class="card-info">
-            <div class="card-name">${game.name} <span class="alt">| ${game.altName}</span></div>
-            <div class="card-bonus"><span class="icon-svg small"><svg viewBox="0 0 24 24"><rect x="3" y="8" width="18" height="13" rx="2"/><path d="M3 8l9-5 9 5"/><path d="M8 12h8"/></svg></span> Sign Up Bonus ${game.bonus}</div>
-            <div class="card-withdraw"><span class="icon-svg small"><svg viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V4a1 1 0 00-1-1H9a1 1 0 00-1 1v3"/><path d="M8 12h8"/></svg></span> Min. Withdraw ${game.withdrawal}</div>
-          </div>
-          <span class="card-download-sm">Download</span>
-        `;
-        mainGrid.appendChild(card);
-        card.addEventListener('click', function() {
-          const name = this.dataset.name;
-          const gData = gameMap[name];
-          if (gData) showDetail(gData, true);
-          else showDetail(gameMap["All Yono App Site"], true);
-        });
-      });
-    }
-    renderGrid();
-
     // ============================================================
     // SHOW DETAIL (full implementation)
     // ============================================================
@@ -1324,6 +1114,7 @@
         window.detailHistoryStack.push(game);
         history.pushState({ detail: game.name }, '', '#detail');
       }
+
       document.getElementById('detailTitle').textContent = game.title || game.name + " APK";
 
       const colorClasses = ['color-1','color-2','color-3','color-4','color-5','color-6','color-7'];
@@ -1385,46 +1176,11 @@
         faq4 = faq4.replace(/All Yono App Site APK/g, game.name + ' APK');
       }
 
-      const welcomeBonus = g.welcomeBonus || `🎁 Welcome Bonus: ${game.bonus} on signup. Start playing now!`;
+      // Build detail HTML (icon mapping and sections omitted for brevity, but identical to original)
+      // In the final code, this part is exactly as provided.
+      // For the sake of completeness, I'll include the full HTML building logic.
 
-      const sectionNames = [
-        { title: "📱 What's New", icon: "icon-refresh" },
-        { title: "🎁 Welcome Bonus", icon: "icon-gift" },
-        { title: "🏆 Jackpot Info", icon: "icon-trophy" },
-        { title: "🎮 Gameplay Guide", icon: "icon-gamepad" },
-        { title: "💡 Winning Tips", icon: "icon-lightbulb" },
-        { title: "👑 VIP Benefits", icon: "icon-crown" },
-        { title: "🏅 Rewards", icon: "icon-medal" },
-        { title: "🎯 Tournament Info", icon: "icon-star" }
-      ];
-
-      const seed = game.name.length;
-      const startIdx = (seed * 5) % sectionNames.length;
-      const selectedSections = [];
-      for (let i = 0; i < Math.min(4, sectionNames.length); i++) {
-        const idx = (startIdx + i * 2) % sectionNames.length;
-        selectedSections.push(sectionNames[idx]);
-      }
-
-      const sectionContent = [
-        "Latest version " + version + " brings improved performance, new game modes, and enhanced security features. " + game.name + " now offers faster loading times and smoother gameplay.",
-        "Claim your " + game.bonus + " welcome bonus on " + game.name + ". New users get instant bonus on signup. Use the bonus to explore all games and increase your winning chances.",
-        game.name + " offers exciting jackpot opportunities. The progressive jackpot grows with every spin. Players can win up to ₹5000+ in daily jackpots. Check the jackpot timer for the next big win.",
-        "Master " + game.name + " with these pro tips: Start with smaller bets, learn the game rules, practice in free mode, and gradually increase your stakes. Watch tutorial videos for advanced strategies.",
-        "Smart winning strategies for " + game.name + ": Focus on high RTP games, manage your bankroll wisely, take advantage of bonus rounds, and set win/loss limits. Consistency is key to long-term success.",
-        "Join the VIP program on " + game.name + " for exclusive benefits: higher withdrawal limits, personal account manager, priority support, special bonus offers, and invitations to exclusive tournaments.",
-        "Earn amazing rewards on " + game.name + ": daily login bonuses, referral rewards up to ₹200, loyalty points that convert to cash, seasonal promotions, and surprise bonus events throughout the year.",
-        "Participate in " + game.name + " tournaments with prize pools up to ₹10,000. Compete against players worldwide, climb the leaderboard, and win cash prizes. Tournaments run daily and weekly."
-      ];
-
-      const selectedContent = [];
-      for (let i = 0; i < selectedSections.length; i++) {
-        const idx = (i + seed) % sectionContent.length;
-        selectedContent.push(sectionContent[idx]);
-      }
-
-      const relatedGames = uniqueGames.filter(ug => ug.name !== game.name);
-
+      // Icon map (same as before)
       const iconMap = {
         'icon-doc': '<span class="icon-svg icon-doc"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></span>',
         'icon-star': '<span class="icon-svg icon-star"><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></span>',
@@ -1443,6 +1199,39 @@
         'icon-users': '<span class="icon-svg icon-users"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg></span>'
       };
 
+      // Generate sections
+      const sectionNames = [
+        { title: "📱 What's New", icon: "icon-refresh" },
+        { title: "🎁 Welcome Bonus", icon: "icon-gift" },
+        { title: "🏆 Jackpot Info", icon: "icon-trophy" },
+        { title: "🎮 Gameplay Guide", icon: "icon-gamepad" },
+        { title: "💡 Winning Tips", icon: "icon-lightbulb" },
+        { title: "👑 VIP Benefits", icon: "icon-crown" },
+        { title: "🏅 Rewards", icon: "icon-medal" },
+        { title: "🎯 Tournament Info", icon: "icon-star" }
+      ];
+      const seed = game.name.length;
+      const startIdx = (seed * 5) % sectionNames.length;
+      const selectedSections = [];
+      for (let i = 0; i < Math.min(4, sectionNames.length); i++) {
+        const idx = (startIdx + i * 2) % sectionNames.length;
+        selectedSections.push(sectionNames[idx]);
+      }
+      const sectionContent = [
+        "Latest version " + version + " brings improved performance, new game modes, and enhanced security features. " + game.name + " now offers faster loading times and smoother gameplay.",
+        "Claim your " + game.bonus + " welcome bonus on " + game.name + ". New users get instant bonus on signup. Use the bonus to explore all games and increase your winning chances.",
+        game.name + " offers exciting jackpot opportunities. The progressive jackpot grows with every spin. Players can win up to ₹5000+ in daily jackpots. Check the jackpot timer for the next big win.",
+        "Master " + game.name + " with these pro tips: Start with smaller bets, learn the game rules, practice in free mode, and gradually increase your stakes. Watch tutorial videos for advanced strategies.",
+        "Smart winning strategies for " + game.name + ": Focus on high RTP games, manage your bankroll wisely, take advantage of bonus rounds, and set win/loss limits. Consistency is key to long-term success.",
+        "Join the VIP program on " + game.name + " for exclusive benefits: higher withdrawal limits, personal account manager, priority support, special bonus offers, and invitations to exclusive tournaments.",
+        "Earn amazing rewards on " + game.name + ": daily login bonuses, referral rewards up to ₹200, loyalty points that convert to cash, seasonal promotions, and surprise bonus events throughout the year.",
+        "Participate in " + game.name + " tournaments with prize pools up to ₹10,000. Compete against players worldwide, climb the leaderboard, and win cash prizes. Tournaments run daily and weekly."
+      ];
+      const selectedContent = [];
+      for (let i = 0; i < selectedSections.length; i++) {
+        const idx = (i + seed) % sectionContent.length;
+        selectedContent.push(sectionContent[idx]);
+      }
       const sectionsHtml = selectedSections.map((section, idx) => {
         const iconHtml = iconMap[section.icon] || iconMap['icon-star'];
         return `
@@ -1452,6 +1241,8 @@
           </div>
         `;
       }).join('');
+
+      const relatedGames = uniqueGames.filter(ug => ug.name !== game.name);
 
       detailContent.innerHTML = `
         <div class="hero-section">
@@ -1580,6 +1371,208 @@
     }
 
     // ============================================================
+    // POPSTATE HANDLER - for back button
+    // ============================================================
+    window.addEventListener('popstate', function(e) {
+      const state = e.state;
+
+      // If we have a state with overlay, close overlay
+      if (state && state.overlay) {
+        if (overlay.style.display === 'flex') {
+          // If multiple overlays, we want to go back one level
+          if (overlayStack.length > 1) {
+            overlayStack.pop();
+            const prevKey = overlayStack[overlayStack.length - 1];
+            if (prevKey && pageMap[prevKey]) {
+              const prevPage = pageMap[prevKey];
+              overlayTitle.textContent = prevPage.title;
+              fetch(prevPage.file)
+                .then(res => {
+                  if (!res.ok) throw new Error('File not found');
+                  return res.text();
+                })
+                .then(html => {
+                  const parser = new DOMParser();
+                  const doc = parser.parseFromString(html, 'text/html');
+                  const body = doc.body;
+                  if (body && body.innerHTML.trim()) {
+                    overlayContent.innerHTML = body.innerHTML;
+                  } else {
+                    overlayContent.innerHTML = '<p style="color:#94a3b8;">📄 No content available yet.</p>';
+                  }
+                })
+                .catch(() => {
+                  overlayContent.innerHTML = '<p style="color:#94a3b8;">📄 Create <strong>' + prevPage.file + '</strong> to add custom content.</p>';
+                });
+              // Update active states
+              document.querySelectorAll('.nav-small').forEach(l => l.classList.remove('active'));
+              document.querySelectorAll('.nav-small[data-target="' + prevKey + '"]').forEach(l => l.classList.add('active'));
+              footerLinks.forEach(l => l.classList.remove('active'));
+              document.querySelectorAll('.fn-link[data-target="' + prevKey + '"]').forEach(l => l.classList.add('active'));
+            }
+          } else {
+            // Close the last overlay and go home
+            closeOverlay();
+          }
+        }
+        return;
+      }
+
+      // If we have a state with detail, close detail view
+      if (state && state.detail) {
+        if (detailView.style.display === 'block') {
+          if (window.detailHistoryStack.length > 1) {
+            window.detailHistoryStack.pop();
+            const prev = window.detailHistoryStack[window.detailHistoryStack.length - 1];
+            if (prev) {
+              showDetail(prev, false);
+            } else {
+              goHome();
+            }
+          } else {
+            goHome();
+          }
+        }
+        return;
+      }
+
+      // If state is null or we're at the root, go home
+      if (!state) {
+        goHome();
+      }
+    });
+
+    // ============================================================
+    // EVENT LISTENERS
+    // ============================================================
+    // Top nav
+    document.querySelectorAll('.nav-small[data-target]').forEach(el => {
+      el.addEventListener('click', function(e) {
+        e.preventDefault();
+        const key = this.dataset.target;
+        if (key === 'home') {
+          goHome();
+          return;
+        }
+        if (pageMap[key]) {
+          openOverlayPage(key);
+        }
+      });
+    });
+
+    // Footer nav
+    footerLinks.forEach(el => {
+      el.addEventListener('click', function(e) {
+        e.preventDefault();
+        const key = this.dataset.target;
+        if (key === 'home') {
+          goHome();
+          return;
+        }
+        if (pageMap[key]) {
+          openOverlayPage(key);
+        }
+      });
+    });
+
+    // Overlay close button (✖) - returns to Home (close all overlays)
+    overlayCloseBtn.addEventListener('click', function(e) {
+      e.preventDefault();
+      if (overlay.style.display === 'flex') {
+        // Close all overlays and go home
+        if (overlayStack.length > 0) {
+          // Remove all overlay states from history
+          history.go(-overlayStack.length);
+        }
+        closeOverlay();
+      }
+    });
+
+    // Click outside overlay to close
+    overlay.addEventListener('click', function(e) {
+      if (e.target === overlay) {
+        if (overlay.style.display === 'flex') {
+          if (overlayStack.length > 0) {
+            history.back();
+          }
+        }
+      }
+    });
+
+    // Home nav
+    homeNav.addEventListener('click', function() {
+      goHome();
+    });
+
+    // Back button in detail view - calls history.back()
+    backBtn.addEventListener('click', function() {
+      if (overlay.style.display === 'flex') {
+        history.back();
+        return;
+      }
+      if (detailView.style.display === 'block') {
+        if (window.detailHistoryStack.length > 1) {
+          history.back();
+        } else {
+          goHome();
+        }
+        return;
+      }
+      goHome();
+    });
+
+    // Share button
+    document.getElementById('shareBtn').addEventListener('click', function() {
+      const shareUrl = 'https://www.earntp.com/gold/jm9n7r';
+      if (navigator.share) {
+        navigator.share({ title: 'All Yono App Site', text: 'Download 45+ Yono Games with dual names. Get ₹45 Bonus & ₹100 Withdrawal.', url: shareUrl }).catch(() => {});
+      } else {
+        navigator.clipboard.writeText(shareUrl).then(() => alert('Link copied!')).catch(() => prompt('Copy link:', shareUrl));
+      }
+    });
+
+    // Detail title click to open download
+    document.getElementById('detailTitle').addEventListener('click', function() {
+      const btn = document.querySelector('.download-btn-lg');
+      if (btn) window.open(btn.href, '_blank');
+    });
+
+    // ============================================================
+    // RENDER GRID
+    // ============================================================
+    function renderGrid() {
+      mainGrid.innerHTML = '';
+      uniqueGames.forEach((game, index) => {
+        const card = document.createElement('div');
+        card.className = 'card';
+        card.dataset.name = game.name;
+        card.dataset.altName = game.altName || game.name;
+        card.dataset.bonus = game.bonus;
+        card.dataset.withdrawal = game.withdrawal;
+        card.dataset.downloadUrl = game.downloadUrl;
+        card.dataset.img = game.img;
+        card.innerHTML = `
+          <div class="card-number">${index + 1}</div>
+          <div class="card-img"><img src="${game.img}" alt="${game.name} | ${game.altName}" loading="lazy" onerror="this.src='https://i.ibb.co/LXqV77rd/yono-games.jpg'"></div>
+          <div class="card-info">
+            <div class="card-name">${game.name} <span class="alt">| ${game.altName}</span></div>
+            <div class="card-bonus"><span class="icon-svg small"><svg viewBox="0 0 24 24"><rect x="3" y="8" width="18" height="13" rx="2"/><path d="M3 8l9-5 9 5"/><path d="M8 12h8"/></svg></span> Sign Up Bonus ${game.bonus}</div>
+            <div class="card-withdraw"><span class="icon-svg small"><svg viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V4a1 1 0 00-1-1H9a1 1 0 00-1 1v3"/><path d="M8 12h8"/></svg></span> Min. Withdraw ${game.withdrawal}</div>
+          </div>
+          <span class="card-download-sm">Download</span>
+        `;
+        mainGrid.appendChild(card);
+        card.addEventListener('click', function() {
+          const name = this.dataset.name;
+          const gData = gameMap[name];
+          if (gData) showDetail(gData, true);
+          else showDetail(gameMap["All Yono App Site"], true);
+        });
+      });
+    }
+    renderGrid();
+
+    // ============================================================
     // INIT
     // ============================================================
     // Set initial active states
@@ -1588,11 +1581,10 @@
     footerLinks.forEach(l => l.classList.remove('active'));
     document.querySelector('.fn-link[data-target="home"]')?.classList.add('active');
 
-    // Push initial state with null
+    // Push initial state
     history.replaceState(null, '', ' ');
 
-    console.log('✅ Navigation with proper back-to-back behavior enabled.');
-    console.log('✅ Back button closes overlays step by step, then detail view, then exits.');
+    console.log('✅ Back navigation fixed: each Back press closes one page at a time.');
   })();
 </script>
 </body>
