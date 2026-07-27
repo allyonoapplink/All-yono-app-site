@@ -167,7 +167,8 @@
       align-items: center;
       justify-content: center;
       flex-shrink: 0;
-      width: 18px; height: 18px;
+      width: 18px;
+      height: 18px;
       color: currentColor;
       position: relative;
     }
@@ -274,7 +275,7 @@
     }
     .led-icon.glow-bg { box-shadow: 0 0 20px rgba(0,255,0,0.15), 0 0 40px rgba(0,200,255,0.05); }
 
-    .tag-section { padding: 10px; background: #f8fafc; border-top: 1px solid #e9edf4; max-height: 400px; overflow-y: auto; }
+    .tag-section { padding: 10px; background: #f8fafc; border-top: 1px solid #e9edf4; }
     .tag-section .tag-title { font-weight: 700; font-size: 0.85rem; color: #0b1e33; margin-bottom: 8px; display: flex; align-items: center; gap: 8px; }
     .tag-grid { display: flex; flex-direction: column; gap: 6px; }
     .tag-box { background: white; border-radius: 12px; padding: 12px 14px; border: 1px solid #e9edf4; }
@@ -380,7 +381,8 @@
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      width: 32px; height: 32px;
+      width: 44px;
+      height: 44px;
       border-radius: 50%;
       position: relative;
       background: #0a0a0a;
@@ -388,8 +390,9 @@
       cursor: pointer;
       flex-shrink: 0;
       transition: transform 0.2s ease;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.15);
     }
-    .close-icon-wrap:active { transform: scale(0.9); }
+    .close-icon-wrap:active { transform: scale(0.92); }
     .close-icon-wrap::before {
       content: '';
       position: absolute;
@@ -405,8 +408,8 @@
       position: relative;
       z-index: 2;
       color: #fff;
-      width: 16px;
-      height: 16px;
+      width: 22px;
+      height: 22px;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -445,7 +448,7 @@
     .related-item .rwithdraw { font-size: 0.4rem; color: #0a0a0a; font-weight: 500; display: inline-flex; align-items: center; gap: 3px; }
     .related-item .rdownload { background: #00bcd4; color: white; border: none; padding: 2px 8px; border-radius: 40px; font-weight: 600; font-size: 0.4rem; white-space: nowrap; cursor: pointer; }
 
-    #mainGrid { display: flex; flex-direction: column; gap: 6px; padding: 8px; max-height: 100vh; overflow-y: auto; }
+    #mainGrid { display: flex; flex-direction: column; gap: 6px; padding: 8px; }
     .card { background: white; border-radius: 12px; padding: 8px 10px; box-shadow: 0 2px 8px rgba(0,0,0,0.03); display: flex; align-items: center; gap: 8px; border: 1px solid #e9edf4; cursor: pointer; position: relative; overflow: hidden; }
     .card:active { transform: scale(0.97); background: #fafcff; }
     .card-number { position: absolute; top: 3px; left: 3px; background: #000; color: #fff; width: 20px; height: 20px; border-radius: 50%; font-size: 0.5rem; font-weight: 800; display: flex; align-items: center; justify-content: center; z-index: 5; border: 1.5px solid #333; box-shadow: 0 2px 6px rgba(0,0,0,0.3); }
@@ -503,47 +506,29 @@
     .border-style-4 .detail-card { border-bottom: 4px solid #7c3aed; }
     .border-style-5 .detail-card { border-left: 4px solid #d97706; border-radius: 0 12px 12px 0; }
 
-    /* Scroll To Top button inside Tags container */
-    .scroll-top-btn {
-      display: none;
-      align-items: center;
-      justify-content: center;
-      width: 40px;
-      height: 40px;
-      background: #0a0a0a;
-      border: 2px solid #1a1a1a;
-      border-radius: 50%;
-      box-shadow: 0 4px 20px rgba(0,0,0,0.25);
-      cursor: pointer;
-      position: sticky;
-      bottom: 10px;
-      margin-top: 10px;
-      margin-left: auto;
-      transition: all 0.2s ease;
-      flex-shrink: 0;
+    /* Overlay header - fixed title with tags below */
+    .overlay-header { 
+      position: sticky; 
+      top: 0; 
+      background: white; 
+      z-index: 10; 
+      padding: 8px 0 4px 0; 
+      border-bottom: 1px solid #e9edf4; 
     }
-    .scroll-top-btn:active { transform: scale(0.92); }
-    .scroll-top-btn svg {
-      width: 20px;
-      height: 20px;
-      stroke: #ffffff;
-      stroke-width: 2.5;
-      fill: none;
-      stroke-linecap: round;
-      stroke-linejoin: round;
+    .overlay-header h2 { 
+      font-size: 1.2rem; 
+      color: #0b1e33; 
+      padding-right: 40px; 
     }
-    .scroll-top-btn.show { display: inline-flex; }
-
-    /* Tags scroll area styling */
-    .tags-scroll-wrapper {
-      max-height: 400px;
-      overflow-y: auto;
-      position: relative;
-      scroll-behavior: smooth;
+    .overlay-content-wrapper { 
+      max-height: calc(80vh - 80px); 
+      overflow-y: auto; 
+      padding: 4px 0 16px 0; 
     }
-    .tags-scroll-wrapper::-webkit-scrollbar { width: 3px; }
-    .tags-scroll-wrapper::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; }
-    .tags-scroll-wrapper::-webkit-scrollbar-track { background: transparent; }
+    .overlay-content-wrapper .page-tags-top,
+    .overlay-content-wrapper .page-tags-bottom {
+      margin: 4px 0 8px 0;
+    }
 
     @media (max-width: 420px) {
       .logo-cyan-round { width: 30px; height: 30px; }
@@ -580,9 +565,8 @@
       .page-tags-top .game-tag, .page-tags-bottom .game-tag { font-size: 0.4rem; padding: 3px 8px 3px 6px; }
       .page-tags-top .tag-loader, .page-tags-bottom .tag-loader { width: 12px; height: 12px; }
       .lucide-icon { width: 15px; height: 15px; }
-      .tags-scroll-wrapper { max-height: 300px; }
-      .scroll-top-btn { width: 34px; height: 34px; }
-      .scroll-top-btn svg { width: 16px; height: 16px; }
+      .close-icon-wrap { width: 38px; height: 38px; }
+      .close-icon-wrap .close-icon-inner { width: 18px; height: 18px; }
     }
   </style>
 </head>
@@ -749,7 +733,7 @@
       </div>
     </div>
 
-    <!-- Top Offers Section with Scrollable Tags -->
+    <!-- Top Offers Section -->
     <div class="tag-section" id="tagSection">
       <div class="tag-title" id="tagSectionTitle">
         <span class="lucide-icon glow-green">
@@ -757,12 +741,7 @@
         </span>
         <span>Top Offers</span>
       </div>
-      <div class="tags-scroll-wrapper" id="tagsScrollWrapper">
-        <div class="tag-grid" id="tagGridContainer"></div>
-        <div class="scroll-top-btn" id="scrollTopBtn" title="Scroll Tags to Top">
-          <svg viewBox="0 0 24 24"><path d="M18 15l-6-6-6 6"/></svg>
-        </div>
-      </div>
+      <div class="tag-grid" id="tagGridContainer"></div>
     </div>
 
     <div class="toc-section">
@@ -885,9 +864,24 @@
         </span>
       </div>
     </div>
-    <h2 id="overlayTitle">About</h2>
-    <div id="overlayContent">
-      <p>Loading...</p>
+    <!-- Fixed Title Header -->
+    <div class="overlay-header">
+      <h2 id="overlayTitle">About</h2>
+    </div>
+    <!-- Scrollable content -->
+    <div class="overlay-content-wrapper" id="overlayContentWrapper">
+      <div id="overlayContent">
+        <p>Loading...</p>
+      </div>
+      <!-- Back to Home button at the end -->
+      <div style="display:flex; justify-content:center; padding:16px 0 8px 0;">
+        <div class="close-icon-wrap" id="backToHomeBtn">
+          <span class="close-glow"></span>
+          <span class="close-icon-inner">
+            <svg viewBox="0 0 24 24"><path d="M18 6L6 18"/><path d="M6 6l12 12"/></svg>
+          </span>
+        </div>
+      </div>
     </div>
   </div>
 </div>
@@ -907,8 +901,8 @@
     const homeNav = document.getElementById('homeNav');
     const overlayTitle = document.getElementById('overlayTitle');
     const overlayContent = document.getElementById('overlayContent');
-    const tagsScrollWrapper = document.getElementById('tagsScrollWrapper');
-    const scrollTopBtn = document.getElementById('scrollTopBtn');
+    const overlayContentWrapper = document.getElementById('overlayContentWrapper');
+    const backToHomeBtn = document.getElementById('backToHomeBtn');
 
     // ---- PAGE CONFIG ----
     const pageConfig = {
@@ -949,6 +943,7 @@
       document.getElementById('homeNav').classList.add('active');
       history.replaceState({ page: 'home', data: null }, '', '#home');
       window.scrollTo({ top: 0, behavior: 'instant' });
+      infoOverlay.style.display = 'none';
     }
 
     function showMainGrid() {
@@ -1013,7 +1008,7 @@
       }
     }
 
-    // ---- SHOW OVERLAY ----
+    // ---- SHOW OVERLAY - title fixed at top, tags below ----
     async function showOverlay(pageType) {
       saveCurrentScroll();
       
@@ -1023,6 +1018,7 @@
         overlayContent.innerHTML = '<p style="color:#94a3b8;font-size:0.8rem;">Page not found.</p>';
         infoOverlay.style.display = 'flex';
         pushState(pageType, null);
+        overlayContentWrapper.scrollTop = 0;
         return;
       }
 
@@ -1030,6 +1026,7 @@
       overlayContent.innerHTML = '<p style="color:#94a3b8;font-size:0.8rem;">Loading content...</p>';
       infoOverlay.style.display = 'flex';
       pushState(pageType, null);
+      overlayContentWrapper.scrollTop = 0;
 
       try {
         const response = await fetch(config.url + '?t=' + Date.now());
@@ -1055,6 +1052,7 @@
           content = config.placeholder;
         }
         
+        // Create containers for tags (will be placed after title)
         const tagsContainerTop = document.createElement('div');
         tagsContainerTop.className = 'page-tags-top';
         const tagsContainerBottom = document.createElement('div');
@@ -1064,14 +1062,11 @@
         await loadTagsFromFile(config.url, tagsContainerBottom);
         
         overlayContent.innerHTML = tagsContainerTop.outerHTML + content + tagsContainerBottom.outerHTML;
+        overlayContentWrapper.scrollTop = 0;
         
       } catch (e) {
         overlayContent.innerHTML = '<p style="color:#94a3b8;font-size:0.8rem;">' + config.placeholder + '</p>';
       }
-    }
-
-    function closeOverlay() {
-      infoOverlay.style.display = 'none';
     }
 
     // ---- RENDER FUNCTIONS ----
@@ -1274,12 +1269,6 @@
       });
 
       showDetailView();
-      
-      // Reset scroll of tags wrapper
-      if (tagsScrollWrapper) {
-        tagsScrollWrapper.scrollTop = 0;
-        scrollTopBtn.classList.remove('show');
-      }
     }
 
     function renderOverlay(pageType) {
@@ -1428,7 +1417,7 @@
     }
     renderGrid();
 
-    // ---- POPSTATE ----
+    // ---- POPSTATE (back navigation with scroll restoration) ----
     window.addEventListener('popstate', function(e) {
       const state = e.state;
       if (!state) {
@@ -1481,6 +1470,7 @@
         }
       } else if (current.type === 'about' || current.type === 'contact' || current.type === 'disclaimer') {
         renderOverlay(current.type);
+        overlayContentWrapper.scrollTop = 0;
       } else {
         goToHome();
       }
@@ -1498,6 +1488,7 @@
       });
     });
 
+    // Page links in footer
     document.querySelectorAll('.page-link').forEach(el => {
       el.addEventListener('click', function(e) {
         e.preventDefault();
@@ -1510,29 +1501,23 @@
 
     overlayCloseBtn.addEventListener('click', function(e) {
       e.stopPropagation();
-      history.back();
-    });
-    infoOverlay.addEventListener('click', function(e) {
-      if (e.target === infoOverlay) {
-        history.back();
+      if (infoOverlay.style.display === 'flex') {
+        infoOverlay.style.display = 'none';
+        goToHome();
       }
     });
 
-    // ---- SCROLL TO TOP INSIDE TAGS CONTAINER ----
-    if (tagsScrollWrapper) {
-      tagsScrollWrapper.addEventListener('scroll', function() {
-        if (this.scrollTop > 50) {
-          scrollTopBtn.classList.add('show');
-        } else {
-          scrollTopBtn.classList.remove('show');
-        }
-      });
+    // ---- BACK TO HOME BUTTON (inside overlay) ----
+    backToHomeBtn.addEventListener('click', function() {
+      goToHome();
+    });
 
-      scrollTopBtn.addEventListener('click', function(e) {
-        e.stopPropagation();
-        tagsScrollWrapper.scrollTo({ top: 0, behavior: 'smooth' });
-      });
-    }
+    // Close overlay when clicking outside
+    infoOverlay.addEventListener('click', function(e) {
+      if (e.target === infoOverlay) {
+        goToHome();
+      }
+    });
 
     // ---- BACK BUTTON ----
     backBtn.addEventListener('click', function(e) {
@@ -1578,7 +1563,6 @@
     showMainGrid();
     document.getElementById('homeNav').classList.add('active');
     window.scrollTo({ top: 0, behavior: 'instant' });
-    scrollTopBtn.classList.remove('show');
   })();
 </script>
 </body>
