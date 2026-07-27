@@ -899,7 +899,8 @@
       document.querySelectorAll('.nav-small').forEach(l => l.classList.remove('active'));
       document.getElementById('homeNav').classList.add('active');
       history.replaceState({ page: 'home', data: null }, '', '#home');
-      window.scrollTo({ top: 0, behavior: 'smooth' });
+      // When going home manually (e.g., nav click), scroll to top instantly
+      window.scrollTo({ top: 0, behavior: 'instant' });
     }
 
     function showMainGrid() {
@@ -931,18 +932,15 @@
         const response = await fetch(config.url);
         if (!response.ok) throw new Error('Not found');
         const html = await response.text();
-        // Parse HTML and extract body content
         const parser = new DOMParser();
         const doc = parser.parseFromString(html, 'text/html');
         const body = doc.body;
         if (body && body.innerHTML.trim()) {
-          // Return the body inner HTML as content
           return { title: config.title, content: body.innerHTML };
         } else {
           return { title: config.title, content: config.placeholder };
         }
       } catch (e) {
-        // File not found or other error – show placeholder
         return { title: config.title, content: config.placeholder };
       }
     }
@@ -950,13 +948,11 @@
     // ---- SHOW OVERLAY WITH DYNAMIC CONTENT ----
     async function showOverlay(pageType) {
       saveCurrentScroll();
-      // Show loading state
       overlayTitle.textContent = 'Loading...';
       overlayContent.innerHTML = '<p style="color:#94a3b8;font-size:0.8rem;">Loading content...</p>';
       infoOverlay.style.display = 'flex';
       pushState(pageType, null);
 
-      // Fetch content
       const result = await fetchPageContent(pageType);
       overlayTitle.textContent = result.title;
       overlayContent.innerHTML = result.content;
@@ -1170,17 +1166,16 @@
     }
 
     function renderOverlay(pageType) {
-      // This is called from popstate; we need to show the overlay with the already-fetched content
-      // But we don't have the content cached, so we fetch it again
-      // We use the pageType from the history state
       showOverlay(pageType);
     }
 
-    // ---- SHOW DETAIL ----
+    // ---- SHOW DETAIL (modified to scroll to top) ----
     function showDetail(game) {
       detailHistory.push(game);
       pushState('detail', game);
       renderDetail(game);
+      // New detail page opens at the top (instant)
+      window.scrollTo({ top: 0, behavior: 'instant' });
     }
 
     // ---- GAME DATA ----
@@ -1320,10 +1315,17 @@
     // ---- POPSTATE (back navigation with scroll restoration) ----
     window.addEventListener('popstate', function(e) {
       const state = e.state;
+      // If state is null and we are at home with scroll at top, let browser exit
       if (!state) {
-        goToHome();
-        return;
+        if (historyStack.length === 1 && historyStack[0].type === 'home' && window.scrollY === 0) {
+          // Do nothing, allow browser to navigate away
+          return;
+        } else {
+          goToHome();
+          return;
+        }
       }
+
       const pageType = state.page || 'home';
       const data = state.data || null;
 
@@ -1348,10 +1350,22 @@
 
       if (current.type === 'home') {
         renderHome();
+        // Restore saved scroll for home, then smoothly scroll to top
+        if (current.scrollY !== undefined) {
+          window.scrollTo({ top: current.scrollY, behavior: 'instant' });
+        }
+        // After restoring, smoothly scroll to top (as per requirement)
+        setTimeout(() => {
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        }, 0);
       } else if (current.type === 'detail') {
         const gameData = current.data;
         if (gameData) {
           renderDetail(gameData);
+          // Restore scroll position of this detail page
+          if (current.scrollY !== undefined) {
+            window.scrollTo({ top: current.scrollY, behavior: 'instant' });
+          }
         } else {
           goToHome();
         }
@@ -1359,12 +1373,6 @@
         renderOverlay(current.type);
       } else {
         goToHome();
-      }
-
-      if (current.scrollY !== undefined) {
-        setTimeout(() => {
-          window.scrollTo({ top: current.scrollY, behavior: 'auto' });
-        }, 50);
       }
     });
 
@@ -1433,7 +1441,7 @@
     history.replaceState({ page: 'home', data: null }, '', '#home');
     showMainGrid();
     document.getElementById('homeNav').classList.add('active');
-    window.scrollTo({ top: 0, behavior: 'auto' });
+    window.scrollTo({ top: 0, behavior: 'instant' });
   })();
 </script>
 </body>
