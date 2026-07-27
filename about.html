@@ -1,1 +1,244 @@
-<!DOCTYPE html>
+<!-- ========================= -->
+<!-- PREMIUM DISCLAIMER TAGS -->
+<!-- ========================= -->
+
+<section class="premium-disclaimer">
+
+  <div class="tag-card">
+    <div class="tag-title">
+      <span class="icon shield"></span>
+      Official Disclaimer
+    </div>
+    <p>
+      This website is created only to provide information about Yono Games applications.
+      We do not own, operate, or officially represent any third-party gaming platform.
+    </p>
+  </div>
+
+  <div class="tag-card">
+    <div class="tag-title">
+      <span class="icon warning"></span>
+      Important Notice
+    </div>
+    <p>
+      Always download apps from trusted and verified sources. Never install modified,
+      fake, or unofficial APK files from unknown websites.
+    </p>
+  </div>
+
+  <div class="tag-card">
+    <div class="tag-title">
+      <span class="icon security"></span>
+      Safety & Security
+    </div>
+    <p>
+      Protect your account information, passwords, OTP, and banking details.
+      Never share personal information with anyone.
+    </p>
+  </div>
+
+  <div class="tag-card">
+    <div class="tag-title">
+      <span class="icon verified"></span>
+      Verified Information
+    </div>
+    <p>
+      App information may change over time. Users should always verify the latest
+      version, update details, and official announcements before installation.
+    </p>
+  </div>
+
+  <div class="tag-card">
+    <div class="tag-title">
+      <span class="icon mobile"></span>
+      Mobile Friendly
+    </div>
+    <p>
+      This website is optimized for Android devices with fast loading,
+      responsive design, and smooth navigation.
+    </p>
+  </div>
+
+  <div class="tag-card">
+    <div class="tag-title">
+      <span class="icon update"></span>
+      Latest Updates
+    </div>
+    <p>
+      Information is reviewed and updated regularly to improve user experience
+      and provide accurate app details.
+    </p>
+  </div>
+
+  <div class="tag-card">
+    <div class="tag-title">
+      <span class="icon privacy"></span>
+      Privacy Protection
+    </div>
+    <p>
+      We respect user privacy and recommend reviewing every application's
+      own Privacy Policy before registration.
+    </p>
+  </div>
+
+  <div class="tag-card">
+    <div class="tag-title">
+      <span class="icon info"></span>
+      User Responsibility
+    </div>
+    <p>
+      Users are responsible for checking local laws and platform policies before
+      using any third-party application.
+    </p>
+  </div>
+
+</section>
+
+<style>
+
+.premium-disclaimer{
+display:flex;
+flex-direction:column;
+gap:16px;
+margin:20px 0;
+}
+
+.tag-card{
+background:#fff;
+border:1px solid #e8ecf4;
+border-radius:18px;
+padding:18px;
+box-shadow:0 8px 20px rgba(0,0,0,.06);
+transition:.3s;
+}
+
+.tag-card:hover{
+transform:translateY(-3px);
+box-shadow:0 14px 28px rgba(0,0,0,.08);
+}
+
+.tag-title{
+display:flex;
+align-items:center;
+gap:12px;
+font-size:21px;
+font-weight:700;
+color:#e11d48;
+margin-bottom:12px;
+}
+
+.tag-card p{
+margin:0;
+font-size:16px;
+line-height:1.8;
+color:#555;
+}
+
+.icon{
+width:42px;
+height:42px;
+border-radius:14px;
+display:flex;
+align-items:center;
+justify-content:center;
+position:relative;
+flex-shrink:0;
+}
+
+.icon::before{
+content:"";
+width:20px;
+height:20px;
+background:#fff;
+}
+
+.shield{
+background:linear-gradient(135deg,#00c853,#00e676);
+box-shadow:0 0 18px rgba(0,200,83,.35);
+}
+
+.shield::before{
+clip-path:polygon(50% 0%,95% 18%,85% 78%,50% 100%,15% 78%,5% 18%);
+}
+
+.warning{
+background:linear-gradient(135deg,#ff9800,#ff5722);
+box-shadow:0 0 18px rgba(255,87,34,.35);
+}
+
+.warning::before{
+clip-path:polygon(50% 0%,100% 100%,0% 100%);
+}
+
+.security{
+background:linear-gradient(135deg,#2979ff,#00b0ff);
+box-shadow:0 0 18px rgba(33,150,243,.35);
+}
+
+.security::before{
+clip-path:polygon(50% 0%,100% 25%,82% 100%,18% 100%,0% 25%);
+}
+
+.verified{
+background:linear-gradient(135deg,#7c4dff,#536dfe);
+box-shadow:0 0 18px rgba(124,77,255,.35);
+}
+
+.verified::before{
+clip-path:polygon(15% 55%,35% 75%,85% 20%,100% 35%,35% 100%,0% 70%);
+}
+
+.mobile{
+background:linear-gradient(135deg,#00bfa5,#00e5ff);
+box-shadow:0 0 18px rgba(0,229,255,.35);
+}
+
+.mobile::before{
+border-radius:3px;
+}
+
+.update{
+background:linear-gradient(135deg,#ff1744,#ff9100);
+box-shadow:0 0 18px rgba(255,23,68,.35);
+}
+
+.update::before{
+clip-path:polygon(50% 0%,100% 50%,50% 100%,0% 50%);
+}
+
+.privacy{
+background:linear-gradient(135deg,#43a047,#8bc34a);
+box-shadow:0 0 18px rgba(76,175,80,.35);
+}
+
+.privacy::before{
+clip-path:polygon(50% 0%,90% 20%,90% 60%,50% 100%,10% 60%,10% 20%);
+}
+
+.info{
+background:linear-gradient(135deg,#00acc1,#42a5f5);
+box-shadow:0 0 18px rgba(66,165,245,.35);
+}
+
+.info::before{
+border-radius:50%;
+}
+
+@media(max-width:768px){
+
+.tag-title{
+font-size:18px;
+}
+
+.tag-card p{
+font-size:15px;
+}
+
+.icon{
+width:38px;
+height:38px;
+}
+
+}
+
+</style>
