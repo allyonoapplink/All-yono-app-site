@@ -1,4 +1,3 @@
-000p
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -862,20 +861,11 @@
     const overlayContent = document.getElementById('overlayContent');
     const container = document.querySelector('.container');
 
-    // ---- PAGE CONTENT (only close icon, no text) ----
-    const pageContent = {
-      about: {
-        title: '',
-        content: ''
-      },
-      contact: {
-        title: '',
-        content: ''
-      },
-      disclaimer: {
-        title: '',
-        content: ''
-      }
+    // ---- PAGE CONFIG ----
+    const pageConfig = {
+      about: { url: 'about.html', title: 'About', placeholder: 'Add your custom About' },
+      contact: { url: 'contact.html', title: 'Contact', placeholder: 'Add your custom Contact' },
+      disclaimer: { url: 'disclaimer.html', title: 'Disclaimer', placeholder: 'Add your custom Disclaimer' }
     };
 
     // ---- NAVIGATION FUNCTIONS ----
@@ -932,13 +922,44 @@
       infoOverlay.style.display = 'none';
     }
 
-    function showOverlay(title, content, pageType) {
+    // ---- FETCH CONTENT FROM EXTERNAL HTML FILE ----
+    async function fetchPageContent(pageType) {
+      const config = pageConfig[pageType];
+      if (!config) return { title: pageType, content: 'Page not found.' };
+
+      try {
+        const response = await fetch(config.url);
+        if (!response.ok) throw new Error('Not found');
+        const html = await response.text();
+        // Parse HTML and extract body content
+        const parser = new DOMParser();
+        const doc = parser.parseFromString(html, 'text/html');
+        const body = doc.body;
+        if (body && body.innerHTML.trim()) {
+          // Return the body inner HTML as content
+          return { title: config.title, content: body.innerHTML };
+        } else {
+          return { title: config.title, content: config.placeholder };
+        }
+      } catch (e) {
+        // File not found or other error – show placeholder
+        return { title: config.title, content: config.placeholder };
+      }
+    }
+
+    // ---- SHOW OVERLAY WITH DYNAMIC CONTENT ----
+    async function showOverlay(pageType) {
       saveCurrentScroll();
-      // Show only the close icon — no title, no content
-      overlayTitle.textContent = '';
-      overlayContent.innerHTML = '';
+      // Show loading state
+      overlayTitle.textContent = 'Loading...';
+      overlayContent.innerHTML = '<p style="color:#94a3b8;font-size:0.8rem;">Loading content...</p>';
       infoOverlay.style.display = 'flex';
       pushState(pageType, null);
+
+      // Fetch content
+      const result = await fetchPageContent(pageType);
+      overlayTitle.textContent = result.title;
+      overlayContent.innerHTML = result.content;
     }
 
     function closeOverlay() {
@@ -1149,10 +1170,10 @@
     }
 
     function renderOverlay(pageType) {
-      // Only close icon — no text, no title
-      overlayTitle.textContent = '';
-      overlayContent.innerHTML = '';
-      infoOverlay.style.display = 'flex';
+      // This is called from popstate; we need to show the overlay with the already-fetched content
+      // But we don't have the content cached, so we fetch it again
+      // We use the pageType from the history state
+      showOverlay(pageType);
     }
 
     // ---- SHOW DETAIL ----
@@ -1351,8 +1372,8 @@
     document.querySelectorAll('.nav-small[data-target]').forEach(el => {
       el.addEventListener('click', function() {
         const key = this.dataset.target;
-        if (pageContent[key]) {
-          showOverlay('', '', key);
+        if (pageConfig[key]) {
+          showOverlay(key);
         }
         document.querySelectorAll('.nav-small').forEach(l => l.classList.remove('active'));
         this.classList.add('active');
@@ -1416,4 +1437,4 @@
   })();
 </script>
 </body>
-</html
+</html>
