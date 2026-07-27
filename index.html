@@ -1,4 +1,3 @@
-ooo
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -847,6 +846,138 @@ ooo
 
 <script>
   (function() {
+    // ---- PAGE STATE MANAGEMENT ----
+    // We maintain a stack of pages: 'home', 'detail', 'about', 'contact', 'disclaimer'
+    // The overlay (About/Contact/Disclaimer) is a separate layer.
+    // We also keep a detailHistory stack for game detail navigation.
+    
+    // views: mainGrid, detailView, infoOverlay
+    // We'll manage state explicitly.
+
+    const mainGrid = document.getElementById('mainGrid');
+    const detailView = document.getElementById('detailView');
+    const infoOverlay = document.getElementById('infoOverlay');
+    const overlayCloseBtn = document.getElementById('overlayCloseBtn');
+    const backBtn = document.getElementById('backBtn');
+    const homeNav = document.getElementById('homeNav');
+
+    // Page stack: ['home'] initially, push 'detail', 'about', 'contact', 'disclaimer'
+    // We'll use a simple array.
+    let pageStack = ['home'];
+    // Detail history stack for game detail back navigation
+    let detailHistory = [];
+
+    // Function to show main grid and close everything else
+    function showMainGrid() {
+      detailView.style.display = 'none';
+      detailView.classList.remove('show');
+      detailView.classList.add('hidden');
+      mainGrid.style.display = 'flex';
+      mainGrid.classList.remove('hidden');
+      mainGrid.classList.add('show');
+      infoOverlay.style.display = 'none';
+      // Reset stack to home
+      pageStack = ['home'];
+      detailHistory = [];
+      window.scrollTo({ top: 0 });
+      document.querySelectorAll('.nav-small').forEach(l => l.classList.remove('active'));
+      document.getElementById('homeNav').classList.add('active');
+    }
+
+    // Show detail view (game detail)
+    function showDetailView() {
+      mainGrid.style.display = 'none';
+      mainGrid.classList.remove('show');
+      mainGrid.classList.add('hidden');
+      detailView.style.display = 'block';
+      detailView.classList.remove('hidden');
+      detailView.classList.add('show');
+      infoOverlay.style.display = 'none';
+      // Update stack: if last is not detail, push
+      if (pageStack[pageStack.length - 1] !== 'detail') {
+        pageStack.push('detail');
+      }
+      window.scrollTo({ top: 0 });
+    }
+
+    // Show overlay (About/Contact/Disclaimer)
+    function showOverlay(title, content) {
+      // Close any other overlay first
+      // But we keep the detail view behind if it was open
+      // We just set overlay display flex
+      document.getElementById('overlayTitle').textContent = title;
+      document.getElementById('overlayContent').innerHTML = content;
+      infoOverlay.style.display = 'flex';
+      // Push to stack if not already
+      const current = pageStack[pageStack.length - 1];
+      if (current !== 'about' && current !== 'contact' && current !== 'disclaimer') {
+        // determine which one
+        let pageType = 'about';
+        if (title.toLowerCase().includes('contact')) pageType = 'contact';
+        else if (title.toLowerCase().includes('disclaimer')) pageType = 'disclaimer';
+        pageStack.push(pageType);
+      }
+    }
+
+    // Close overlay (go back)
+    function closeOverlay() {
+      infoOverlay.style.display = 'none';
+      // Remove overlay page from stack
+      const last = pageStack[pageStack.length - 1];
+      if (last === 'about' || last === 'contact' || last === 'disclaimer') {
+        pageStack.pop();
+      }
+      // If after popping the last is 'detail', show detail, else show home
+      const newLast = pageStack[pageStack.length - 1];
+      if (newLast === 'detail') {
+        // detail is already visible, just ensure it's shown
+        detailView.style.display = 'block';
+        detailView.classList.remove('hidden');
+        detailView.classList.add('show');
+        mainGrid.style.display = 'none';
+        mainGrid.classList.add('hidden');
+        mainGrid.classList.remove('show');
+      } else {
+        showMainGrid();
+      }
+    }
+
+    // Go back one page
+    function goBack() {
+      // If overlay is open, close it
+      if (infoOverlay.style.display === 'flex') {
+        closeOverlay();
+        return;
+      }
+      // If detail is open
+      if (detailView.style.display === 'block') {
+        if (detailHistory.length > 1) {
+          // Go to previous detail
+          detailHistory.pop();
+          const prevGame = detailHistory[detailHistory.length - 1];
+          if (prevGame) {
+            showDetail(prevGame, false);
+          } else {
+            // no more detail history, go home
+            showMainGrid();
+          }
+        } else {
+          // Only one detail, go home
+          showMainGrid();
+        }
+        return;
+      }
+      // If home, do nothing (or exit)
+      if (pageStack.length === 1 && pageStack[0] === 'home') {
+        // exit
+        window.close();
+        return;
+      }
+      // Fallback: go home
+      showMainGrid();
+    }
+
+    // ---- GAME DATA ----
     const games = [
       { name: "All Yono App Site", altName: "All Yono Games", bonus: "₹58", withdrawal: "₹100", downloadUrl: "https://www.earntp.com/m/jm9n7r", img: "https://i.ibb.co/CssC2WbG/1000022725.jpg", version: "v3.2.1", layout: "left", bg: "bg-gradient-1", border: "border-style-1" },
       { name: "567 Slots", altName: "567 Slots Game", bonus: "₹72", withdrawal: "₹100", downloadUrl: "https://join567slots0.com/?code=4NYF487URJ6&t=1781505684", img: "https://i.ibb.co/hFytMXY2/1000022725.jpg", version: "v2.5.0", layout: "right", bg: "bg-gradient-2", border: "border-style-2" },
@@ -903,16 +1034,9 @@ ooo
       return true;
     });
 
-    const mainGrid = document.getElementById('mainGrid');
-    const detailView = document.getElementById('detailView');
-    const backBtn = document.getElementById('backBtn');
-    const homeNav = document.getElementById('homeNav');
-    const overlay = document.getElementById('infoOverlay');
     const overlayTitle = document.getElementById('overlayTitle');
     const overlayContent = document.getElementById('overlayContent');
-    const overlayCloseBtn = document.getElementById('overlayCloseBtn');
 
-    // Page content definitions (only content, no tags in overlay)
     const pageContent = {
       about: {
         title: 'About',
@@ -941,58 +1065,63 @@ ooo
       }
     };
 
-    // Remove tag display from overlay - only content
+    // ---- NAVIGATION EVENTS ----
     document.querySelectorAll('.nav-small[data-target]').forEach(el => {
       el.addEventListener('click', function() {
         const key = this.dataset.target;
         if (pageContent[key]) {
           const data = pageContent[key];
-          overlayTitle.textContent = data.title;
-          overlayContent.innerHTML = data.content; // No tags
-          overlay.style.display = 'flex';
+          // If overlay is already open, close it first? but we want to replace
+          // We'll just show new overlay
+          showOverlay(data.title, data.content);
         }
         document.querySelectorAll('.nav-small').forEach(l => l.classList.remove('active'));
         this.classList.add('active');
       });
     });
 
-    overlayCloseBtn.addEventListener('click', function() {
-      overlay.style.display = 'none';
+    overlayCloseBtn.addEventListener('click', function(e) {
+      e.stopPropagation();
+      closeOverlay();
     });
-    overlay.addEventListener('click', function(e) {
-      if (e.target === overlay) overlay.style.display = 'none';
+    infoOverlay.addEventListener('click', function(e) {
+      if (e.target === infoOverlay) closeOverlay();
     });
 
+    // ---- BACK BUTTON ----
+    backBtn.addEventListener('click', function(e) {
+      goBack();
+    });
+
+    // ---- HOME NAV ----
+    homeNav.addEventListener('click', function() {
+      if (infoOverlay.style.display === 'flex') {
+        closeOverlay();
+        return;
+      }
+      showMainGrid();
+      document.querySelectorAll('.nav-small').forEach(l => l.classList.remove('active'));
+      this.classList.add('active');
+    });
+
+    // ---- SHARE ----
+    document.getElementById('shareBtn').addEventListener('click', function() {
+      const shareUrl = 'https://www.earntp.com/gold/jm9n7r';
+      if (navigator.share) {
+        navigator.share({
+          title: 'All Yono App Site – All Yono Apk – All Yono New – All Yono Games',
+          text: 'Download 45+ Yono Games with dual names – 567 Slots (Game), Saga Slots (APK), Jaiho 91 (Game) & more. Get ₹45 Bonus & ₹100 Withdrawal.',
+          url: shareUrl
+        }).catch(() => {});
+      } else {
+        navigator.clipboard.writeText(shareUrl).then(() => alert('Link copied!')).catch(() => prompt('Copy link:', shareUrl));
+      }
+    });
+
+    // ---- RENDER GRID ----
     function getRandomRating() { return (4 + Math.random() * 0.8).toFixed(1); }
     function getRandomSize() { return (30 + Math.floor(Math.random() * 40)) + ' MB'; }
     function getRandomVotes() { return (Math.floor(Math.random() * 30) + 5) + 'K'; }
-
-    let historyStack = [];
-
-    document.getElementById('tocToggle').addEventListener('click', function() {
-      document.getElementById('tocBody').classList.toggle('open');
-      document.getElementById('tocArrow').classList.toggle('open');
-    });
-
-    function showMainGrid() {
-      detailView.style.display = 'none';
-      detailView.classList.remove('show');
-      detailView.classList.add('hidden');
-      mainGrid.style.display = 'flex';
-      mainGrid.classList.remove('hidden');
-      mainGrid.classList.add('show');
-      window.scrollTo({ top: 0 });
-    }
-
-    function showDetailView() {
-      mainGrid.style.display = 'none';
-      mainGrid.classList.remove('show');
-      mainGrid.classList.add('hidden');
-      detailView.style.display = 'block';
-      detailView.classList.remove('hidden');
-      detailView.classList.add('show');
-      window.scrollTo({ top: 0 });
-    }
 
     function renderGrid() {
       mainGrid.innerHTML = '';
@@ -1047,6 +1176,7 @@ ooo
     }
     renderGrid();
 
+    // ---- DETAIL FUNCTIONS ----
     function getUniqueBonuses(gameName) {
       const seed = gameName.length * 7 + (gameName.charCodeAt(0) || 10);
       return {
@@ -1067,7 +1197,13 @@ ooo
     }
 
     function showDetail(game, pushHistory = true) {
-      if (pushHistory) historyStack.push(game);
+      if (pushHistory) {
+        detailHistory.push(game);
+        // Ensure pageStack has 'detail'
+        if (pageStack[pageStack.length - 1] !== 'detail') {
+          pageStack.push('detail');
+        }
+      }
 
       const detailCard = document.getElementById('detailCard');
       detailCard.className = 'detail-card ' + (game.layout || 'left') + ' ' + (game.bg || 'bg-gradient-1') + ' ' + (game.border || 'border-style-1');
@@ -1087,7 +1223,7 @@ ooo
       const gName = game.name;
       const b = getUniqueBonuses(gName);
 
-      // Top Offers section
+      // Top Offers
       const tagContainer = document.getElementById('tagGridContainer');
       const tagVariants = [
         { 
@@ -1262,37 +1398,9 @@ ooo
       showDetailView();
     }
 
-    function goBack() {
-      if (overlay.style.display === 'flex') {
-        overlay.style.display = 'none';
-        return;
-      }
-      if (detailView.style.display === 'block') {
-        if (historyStack.length > 1) {
-          historyStack.pop();
-          const prevGame = historyStack[historyStack.length - 1];
-          if (prevGame) showDetail(prevGame, false);
-          else goHome();
-        } else {
-          historyStack = [];
-          goHome();
-        }
-        return;
-      }
-    }
-
-    function goHome() {
-      historyStack = [];
-      showMainGrid();
-      document.querySelectorAll('.nav-small').forEach(l => l.classList.remove('active'));
-      document.getElementById('homeNav').classList.add('active');
-    }
-
-    backBtn.addEventListener('click', goBack);
-    homeNav.addEventListener('click', function() {
-      if (overlay.style.display === 'flex') overlay.style.display = 'none';
-      historyStack = [];
-      goHome();
+    document.getElementById('tocToggle').addEventListener('click', function() {
+      document.getElementById('tocBody').classList.toggle('open');
+      document.getElementById('tocArrow').classList.toggle('open');
     });
 
     document.getElementById('detailTitle').addEventListener('click', function() {
@@ -1300,24 +1408,28 @@ ooo
       if (url && url !== '#') window.open(url, '_blank');
     });
 
-    document.getElementById('shareBtn').addEventListener('click', function() {
-      const shareUrl = 'https://www.earntp.com/gold/jm9n7r';
-      if (navigator.share) {
-        navigator.share({
-          title: 'All Yono App Site – All Yono Apk – All Yono New – All Yono Games',
-          text: 'Download 45+ Yono Games with dual names – 567 Slots (Game), Saga Slots (APK), Jaiho 91 (Game) & more. Get ₹45 Bonus & ₹100 Withdrawal.',
-          url: shareUrl
-        }).catch(() => {});
-      } else {
-        navigator.clipboard.writeText(shareUrl).then(() => alert('Link copied!')).catch(() => prompt('Copy link:', shareUrl));
-      }
-    });
-
+    // ---- POPSTATE for back button ----
     window.addEventListener('popstate', function(e) {
-      if (overlay.style.display === 'flex') { overlay.style.display = 'none'; return; }
-      if (detailView.style.display === 'block') { goBack(); return; }
+      // If overlay is open, close it
+      if (infoOverlay.style.display === 'flex') {
+        closeOverlay();
+        return;
+      }
+      // If detail is open, go back
+      if (detailView.style.display === 'block') {
+        goBack();
+        return;
+      }
+      // If home, do nothing (or exit)
+      if (pageStack.length === 1 && pageStack[0] === 'home') {
+        // exit
+        return;
+      }
+      goBack();
     });
 
+    // Initialize
+    showMainGrid();
     history.pushState(null, null, location.href);
   })();
 </script>
