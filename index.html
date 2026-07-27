@@ -381,8 +381,7 @@
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      width: 32px;
-      height: 32px;
+      width: 32px; height: 32px;
       border-radius: 50%;
       position: relative;
       background: #0a0a0a;
@@ -934,25 +933,36 @@
         const doc = parser.parseFromString(html, 'text/html');
         const body = doc.body;
         if (body && body.innerHTML.trim()) {
-          // Check if the body contains the page-tags-top or page-tags-bottom classes
-          // If not, wrap the content with the tags structure
+          // Extract all content including tags
           let content = body.innerHTML;
-          // Check if content already has page-tags-top or page-tags-bottom
+          
+          // Check if the content already has page-tags-top or page-tags-bottom
+          // If not, try to extract game-tag elements and wrap them
           if (!content.includes('page-tags-top') && !content.includes('page-tags-bottom')) {
-            // Try to extract tags from the body if they exist as game-tag elements
-            const tagElements = body.querySelectorAll('.game-tag, .tag-text');
+            // Try to find any game-tag or tag-text elements
+            const tempDiv = document.createElement('div');
+            tempDiv.innerHTML = content;
+            const tagElements = tempDiv.querySelectorAll('.game-tag, .tag-text, [class*="tag"]');
             let tagsHtml = '';
             if (tagElements.length > 0) {
-              tagsHtml = '<div class="page-tags-top">';
+              // Extract tag names from the elements
+              const tagNames = [];
               tagElements.forEach(el => {
                 const text = el.textContent.trim();
-                if (text) {
-                  tagsHtml += `<span class="game-tag"><span class="tag-loader"><svg viewBox="0 0 50 50"><circle class="loader-ring-bg" cx="25" cy="25" r="20"/><circle class="loader-ring" cx="25" cy="25" r="20"/></svg></span><span class="tag-text">${text}</span></span>`;
+                if (text && text.length > 0 && text.length < 50) {
+                  tagNames.push(text);
                 }
               });
-              tagsHtml += '</div>';
+              // Remove duplicates
+              const uniqueTags = [...new Set(tagNames)];
+              if (uniqueTags.length > 0) {
+                tagsHtml = '<div class="page-tags-top">';
+                uniqueTags.forEach(text => {
+                  tagsHtml += `<span class="game-tag"><span class="tag-loader"><svg viewBox="0 0 50 50"><circle class="loader-ring-bg" cx="25" cy="25" r="20"/><circle class="loader-ring" cx="25" cy="25" r="20"/></svg></span><span class="tag-text">${text}</span></span>`;
+                });
+                tagsHtml += '</div>';
+              }
             }
-            // If no tags found, just return the content as is
             if (tagsHtml) {
               content = tagsHtml + content + tagsHtml.replace('page-tags-top', 'page-tags-bottom');
             }
