@@ -1,4 +1,3 @@
-8888
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -168,7 +167,8 @@
       align-items: center;
       justify-content: center;
       flex-shrink: 0;
-      width: 18px; height: 18px;
+      width: 18px;
+      height: 18px;
       color: currentColor;
       position: relative;
     }
@@ -337,7 +337,8 @@
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      width: 18px; height: 18px;
+      width: 18px;
+      height: 18px;
       flex-shrink: 0;
       position: relative;
     }
@@ -380,7 +381,8 @@
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      width: 32px; height: 32px;
+      width: 32px;
+      height: 32px;
       border-radius: 50%;
       position: relative;
       background: #0a0a0a;
@@ -919,26 +921,44 @@
       infoOverlay.style.display = 'none';
     }
 
-    // ---- FETCH CONTENT FROM EXTERNAL HTML FILE ----
-    async function fetchPageContent(pageType) {
-      const config = pageConfig[pageType];
-      if (!config) return { title: pageType, content: 'Page not found.' };
-
+    // ---- DYNAMIC TAGS SYSTEM ----
+    async function loadTagsFromFile(file, targetContainer) {
       try {
-        const response = await fetch(config.url + '?t=' + Date.now());
-        if (!response.ok) throw new Error('Not found');
+        const response = await fetch(file + '?t=' + Date.now());
+        if (!response.ok) throw new Error('File not found');
         const html = await response.text();
         const parser = new DOMParser();
         const doc = parser.parseFromString(html, 'text/html');
-        const body = doc.body;
-        if (body && body.innerHTML.trim()) {
-          let content = body.innerHTML;
-          return { title: config.title, content: content };
-        } else {
-          return { title: config.title, content: config.placeholder };
+        const tags = doc.querySelectorAll('.tag');
+        
+        // Clear container
+        targetContainer.innerHTML = '';
+        
+        if (tags.length === 0) {
+          targetContainer.innerHTML = '<p style="color:#94a3b8;font-size:0.7rem;padding:8px 0;">No tags added yet.</p>';
+          return;
         }
+        
+        tags.forEach(tag => {
+          const clone = tag.cloneNode(true);
+          clone.className = 'game-tag';
+          // Add loader and wrapper if needed
+          if (!clone.querySelector('.tag-loader')) {
+            const text = clone.textContent.trim();
+            clone.innerHTML = `
+              <span class="tag-loader">
+                <svg viewBox="0 0 50 50">
+                  <circle class="loader-ring-bg" cx="25" cy="25" r="20"/>
+                  <circle class="loader-ring" cx="25" cy="25" r="20"/>
+                </svg>
+              </span>
+              <span class="tag-text">${text}</span>
+            `;
+          }
+          targetContainer.appendChild(clone);
+        });
       } catch (e) {
-        return { title: config.title, content: config.placeholder };
+        targetContainer.innerHTML = '<p style="color:#94a3b8;font-size:0.7rem;padding:8px 0;">Unable to load tags. Please ensure the file exists.</p>';
       }
     }
 
@@ -950,9 +970,47 @@
       infoOverlay.style.display = 'flex';
       pushState(pageType, null);
 
-      const result = await fetchPageContent(pageType);
-      overlayTitle.textContent = result.title;
-      overlayContent.innerHTML = result.content;
+      const config = pageConfig[pageType];
+      if (!config) return;
+
+      try {
+        const response = await fetch(config.url + '?t=' + Date.now());
+        if (!response.ok) throw new Error('Not found');
+        const html = await response.text();
+        const parser = new DOMParser();
+        const doc = parser.parseFromString(html, 'text/html');
+        const body = doc.body;
+        
+        overlayTitle.textContent = config.title;
+        
+        let content = '';
+        if (body && body.innerHTML.trim()) {
+          // Extract content without tags
+          const tempDiv = document.createElement('div');
+          tempDiv.innerHTML = body.innerHTML;
+          // Remove .tag elements from content to avoid duplication
+          tempDiv.querySelectorAll('.tag').forEach(el => el.remove());
+          content = tempDiv.innerHTML;
+        } else {
+          content = config.placeholder;
+        }
+        
+        // Add tags at top and bottom
+        const tagsContainer = document.createElement('div');
+        tagsContainer.className = 'page-tags-top';
+        const tagsBottomContainer = document.createElement('div');
+        tagsBottomContainer.className = 'page-tags-bottom';
+        
+        // Load tags into both containers
+        await loadTagsFromFile(config.url, tagsContainer);
+        await loadTagsFromFile(config.url, tagsBottomContainer);
+        
+        // Build final content
+        overlayContent.innerHTML = tagsContainer.outerHTML + content + tagsBottomContainer.outerHTML;
+        
+      } catch (e) {
+        overlayContent.innerHTML = '<p style="color:#94a3b8;font-size:0.8rem;">Unable to load page content.</p>';
+      }
     }
 
     function closeOverlay() {
