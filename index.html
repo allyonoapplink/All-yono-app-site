@@ -837,15 +837,19 @@
         </span>
       </div>
     </div>
-    <!-- Title and content removed - only close icon remains -->
-    <div id="overlayContent" style="display:none;"></div>
+    <h2 id="overlayTitle">About</h2>
+    <div id="overlayContent">
+      <p>Loading...</p>
+    </div>
   </div>
 </div>
 
 <script>
   (function() {
     // ---- UNLIMITED HISTORY WITH SCROLL RESTORATION ----
+    // We maintain a stack of page states: each entry has { type, data, scrollY }
     let historyStack = [{ type: 'home', data: null, scrollY: 0 }];
+    // For detail views, we store the game data separately
     let detailHistory = [];
 
     // DOM refs
@@ -859,13 +863,36 @@
     const overlayContent = document.getElementById('overlayContent');
     const container = document.querySelector('.container');
 
-    // ---- PAGE CONTENT - EMPTY - only close icon shown ----
+    // ---- PAGE CONTENT ----
     const pageContent = {
-      about: { title: '', content: '' },
-      contact: { title: '', content: '' },
-      disclaimer: { title: '', content: '' }
+      about: {
+        title: 'About',
+        content: `
+          <p>All Yono App Site is a curated platform listing 45+ top gaming apps including Teen Patti, Rummy, Slots, and Casino. We provide direct download links and bonus details for each app.</p>
+          <p>Our mission is to help users discover the best real cash earning games in India. All apps listed are verified and trusted by millions of players.</p>
+          <p>Whether you're a beginner or a pro, All Yono App Site has something for everyone. Start your gaming journey today!</p>
+        `
+      },
+      contact: {
+        title: 'Contact',
+        content: `
+          <p>For any queries, feedback or support, you can reach us via email: <strong>support@allyonoappsite.com</strong></p>
+          <p>You can also connect with us on Telegram: <strong>@allyonoappsite</strong></p>
+          <p>We respond to all inquiries within 24 hours. Your feedback helps us improve and bring you the best gaming recommendations.</p>
+        `
+      },
+      disclaimer: {
+        title: 'Disclaimer',
+        content: `
+          <p>All Yono App Site does not host or operate any of the games listed. We only provide information and referral links.</p>
+          <p>Users are advised to check the terms and conditions of each app before downloading or using it.</p>
+          <p>Play responsibly. Real money gaming involves financial risk. Only play with money you can afford to lose.</p>
+          <p>All Yono App Site is not responsible for any losses or damages incurred while using any third-party apps or services.</p>
+        `
+      }
     };
 
+    // ---- NAVIGATION FUNCTIONS ----
     function getScrollY() {
       return window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop || 0;
     }
@@ -884,6 +911,7 @@
       if (pageType === 'detail' && data) {
         detailHistory.push(data);
       }
+      // Update browser history
       const historyState = { page: pageType, data: data || null };
       history.pushState(historyState, '', '#' + pageType);
     }
@@ -896,6 +924,7 @@
       document.querySelectorAll('.nav-small').forEach(l => l.classList.remove('active'));
       document.getElementById('homeNav').classList.add('active');
       history.replaceState({ page: 'home', data: null }, '', '#home');
+      // Smooth scroll to top
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
@@ -919,16 +948,19 @@
       infoOverlay.style.display = 'none';
     }
 
-    function showOverlay(pageType) {
+    function showOverlay(title, content, pageType) {
       saveCurrentScroll();
-      // No title, no content - just show the overlay with close icon
-      overlayTitle.textContent = '';
-      overlayContent.innerHTML = '';
-      overlayContent.style.display = 'none';
+      overlayTitle.textContent = title;
+      overlayContent.innerHTML = content;
       infoOverlay.style.display = 'flex';
       pushState(pageType, null);
     }
 
+    function closeOverlay() {
+      infoOverlay.style.display = 'none';
+    }
+
+    // ---- RENDER FUNCTIONS ----
     function renderHome() {
       showMainGrid();
       document.querySelectorAll('.nav-small').forEach(l => l.classList.remove('active'));
@@ -954,6 +986,7 @@
       const gName = game.name;
       const b = getUniqueBonuses(gName);
 
+      // Top Offers
       const tagContainer = document.getElementById('tagGridContainer');
       const tagVariants = [
         { 
@@ -1131,19 +1164,24 @@
     }
 
     function renderOverlay(pageType) {
-      // Show only the overlay with close icon - no content
-      overlayTitle.textContent = '';
-      overlayContent.innerHTML = '';
-      overlayContent.style.display = 'none';
-      infoOverlay.style.display = 'flex';
+      const content = pageContent[pageType];
+      if (content) {
+        overlayTitle.textContent = content.title;
+        overlayContent.innerHTML = content.content;
+        infoOverlay.style.display = 'flex';
+      } else {
+        goToHome();
+      }
     }
 
+    // ---- SHOW DETAIL (with pushState) ----
     function showDetail(game) {
       detailHistory.push(game);
       pushState('detail', game);
       renderDetail(game);
     }
 
+    // ---- GAME DATA ----
     const games = [
       { name: "All Yono App Site", altName: "All Yono Games", bonus: "₹58", withdrawal: "₹100", downloadUrl: "https://www.earntp.com/m/jm9n7r", img: "https://i.ibb.co/CssC2WbG/1000022725.jpg", version: "v3.2.1", layout: "left", bg: "bg-gradient-1", border: "border-style-1" },
       { name: "567 Slots", altName: "567 Slots Game", bonus: "₹72", withdrawal: "₹100", downloadUrl: "https://join567slots0.com/?code=4NYF487URJ6&t=1781505684", img: "https://i.ibb.co/hFytMXY2/1000022725.jpg", version: "v2.5.0", layout: "right", bg: "bg-gradient-2", border: "border-style-2" },
@@ -1223,6 +1261,7 @@
       };
     }
 
+    // ---- RENDER GRID ----
     function renderGrid() {
       mainGrid.innerHTML = '';
       uniqueGames.forEach((game, index) => {
@@ -1276,6 +1315,7 @@
     }
     renderGrid();
 
+    // ---- POPSTATE (back navigation with scroll restoration) ----
     window.addEventListener('popstate', function(e) {
       const state = e.state;
       if (!state) {
@@ -1285,25 +1325,31 @@
       const pageType = state.page || 'home';
       const data = state.data || null;
 
+      // Pop from our stack to match the new state
       if (historyStack.length > 1) {
         const popped = historyStack.pop();
         if (popped.type === 'detail' && popped.data) {
+          // Remove from detailHistory if it matches
           const idx = detailHistory.findIndex(d => d && d.name === popped.data.name);
           if (idx !== -1) detailHistory.splice(idx, 1);
         }
       } else {
+        // If only home remains, but state says otherwise, reset
         if (pageType !== 'home') {
+          // Rebuild
           goToHome();
           return;
         }
       }
 
+      // Now render based on the new current state
       const current = historyStack[historyStack.length - 1];
       if (!current) {
         goToHome();
         return;
       }
 
+      // Render the page
       if (current.type === 'home') {
         renderHome();
       } else if (current.type === 'detail') {
@@ -1319,6 +1365,7 @@
         goToHome();
       }
 
+      // Restore scroll position
       if (current.scrollY !== undefined) {
         setTimeout(() => {
           window.scrollTo({ top: current.scrollY, behavior: 'auto' });
@@ -1326,10 +1373,14 @@
       }
     });
 
+    // ---- NAV EVENTS ----
     document.querySelectorAll('.nav-small[data-target]').forEach(el => {
       el.addEventListener('click', function() {
         const key = this.dataset.target;
-        showOverlay(key);
+        if (pageContent[key]) {
+          const data = pageContent[key];
+          showOverlay(data.title, data.content, key);
+        }
         document.querySelectorAll('.nav-small').forEach(l => l.classList.remove('active'));
         this.classList.add('active');
       });
@@ -1345,18 +1396,22 @@
       }
     });
 
+    // ---- BACK BUTTON ----
     backBtn.addEventListener('click', function(e) {
       history.back();
     });
 
+    // ---- HOME NAV ----
     homeNav.addEventListener('click', function() {
       if (historyStack.length === 1 && historyStack[0].type === 'home') {
+        // Already home, scroll to top smoothly
         window.scrollTo({ top: 0, behavior: 'smooth' });
         return;
       }
       goToHome();
     });
 
+    // ---- SHARE ----
     document.getElementById('shareBtn').addEventListener('click', function() {
       const shareUrl = 'https://www.earntp.com/gold/jm9n7r';
       if (navigator.share) {
@@ -1370,6 +1425,7 @@
       }
     });
 
+    // ---- TOC TOGGLE ----
     document.getElementById('tocToggle').addEventListener('click', function() {
       document.getElementById('tocBody').classList.toggle('open');
       document.getElementById('tocArrow').classList.toggle('open');
@@ -1380,6 +1436,7 @@
       if (url && url !== '#') window.open(url, '_blank');
     });
 
+    // ---- INIT ----
     history.replaceState({ page: 'home', data: null }, '', '#home');
     showMainGrid();
     document.getElementById('homeNav').classList.add('active');
