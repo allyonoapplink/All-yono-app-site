@@ -505,6 +505,76 @@
     .border-style-4 .detail-card { border-bottom: 4px solid #7c3aed; }
     .border-style-5 .detail-card { border-left: 4px solid #d97706; border-radius: 0 12px 12px 0; }
 
+    /* ===== FIXED TOP NAVIGATION ===== */
+    .nav-row-small {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: #f8fafc;
+      border-bottom: 1px solid #e9edf4;
+      padding: 4px 6px;
+    }
+
+    /* ===== FIXED BACK BUTTON - TOP RIGHT ===== */
+    .fixed-back-btn {
+      position: fixed;
+      top: 70px;
+      right: 12px;
+      z-index: 999;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      width: 44px;
+      height: 44px;
+      background: #0a0a0a;
+      border: 2px solid #1a1a1a;
+      border-radius: 50%;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.25);
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+    .fixed-back-btn:active { transform: scale(0.92); }
+    .fixed-back-btn svg {
+      width: 22px;
+      height: 22px;
+      stroke: #ffffff;
+      stroke-width: 2.5;
+      fill: none;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+    .fixed-back-btn.show { display: flex; }
+
+    /* ===== FIXED SCROLL TO TOP - BOTTOM RIGHT ===== */
+    .fixed-scroll-top {
+      position: fixed;
+      bottom: 24px;
+      right: 12px;
+      z-index: 999;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      width: 44px;
+      height: 44px;
+      background: #0a0a0a;
+      border: 2px solid #1a1a1a;
+      border-radius: 50%;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.25);
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+    .fixed-scroll-top:active { transform: scale(0.92); }
+    .fixed-scroll-top svg {
+      width: 22px;
+      height: 22px;
+      stroke: #ffffff;
+      stroke-width: 2.5;
+      fill: none;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+    .fixed-scroll-top.show { display: flex; }
+
     @media (max-width: 420px) {
       .logo-cyan-round { width: 30px; height: 30px; }
       .site-name-led-round { padding: 3px 10px 3px 8px; min-height: 24px; }
@@ -540,6 +610,10 @@
       .page-tags-top .game-tag, .page-tags-bottom .game-tag { font-size: 0.4rem; padding: 3px 8px 3px 6px; }
       .page-tags-top .tag-loader, .page-tags-bottom .tag-loader { width: 12px; height: 12px; }
       .lucide-icon { width: 15px; height: 15px; }
+      .fixed-back-btn { top: 62px; right: 8px; width: 38px; height: 38px; }
+      .fixed-back-btn svg { width: 18px; height: 18px; }
+      .fixed-scroll-top { bottom: 18px; right: 8px; width: 38px; height: 38px; }
+      .fixed-scroll-top svg { width: 18px; height: 18px; }
     }
   </style>
 </head>
@@ -826,6 +900,16 @@
   <div class="footer-note">All Yono App Site • All Yono Apk • All Yono New • All Yono Games • 45+ Games • ₹45 Bonus • ₹100 Withdrawal</div>
 </div>
 
+<!-- FIXED BACK BUTTON - TOP RIGHT -->
+<div class="fixed-back-btn" id="fixedBackBtn" title="Back to Home">
+  <svg viewBox="0 0 24 24"><path d="M18 6L6 18"/><path d="M6 6l12 12"/></svg>
+</div>
+
+<!-- FIXED SCROLL TO TOP - BOTTOM RIGHT -->
+<div class="fixed-scroll-top" id="fixedScrollTop" title="Scroll to Top">
+  <svg viewBox="0 0 24 24"><path d="M18 15l-6-6-6 6"/></svg>
+</div>
+
 <!-- OVERLAY -->
 <div class="info-overlay" id="infoOverlay">
   <div class="info-card">
@@ -859,6 +943,8 @@
     const homeNav = document.getElementById('homeNav');
     const overlayTitle = document.getElementById('overlayTitle');
     const overlayContent = document.getElementById('overlayContent');
+    const fixedBackBtn = document.getElementById('fixedBackBtn');
+    const fixedScrollTop = document.getElementById('fixedScrollTop');
 
     // ---- PAGE CONFIG ----
     const pageConfig = {
@@ -899,6 +985,7 @@
       document.getElementById('homeNav').classList.add('active');
       history.replaceState({ page: 'home', data: null }, '', '#home');
       window.scrollTo({ top: 0, behavior: 'instant' });
+      fixedBackBtn.classList.remove('show');
     }
 
     function showMainGrid() {
@@ -909,6 +996,7 @@
       mainGrid.classList.remove('hidden');
       mainGrid.classList.add('show');
       infoOverlay.style.display = 'none';
+      fixedBackBtn.classList.remove('show');
     }
 
     function showDetailView() {
@@ -919,19 +1007,22 @@
       detailView.classList.remove('hidden');
       detailView.classList.add('show');
       infoOverlay.style.display = 'none';
+      fixedBackBtn.classList.add('show');
     }
 
     // ---- DYNAMIC TAGS SYSTEM ----
     async function loadTagsFromFile(file, targetContainer) {
       try {
         const response = await fetch(file + '?t=' + Date.now());
-        if (!response.ok) throw new Error('File not found');
+        if (!response.ok) {
+          targetContainer.innerHTML = '<p style="color:#94a3b8;font-size:0.7rem;padding:8px 0;">No tags added yet.</p>';
+          return;
+        }
         const html = await response.text();
         const parser = new DOMParser();
         const doc = parser.parseFromString(html, 'text/html');
         const tags = doc.querySelectorAll('.tag');
         
-        // Clear container
         targetContainer.innerHTML = '';
         
         if (tags.length === 0) {
@@ -942,7 +1033,6 @@
         tags.forEach(tag => {
           const clone = tag.cloneNode(true);
           clone.className = 'game-tag';
-          // Add loader and wrapper if needed
           if (!clone.querySelector('.tag-loader')) {
             const text = clone.textContent.trim();
             clone.innerHTML = `
@@ -958,63 +1048,74 @@
           targetContainer.appendChild(clone);
         });
       } catch (e) {
-        targetContainer.innerHTML = '<p style="color:#94a3b8;font-size:0.7rem;padding:8px 0;">Unable to load tags. Please ensure the file exists.</p>';
+        targetContainer.innerHTML = '<p style="color:#94a3b8;font-size:0.7rem;padding:8px 0;">No tags added yet.</p>';
       }
     }
 
-    // ---- SHOW OVERLAY WITH DYNAMIC CONTENT ----
+    // ---- SHOW OVERLAY WITHOUT LOADING POPUP ----
     async function showOverlay(pageType) {
       saveCurrentScroll();
-      overlayTitle.textContent = 'Loading...';
+      
+      const config = pageConfig[pageType];
+      if (!config) {
+        overlayTitle.textContent = 'Page';
+        overlayContent.innerHTML = '<p style="color:#94a3b8;font-size:0.8rem;">Page not found.</p>';
+        infoOverlay.style.display = 'flex';
+        pushState(pageType, null);
+        return;
+      }
+
+      // Show overlay instantly
+      overlayTitle.textContent = config.title;
       overlayContent.innerHTML = '<p style="color:#94a3b8;font-size:0.8rem;">Loading content...</p>';
       infoOverlay.style.display = 'flex';
       pushState(pageType, null);
-
-      const config = pageConfig[pageType];
-      if (!config) return;
+      fixedBackBtn.classList.add('show');
 
       try {
         const response = await fetch(config.url + '?t=' + Date.now());
-        if (!response.ok) throw new Error('Not found');
+        if (!response.ok) {
+          overlayContent.innerHTML = '<p style="color:#94a3b8;font-size:0.8rem;">' + config.placeholder + '</p>';
+          return;
+        }
         const html = await response.text();
         const parser = new DOMParser();
         const doc = parser.parseFromString(html, 'text/html');
         const body = doc.body;
         
-        overlayTitle.textContent = config.title;
-        
         let content = '';
         if (body && body.innerHTML.trim()) {
-          // Extract content without tags
           const tempDiv = document.createElement('div');
           tempDiv.innerHTML = body.innerHTML;
-          // Remove .tag elements from content to avoid duplication
           tempDiv.querySelectorAll('.tag').forEach(el => el.remove());
           content = tempDiv.innerHTML;
+          if (!content.trim()) {
+            content = config.placeholder;
+          }
         } else {
           content = config.placeholder;
         }
         
-        // Add tags at top and bottom
-        const tagsContainer = document.createElement('div');
-        tagsContainer.className = 'page-tags-top';
-        const tagsBottomContainer = document.createElement('div');
-        tagsBottomContainer.className = 'page-tags-bottom';
+        // Create containers for tags
+        const tagsContainerTop = document.createElement('div');
+        tagsContainerTop.className = 'page-tags-top';
+        const tagsContainerBottom = document.createElement('div');
+        tagsContainerBottom.className = 'page-tags-bottom';
         
-        // Load tags into both containers
-        await loadTagsFromFile(config.url, tagsContainer);
-        await loadTagsFromFile(config.url, tagsBottomContainer);
+        // Load tags
+        await loadTagsFromFile(config.url, tagsContainerTop);
+        await loadTagsFromFile(config.url, tagsContainerBottom);
         
-        // Build final content
-        overlayContent.innerHTML = tagsContainer.outerHTML + content + tagsBottomContainer.outerHTML;
+        overlayContent.innerHTML = tagsContainerTop.outerHTML + content + tagsContainerBottom.outerHTML;
         
       } catch (e) {
-        overlayContent.innerHTML = '<p style="color:#94a3b8;font-size:0.8rem;">Unable to load page content.</p>';
+        overlayContent.innerHTML = '<p style="color:#94a3b8;font-size:0.8rem;">' + config.placeholder + '</p>';
       }
     }
 
     function closeOverlay() {
       infoOverlay.style.display = 'none';
+      fixedBackBtn.classList.remove('show');
     }
 
     // ---- RENDER FUNCTIONS ----
@@ -1401,6 +1502,7 @@
 
       if (current.type === 'home') {
         renderHome();
+        fixedBackBtn.classList.remove('show');
         if (current.scrollY !== undefined && current.scrollY > 0) {
           window.scrollTo({ top: current.scrollY, behavior: 'instant' });
         } else {
@@ -1410,6 +1512,7 @@
         const gameData = current.data;
         if (gameData) {
           renderDetail(gameData);
+          fixedBackBtn.classList.add('show');
           if (current.scrollY !== undefined) {
             window.scrollTo({ top: current.scrollY, behavior: 'instant' });
           }
@@ -1418,6 +1521,7 @@
         }
       } else if (current.type === 'about' || current.type === 'contact' || current.type === 'disclaimer') {
         renderOverlay(current.type);
+        fixedBackBtn.classList.add('show');
       } else {
         goToHome();
       }
@@ -1454,6 +1558,32 @@
       if (e.target === infoOverlay) {
         history.back();
       }
+    });
+
+    // ---- FIXED BACK BUTTON ----
+    fixedBackBtn.addEventListener('click', function() {
+      if (infoOverlay.style.display === 'flex') {
+        infoOverlay.style.display = 'none';
+        fixedBackBtn.classList.remove('show');
+        goToHome();
+      } else if (detailView.style.display === 'block') {
+        history.back();
+      } else {
+        goToHome();
+      }
+    });
+
+    // ---- FIXED SCROLL TO TOP ----
+    window.addEventListener('scroll', function() {
+      if (window.scrollY > 200) {
+        fixedScrollTop.classList.add('show');
+      } else {
+        fixedScrollTop.classList.remove('show');
+      }
+    });
+
+    fixedScrollTop.addEventListener('click', function() {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
     });
 
     // ---- BACK BUTTON ----
@@ -1500,6 +1630,8 @@
     showMainGrid();
     document.getElementById('homeNav').classList.add('active');
     window.scrollTo({ top: 0, behavior: 'instant' });
+    fixedBackBtn.classList.remove('show');
+    fixedScrollTop.classList.remove('show');
   })();
 </script>
 </body>
