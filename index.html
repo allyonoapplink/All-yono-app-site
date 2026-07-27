@@ -1,3 +1,4 @@
+0000000
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -846,197 +847,24 @@
 
 <script>
   (function() {
-    // ---- PAGE STATE MANAGEMENT ----
-    // We maintain a stack of pages: 'home', 'detail', 'about', 'contact', 'disclaimer'
-    // The overlay (About/Contact/Disclaimer) is a separate layer.
-    // We also keep a detailHistory stack for game detail navigation.
-    
-    // views: mainGrid, detailView, infoOverlay
-    // We'll manage state explicitly.
+    // ---- UNLIMITED HISTORY STACK ----
+    // We use a simple array to track the sequence of pages.
+    // Each entry is either 'home', 'detail', 'about', 'contact', 'disclaimer'
+    let historyStack = ['home'];
+    // For detail views, we store the game data separately to restore
+    let detailHistory = [];
 
+    // DOM refs
     const mainGrid = document.getElementById('mainGrid');
     const detailView = document.getElementById('detailView');
     const infoOverlay = document.getElementById('infoOverlay');
     const overlayCloseBtn = document.getElementById('overlayCloseBtn');
     const backBtn = document.getElementById('backBtn');
     const homeNav = document.getElementById('homeNav');
-
-    // Page stack: ['home'] initially, push 'detail', 'about', 'contact', 'disclaimer'
-    // We'll use a simple array.
-    let pageStack = ['home'];
-    // Detail history stack for game detail back navigation
-    let detailHistory = [];
-
-    // Function to show main grid and close everything else
-    function showMainGrid() {
-      detailView.style.display = 'none';
-      detailView.classList.remove('show');
-      detailView.classList.add('hidden');
-      mainGrid.style.display = 'flex';
-      mainGrid.classList.remove('hidden');
-      mainGrid.classList.add('show');
-      infoOverlay.style.display = 'none';
-      // Reset stack to home
-      pageStack = ['home'];
-      detailHistory = [];
-      window.scrollTo({ top: 0 });
-      document.querySelectorAll('.nav-small').forEach(l => l.classList.remove('active'));
-      document.getElementById('homeNav').classList.add('active');
-    }
-
-    // Show detail view (game detail)
-    function showDetailView() {
-      mainGrid.style.display = 'none';
-      mainGrid.classList.remove('show');
-      mainGrid.classList.add('hidden');
-      detailView.style.display = 'block';
-      detailView.classList.remove('hidden');
-      detailView.classList.add('show');
-      infoOverlay.style.display = 'none';
-      // Update stack: if last is not detail, push
-      if (pageStack[pageStack.length - 1] !== 'detail') {
-        pageStack.push('detail');
-      }
-      window.scrollTo({ top: 0 });
-    }
-
-    // Show overlay (About/Contact/Disclaimer)
-    function showOverlay(title, content) {
-      // Close any other overlay first
-      // But we keep the detail view behind if it was open
-      // We just set overlay display flex
-      document.getElementById('overlayTitle').textContent = title;
-      document.getElementById('overlayContent').innerHTML = content;
-      infoOverlay.style.display = 'flex';
-      // Push to stack if not already
-      const current = pageStack[pageStack.length - 1];
-      if (current !== 'about' && current !== 'contact' && current !== 'disclaimer') {
-        // determine which one
-        let pageType = 'about';
-        if (title.toLowerCase().includes('contact')) pageType = 'contact';
-        else if (title.toLowerCase().includes('disclaimer')) pageType = 'disclaimer';
-        pageStack.push(pageType);
-      }
-    }
-
-    // Close overlay (go back)
-    function closeOverlay() {
-      infoOverlay.style.display = 'none';
-      // Remove overlay page from stack
-      const last = pageStack[pageStack.length - 1];
-      if (last === 'about' || last === 'contact' || last === 'disclaimer') {
-        pageStack.pop();
-      }
-      // If after popping the last is 'detail', show detail, else show home
-      const newLast = pageStack[pageStack.length - 1];
-      if (newLast === 'detail') {
-        // detail is already visible, just ensure it's shown
-        detailView.style.display = 'block';
-        detailView.classList.remove('hidden');
-        detailView.classList.add('show');
-        mainGrid.style.display = 'none';
-        mainGrid.classList.add('hidden');
-        mainGrid.classList.remove('show');
-      } else {
-        showMainGrid();
-      }
-    }
-
-    // Go back one page
-    function goBack() {
-      // If overlay is open, close it
-      if (infoOverlay.style.display === 'flex') {
-        closeOverlay();
-        return;
-      }
-      // If detail is open
-      if (detailView.style.display === 'block') {
-        if (detailHistory.length > 1) {
-          // Go to previous detail
-          detailHistory.pop();
-          const prevGame = detailHistory[detailHistory.length - 1];
-          if (prevGame) {
-            showDetail(prevGame, false);
-          } else {
-            // no more detail history, go home
-            showMainGrid();
-          }
-        } else {
-          // Only one detail, go home
-          showMainGrid();
-        }
-        return;
-      }
-      // If home, do nothing (or exit)
-      if (pageStack.length === 1 && pageStack[0] === 'home') {
-        // exit
-        window.close();
-        return;
-      }
-      // Fallback: go home
-      showMainGrid();
-    }
-
-    // ---- GAME DATA ----
-    const games = [
-      { name: "All Yono App Site", altName: "All Yono Games", bonus: "₹58", withdrawal: "₹100", downloadUrl: "https://www.earntp.com/m/jm9n7r", img: "https://i.ibb.co/CssC2WbG/1000022725.jpg", version: "v3.2.1", layout: "left", bg: "bg-gradient-1", border: "border-style-1" },
-      { name: "567 Slots", altName: "567 Slots Game", bonus: "₹72", withdrawal: "₹100", downloadUrl: "https://join567slots0.com/?code=4NYF487URJ6&t=1781505684", img: "https://i.ibb.co/hFytMXY2/1000022725.jpg", version: "v2.5.0", layout: "right", bg: "bg-gradient-2", border: "border-style-2" },
-      { name: "Saga Slots", altName: "Saga Slots APK", bonus: "₹45", withdrawal: "₹100", downloadUrl: "https://www.sagaslots5.com/?code=0QHJSERZYMV&t=1781505813", img: "https://i.ibb.co/20dzhBZf/1000022725.jpg", version: "v3.0.2", layout: "center", bg: "bg-gradient-3", border: "border-style-3" },
-      { name: "Jaiho 91", altName: "Jaiho 91 Game", bonus: "₹67", withdrawal: "₹100", downloadUrl: "https://jaiho91bonus.vip/?code=C42T99ZQHAT&t=1781506067", img: "https://i.ibb.co/zV0C6Xkk/1000022725.jpg", version: "v4.1.0", layout: "left", bg: "bg-gradient-4", border: "border-style-4" },
-      { name: "Rummy Ludo", altName: "Rummy Ludo APK", bonus: "₹52", withdrawal: "₹100", downloadUrl: "https://rummyludoapp37.com/", img: "https://i.ibb.co/Z6Xy7y2x/1000022725.jpg", version: "v2.0.8", layout: "right", bg: "bg-gradient-5", border: "border-style-5" },
-      { name: "ABC Rummy", altName: "ABC Rummy Game", bonus: "₹63", withdrawal: "₹100", downloadUrl: "https://d34i569g8ztoql.cloudfront.net/abcrummy_MeApp.apk", img: "https://i.ibb.co/Ldmd1DHH/1000022725.jpg", version: "v1.9.3", layout: "center", bg: "bg-gradient-6", border: "border-style-1" },
-      { name: "Rummy 91", altName: "Rummy 91 APK", bonus: "₹55", withdrawal: "₹100", downloadUrl: "https://d16sfv4ssrmnvt.cloudfront.net/rummy91_AGENT.apk", img: "https://i.ibb.co/Fb2j77pp/1000022725.jpg", version: "v2.1.5", layout: "left", bg: "bg-gradient-7", border: "border-style-2" },
-      { name: "Love Rummy", altName: "Love Rummy Game", bonus: "₹48", withdrawal: "₹100", downloadUrl: "https://d34i569g8ztoql.cloudfront.net/loverummy_App.apk", img: "https://i.ibb.co/PZ2dpNJ9/1000022725.jpg", version: "v1.7.2", layout: "right", bg: "bg-gradient-1", border: "border-style-3" },
-      { name: "Spin Crush", altName: "Spin Crush APK", bonus: "₹78", withdrawal: "₹100", downloadUrl: "https://d292swwe9zki3u.cloudfront.net/spincrush_freecash.apk", img: "https://i.ibb.co/S4C26kVS/1000022725.jpg", version: "v3.0.0", layout: "center", bg: "bg-gradient-2", border: "border-style-4" },
-      { name: "Top Rummy", altName: "Top Rummy Game", bonus: "₹61", withdrawal: "₹100", downloadUrl: "https://th7.my/BY1JWS/3gvute0", img: "https://i.ibb.co/bRy3w8dN/1000022725.jpg", version: "v2.8.1", layout: "left", bg: "bg-gradient-3", border: "border-style-5" },
-      { name: "Rummy 365", altName: "Rummy 365 APK", bonus: "₹44", withdrawal: "₹100", downloadUrl: "https://join567slots0.com/?code=4NYF487URJ6&t=1781505684", img: "https://i.ibb.co/Hf9bhrFm/1000022725.jpg", version: "v1.5.0", layout: "right", bg: "bg-gradient-4", border: "border-style-1" },
-      { name: "Teen Patti Gold", altName: "Teen Patti Gold Game", bonus: "₹75", withdrawal: "₹100", downloadUrl: "https://www.earntp.com/gold/jm9n7r", img: "https://i.ibb.co/C5XcGXsJ/teen-patti-gold.jpg", version: "v4.0.1", layout: "center", bg: "bg-gradient-5", border: "border-style-2" },
-      { name: "Teen Patti Master", altName: "Teen Patti Master APK", bonus: "₹50", withdrawal: "₹100", downloadUrl: "https://www.earntp.com/m/jm9n7r", img: "https://i.ibb.co/JjrZjn2n/teen-patti-master.jpg", version: "v3.5.0", layout: "left", bg: "bg-gradient-6", border: "border-style-3" },
-      { name: "Yono Rummy", altName: "Yono Rummy Game", bonus: "₹68", withdrawal: "₹100", downloadUrl: "https://yonorummy043.com/?code=VIPYQC5EE9X&t=1781107758", img: "https://i.ibb.co/zTFDGPpX/yono-rummy.jpg", version: "v2.0.0", layout: "right", bg: "bg-gradient-7", border: "border-style-4" },
-      { name: "Slots Winner", altName: "Slots Winner APK", bonus: "₹56", withdrawal: "₹100", downloadUrl: "https://slotswinneri.com/?code=PGVC6CBNF53&t=1781107393", img: "https://i.ibb.co/NdbNBtx7/slots-winner.jpg", version: "v1.8.5", layout: "center", bg: "bg-gradient-1", border: "border-style-5" },
-      { name: "Good Slots", altName: "Good Slots Game", bonus: "₹40", withdrawal: "₹100", downloadUrl: "https://7sharegoodslots.vip?pid=320806209&channel=2010001&t=pdd2&pkg=com.1", img: "https://i.ibb.co/nq9kMKHZ/good-slots.jpg", version: "v1.2.0", layout: "left", bg: "bg-gradient-2", border: "border-style-1" },
-      { name: "Diwa Slot", altName: "Diwa Slot APK", bonus: "₹82", withdrawal: "₹100", downloadUrl: "https://sharediwaslot1.vip?pid=483455673&channel=2010002&t=pdd2&pkg=com.diwaslotwhl.app", img: "https://i.ibb.co/BKB6QMbD/diwa-slot.jpg", version: "v2.2.0", layout: "right", bg: "bg-gradient-3", border: "border-style-2" },
-      { name: "GoGo Rummy", altName: "GoGo Rummy Game", bonus: "₹59", withdrawal: "₹100", downloadUrl: "https://www.gogorummyagent.com/?code=V4UTQA2VYMQ&t=1781196694", img: "https://i.ibb.co/Y7dzDP7z/gogo-rummy.jpg", version: "v1.9.1", layout: "center", bg: "bg-gradient-4", border: "border-style-3" },
-      { name: "Joy Rummy", altName: "Joy Rummy APK", bonus: "₹47", withdrawal: "₹100", downloadUrl: "https://www.joyrummymax.com/?code=J5KFTAWJ9X5&t=1781198100", img: "https://i.ibb.co/nqD8CD8W/joy-rummy.jpg", version: "v2.3.0", layout: "left", bg: "bg-gradient-5", border: "border-style-4" },
-      { name: "Spin Gold", altName: "Spin Gold Game", bonus: "₹71", withdrawal: "₹100", downloadUrl: "https://uono-bingo101.com/?code=3WFQ231H9Y2&t=1781197828", img: "https://i.ibb.co/G3QnY0vY/spin-gold.jpg", version: "v1.6.0", layout: "right", bg: "bg-gradient-6", border: "border-style-5" },
-      { name: "Bingo 101", altName: "Bingo 101 APK", bonus: "₹65", withdrawal: "₹100", downloadUrl: "https://uono-bingo101.com/?code=3WFQ231H9Y2&t=1781197828", img: "https://i.ibb.co/My9tjNgL/bingo101.jpg", version: "v2.0.0", layout: "center", bg: "bg-gradient-7", border: "border-style-1" },
-      { name: "Yes Spin", altName: "Yes Spin Game", bonus: "₹43", withdrawal: "₹100", downloadUrl: "https://www.yesspineee.com/?code=47TXJTLU5YY&t=1781198907", img: "https://i.ibb.co/m5qzq7W4/yes-spin.jpg", version: "v1.3.0", layout: "left", bg: "bg-gradient-1", border: "border-style-2" },
-      { name: "Yono Arcade", altName: "Yono Arcade APK", bonus: "₹60", withdrawal: "₹100", downloadUrl: "https://yonoarcadeapk9.com/?code=96LNEL9FQXZ&t=1781199006", img: "https://i.ibb.co/mCzSG1L7/yono-arcade.jpg", version: "v2.5.0", layout: "right", bg: "bg-gradient-2", border: "border-style-3" },
-      { name: "SVIP 777", altName: "SVIP 777 Game", bonus: "₹49", withdrawal: "₹100", downloadUrl: "https://www.svip777.life?pid=297924008&channel=2050001&t=pdd2&pkg=com.svip777.h5", img: "https://i.ibb.co/vfWZMLm/svip777.jpg", version: "v1.8.0", layout: "center", bg: "bg-gradient-3", border: "border-style-4" },
-      { name: "OK Rummy", altName: "OK Rummy APK", bonus: "₹66", withdrawal: "₹100", downloadUrl: "https://www.okrummy22.com/?code=H2GU92WUXXA&t=1781199220", img: "https://i.ibb.co/99fCMbNC/ok-rummy.jpg", version: "v1.9.0", layout: "left", bg: "bg-gradient-4", border: "border-style-5" },
-      { name: "Hind 777", altName: "Hind 777 Game", bonus: "₹73", withdrawal: "₹100", downloadUrl: "https://www.hindi777agent5.com/?code=7LFFR8WPHEG&t=1781199307", img: "https://i.ibb.co/5gf3q0Sh/hind777.jpg", version: "v2.0.0", layout: "right", bg: "bg-gradient-5", border: "border-style-1" },
-      { name: "Bet 213", altName: "Bet 213 APK", bonus: "₹54", withdrawal: "₹100", downloadUrl: "https://www.bet213.rocks/?code=2QTKPV4BYDH&t=1781199576", img: "https://i.ibb.co/YTqq2C4F/bet213.jpg", version: "v1.7.0", layout: "center", bg: "bg-gradient-6", border: "border-style-2" },
-      { name: "Boss Rummy", altName: "Boss Rummy Game", bonus: "₹77", withdrawal: "₹100", downloadUrl: "https://www.bossrummyy.com/?code=LSHTVUZE1NR&t=1781429504", img: "https://i.ibb.co/fdWgRgxk/1000022725.jpg", version: "v2.1.0", layout: "left", bg: "bg-gradient-7", border: "border-style-3" },
-      { name: "Yono 777", altName: "Yono 777 APK", bonus: "₹51", withdrawal: "₹100", downloadUrl: "https://uono777refer.vip/?code=F9MPSLKZCV9&t=1781429388", img: "https://i.ibb.co/VWz6S3JB/1000022725.jpg", version: "v2.0.0", layout: "right", bg: "bg-gradient-1", border: "border-style-4" },
-      { name: "Diwa VIP", altName: "Diwa VIP Game", bonus: "₹85", withdrawal: "₹100", downloadUrl: "https://uono777refer.vip/?code=F9MPSLKZCV9&t=1781429388", img: "https://i.ibb.co/ynsBHKtg/1000022725.jpg", version: "v1.5.0", layout: "center", bg: "bg-gradient-2", border: "border-style-5" },
-      { name: "Diwa 777", altName: "Diwa 777 APK", bonus: "₹69", withdrawal: "₹100", downloadUrl: "https://sharediwa7771.top?pid=287747863&channel=2010001&t=pdd2&pkg=com.diwa777.app", img: "https://i.ibb.co/Kx2RKNvN/1000022725.jpg", version: "v1.8.0", layout: "left", bg: "bg-gradient-3", border: "border-style-1" },
-      { name: "Yono Games", altName: "Yono Games APK", bonus: "₹57", withdrawal: "₹100", downloadUrl: "https://yonogamesm.com/?code=LHS49AEHVMR&t=1784314209", img: "https://i.ibb.co/LXqV77rd/yono-games.jpg", version: "v3.0.0", layout: "right", bg: "bg-gradient-4", border: "border-style-2" },
-      { name: "INR Rummy", altName: "INR Rummy Game", bonus: "₹62", withdrawal: "₹100", downloadUrl: "https://inrrummy.club/?code=JMQBV8TAPD7&t=1784298106", img: "https://i.ibb.co/Y7ZRkLFp/inr-rummy.jpg", version: "v1.6.0", layout: "center", bg: "bg-gradient-5", border: "border-style-3" },
-      { name: "Slots Winner Pro", altName: "Slots Winner Pro APK", bonus: "₹74", withdrawal: "₹100", downloadUrl: "https://slotswinneri.com/?code=PGVC6CBNF53&t=1784299271", img: "https://i.ibb.co/wNYf5LG8/slots-winner.jpg", version: "v2.0.0", layout: "left", bg: "bg-gradient-6", border: "border-style-4" },
-      { name: "MBM BET", altName: "MBM BET Game", bonus: "₹53", withdrawal: "₹100", downloadUrl: "https://www.mbmbet3.com/?code=GD3H3VA6YK5&t=1784297830", img: "https://i.ibb.co/sJcmCxK6/mbm-bet.jpg", version: "v1.4.0", layout: "right", bg: "bg-gradient-7", border: "border-style-5" },
-      { name: "Goa Spin", altName: "Goa Spin APK", bonus: "₹64", withdrawal: "₹100", downloadUrl: "https://www.earntp.com/m/jm9n7r", img: "https://i.ibb.co/FbpzMnQx/goa-spin.jpg", version: "v1.5.0", layout: "center", bg: "bg-gradient-1", border: "border-style-1" },
-      { name: "101Z", altName: "101Z Game", bonus: "₹46", withdrawal: "₹100", downloadUrl: "https://www.earntp.com/gold/jm9n7r", img: "https://i.ibb.co/F4tpkSSm/101z.jpg", version: "v1.2.0", layout: "left", bg: "bg-gradient-2", border: "border-style-2" },
-      { name: "777 Game", altName: "777 Game APK", bonus: "₹79", withdrawal: "₹100", downloadUrl: "https://t.me/yonogamestite", img: "https://i.ibb.co/YFG8D6NF/777-game.jpg", version: "v2.0.0", layout: "right", bg: "bg-gradient-3", border: "border-style-3" },
-      { name: "Teen Patti", altName: "Teen Patti Game", bonus: "₹41", withdrawal: "₹100", downloadUrl: "https://www.earntp.com/gold/jm9n7r", img: "https://i.ibb.co/5xkDVhrK/teen-patti.jpg", version: "v4.0.0", layout: "center", bg: "bg-gradient-4", border: "border-style-4" },
-      { name: "All Yono Games", altName: "All Yono Games APK", bonus: "₹70", withdrawal: "₹100", downloadUrl: "https://www.earntp.com/gold/jm9n7r", img: "https://i.ibb.co/yzyKyN1/all-yono-games.jpg", version: "v3.1.0", layout: "left", bg: "bg-gradient-5", border: "border-style-5" },
-      { name: "New Yono Games", altName: "New Yono Games Game", bonus: "₹76", withdrawal: "₹100", downloadUrl: "https://t.me/yonogamestite", img: "https://i.ibb.co/8nq6LH05/new-yono-games.jpg", version: "v1.9.0", layout: "right", bg: "bg-gradient-6", border: "border-style-1" },
-      { name: "Yono Apps", altName: "Yono Apps APK", bonus: "₹39", withdrawal: "₹100", downloadUrl: "https://t.me/yonogamestite", img: "https://i.ibb.co/S4rJJnB7/yono-apps.jpg", version: "v2.0.0", layout: "center", bg: "bg-gradient-7", border: "border-style-2" },
-      { name: "Spin Winner", altName: "Spin Winner Game", bonus: "₹80", withdrawal: "₹100", downloadUrl: "https://www.yesspineee.com/?code=47TXJTLU5YY&t=1781198907", img: "https://i.ibb.co/ZpP9wKdm/spin-winner.jpg", version: "v1.3.0", layout: "left", bg: "bg-gradient-1", border: "border-style-3" },
-      { name: "Yono All Games", altName: "Yono All Games APK", bonus: "₹81", withdrawal: "₹100", downloadUrl: "https://diwavipshare.cc?pid=428256719&channel=2050001&t=pdd2&pkg=com.diwavip.h5", img: "https://i.ibb.co/XxxDXGr3/yono-all-games.jpg", version: "v3.0.0", layout: "right", bg: "bg-gradient-2", border: "border-style-4" },
-      { name: "Spin Lucky", altName: "Spin Lucky Game", bonus: "₹42", withdrawal: "₹100", downloadUrl: "https://www.earntp.com/m/jm9n7r", img: "https://i.ibb.co/VY95vgTQ/spin-lucky.jpg", version: "v1.5.0", layout: "center", bg: "bg-gradient-3", border: "border-style-5" }
-    ];
-
-    const seen = new Set();
-    const uniqueGames = games.filter(g => {
-      const key = g.name.trim().toLowerCase();
-      if (seen.has(key)) return false;
-      seen.add(key);
-      return true;
-    });
-
     const overlayTitle = document.getElementById('overlayTitle');
     const overlayContent = document.getElementById('overlayContent');
 
+    // ---- PAGE CONTENT ----
     const pageContent = {
       about: {
         title: 'About',
@@ -1065,146 +893,133 @@
       }
     };
 
-    // ---- NAVIGATION EVENTS ----
-    document.querySelectorAll('.nav-small[data-target]').forEach(el => {
-      el.addEventListener('click', function() {
-        const key = this.dataset.target;
-        if (pageContent[key]) {
-          const data = pageContent[key];
-          // If overlay is already open, close it first? but we want to replace
-          // We'll just show new overlay
-          showOverlay(data.title, data.content);
-        }
-        document.querySelectorAll('.nav-small').forEach(l => l.classList.remove('active'));
-        this.classList.add('active');
-      });
-    });
-
-    overlayCloseBtn.addEventListener('click', function(e) {
-      e.stopPropagation();
-      closeOverlay();
-    });
-    infoOverlay.addEventListener('click', function(e) {
-      if (e.target === infoOverlay) closeOverlay();
-    });
-
-    // ---- BACK BUTTON ----
-    backBtn.addEventListener('click', function(e) {
-      goBack();
-    });
-
-    // ---- HOME NAV ----
-    homeNav.addEventListener('click', function() {
-      if (infoOverlay.style.display === 'flex') {
-        closeOverlay();
-        return;
+    // ---- NAVIGATION FUNCTIONS ----
+    function pushState(pageType, data) {
+      // Push to history stack
+      historyStack.push(pageType);
+      if (pageType === 'detail' && data) {
+        detailHistory.push(data);
+      } else if (pageType !== 'detail') {
+        // For non-detail, we don't store data
+        // but we keep detailHistory aligned: if we push about/contact/disclaimer, we don't add to detailHistory
+        // but we need to keep detailHistory for when we go back to detail
       }
+      // Update browser history
+      const state = { page: pageType, data: data || null };
+      history.pushState(state, '', '#' + pageType);
+    }
+
+    function goToHome() {
+      // Clear stacks and show home
+      historyStack = ['home'];
+      detailHistory = [];
       showMainGrid();
       document.querySelectorAll('.nav-small').forEach(l => l.classList.remove('active'));
-      this.classList.add('active');
-    });
+      document.getElementById('homeNav').classList.add('active');
+      // Replace history state so home is the only entry
+      history.replaceState({ page: 'home', data: null }, '', '#home');
+    }
 
-    // ---- SHARE ----
-    document.getElementById('shareBtn').addEventListener('click', function() {
-      const shareUrl = 'https://www.earntp.com/gold/jm9n7r';
-      if (navigator.share) {
-        navigator.share({
-          title: 'All Yono App Site – All Yono Apk – All Yono New – All Yono Games',
-          text: 'Download 45+ Yono Games with dual names – 567 Slots (Game), Saga Slots (APK), Jaiho 91 (Game) & more. Get ₹45 Bonus & ₹100 Withdrawal.',
-          url: shareUrl
-        }).catch(() => {});
-      } else {
-        navigator.clipboard.writeText(shareUrl).then(() => alert('Link copied!')).catch(() => prompt('Copy link:', shareUrl));
+    function showMainGrid() {
+      detailView.style.display = 'none';
+      detailView.classList.remove('show');
+      detailView.classList.add('hidden');
+      mainGrid.style.display = 'flex';
+      mainGrid.classList.remove('hidden');
+      mainGrid.classList.add('show');
+      infoOverlay.style.display = 'none';
+      window.scrollTo({ top: 0 });
+    }
+
+    function showDetailView() {
+      mainGrid.style.display = 'none';
+      mainGrid.classList.remove('show');
+      mainGrid.classList.add('hidden');
+      detailView.style.display = 'block';
+      detailView.classList.remove('hidden');
+      detailView.classList.add('show');
+      infoOverlay.style.display = 'none';
+      window.scrollTo({ top: 0 });
+    }
+
+    function showOverlay(title, content, pageType) {
+      overlayTitle.textContent = title;
+      overlayContent.innerHTML = content;
+      infoOverlay.style.display = 'flex';
+      // Push state
+      pushState(pageType, null);
+    }
+
+    function closeOverlay() {
+      infoOverlay.style.display = 'none';
+      // We don't pop stack here; popstate will handle it
+    }
+
+    // ---- BACK NAVIGATION (popstate) ----
+    window.addEventListener('popstate', function(e) {
+      const state = e.state;
+      if (!state) {
+        // If no state, go home
+        goToHome();
+        return;
       }
-    });
+      const page = state.page || 'home';
+      const data = state.data || null;
 
-    // ---- RENDER GRID ----
-    function getRandomRating() { return (4 + Math.random() * 0.8).toFixed(1); }
-    function getRandomSize() { return (30 + Math.floor(Math.random() * 40)) + ' MB'; }
-    function getRandomVotes() { return (Math.floor(Math.random() * 30) + 5) + 'K'; }
-
-    function renderGrid() {
-      mainGrid.innerHTML = '';
-      uniqueGames.forEach((game, index) => {
-        const card = document.createElement('div');
-        card.className = 'card';
-        card.dataset.name = game.name;
-        card.dataset.altName = game.altName || game.name;
-        card.dataset.bonus = game.bonus;
-        card.dataset.withdrawal = game.withdrawal;
-        card.dataset.downloadUrl = game.downloadUrl;
-        card.dataset.img = game.img;
-        card.dataset.rating = getRandomRating();
-        card.dataset.size = getRandomSize();
-        card.dataset.votes = getRandomVotes();
-        card.dataset.version = game.version || 'v2.0.0';
-        card.dataset.layout = game.layout || 'left';
-        card.dataset.bg = game.bg || 'bg-gradient-1';
-        card.dataset.border = game.border || 'border-style-1';
-
-        card.innerHTML = `
-          <div class="card-number">${index + 1}</div>
-          <div class="card-img"><img src="${game.img}" alt="${game.name} | ${game.altName}" loading="lazy" onerror="this.src='https://i.ibb.co/LXqV77rd/yono-games.jpg'"></div>
-          <div class="card-info">
-            <div class="card-name">${game.name} <span class="alt">| ${game.altName}</span></div>
-            <div class="card-bonus"><span class="icon-svg small"><svg viewBox="0 0 24 24"><rect x="3" y="8" width="18" height="13" rx="2"/><path d="M3 8l9-5 9 5"/><path d="M8 12h8"/></svg></span> Sign Up Bonus ${game.bonus}</div>
-            <div class="card-withdraw"><span class="icon-svg small"><svg viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V4a1 1 0 00-1-1H9a1 1 0 00-1 1v3"/><path d="M8 12h8"/></svg></span> Min. Withdraw ${game.withdrawal}</div>
-          </div>
-          <span class="card-download-sm">Download</span>
-        `;
-        mainGrid.appendChild(card);
-
-        card.addEventListener('click', function() {
-          const gData = {
-            name: this.dataset.name,
-            altName: this.dataset.altName,
-            bonus: this.dataset.bonus,
-            withdrawal: this.dataset.withdrawal,
-            downloadUrl: this.dataset.downloadUrl,
-            img: this.dataset.img,
-            rating: this.dataset.rating,
-            size: this.dataset.size,
-            votes: this.dataset.votes,
-            version: this.dataset.version,
-            layout: this.dataset.layout,
-            bg: this.dataset.bg,
-            border: this.dataset.border
-          };
-          showDetail(gData, true);
-        });
-      });
-    }
-    renderGrid();
-
-    // ---- DETAIL FUNCTIONS ----
-    function getUniqueBonuses(gameName) {
-      const seed = gameName.length * 7 + (gameName.charCodeAt(0) || 10);
-      return {
-        tag1: 20 + (seed * 3) % 880, tag2: 20 + (seed * 7) % 880,
-        tag3: 20 + (seed * 2) % 880, tag3b: 20 + (seed * 4) % 880,
-        tag4: 20 + (seed * 5) % 880, tag5: 20 + (seed * 6) % 880,
-        faq1: 20 + (seed * 11) % 880, faq2: 20 + (seed * 9) % 880,
-        faq4: 20 + (seed * 3) % 880, faq4b: 20 + (seed * 7) % 880,
-        faq4w: 20 + (seed * 8) % 880, faq4d: 20 + (seed * 2) % 880,
-        ref1: 5 + (seed * 2) % 20, ref2: 5 + (seed * 3) % 20,
-        ref3: 5 + (seed * 4) % 20, ref4: 5 + (seed * 5) % 20,
-        ref5: 5 + (seed * 6) % 20, refFaq1: 5 + (seed * 7) % 20,
-        refFaq2: 5 + (seed * 8) % 20, refFaq4: 5 + (seed * 9) % 20,
-        toc1Bonus: 50 + (seed * 3) % 50, toc2Bonus1: 50 + (seed * 4) % 50,
-        toc3Bonus: 50 + (seed * 5) % 50, toc5Bonus1: 50 + (seed * 6) % 50,
-        tocWithdraw: 100 + (seed * 2) % 50
-      };
-    }
-
-    function showDetail(game, pushHistory = true) {
-      if (pushHistory) {
-        detailHistory.push(game);
-        // Ensure pageStack has 'detail'
-        if (pageStack[pageStack.length - 1] !== 'detail') {
-          pageStack.push('detail');
+      // Update our stack to match the current state
+      // We'll rebuild stack from the current state
+      // But we need to know the sequence. Since we push every time, we can just pop from our stack
+      // However, popstate fires on back, so we pop the last entry
+      if (historyStack.length > 1) {
+        const popped = historyStack.pop();
+        if (popped === 'detail') {
+          detailHistory.pop();
+        }
+      } else {
+        // If only home remains, we are at home
+        // But if we get a popstate with page home, just show home
+        if (page === 'home') {
+          showMainGrid();
+          document.querySelectorAll('.nav-small').forEach(l => l.classList.remove('active'));
+          document.getElementById('homeNav').classList.add('active');
+          return;
         }
       }
 
+      // Now render the current page based on the new stack top
+      const currentPage = historyStack[historyStack.length - 1] || 'home';
+      renderCurrentPage(currentPage);
+    });
+
+    function renderCurrentPage(pageType) {
+      if (pageType === 'home') {
+        showMainGrid();
+        document.querySelectorAll('.nav-small').forEach(l => l.classList.remove('active'));
+        document.getElementById('homeNav').classList.add('active');
+      } else if (pageType === 'detail') {
+        // Restore last detail
+        const lastDetail = detailHistory[detailHistory.length - 1];
+        if (lastDetail) {
+          renderDetail(lastDetail);
+        } else {
+          goToHome();
+        }
+      } else if (pageType === 'about' || pageType === 'contact' || pageType === 'disclaimer') {
+        const content = pageContent[pageType];
+        if (content) {
+          overlayTitle.textContent = content.title;
+          overlayContent.innerHTML = content.content;
+          infoOverlay.style.display = 'flex';
+        } else {
+          goToHome();
+        }
+      } else {
+        goToHome();
+      }
+    }
+
+    // ---- RENDER DETAIL (without pushing state) ----
+    function renderDetail(game) {
       const detailCard = document.getElementById('detailCard');
       detailCard.className = 'detail-card ' + (game.layout || 'left') + ' ' + (game.bg || 'bg-gradient-1') + ' ' + (game.border || 'border-style-1');
 
@@ -1326,7 +1141,7 @@
         tag.dataset.border = g.border || 'border-style-1';
         tag.addEventListener('click', function(e) {
           e.stopPropagation();
-          showDetail({
+          const gData = {
             name: this.dataset.name,
             altName: this.dataset.altName,
             bonus: this.dataset.bonus,
@@ -1340,7 +1155,8 @@
             layout: this.dataset.layout,
             bg: this.dataset.bg,
             border: this.dataset.border
-          }, true);
+          };
+          showDetail(gData);
         });
         tagsContainer.appendChild(tag);
       });
@@ -1377,7 +1193,7 @@
 
         item.addEventListener('click', function(e) {
           e.stopPropagation();
-          showDetail({
+          const gData = {
             name: this.dataset.name,
             altName: this.dataset.altName,
             bonus: this.dataset.bonus,
@@ -1391,13 +1207,208 @@
             layout: this.dataset.layout,
             bg: this.dataset.bg,
             border: this.dataset.border
-          }, true);
+          };
+          showDetail(gData);
         });
       });
 
       showDetailView();
     }
 
+    // ---- SHOW DETAIL (with pushState) ----
+    function showDetail(game) {
+      detailHistory.push(game);
+      pushState('detail', game);
+      renderDetail(game);
+    }
+
+    // ---- GAME DATA ----
+    const games = [
+      { name: "All Yono App Site", altName: "All Yono Games", bonus: "₹58", withdrawal: "₹100", downloadUrl: "https://www.earntp.com/m/jm9n7r", img: "https://i.ibb.co/CssC2WbG/1000022725.jpg", version: "v3.2.1", layout: "left", bg: "bg-gradient-1", border: "border-style-1" },
+      { name: "567 Slots", altName: "567 Slots Game", bonus: "₹72", withdrawal: "₹100", downloadUrl: "https://join567slots0.com/?code=4NYF487URJ6&t=1781505684", img: "https://i.ibb.co/hFytMXY2/1000022725.jpg", version: "v2.5.0", layout: "right", bg: "bg-gradient-2", border: "border-style-2" },
+      { name: "Saga Slots", altName: "Saga Slots APK", bonus: "₹45", withdrawal: "₹100", downloadUrl: "https://www.sagaslots5.com/?code=0QHJSERZYMV&t=1781505813", img: "https://i.ibb.co/20dzhBZf/1000022725.jpg", version: "v3.0.2", layout: "center", bg: "bg-gradient-3", border: "border-style-3" },
+      { name: "Jaiho 91", altName: "Jaiho 91 Game", bonus: "₹67", withdrawal: "₹100", downloadUrl: "https://jaiho91bonus.vip/?code=C42T99ZQHAT&t=1781506067", img: "https://i.ibb.co/zV0C6Xkk/1000022725.jpg", version: "v4.1.0", layout: "left", bg: "bg-gradient-4", border: "border-style-4" },
+      { name: "Rummy Ludo", altName: "Rummy Ludo APK", bonus: "₹52", withdrawal: "₹100", downloadUrl: "https://rummyludoapp37.com/", img: "https://i.ibb.co/Z6Xy7y2x/1000022725.jpg", version: "v2.0.8", layout: "right", bg: "bg-gradient-5", border: "border-style-5" },
+      { name: "ABC Rummy", altName: "ABC Rummy Game", bonus: "₹63", withdrawal: "₹100", downloadUrl: "https://d34i569g8ztoql.cloudfront.net/abcrummy_MeApp.apk", img: "https://i.ibb.co/Ldmd1DHH/1000022725.jpg", version: "v1.9.3", layout: "center", bg: "bg-gradient-6", border: "border-style-1" },
+      { name: "Rummy 91", altName: "Rummy 91 APK", bonus: "₹55", withdrawal: "₹100", downloadUrl: "https://d16sfv4ssrmnvt.cloudfront.net/rummy91_AGENT.apk", img: "https://i.ibb.co/Fb2j77pp/1000022725.jpg", version: "v2.1.5", layout: "left", bg: "bg-gradient-7", border: "border-style-2" },
+      { name: "Love Rummy", altName: "Love Rummy Game", bonus: "₹48", withdrawal: "₹100", downloadUrl: "https://d34i569g8ztoql.cloudfront.net/loverummy_App.apk", img: "https://i.ibb.co/PZ2dpNJ9/1000022725.jpg", version: "v1.7.2", layout: "right", bg: "bg-gradient-1", border: "border-style-3" },
+      { name: "Spin Crush", altName: "Spin Crush APK", bonus: "₹78", withdrawal: "₹100", downloadUrl: "https://d292swwe9zki3u.cloudfront.net/spincrush_freecash.apk", img: "https://i.ibb.co/S4C26kVS/1000022725.jpg", version: "v3.0.0", layout: "center", bg: "bg-gradient-2", border: "border-style-4" },
+      { name: "Top Rummy", altName: "Top Rummy Game", bonus: "₹61", withdrawal: "₹100", downloadUrl: "https://th7.my/BY1JWS/3gvute0", img: "https://i.ibb.co/bRy3w8dN/1000022725.jpg", version: "v2.8.1", layout: "left", bg: "bg-gradient-3", border: "border-style-5" },
+      { name: "Rummy 365", altName: "Rummy 365 APK", bonus: "₹44", withdrawal: "₹100", downloadUrl: "https://join567slots0.com/?code=4NYF487URJ6&t=1781505684", img: "https://i.ibb.co/Hf9bhrFm/1000022725.jpg", version: "v1.5.0", layout: "right", bg: "bg-gradient-4", border: "border-style-1" },
+      { name: "Teen Patti Gold", altName: "Teen Patti Gold Game", bonus: "₹75", withdrawal: "₹100", downloadUrl: "https://www.earntp.com/gold/jm9n7r", img: "https://i.ibb.co/C5XcGXsJ/teen-patti-gold.jpg", version: "v4.0.1", layout: "center", bg: "bg-gradient-5", border: "border-style-2" },
+      { name: "Teen Patti Master", altName: "Teen Patti Master APK", bonus: "₹50", withdrawal: "₹100", downloadUrl: "https://www.earntp.com/m/jm9n7r", img: "https://i.ibb.co/JjrZjn2n/teen-patti-master.jpg", version: "v3.5.0", layout: "left", bg: "bg-gradient-6", border: "border-style-3" },
+      { name: "Yono Rummy", altName: "Yono Rummy Game", bonus: "₹68", withdrawal: "₹100", downloadUrl: "https://yonorummy043.com/?code=VIPYQC5EE9X&t=1781107758", img: "https://i.ibb.co/zTFDGPpX/yono-rummy.jpg", version: "v2.0.0", layout: "right", bg: "bg-gradient-7", border: "border-style-4" },
+      { name: "Slots Winner", altName: "Slots Winner APK", bonus: "₹56", withdrawal: "₹100", downloadUrl: "https://slotswinneri.com/?code=PGVC6CBNF53&t=1781107393", img: "https://i.ibb.co/NdbNBtx7/slots-winner.jpg", version: "v1.8.5", layout: "center", bg: "bg-gradient-1", border: "border-style-5" },
+      { name: "Good Slots", altName: "Good Slots Game", bonus: "₹40", withdrawal: "₹100", downloadUrl: "https://7sharegoodslots.vip?pid=320806209&channel=2010001&t=pdd2&pkg=com.1", img: "https://i.ibb.co/nq9kMKHZ/good-slots.jpg", version: "v1.2.0", layout: "left", bg: "bg-gradient-2", border: "border-style-1" },
+      { name: "Diwa Slot", altName: "Diwa Slot APK", bonus: "₹82", withdrawal: "₹100", downloadUrl: "https://sharediwaslot1.vip?pid=483455673&channel=2010002&t=pdd2&pkg=com.diwaslotwhl.app", img: "https://i.ibb.co/BKB6QMbD/diwa-slot.jpg", version: "v2.2.0", layout: "right", bg: "bg-gradient-3", border: "border-style-2" },
+      { name: "GoGo Rummy", altName: "GoGo Rummy Game", bonus: "₹59", withdrawal: "₹100", downloadUrl: "https://www.gogorummyagent.com/?code=V4UTQA2VYMQ&t=1781196694", img: "https://i.ibb.co/Y7dzDP7z/gogo-rummy.jpg", version: "v1.9.1", layout: "center", bg: "bg-gradient-4", border: "border-style-3" },
+      { name: "Joy Rummy", altName: "Joy Rummy APK", bonus: "₹47", withdrawal: "₹100", downloadUrl: "https://www.joyrummymax.com/?code=J5KFTAWJ9X5&t=1781198100", img: "https://i.ibb.co/nqD8CD8W/joy-rummy.jpg", version: "v2.3.0", layout: "left", bg: "bg-gradient-5", border: "border-style-4" },
+      { name: "Spin Gold", altName: "Spin Gold Game", bonus: "₹71", withdrawal: "₹100", downloadUrl: "https://uono-bingo101.com/?code=3WFQ231H9Y2&t=1781197828", img: "https://i.ibb.co/G3QnY0vY/spin-gold.jpg", version: "v1.6.0", layout: "right", bg: "bg-gradient-6", border: "border-style-5" },
+      { name: "Bingo 101", altName: "Bingo 101 APK", bonus: "₹65", withdrawal: "₹100", downloadUrl: "https://uono-bingo101.com/?code=3WFQ231H9Y2&t=1781197828", img: "https://i.ibb.co/My9tjNgL/bingo101.jpg", version: "v2.0.0", layout: "center", bg: "bg-gradient-7", border: "border-style-1" },
+      { name: "Yes Spin", altName: "Yes Spin Game", bonus: "₹43", withdrawal: "₹100", downloadUrl: "https://www.yesspineee.com/?code=47TXJTLU5YY&t=1781198907", img: "https://i.ibb.co/m5qzq7W4/yes-spin.jpg", version: "v1.3.0", layout: "left", bg: "bg-gradient-1", border: "border-style-2" },
+      { name: "Yono Arcade", altName: "Yono Arcade APK", bonus: "₹60", withdrawal: "₹100", downloadUrl: "https://yonoarcadeapk9.com/?code=96LNEL9FQXZ&t=1781199006", img: "https://i.ibb.co/mCzSG1L7/yono-arcade.jpg", version: "v2.5.0", layout: "right", bg: "bg-gradient-2", border: "border-style-3" },
+      { name: "SVIP 777", altName: "SVIP 777 Game", bonus: "₹49", withdrawal: "₹100", downloadUrl: "https://www.svip777.life?pid=297924008&channel=2050001&t=pdd2&pkg=com.svip777.h5", img: "https://i.ibb.co/vfWZMLm/svip777.jpg", version: "v1.8.0", layout: "center", bg: "bg-gradient-3", border: "border-style-4" },
+      { name: "OK Rummy", altName: "OK Rummy APK", bonus: "₹66", withdrawal: "₹100", downloadUrl: "https://www.okrummy22.com/?code=H2GU92WUXXA&t=1781199220", img: "https://i.ibb.co/99fCMbNC/ok-rummy.jpg", version: "v1.9.0", layout: "left", bg: "bg-gradient-4", border: "border-style-5" },
+      { name: "Hind 777", altName: "Hind 777 Game", bonus: "₹73", withdrawal: "₹100", downloadUrl: "https://www.hindi777agent5.com/?code=7LFFR8WPHEG&t=1781199307", img: "https://i.ibb.co/5gf3q0Sh/hind777.jpg", version: "v2.0.0", layout: "right", bg: "bg-gradient-5", border: "border-style-1" },
+      { name: "Bet 213", altName: "Bet 213 APK", bonus: "₹54", withdrawal: "₹100", downloadUrl: "https://www.bet213.rocks/?code=2QTKPV4BYDH&t=1781199576", img: "https://i.ibb.co/YTqq2C4F/bet213.jpg", version: "v1.7.0", layout: "center", bg: "bg-gradient-6", border: "border-style-2" },
+      { name: "Boss Rummy", altName: "Boss Rummy Game", bonus: "₹77", withdrawal: "₹100", downloadUrl: "https://www.bossrummyy.com/?code=LSHTVUZE1NR&t=1781429504", img: "https://i.ibb.co/fdWgRgxk/1000022725.jpg", version: "v2.1.0", layout: "left", bg: "bg-gradient-7", border: "border-style-3" },
+      { name: "Yono 777", altName: "Yono 777 APK", bonus: "₹51", withdrawal: "₹100", downloadUrl: "https://uono777refer.vip/?code=F9MPSLKZCV9&t=1781429388", img: "https://i.ibb.co/VWz6S3JB/1000022725.jpg", version: "v2.0.0", layout: "right", bg: "bg-gradient-1", border: "border-style-4" },
+      { name: "Diwa VIP", altName: "Diwa VIP Game", bonus: "₹85", withdrawal: "₹100", downloadUrl: "https://uono777refer.vip/?code=F9MPSLKZCV9&t=1781429388", img: "https://i.ibb.co/ynsBHKtg/1000022725.jpg", version: "v1.5.0", layout: "center", bg: "bg-gradient-2", border: "border-style-5" },
+      { name: "Diwa 777", altName: "Diwa 777 APK", bonus: "₹69", withdrawal: "₹100", downloadUrl: "https://sharediwa7771.top?pid=287747863&channel=2010001&t=pdd2&pkg=com.diwa777.app", img: "https://i.ibb.co/Kx2RKNvN/1000022725.jpg", version: "v1.8.0", layout: "left", bg: "bg-gradient-3", border: "border-style-1" },
+      { name: "Yono Games", altName: "Yono Games APK", bonus: "₹57", withdrawal: "₹100", downloadUrl: "https://yonogamesm.com/?code=LHS49AEHVMR&t=1784314209", img: "https://i.ibb.co/LXqV77rd/yono-games.jpg", version: "v3.0.0", layout: "right", bg: "bg-gradient-4", border: "border-style-2" },
+      { name: "INR Rummy", altName: "INR Rummy Game", bonus: "₹62", withdrawal: "₹100", downloadUrl: "https://inrrummy.club/?code=JMQBV8TAPD7&t=1784298106", img: "https://i.ibb.co/Y7ZRkLFp/inr-rummy.jpg", version: "v1.6.0", layout: "center", bg: "bg-gradient-5", border: "border-style-3" },
+      { name: "Slots Winner Pro", altName: "Slots Winner Pro APK", bonus: "₹74", withdrawal: "₹100", downloadUrl: "https://slotswinneri.com/?code=PGVC6CBNF53&t=1784299271", img: "https://i.ibb.co/wNYf5LG8/slots-winner.jpg", version: "v2.0.0", layout: "left", bg: "bg-gradient-6", border: "border-style-4" },
+      { name: "MBM BET", altName: "MBM BET Game", bonus: "₹53", withdrawal: "₹100", downloadUrl: "https://www.mbmbet3.com/?code=GD3H3VA6YK5&t=1784297830", img: "https://i.ibb.co/sJcmCxK6/mbm-bet.jpg", version: "v1.4.0", layout: "right", bg: "bg-gradient-7", border: "border-style-5" },
+      { name: "Goa Spin", altName: "Goa Spin APK", bonus: "₹64", withdrawal: "₹100", downloadUrl: "https://www.earntp.com/m/jm9n7r", img: "https://i.ibb.co/FbpzMnQx/goa-spin.jpg", version: "v1.5.0", layout: "center", bg: "bg-gradient-1", border: "border-style-1" },
+      { name: "101Z", altName: "101Z Game", bonus: "₹46", withdrawal: "₹100", downloadUrl: "https://www.earntp.com/gold/jm9n7r", img: "https://i.ibb.co/F4tpkSSm/101z.jpg", version: "v1.2.0", layout: "left", bg: "bg-gradient-2", border: "border-style-2" },
+      { name: "777 Game", altName: "777 Game APK", bonus: "₹79", withdrawal: "₹100", downloadUrl: "https://t.me/yonogamestite", img: "https://i.ibb.co/YFG8D6NF/777-game.jpg", version: "v2.0.0", layout: "right", bg: "bg-gradient-3", border: "border-style-3" },
+      { name: "Teen Patti", altName: "Teen Patti Game", bonus: "₹41", withdrawal: "₹100", downloadUrl: "https://www.earntp.com/gold/jm9n7r", img: "https://i.ibb.co/5xkDVhrK/teen-patti.jpg", version: "v4.0.0", layout: "center", bg: "bg-gradient-4", border: "border-style-4" },
+      { name: "All Yono Games", altName: "All Yono Games APK", bonus: "₹70", withdrawal: "₹100", downloadUrl: "https://www.earntp.com/gold/jm9n7r", img: "https://i.ibb.co/yzyKyN1/all-yono-games.jpg", version: "v3.1.0", layout: "left", bg: "bg-gradient-5", border: "border-style-5" },
+      { name: "New Yono Games", altName: "New Yono Games Game", bonus: "₹76", withdrawal: "₹100", downloadUrl: "https://t.me/yonogamestite", img: "https://i.ibb.co/8nq6LH05/new-yono-games.jpg", version: "v1.9.0", layout: "right", bg: "bg-gradient-6", border: "border-style-1" },
+      { name: "Yono Apps", altName: "Yono Apps APK", bonus: "₹39", withdrawal: "₹100", downloadUrl: "https://t.me/yonogamestite", img: "https://i.ibb.co/S4rJJnB7/yono-apps.jpg", version: "v2.0.0", layout: "center", bg: "bg-gradient-7", border: "border-style-2" },
+      { name: "Spin Winner", altName: "Spin Winner Game", bonus: "₹80", withdrawal: "₹100", downloadUrl: "https://www.yesspineee.com/?code=47TXJTLU5YY&t=1781198907", img: "https://i.ibb.co/ZpP9wKdm/spin-winner.jpg", version: "v1.3.0", layout: "left", bg: "bg-gradient-1", border: "border-style-3" },
+      { name: "Yono All Games", altName: "Yono All Games APK", bonus: "₹81", withdrawal: "₹100", downloadUrl: "https://diwavipshare.cc?pid=428256719&channel=2050001&t=pdd2&pkg=com.diwavip.h5", img: "https://i.ibb.co/XxxDXGr3/yono-all-games.jpg", version: "v3.0.0", layout: "right", bg: "bg-gradient-2", border: "border-style-4" },
+      { name: "Spin Lucky", altName: "Spin Lucky Game", bonus: "₹42", withdrawal: "₹100", downloadUrl: "https://www.earntp.com/m/jm9n7r", img: "https://i.ibb.co/VY95vgTQ/spin-lucky.jpg", version: "v1.5.0", layout: "center", bg: "bg-gradient-3", border: "border-style-5" }
+    ];
+
+    const seen = new Set();
+    const uniqueGames = games.filter(g => {
+      const key = g.name.trim().toLowerCase();
+      if (seen.has(key)) return false;
+      seen.add(key);
+      return true;
+    });
+
+    function getRandomRating() { return (4 + Math.random() * 0.8).toFixed(1); }
+    function getRandomSize() { return (30 + Math.floor(Math.random() * 40)) + ' MB'; }
+    function getRandomVotes() { return (Math.floor(Math.random() * 30) + 5) + 'K'; }
+
+    function getUniqueBonuses(gameName) {
+      const seed = gameName.length * 7 + (gameName.charCodeAt(0) || 10);
+      return {
+        tag1: 20 + (seed * 3) % 880, tag2: 20 + (seed * 7) % 880,
+        tag3: 20 + (seed * 2) % 880, tag3b: 20 + (seed * 4) % 880,
+        tag4: 20 + (seed * 5) % 880, tag5: 20 + (seed * 6) % 880,
+        faq1: 20 + (seed * 11) % 880, faq2: 20 + (seed * 9) % 880,
+        faq4: 20 + (seed * 3) % 880, faq4b: 20 + (seed * 7) % 880,
+        faq4w: 20 + (seed * 8) % 880, faq4d: 20 + (seed * 2) % 880,
+        ref1: 5 + (seed * 2) % 20, ref2: 5 + (seed * 3) % 20,
+        ref3: 5 + (seed * 4) % 20, ref4: 5 + (seed * 5) % 20,
+        ref5: 5 + (seed * 6) % 20, refFaq1: 5 + (seed * 7) % 20,
+        refFaq2: 5 + (seed * 8) % 20, refFaq4: 5 + (seed * 9) % 20,
+        toc1Bonus: 50 + (seed * 3) % 50, toc2Bonus1: 50 + (seed * 4) % 50,
+        toc3Bonus: 50 + (seed * 5) % 50, toc5Bonus1: 50 + (seed * 6) % 50,
+        tocWithdraw: 100 + (seed * 2) % 50
+      };
+    }
+
+    // ---- RENDER GRID ----
+    function renderGrid() {
+      mainGrid.innerHTML = '';
+      uniqueGames.forEach((game, index) => {
+        const card = document.createElement('div');
+        card.className = 'card';
+        card.dataset.name = game.name;
+        card.dataset.altName = game.altName || game.name;
+        card.dataset.bonus = game.bonus;
+        card.dataset.withdrawal = game.withdrawal;
+        card.dataset.downloadUrl = game.downloadUrl;
+        card.dataset.img = game.img;
+        card.dataset.rating = getRandomRating();
+        card.dataset.size = getRandomSize();
+        card.dataset.votes = getRandomVotes();
+        card.dataset.version = game.version || 'v2.0.0';
+        card.dataset.layout = game.layout || 'left';
+        card.dataset.bg = game.bg || 'bg-gradient-1';
+        card.dataset.border = game.border || 'border-style-1';
+
+        card.innerHTML = `
+          <div class="card-number">${index + 1}</div>
+          <div class="card-img"><img src="${game.img}" alt="${game.name} | ${game.altName}" loading="lazy" onerror="this.src='https://i.ibb.co/LXqV77rd/yono-games.jpg'"></div>
+          <div class="card-info">
+            <div class="card-name">${game.name} <span class="alt">| ${game.altName}</span></div>
+            <div class="card-bonus"><span class="icon-svg small"><svg viewBox="0 0 24 24"><rect x="3" y="8" width="18" height="13" rx="2"/><path d="M3 8l9-5 9 5"/><path d="M8 12h8"/></svg></span> Sign Up Bonus ${game.bonus}</div>
+            <div class="card-withdraw"><span class="icon-svg small"><svg viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V4a1 1 0 00-1-1H9a1 1 0 00-1 1v3"/><path d="M8 12h8"/></svg></span> Min. Withdraw ${game.withdrawal}</div>
+          </div>
+          <span class="card-download-sm">Download</span>
+        `;
+        mainGrid.appendChild(card);
+
+        card.addEventListener('click', function() {
+          const gData = {
+            name: this.dataset.name,
+            altName: this.dataset.altName,
+            bonus: this.dataset.bonus,
+            withdrawal: this.dataset.withdrawal,
+            downloadUrl: this.dataset.downloadUrl,
+            img: this.dataset.img,
+            rating: this.dataset.rating,
+            size: this.dataset.size,
+            votes: this.dataset.votes,
+            version: this.dataset.version,
+            layout: this.dataset.layout,
+            bg: this.dataset.bg,
+            border: this.dataset.border
+          };
+          showDetail(gData);
+        });
+      });
+    }
+    renderGrid();
+
+    // ---- NAV EVENTS ----
+    document.querySelectorAll('.nav-small[data-target]').forEach(el => {
+      el.addEventListener('click', function() {
+        const key = this.dataset.target;
+        if (pageContent[key]) {
+          const data = pageContent[key];
+          // If overlay is already open, we still push a new state
+          showOverlay(data.title, data.content, key);
+        }
+        document.querySelectorAll('.nav-small').forEach(l => l.classList.remove('active'));
+        this.classList.add('active');
+      });
+    });
+
+    overlayCloseBtn.addEventListener('click', function(e) {
+      e.stopPropagation();
+      // Go back in history
+      history.back();
+    });
+    infoOverlay.addEventListener('click', function(e) {
+      if (e.target === infoOverlay) {
+        history.back();
+      }
+    });
+
+    // ---- BACK BUTTON (manual back) ----
+    backBtn.addEventListener('click', function(e) {
+      history.back();
+    });
+
+    // ---- HOME NAV ----
+    homeNav.addEventListener('click', function() {
+      // If we are already home, do nothing
+      if (historyStack.length === 1 && historyStack[0] === 'home') return;
+      // Go home by replacing history
+      goToHome();
+    });
+
+    // ---- SHARE ----
+    document.getElementById('shareBtn').addEventListener('click', function() {
+      const shareUrl = 'https://www.earntp.com/gold/jm9n7r';
+      if (navigator.share) {
+        navigator.share({
+          title: 'All Yono App Site – All Yono Apk – All Yono New – All Yono Games',
+          text: 'Download 45+ Yono Games with dual names – 567 Slots (Game), Saga Slots (APK), Jaiho 91 (Game) & more. Get ₹45 Bonus & ₹100 Withdrawal.',
+          url: shareUrl
+        }).catch(() => {});
+      } else {
+        navigator.clipboard.writeText(shareUrl).then(() => alert('Link copied!')).catch(() => prompt('Copy link:', shareUrl));
+      }
+    });
+
+    // ---- TOC TOGGLE ----
     document.getElementById('tocToggle').addEventListener('click', function() {
       document.getElementById('tocBody').classList.toggle('open');
       document.getElementById('tocArrow').classList.toggle('open');
@@ -1408,29 +1419,11 @@
       if (url && url !== '#') window.open(url, '_blank');
     });
 
-    // ---- POPSTATE for back button ----
-    window.addEventListener('popstate', function(e) {
-      // If overlay is open, close it
-      if (infoOverlay.style.display === 'flex') {
-        closeOverlay();
-        return;
-      }
-      // If detail is open, go back
-      if (detailView.style.display === 'block') {
-        goBack();
-        return;
-      }
-      // If home, do nothing (or exit)
-      if (pageStack.length === 1 && pageStack[0] === 'home') {
-        // exit
-        return;
-      }
-      goBack();
-    });
-
-    // Initialize
+    // ---- INIT ----
+    // Set initial home state
+    history.replaceState({ page: 'home', data: null }, '', '#home');
     showMainGrid();
-    history.pushState(null, null, location.href);
+    document.getElementById('homeNav').classList.add('active');
   })();
 </script>
 </body>
