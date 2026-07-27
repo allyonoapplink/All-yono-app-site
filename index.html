@@ -1,3 +1,4 @@
+ppppp
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -629,7 +630,7 @@
     </marquee>
   </div>
 
-  <!-- NAV - only icons with names -->
+  <!-- NAV -->
   <div class="nav-row-small">
     <span class="nav-small active" id="homeNav">
       <span class="nav-icon"><svg viewBox="0 0 24 24"><path d="M3 12l9-9 9 9"/><path d="M5 10v10a1 1 0 001 1h3a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1h3a1 1 0 001-1V10"/></svg></span> Home
@@ -706,7 +707,7 @@
       </div>
     </div>
 
-    <!-- Top Offers Section with Megaphone Icon -->
+    <!-- Top Offers Section -->
     <div class="tag-section" id="tagSection">
       <div class="tag-title" id="tagSectionTitle">
         <span class="lucide-icon glow-green">
@@ -777,7 +778,7 @@
       </div>
     </div>
 
-    <!-- FAQ Section with Circle Help Icon -->
+    <!-- FAQ Section -->
     <div class="faq-section">
       <div class="faq-title">
         <span class="lucide-icon glow-pink">
@@ -793,7 +794,7 @@
       </div>
     </div>
 
-    <!-- Tags Section with Tags Icon -->
+    <!-- Tags Section -->
     <div class="game-tags-section">
       <div class="game-tags-title">
         <span class="lucide-icon glow-gold">
@@ -815,11 +816,11 @@
     </div>
 
     <div class="footer-links">
-      <a href="#" onclick="window.open('about.html', '_blank'); return false;">About</a>
+      <a href="#" class="page-link" data-page="about">About</a>
       <span style="color:#94a3b8;font-size:0.5rem;">•</span>
-      <a href="#" onclick="window.open('contact.html', '_blank'); return false;">Contact</a>
+      <a href="#" class="page-link" data-page="contact">Contact</a>
       <span style="color:#94a3b8;font-size:0.5rem;">•</span>
-      <a href="#" onclick="window.open('disclaimer.html', '_blank'); return false;">Disclaimer</a>
+      <a href="#" class="page-link" data-page="disclaimer">Disclaimer</a>
     </div>
   </div>
 
@@ -859,13 +860,12 @@
     const homeNav = document.getElementById('homeNav');
     const overlayTitle = document.getElementById('overlayTitle');
     const overlayContent = document.getElementById('overlayContent');
-    const container = document.querySelector('.container');
 
     // ---- PAGE CONFIG ----
     const pageConfig = {
-      about: { url: 'about.html', title: 'About', placeholder: 'Add your custom About' },
-      contact: { url: 'contact.html', title: 'Contact', placeholder: 'Add your custom Contact' },
-      disclaimer: { url: 'disclaimer.html', title: 'Disclaimer', placeholder: 'Add your custom Disclaimer' }
+      about: { url: 'about.html', title: 'About', placeholder: 'Add your custom About content here.' },
+      contact: { url: 'contact.html', title: 'Contact', placeholder: 'Add your custom Contact content here.' },
+      disclaimer: { url: 'disclaimer.html', title: 'Disclaimer', placeholder: 'Add your custom Disclaimer content here.' }
     };
 
     // ---- NAVIGATION FUNCTIONS ----
@@ -1310,7 +1310,6 @@
     renderGrid();
 
     // ---- POPSTATE (back navigation with scroll restoration) ----
-    let isBackFromHome = false;
     window.addEventListener('popstate', function(e) {
       const state = e.state;
       if (!state) {
@@ -1348,7 +1347,6 @@
         renderHome();
         if (current.scrollY !== undefined && current.scrollY > 0) {
           window.scrollTo({ top: current.scrollY, behavior: 'instant' });
-          setTimeout(() => {}, 0);
         } else {
           window.scrollTo({ top: 0, behavior: 'instant' });
         }
@@ -1378,6 +1376,17 @@
         }
         document.querySelectorAll('.nav-small').forEach(l => l.classList.remove('active'));
         this.classList.add('active');
+      });
+    });
+
+    // Page links in footer
+    document.querySelectorAll('.page-link').forEach(el => {
+      el.addEventListener('click', function(e) {
+        e.preventDefault();
+        const key = this.dataset.page;
+        if (pageConfig[key]) {
+          showOverlay(key);
+        }
       });
     });
 
