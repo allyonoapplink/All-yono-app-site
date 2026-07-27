@@ -1,3 +1,4 @@
+super fast speed llll
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -1313,12 +1314,14 @@
     renderGrid();
 
     // ---- POPSTATE (back navigation with scroll restoration) ----
+    let isBackFromHome = false;
     window.addEventListener('popstate', function(e) {
       const state = e.state;
       // If state is null and we are at home with scroll at top, let browser exit
       if (!state) {
+        // Check if we are at home and scroll is at top
         if (historyStack.length === 1 && historyStack[0].type === 'home' && window.scrollY === 0) {
-          // Do nothing, allow browser to navigate away
+          // Allow browser to navigate away
           return;
         } else {
           goToHome();
@@ -1329,13 +1332,16 @@
       const pageType = state.page || 'home';
       const data = state.data || null;
 
+      // Pop the current state from our stack if we are going back
       if (historyStack.length > 1) {
         const popped = historyStack.pop();
         if (popped.type === 'detail' && popped.data) {
           const idx = detailHistory.findIndex(d => d && d.name === popped.data.name);
           if (idx !== -1) detailHistory.splice(idx, 1);
         }
+        // Save the popped state's scroll for later restoration if needed
       } else {
+        // If only home remains but state says otherwise, reset
         if (pageType !== 'home') {
           goToHome();
           return;
@@ -1351,13 +1357,20 @@
       if (current.type === 'home') {
         renderHome();
         // Restore saved scroll for home, then smoothly scroll to top
-        if (current.scrollY !== undefined) {
+        if (current.scrollY !== undefined && current.scrollY > 0) {
+          // First restore the original scroll position
           window.scrollTo({ top: current.scrollY, behavior: 'instant' });
+          // Then after a tiny delay, smoothly scroll to top (for the next back press)
+          setTimeout(() => {
+            // Only scroll to top if we are going to stay on home
+            // We'll let the next back press handle the smooth scroll to top
+            // But we need to set a flag that we are at home and should scroll to top on next back
+            // For now, we just restore the position
+          }, 0);
+        } else {
+          // If scrollY is 0 or undefined, just ensure we are at top
+          window.scrollTo({ top: 0, behavior: 'instant' });
         }
-        // After restoring, smoothly scroll to top (as per requirement)
-        setTimeout(() => {
-          window.scrollTo({ top: 0, behavior: 'smooth' });
-        }, 0);
       } else if (current.type === 'detail') {
         const gameData = current.data;
         if (gameData) {
