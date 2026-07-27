@@ -928,21 +928,18 @@
       if (!config) return { title: pageType, content: 'Page not found.' };
 
       try {
-        const response = await fetch(config.url);
+        const response = await fetch(config.url + '?t=' + Date.now());
         if (!response.ok) throw new Error('Not found');
         const html = await response.text();
-        // Parse HTML and extract body content
         const parser = new DOMParser();
         const doc = parser.parseFromString(html, 'text/html');
         const body = doc.body;
         if (body && body.innerHTML.trim()) {
-          // Return the body inner HTML as content
           return { title: config.title, content: body.innerHTML };
         } else {
           return { title: config.title, content: config.placeholder };
         }
       } catch (e) {
-        // File not found or other error – show placeholder
         return { title: config.title, content: config.placeholder };
       }
     }
@@ -950,13 +947,11 @@
     // ---- SHOW OVERLAY WITH DYNAMIC CONTENT ----
     async function showOverlay(pageType) {
       saveCurrentScroll();
-      // Show loading state
       overlayTitle.textContent = 'Loading...';
       overlayContent.innerHTML = '<p style="color:#94a3b8;font-size:0.8rem;">Loading content...</p>';
       infoOverlay.style.display = 'flex';
       pushState(pageType, null);
 
-      // Fetch content
       const result = await fetchPageContent(pageType);
       overlayTitle.textContent = result.title;
       overlayContent.innerHTML = result.content;
@@ -992,7 +987,6 @@
       const gName = game.name;
       const b = getUniqueBonuses(gName);
 
-      // Top Offers
       const tagContainer = document.getElementById('tagGridContainer');
       const tagVariants = [
         { 
@@ -1170,9 +1164,6 @@
     }
 
     function renderOverlay(pageType) {
-      // This is called from popstate; we need to show the overlay with the already-fetched content
-      // But we don't have the content cached, so we fetch it again
-      // We use the pageType from the history state
       showOverlay(pageType);
     }
 
@@ -1322,11 +1313,8 @@
     let isBackFromHome = false;
     window.addEventListener('popstate', function(e) {
       const state = e.state;
-      // If state is null and we are at home with scroll at top, let browser exit
       if (!state) {
-        // Check if we are at home and scroll is at top
         if (historyStack.length === 1 && historyStack[0].type === 'home' && window.scrollY === 0) {
-          // Allow browser to navigate away
           return;
         } else {
           goToHome();
@@ -1337,16 +1325,13 @@
       const pageType = state.page || 'home';
       const data = state.data || null;
 
-      // Pop the current state from our stack if we are going back
       if (historyStack.length > 1) {
         const popped = historyStack.pop();
         if (popped.type === 'detail' && popped.data) {
           const idx = detailHistory.findIndex(d => d && d.name === popped.data.name);
           if (idx !== -1) detailHistory.splice(idx, 1);
         }
-        // Save the popped state's scroll for later restoration if needed
       } else {
-        // If only home remains but state says otherwise, reset
         if (pageType !== 'home') {
           goToHome();
           return;
@@ -1361,25 +1346,16 @@
 
       if (current.type === 'home') {
         renderHome();
-        // Restore saved scroll for home, then smoothly scroll to top
         if (current.scrollY !== undefined && current.scrollY > 0) {
-          // First restore the original scroll position
           window.scrollTo({ top: current.scrollY, behavior: 'instant' });
-          // Then after a tiny delay, smoothly scroll to top (for the next back press)
-          setTimeout(() => {
-            // Only scroll to top if we are going to stay on home
-            // We'll let the next back press handle the smooth scroll to top
-            // For now, we just restore the position
-          }, 0);
+          setTimeout(() => {}, 0);
         } else {
-          // If scrollY is 0 or undefined, just ensure we are at top
           window.scrollTo({ top: 0, behavior: 'instant' });
         }
       } else if (current.type === 'detail') {
         const gameData = current.data;
         if (gameData) {
           renderDetail(gameData);
-          // Restore scroll position of this detail page
           if (current.scrollY !== undefined) {
             window.scrollTo({ top: current.scrollY, behavior: 'instant' });
           }
