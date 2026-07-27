@@ -1,4 +1,3 @@
-ppppp
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -935,7 +934,30 @@ ppppp
         const doc = parser.parseFromString(html, 'text/html');
         const body = doc.body;
         if (body && body.innerHTML.trim()) {
-          return { title: config.title, content: body.innerHTML };
+          // Check if the body contains the page-tags-top or page-tags-bottom classes
+          // If not, wrap the content with the tags structure
+          let content = body.innerHTML;
+          // Check if content already has page-tags-top or page-tags-bottom
+          if (!content.includes('page-tags-top') && !content.includes('page-tags-bottom')) {
+            // Try to extract tags from the body if they exist as game-tag elements
+            const tagElements = body.querySelectorAll('.game-tag, .tag-text');
+            let tagsHtml = '';
+            if (tagElements.length > 0) {
+              tagsHtml = '<div class="page-tags-top">';
+              tagElements.forEach(el => {
+                const text = el.textContent.trim();
+                if (text) {
+                  tagsHtml += `<span class="game-tag"><span class="tag-loader"><svg viewBox="0 0 50 50"><circle class="loader-ring-bg" cx="25" cy="25" r="20"/><circle class="loader-ring" cx="25" cy="25" r="20"/></svg></span><span class="tag-text">${text}</span></span>`;
+                }
+              });
+              tagsHtml += '</div>';
+            }
+            // If no tags found, just return the content as is
+            if (tagsHtml) {
+              content = tagsHtml + content + tagsHtml.replace('page-tags-top', 'page-tags-bottom');
+            }
+          }
+          return { title: config.title, content: content };
         } else {
           return { title: config.title, content: config.placeholder };
         }
