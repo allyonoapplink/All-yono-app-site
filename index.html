@@ -1,4 +1,3 @@
-0000000
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -847,11 +846,10 @@
 
 <script>
   (function() {
-    // ---- UNLIMITED HISTORY STACK ----
-    // We use a simple array to track the sequence of pages.
-    // Each entry is either 'home', 'detail', 'about', 'contact', 'disclaimer'
-    let historyStack = ['home'];
-    // For detail views, we store the game data separately to restore
+    // ---- UNLIMITED HISTORY WITH SCROLL RESTORATION ----
+    // We maintain a stack of page states: each entry has { type, data, scrollY }
+    let historyStack = [{ type: 'home', data: null, scrollY: 0 }];
+    // For detail views, we store the game data separately
     let detailHistory = [];
 
     // DOM refs
@@ -863,6 +861,7 @@
     const homeNav = document.getElementById('homeNav');
     const overlayTitle = document.getElementById('overlayTitle');
     const overlayContent = document.getElementById('overlayContent');
+    const container = document.querySelector('.container');
 
     // ---- PAGE CONTENT ----
     const pageContent = {
@@ -894,30 +893,39 @@
     };
 
     // ---- NAVIGATION FUNCTIONS ----
+    function getScrollY() {
+      return window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop || 0;
+    }
+
+    function saveCurrentScroll() {
+      const current = historyStack[historyStack.length - 1];
+      if (current) {
+        current.scrollY = getScrollY();
+      }
+    }
+
     function pushState(pageType, data) {
-      // Push to history stack
-      historyStack.push(pageType);
+      saveCurrentScroll();
+      const state = { type: pageType, data: data || null, scrollY: 0 };
+      historyStack.push(state);
       if (pageType === 'detail' && data) {
         detailHistory.push(data);
-      } else if (pageType !== 'detail') {
-        // For non-detail, we don't store data
-        // but we keep detailHistory aligned: if we push about/contact/disclaimer, we don't add to detailHistory
-        // but we need to keep detailHistory for when we go back to detail
       }
       // Update browser history
-      const state = { page: pageType, data: data || null };
-      history.pushState(state, '', '#' + pageType);
+      const historyState = { page: pageType, data: data || null };
+      history.pushState(historyState, '', '#' + pageType);
     }
 
     function goToHome() {
-      // Clear stacks and show home
-      historyStack = ['home'];
+      saveCurrentScroll();
+      historyStack = [{ type: 'home', data: null, scrollY: 0 }];
       detailHistory = [];
       showMainGrid();
       document.querySelectorAll('.nav-small').forEach(l => l.classList.remove('active'));
       document.getElementById('homeNav').classList.add('active');
-      // Replace history state so home is the only entry
       history.replaceState({ page: 'home', data: null }, '', '#home');
+      // Smooth scroll to top
+      window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
     function showMainGrid() {
@@ -928,7 +936,6 @@
       mainGrid.classList.remove('hidden');
       mainGrid.classList.add('show');
       infoOverlay.style.display = 'none';
-      window.scrollTo({ top: 0 });
     }
 
     function showDetailView() {
@@ -939,86 +946,27 @@
       detailView.classList.remove('hidden');
       detailView.classList.add('show');
       infoOverlay.style.display = 'none';
-      window.scrollTo({ top: 0 });
     }
 
     function showOverlay(title, content, pageType) {
+      saveCurrentScroll();
       overlayTitle.textContent = title;
       overlayContent.innerHTML = content;
       infoOverlay.style.display = 'flex';
-      // Push state
       pushState(pageType, null);
     }
 
     function closeOverlay() {
       infoOverlay.style.display = 'none';
-      // We don't pop stack here; popstate will handle it
     }
 
-    // ---- BACK NAVIGATION (popstate) ----
-    window.addEventListener('popstate', function(e) {
-      const state = e.state;
-      if (!state) {
-        // If no state, go home
-        goToHome();
-        return;
-      }
-      const page = state.page || 'home';
-      const data = state.data || null;
-
-      // Update our stack to match the current state
-      // We'll rebuild stack from the current state
-      // But we need to know the sequence. Since we push every time, we can just pop from our stack
-      // However, popstate fires on back, so we pop the last entry
-      if (historyStack.length > 1) {
-        const popped = historyStack.pop();
-        if (popped === 'detail') {
-          detailHistory.pop();
-        }
-      } else {
-        // If only home remains, we are at home
-        // But if we get a popstate with page home, just show home
-        if (page === 'home') {
-          showMainGrid();
-          document.querySelectorAll('.nav-small').forEach(l => l.classList.remove('active'));
-          document.getElementById('homeNav').classList.add('active');
-          return;
-        }
-      }
-
-      // Now render the current page based on the new stack top
-      const currentPage = historyStack[historyStack.length - 1] || 'home';
-      renderCurrentPage(currentPage);
-    });
-
-    function renderCurrentPage(pageType) {
-      if (pageType === 'home') {
-        showMainGrid();
-        document.querySelectorAll('.nav-small').forEach(l => l.classList.remove('active'));
-        document.getElementById('homeNav').classList.add('active');
-      } else if (pageType === 'detail') {
-        // Restore last detail
-        const lastDetail = detailHistory[detailHistory.length - 1];
-        if (lastDetail) {
-          renderDetail(lastDetail);
-        } else {
-          goToHome();
-        }
-      } else if (pageType === 'about' || pageType === 'contact' || pageType === 'disclaimer') {
-        const content = pageContent[pageType];
-        if (content) {
-          overlayTitle.textContent = content.title;
-          overlayContent.innerHTML = content.content;
-          infoOverlay.style.display = 'flex';
-        } else {
-          goToHome();
-        }
-      } else {
-        goToHome();
-      }
+    // ---- RENDER FUNCTIONS ----
+    function renderHome() {
+      showMainGrid();
+      document.querySelectorAll('.nav-small').forEach(l => l.classList.remove('active'));
+      document.getElementById('homeNav').classList.add('active');
     }
 
-    // ---- RENDER DETAIL (without pushing state) ----
     function renderDetail(game) {
       const detailCard = document.getElementById('detailCard');
       detailCard.className = 'detail-card ' + (game.layout || 'left') + ' ' + (game.bg || 'bg-gradient-1') + ' ' + (game.border || 'border-style-1');
@@ -1215,6 +1163,17 @@
       showDetailView();
     }
 
+    function renderOverlay(pageType) {
+      const content = pageContent[pageType];
+      if (content) {
+        overlayTitle.textContent = content.title;
+        overlayContent.innerHTML = content.content;
+        infoOverlay.style.display = 'flex';
+      } else {
+        goToHome();
+      }
+    }
+
     // ---- SHOW DETAIL (with pushState) ----
     function showDetail(game) {
       detailHistory.push(game);
@@ -1356,13 +1315,70 @@
     }
     renderGrid();
 
+    // ---- POPSTATE (back navigation with scroll restoration) ----
+    window.addEventListener('popstate', function(e) {
+      const state = e.state;
+      if (!state) {
+        goToHome();
+        return;
+      }
+      const pageType = state.page || 'home';
+      const data = state.data || null;
+
+      // Pop from our stack to match the new state
+      if (historyStack.length > 1) {
+        const popped = historyStack.pop();
+        if (popped.type === 'detail' && popped.data) {
+          // Remove from detailHistory if it matches
+          const idx = detailHistory.findIndex(d => d && d.name === popped.data.name);
+          if (idx !== -1) detailHistory.splice(idx, 1);
+        }
+      } else {
+        // If only home remains, but state says otherwise, reset
+        if (pageType !== 'home') {
+          // Rebuild
+          goToHome();
+          return;
+        }
+      }
+
+      // Now render based on the new current state
+      const current = historyStack[historyStack.length - 1];
+      if (!current) {
+        goToHome();
+        return;
+      }
+
+      // Render the page
+      if (current.type === 'home') {
+        renderHome();
+      } else if (current.type === 'detail') {
+        const gameData = current.data;
+        if (gameData) {
+          renderDetail(gameData);
+        } else {
+          goToHome();
+        }
+      } else if (current.type === 'about' || current.type === 'contact' || current.type === 'disclaimer') {
+        renderOverlay(current.type);
+      } else {
+        goToHome();
+      }
+
+      // Restore scroll position
+      if (current.scrollY !== undefined) {
+        setTimeout(() => {
+          window.scrollTo({ top: current.scrollY, behavior: 'auto' });
+        }, 50);
+      }
+    });
+
     // ---- NAV EVENTS ----
     document.querySelectorAll('.nav-small[data-target]').forEach(el => {
       el.addEventListener('click', function() {
         const key = this.dataset.target;
         if (pageContent[key]) {
           const data = pageContent[key];
-          // If overlay is already open, we still push a new state
           showOverlay(data.title, data.content, key);
         }
         document.querySelectorAll('.nav-small').forEach(l => l.classList.remove('active'));
@@ -1372,7 +1388,6 @@
 
     overlayCloseBtn.addEventListener('click', function(e) {
       e.stopPropagation();
-      // Go back in history
       history.back();
     });
     infoOverlay.addEventListener('click', function(e) {
@@ -1381,16 +1396,18 @@
       }
     });
 
-    // ---- BACK BUTTON (manual back) ----
+    // ---- BACK BUTTON ----
     backBtn.addEventListener('click', function(e) {
       history.back();
     });
 
     // ---- HOME NAV ----
     homeNav.addEventListener('click', function() {
-      // If we are already home, do nothing
-      if (historyStack.length === 1 && historyStack[0] === 'home') return;
-      // Go home by replacing history
+      if (historyStack.length === 1 && historyStack[0].type === 'home') {
+        // Already home, scroll to top smoothly
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+        return;
+      }
       goToHome();
     });
 
@@ -1420,10 +1437,10 @@
     });
 
     // ---- INIT ----
-    // Set initial home state
     history.replaceState({ page: 'home', data: null }, '', '#home');
     showMainGrid();
     document.getElementById('homeNav').classList.add('active');
+    window.scrollTo({ top: 0, behavior: 'auto' });
   })();
 </script>
 </body>
