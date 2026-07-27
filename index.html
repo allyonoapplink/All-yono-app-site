@@ -837,20 +837,15 @@
         </span>
       </div>
     </div>
-    <h2 id="overlayTitle">About</h2>
-    <div id="overlayContent">
-      <p>Loading...</p>
-    </div>
+    <!-- Title and content removed - only close icon remains -->
+    <div id="overlayContent" style="display:none;"></div>
   </div>
 </div>
 
 <script>
   (function() {
-    // ---- UNLIMITED HISTORY STACK ----
-    // We use a simple array to track the sequence of pages.
-    // Each entry is either 'home', 'detail', 'about', 'contact', 'disclaimer'
-    let historyStack = ['home'];
-    // For detail views, we store the game data separately to restore
+    // ---- UNLIMITED HISTORY WITH SCROLL RESTORATION ----
+    let historyStack = [{ type: 'home', data: null, scrollY: 0 }];
     let detailHistory = [];
 
     // DOM refs
@@ -862,61 +857,46 @@
     const homeNav = document.getElementById('homeNav');
     const overlayTitle = document.getElementById('overlayTitle');
     const overlayContent = document.getElementById('overlayContent');
+    const container = document.querySelector('.container');
 
-    // ---- PAGE CONTENT ----
+    // ---- PAGE CONTENT - EMPTY - only close icon shown ----
     const pageContent = {
-      about: {
-        title: 'About',
-        content: `
-          <p>All Yono App Site is a curated platform listing 45+ top gaming apps including Teen Patti, Rummy, Slots, and Casino. We provide direct download links and bonus details for each app.</p>
-          <p>Our mission is to help users discover the best real cash earning games in India. All apps listed are verified and trusted by millions of players.</p>
-          <p>Whether you're a beginner or a pro, All Yono App Site has something for everyone. Start your gaming journey today!</p>
-        `
-      },
-      contact: {
-        title: 'Contact',
-        content: `
-          <p>For any queries, feedback or support, you can reach us via email: <strong>support@allyonoappsite.com</strong></p>
-          <p>You can also connect with us on Telegram: <strong>@allyonoappsite</strong></p>
-          <p>We respond to all inquiries within 24 hours. Your feedback helps us improve and bring you the best gaming recommendations.</p>
-        `
-      },
-      disclaimer: {
-        title: 'Disclaimer',
-        content: `
-          <p>All Yono App Site does not host or operate any of the games listed. We only provide information and referral links.</p>
-          <p>Users are advised to check the terms and conditions of each app before downloading or using it.</p>
-          <p>Play responsibly. Real money gaming involves financial risk. Only play with money you can afford to lose.</p>
-          <p>All Yono App Site is not responsible for any losses or damages incurred while using any third-party apps or services.</p>
-        `
-      }
+      about: { title: '', content: '' },
+      contact: { title: '', content: '' },
+      disclaimer: { title: '', content: '' }
     };
 
-    // ---- NAVIGATION FUNCTIONS ----
+    function getScrollY() {
+      return window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop || 0;
+    }
+
+    function saveCurrentScroll() {
+      const current = historyStack[historyStack.length - 1];
+      if (current) {
+        current.scrollY = getScrollY();
+      }
+    }
+
     function pushState(pageType, data) {
-      // Push to history stack
-      historyStack.push(pageType);
+      saveCurrentScroll();
+      const state = { type: pageType, data: data || null, scrollY: 0 };
+      historyStack.push(state);
       if (pageType === 'detail' && data) {
         detailHistory.push(data);
-      } else if (pageType !== 'detail') {
-        // For non-detail, we don't store data
-        // but we keep detailHistory aligned: if we push about/contact/disclaimer, we don't add to detailHistory
-        // but we need to keep detailHistory for when we go back to detail
       }
-      // Update browser history
-      const state = { page: pageType, data: data || null };
-      history.pushState(state, '', '#' + pageType);
+      const historyState = { page: pageType, data: data || null };
+      history.pushState(historyState, '', '#' + pageType);
     }
 
     function goToHome() {
-      // Clear stacks and show home
-      historyStack = ['home'];
+      saveCurrentScroll();
+      historyStack = [{ type: 'home', data: null, scrollY: 0 }];
       detailHistory = [];
       showMainGrid();
       document.querySelectorAll('.nav-small').forEach(l => l.classList.remove('active'));
       document.getElementById('homeNav').classList.add('active');
-      // Replace history state so home is the only entry
       history.replaceState({ page: 'home', data: null }, '', '#home');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
     function showMainGrid() {
@@ -927,7 +907,6 @@
       mainGrid.classList.remove('hidden');
       mainGrid.classList.add('show');
       infoOverlay.style.display = 'none';
-      window.scrollTo({ top: 0 });
     }
 
     function showDetailView() {
@@ -938,86 +917,24 @@
       detailView.classList.remove('hidden');
       detailView.classList.add('show');
       infoOverlay.style.display = 'none';
-      window.scrollTo({ top: 0 });
     }
 
-    function showOverlay(title, content, pageType) {
-      overlayTitle.textContent = title;
-      overlayContent.innerHTML = content;
+    function showOverlay(pageType) {
+      saveCurrentScroll();
+      // No title, no content - just show the overlay with close icon
+      overlayTitle.textContent = '';
+      overlayContent.innerHTML = '';
+      overlayContent.style.display = 'none';
       infoOverlay.style.display = 'flex';
-      // Push state
       pushState(pageType, null);
     }
 
-    function closeOverlay() {
-      infoOverlay.style.display = 'none';
-      // We don't pop stack here; popstate will handle it
+    function renderHome() {
+      showMainGrid();
+      document.querySelectorAll('.nav-small').forEach(l => l.classList.remove('active'));
+      document.getElementById('homeNav').classList.add('active');
     }
 
-    // ---- BACK NAVIGATION (popstate) ----
-    window.addEventListener('popstate', function(e) {
-      const state = e.state;
-      if (!state) {
-        // If no state, go home
-        goToHome();
-        return;
-      }
-      const page = state.page || 'home';
-      const data = state.data || null;
-
-      // Update our stack to match the current state
-      // We'll rebuild stack from the current state
-      // But we need to know the sequence. Since we push every time, we can just pop from our stack
-      // However, popstate fires on back, so we pop the last entry
-      if (historyStack.length > 1) {
-        const popped = historyStack.pop();
-        if (popped === 'detail') {
-          detailHistory.pop();
-        }
-      } else {
-        // If only home remains, we are at home
-        // But if we get a popstate with page home, just show home
-        if (page === 'home') {
-          showMainGrid();
-          document.querySelectorAll('.nav-small').forEach(l => l.classList.remove('active'));
-          document.getElementById('homeNav').classList.add('active');
-          return;
-        }
-      }
-
-      // Now render the current page based on the new stack top
-      const currentPage = historyStack[historyStack.length - 1] || 'home';
-      renderCurrentPage(currentPage);
-    });
-
-    function renderCurrentPage(pageType) {
-      if (pageType === 'home') {
-        showMainGrid();
-        document.querySelectorAll('.nav-small').forEach(l => l.classList.remove('active'));
-        document.getElementById('homeNav').classList.add('active');
-      } else if (pageType === 'detail') {
-        // Restore last detail
-        const lastDetail = detailHistory[detailHistory.length - 1];
-        if (lastDetail) {
-          renderDetail(lastDetail);
-        } else {
-          goToHome();
-        }
-      } else if (pageType === 'about' || pageType === 'contact' || pageType === 'disclaimer') {
-        const content = pageContent[pageType];
-        if (content) {
-          overlayTitle.textContent = content.title;
-          overlayContent.innerHTML = content.content;
-          infoOverlay.style.display = 'flex';
-        } else {
-          goToHome();
-        }
-      } else {
-        goToHome();
-      }
-    }
-
-    // ---- RENDER DETAIL (without pushing state) ----
     function renderDetail(game) {
       const detailCard = document.getElementById('detailCard');
       detailCard.className = 'detail-card ' + (game.layout || 'left') + ' ' + (game.bg || 'bg-gradient-1') + ' ' + (game.border || 'border-style-1');
@@ -1037,7 +954,6 @@
       const gName = game.name;
       const b = getUniqueBonuses(gName);
 
-      // Top Offers
       const tagContainer = document.getElementById('tagGridContainer');
       const tagVariants = [
         { 
@@ -1214,14 +1130,20 @@
       showDetailView();
     }
 
-    // ---- SHOW DETAIL (with pushState) ----
+    function renderOverlay(pageType) {
+      // Show only the overlay with close icon - no content
+      overlayTitle.textContent = '';
+      overlayContent.innerHTML = '';
+      overlayContent.style.display = 'none';
+      infoOverlay.style.display = 'flex';
+    }
+
     function showDetail(game) {
       detailHistory.push(game);
       pushState('detail', game);
       renderDetail(game);
     }
 
-    // ---- GAME DATA ----
     const games = [
       { name: "All Yono App Site", altName: "All Yono Games", bonus: "₹58", withdrawal: "₹100", downloadUrl: "https://www.earntp.com/m/jm9n7r", img: "https://i.ibb.co/CssC2WbG/1000022725.jpg", version: "v3.2.1", layout: "left", bg: "bg-gradient-1", border: "border-style-1" },
       { name: "567 Slots", altName: "567 Slots Game", bonus: "₹72", withdrawal: "₹100", downloadUrl: "https://join567slots0.com/?code=4NYF487URJ6&t=1781505684", img: "https://i.ibb.co/hFytMXY2/1000022725.jpg", version: "v2.5.0", layout: "right", bg: "bg-gradient-2", border: "border-style-2" },
@@ -1301,7 +1223,6 @@
       };
     }
 
-    // ---- RENDER GRID ----
     function renderGrid() {
       mainGrid.innerHTML = '';
       uniqueGames.forEach((game, index) => {
@@ -1355,15 +1276,60 @@
     }
     renderGrid();
 
-    // ---- NAV EVENTS ----
+    window.addEventListener('popstate', function(e) {
+      const state = e.state;
+      if (!state) {
+        goToHome();
+        return;
+      }
+      const pageType = state.page || 'home';
+      const data = state.data || null;
+
+      if (historyStack.length > 1) {
+        const popped = historyStack.pop();
+        if (popped.type === 'detail' && popped.data) {
+          const idx = detailHistory.findIndex(d => d && d.name === popped.data.name);
+          if (idx !== -1) detailHistory.splice(idx, 1);
+        }
+      } else {
+        if (pageType !== 'home') {
+          goToHome();
+          return;
+        }
+      }
+
+      const current = historyStack[historyStack.length - 1];
+      if (!current) {
+        goToHome();
+        return;
+      }
+
+      if (current.type === 'home') {
+        renderHome();
+      } else if (current.type === 'detail') {
+        const gameData = current.data;
+        if (gameData) {
+          renderDetail(gameData);
+        } else {
+          goToHome();
+        }
+      } else if (current.type === 'about' || current.type === 'contact' || current.type === 'disclaimer') {
+        renderOverlay(current.type);
+      } else {
+        goToHome();
+      }
+
+      if (current.scrollY !== undefined) {
+        setTimeout(() => {
+          window.scrollTo({ top: current.scrollY, behavior: 'auto' });
+        }, 50);
+      }
+    });
+
     document.querySelectorAll('.nav-small[data-target]').forEach(el => {
       el.addEventListener('click', function() {
         const key = this.dataset.target;
-        if (pageContent[key]) {
-          const data = pageContent[key];
-          // If overlay is already open, we still push a new state
-          showOverlay(data.title, data.content, key);
-        }
+        showOverlay(key);
         document.querySelectorAll('.nav-small').forEach(l => l.classList.remove('active'));
         this.classList.add('active');
       });
@@ -1371,7 +1337,6 @@
 
     overlayCloseBtn.addEventListener('click', function(e) {
       e.stopPropagation();
-      // Go back in history
       history.back();
     });
     infoOverlay.addEventListener('click', function(e) {
@@ -1380,20 +1345,18 @@
       }
     });
 
-    // ---- BACK BUTTON (manual back) ----
     backBtn.addEventListener('click', function(e) {
       history.back();
     });
 
-    // ---- HOME NAV ----
     homeNav.addEventListener('click', function() {
-      // If we are already home, do nothing
-      if (historyStack.length === 1 && historyStack[0] === 'home') return;
-      // Go home by replacing history
+      if (historyStack.length === 1 && historyStack[0].type === 'home') {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+        return;
+      }
       goToHome();
     });
 
-    // ---- SHARE ----
     document.getElementById('shareBtn').addEventListener('click', function() {
       const shareUrl = 'https://www.earntp.com/gold/jm9n7r';
       if (navigator.share) {
@@ -1407,7 +1370,6 @@
       }
     });
 
-    // ---- TOC TOGGLE ----
     document.getElementById('tocToggle').addEventListener('click', function() {
       document.getElementById('tocBody').classList.toggle('open');
       document.getElementById('tocArrow').classList.toggle('open');
@@ -1418,11 +1380,10 @@
       if (url && url !== '#') window.open(url, '_blank');
     });
 
-    // ---- INIT ----
-    // Set initial home state
     history.replaceState({ page: 'home', data: null }, '', '#home');
     showMainGrid();
     document.getElementById('homeNav').classList.add('active');
+    window.scrollTo({ top: 0, behavior: 'auto' });
   })();
 </script>
 </body>
