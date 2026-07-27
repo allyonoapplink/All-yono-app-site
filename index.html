@@ -1037,7 +1037,7 @@
       }
     }
 
-    // ---- SHOW OVERLAY - title fixed at top, tags below ----
+    // ---- SHOW OVERLAY ----
     async function showOverlay(pageType) {
       saveCurrentScroll();
       
@@ -1081,7 +1081,7 @@
           content = config.placeholder;
         }
         
-        // Create containers for tags (will be placed after title)
+        // Create containers for tags
         const tagsContainerTop = document.createElement('div');
         tagsContainerTop.className = 'page-tags-top';
         const tagsContainerBottom = document.createElement('div');
