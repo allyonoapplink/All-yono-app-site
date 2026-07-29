@@ -1,4 +1,3 @@
-0000
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -507,8 +506,10 @@
     .card-name .alt { font-weight: 400; font-size: 0.5rem; color: #6b7280; }
     .card-bonus { font-size: 0.55rem; color: #dc2626; font-weight: 600; display: inline-flex; align-items: center; gap: 3px; }
     .card-withdraw { font-size: 0.5rem; color: #0a0a0a; font-weight: 500; display: inline-flex; align-items: center; gap: 3px; }
-    .card-download-sm { background: #0a0a0a; color: white; border: none; padding: 3px 10px; border-radius: 40px; font-weight: 600; font-size: 0.45rem; white-space: nowrap; cursor: pointer; }
+    .card-download-sm { background: #0a0a0a; color: white; border: none; padding: 3px 10px; border-radius: 40px; font-weight: 600; font-size: 0.45rem; white-space: nowrap; cursor: pointer; display: inline-flex; align-items: center; gap: 6px; }
     .card-download-sm:active { transform: scale(0.95); }
+    .card-download-sm .dl-icon { width: 14px; height: 14px; display: inline-flex; align-items: center; justify-content: center; }
+    .card-download-sm .dl-icon svg { width: 100%; height: 100%; fill: none; stroke: #22c55e; stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; filter: drop-shadow(0 0 6px rgba(34,197,94,0.4)); }
 
     .footer-links { display: flex; justify-content: center; align-items: center; gap: 8px; padding: 8px 10px; background: #f8fafc; border-top: 1px solid #e9edf4; flex-wrap: wrap; }
     .footer-links a { font-size: 0.55rem; font-weight: 500; color: #1e293b; text-decoration: none; border: 1px solid #e2e8f0; padding: 3px 12px; border-radius: 40px; background: white; }
@@ -554,7 +555,7 @@
     .border-style-4 .detail-card { border-bottom: 4px solid #7c3aed; }
     .border-style-5 .detail-card { border-left: 4px solid #d97706; border-radius: 0 12px 12px 0; }
 
-    /* ----- DOWNLOAD BUTTON IMPROVEMENTS ----- */
+    /* ----- DOWNLOAD BUTTON IMPROVEMENTS (Detail view) ----- */
     .download-btn-wrap {
       display: flex;
       justify-content: flex-end;
@@ -1175,7 +1176,6 @@
       const name = game.name;
       const alt = game.altName || name;
       const bonus = game.bonus || '₹45';
-      const slug = name.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
       
       seoTitle.textContent = `${name} (${alt}) – Download ${name} APK | Get ${bonus} Signup Bonus`;
       seoDescription.textContent = `Download ${name} (${alt}) APK. Get ${bonus} welcome bonus, ₹100 min withdrawal. Play rummy, slots, bingo & more. ${name} is a top real cash earning app in India. Install now!`;
@@ -1514,7 +1514,10 @@
             <div class="card-bonus"><span class="icon-svg small"><svg viewBox="0 0 24 24"><rect x="3" y="8" width="18" height="13" rx="2"/><path d="M3 8l9-5 9 5"/><path d="M8 12h8"/></svg></span> Sign Up Bonus ${game.bonus}</div>
             <div class="card-withdraw"><span class="icon-svg small"><svg viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V4a1 1 0 00-1-1H9a1 1 0 00-1 1v3"/><path d="M8 12h8"/></svg></span> Min. Withdraw ${game.withdrawal}</div>
           </div>
-          <span class="card-download-sm">Download</span>
+          <span class="card-download-sm">
+            <span class="dl-icon"><svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><path d="M12 15V3"/></svg></span>
+            Download
+          </span>
         `;
         mainGrid.appendChild(card);
 
