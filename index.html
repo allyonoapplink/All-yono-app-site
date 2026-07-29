@@ -1494,6 +1494,8 @@
       if (backToHomeBtn) {
         backToHomeBtn.addEventListener('click', function(e) {
           e.preventDefault();
+          // Close overlay and go to home with scroll to top
+          infoOverlay.style.display = 'none';
           goHome();
         });
       }
