@@ -506,8 +506,90 @@
     .card-name .alt { font-weight: 400; font-size: 0.5rem; color: #6b7280; }
     .card-bonus { font-size: 0.55rem; color: #dc2626; font-weight: 600; display: inline-flex; align-items: center; gap: 3px; }
     .card-withdraw { font-size: 0.5rem; color: #0a0a0a; font-weight: 500; display: inline-flex; align-items: center; gap: 3px; }
-    .card-download-sm { background: #0a0a0a; color: white; border: none; padding: 3px 10px; border-radius: 40px; font-weight: 600; font-size: 0.45rem; white-space: nowrap; cursor: pointer; }
-    .card-download-sm:active { transform: scale(0.95); }
+    /* ----- IMPROVED HOME PAGE DOWNLOAD BUTTON ----- */
+    .card-download-home {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      background: #0b1e33;
+      color: #ffffff;
+      padding: 12px 18px;
+      border-radius: 60px;
+      font-weight: 700;
+      font-size: 0.7rem;
+      text-decoration: none;
+      border: none;
+      cursor: pointer;
+      transition: all 0.25s ease;
+      box-shadow: 0 6px 20px rgba(0,0,0,0.18);
+      min-width: 110px;
+      letter-spacing: 0.4px;
+      position: relative;
+      overflow: hidden;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+    .card-download-home:hover {
+      transform: scale(1.03);
+      box-shadow: 0 8px 28px rgba(0,0,0,0.25);
+    }
+    .card-download-home:active {
+      transform: scale(0.94);
+    }
+    .card-download-home .btn-icon {
+      width: 20px;
+      height: 20px;
+      flex-shrink: 0;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      order: 2;
+    }
+    .card-download-home .btn-icon svg {
+      width: 100%;
+      height: 100%;
+      fill: none;
+      stroke: #ffffff;
+      stroke-width: 2.2;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+    .card-download-home .btn-text {
+      white-space: nowrap;
+      order: 1;
+    }
+    /* Glow effect */
+    .card-download-home::after {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: radial-gradient(circle, rgba(255,255,255,0.08) 0%, transparent 60%);
+      opacity: 0;
+      transition: opacity 0.3s ease;
+      pointer-events: none;
+    }
+    .card-download-home:hover::after {
+      opacity: 1;
+    }
+    .card-download-home .btn-glow-border {
+      position: absolute;
+      inset: -2px;
+      border-radius: 60px;
+      background: conic-gradient(from 0deg, #00ff00 0deg 30deg, #00ffff 90deg 120deg, #ff00ff 180deg 210deg, #ffff00 270deg 300deg, #00ff00 360deg);
+      animation: btnGlowSpin 6s linear infinite;
+      z-index: -1;
+      padding: 2px;
+      -webkit-mask: radial-gradient(farthest-side, transparent calc(100% - 2px), #fff calc(100% - 1px));
+      mask: radial-gradient(farthest-side, transparent calc(100% - 2px), #fff calc(100% - 1px));
+    }
+    @keyframes btnGlowSpin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
 
     .footer-links { display: flex; justify-content: center; align-items: center; gap: 8px; padding: 8px 10px; background: #f8fafc; border-top: 1px solid #e9edf4; flex-wrap: wrap; }
     .footer-links a { font-size: 0.55rem; font-weight: 500; color: #1e293b; text-decoration: none; border: 1px solid #e2e8f0; padding: 3px 12px; border-radius: 40px; background: white; }
@@ -553,14 +635,14 @@
     .border-style-4 .detail-card { border-bottom: 4px solid #7c3aed; }
     .border-style-5 .detail-card { border-left: 4px solid #d97706; border-radius: 0 12px 12px 0; }
 
-    /* ----- DOWNLOAD BUTTON IMPROVEMENTS ----- */
+    /* ----- DOWNLOAD BUTTON IMPROVEMENTS (Detail page) ----- */
     .download-btn-wrap {
       display: flex;
       justify-content: flex-end;
       align-items: center;
       margin-top: 12px;
     }
-    .download-btn {
+    .detail-download .download-btn {
       display: inline-flex;
       align-items: center;
       justify-content: center;
@@ -581,14 +663,14 @@
       position: relative;
       overflow: hidden;
     }
-    .download-btn:hover {
+    .detail-download .download-btn:hover {
       transform: scale(1.02);
       box-shadow: 0 12px 32px rgba(0,0,0,0.35);
     }
-    .download-btn:active {
+    .detail-download .download-btn:active {
       transform: scale(0.96);
     }
-    .download-btn .btn-icon {
+    .detail-download .download-btn .btn-icon {
       width: 24px;
       height: 24px;
       flex-shrink: 0;
@@ -596,7 +678,7 @@
       align-items: center;
       justify-content: center;
     }
-    .download-btn .btn-icon svg {
+    .detail-download .download-btn .btn-icon svg {
       width: 100%;
       height: 100%;
       fill: none;
@@ -605,11 +687,10 @@
       stroke-linecap: round;
       stroke-linejoin: round;
     }
-    .download-btn .btn-text {
+    .detail-download .download-btn .btn-text {
       white-space: nowrap;
     }
-    /* glow effect */
-    .download-btn::after {
+    .detail-download .download-btn::after {
       content: '';
       position: absolute;
       top: -50%;
@@ -621,10 +702,10 @@
       transition: opacity 0.3s ease;
       pointer-events: none;
     }
-    .download-btn:hover::after {
+    .detail-download .download-btn:hover::after {
       opacity: 1;
     }
-    .download-btn .btn-glow {
+    .detail-download .download-btn .btn-glow {
       position: absolute;
       inset: -2px;
       border-radius: 60px;
@@ -675,12 +756,19 @@
       .page-tags-top .game-tag, .page-tags-bottom .game-tag { font-size: 0.4rem; padding: 3px 8px 3px 6px; }
       .page-tags-top .tag-loader, .page-tags-bottom .tag-loader { width: 12px; height: 12px; }
       .lucide-icon { width: 15px; height: 15px; }
-      .download-btn {
+      .detail-download .download-btn {
         padding: 12px 20px;
         font-size: 0.85rem;
         min-width: 140px;
       }
-      .download-btn .btn-icon { width: 20px; height: 20px; }
+      .detail-download .download-btn .btn-icon { width: 20px; height: 20px; }
+      .card-download-home {
+        padding: 10px 14px;
+        font-size: 0.6rem;
+        min-width: 90px;
+        gap: 8px;
+      }
+      .card-download-home .btn-icon { width: 17px; height: 17px; }
     }
   </style>
 </head>
@@ -842,8 +930,8 @@
           </div>
         </div>
       </div>
-      <!-- DOWNLOAD BUTTON - IMPROVED -->
-      <div class="download-btn-wrap">
+      <!-- DOWNLOAD BUTTON - IMPROVED (Detail page) -->
+      <div class="detail-download">
         <a href="#" class="download-btn" id="detailDownloadBtn" target="_blank">
           <span class="btn-glow"></span>
           <span class="btn-icon">
@@ -1505,6 +1593,22 @@
         card.dataset.bg = game.bg || 'bg-gradient-1';
         card.dataset.border = game.border || 'border-style-1';
 
+        // Define a unique icon for each game based on index
+        const icons = [
+          '<svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><path d="M12 15V3"/></svg>',
+          '<svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>',
+          '<svg viewBox="0 0 24 24"><rect x="3" y="8" width="18" height="13" rx="2"/><path d="M3 8l9-5 9 5"/><path d="M8 12h8"/></svg>',
+          '<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 8v8"/><path d="M8 12h8"/></svg>',
+          '<svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>',
+          '<svg viewBox="0 0 24 24"><path d="M4 4h16v16H4z"/><path d="M9 9h6v6H9z"/></svg>',
+          '<svg viewBox="0 0 24 24"><path d="M20 12H4"/><path d="M12 4v16"/></svg>',
+          '<svg viewBox="0 0 24 24"><path d="M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 003 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0021 16z"/><path d="M12 12v4"/><path d="M12 8v1"/></svg>',
+          '<svg viewBox="0 0 24 24"><path d="M20 7h-4.5L15 4H9L8.5 7H4v13h16V7z"/></svg>',
+          '<svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg>'
+        ];
+        const iconIndex = index % icons.length;
+        const iconSvg = icons[iconIndex];
+
         card.innerHTML = `
           <div class="card-number">${index + 1}</div>
           <div class="card-img"><img src="${game.img}" alt="${game.name} | ${game.altName}" loading="lazy" onerror="this.src='https://i.ibb.co/LXqV77rd/yono-games.jpg'"></div>
@@ -1513,11 +1617,29 @@
             <div class="card-bonus"><span class="icon-svg small"><svg viewBox="0 0 24 24"><rect x="3" y="8" width="18" height="13" rx="2"/><path d="M3 8l9-5 9 5"/><path d="M8 12h8"/></svg></span> Sign Up Bonus ${game.bonus}</div>
             <div class="card-withdraw"><span class="icon-svg small"><svg viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V4a1 1 0 00-1-1H9a1 1 0 00-1 1v3"/><path d="M8 12h8"/></svg></span> Min. Withdraw ${game.withdrawal}</div>
           </div>
-          <span class="card-download-sm">Download</span>
+          <button class="card-download-home" data-download="${game.downloadUrl}">
+            <span class="btn-glow-border"></span>
+            <span class="btn-text">Download</span>
+            <span class="btn-icon">${iconSvg}</span>
+          </button>
         `;
         mainGrid.appendChild(card);
 
-        card.addEventListener('click', function() {
+        // Download button click handler
+        const downloadBtn = card.querySelector('.card-download-home');
+        downloadBtn.addEventListener('click', function(e) {
+          e.stopPropagation();
+          const url = this.dataset.download;
+          if (url && url !== '#') {
+            window.open(url, '_blank');
+          }
+        });
+
+        // Card click handler (navigate to detail)
+        card.addEventListener('click', function(e) {
+          // If click is on the download button, it's already handled above
+          if (e.target.closest('.card-download-home')) return;
+          
           const gData = {
             name: this.dataset.name,
             altName: this.dataset.altName,
