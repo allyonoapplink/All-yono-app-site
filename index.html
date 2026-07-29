@@ -708,6 +708,10 @@
     .overlay-page-wrapper .overlay-content .page-tags-top,
     .overlay-page-wrapper .overlay-content .page-tags-bottom {
       margin: 12px 0;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      width: 100%;
     }
     .overlay-page-wrapper .overlay-content .game-tag {
       background: #0b1e33;
@@ -715,6 +719,9 @@
       font-size: 0.5rem;
       padding: 4px 12px 4px 8px;
       gap: 6px;
+      display: inline-flex;
+      align-items: center;
+      border-radius: 50px;
     }
     .overlay-page-wrapper .overlay-content .game-tag .tag-loader {
       width: 14px;
@@ -833,6 +840,18 @@
       .overlay-back-link { font-size: 0.55rem; padding: 6px 12px; }
       .overlay-back-link .back-led-icon { width: 18px; height: 18px; }
       .overlay-back-link .back-led-icon .inner-icon svg { width: 12px; height: 12px; }
+      .overlay-page-wrapper .overlay-content .page-tags-top,
+      .overlay-page-wrapper .overlay-content .page-tags-bottom {
+        gap: 4px;
+      }
+      .overlay-page-wrapper .overlay-content .game-tag {
+        font-size: 0.4rem;
+        padding: 3px 8px 3px 6px;
+      }
+      .overlay-page-wrapper .overlay-content .game-tag .tag-loader {
+        width: 12px;
+        height: 12px;
+      }
     }
   </style>
 </head>
@@ -1377,6 +1396,9 @@
           }
         });
       });
+
+      // Scroll to top smoothly
+      window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
     function closeOverlay() {
