@@ -1,3 +1,4 @@
+77777
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -1489,13 +1490,11 @@
         });
       });
 
-      // Attach Back to Home button
+      // Attach Back to Home button - Go to Home with scroll to top
       const backToHomeBtn = document.getElementById('backToHomeBtn');
       if (backToHomeBtn) {
         backToHomeBtn.addEventListener('click', function(e) {
           e.preventDefault();
-          // Close overlay and go to home with scroll to top
-          infoOverlay.style.display = 'none';
           goHome();
         });
       }
