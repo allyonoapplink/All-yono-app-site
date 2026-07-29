@@ -1,65 +1,129 @@
-/* ============================
-   custom.css
-   Global Custom Styles
-   ============================ */
+/* =========================================================
+   ULTRA PREMIUM DARK THEME & MOBILE APP-FRIENDLY CSS
+   ========================================================= */
 
-/* Reset */
-*{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
+/* 1. DARK COLOR THEME CONTROLLER */
+:root {
+    --bg-color: #0b0f19;            /* Deep Gaming Dark Background */
+    --card-bg: #151c2c;             /* Premium Elevated Card BG */
+    --card-border: #232d42;         /* Sleek Dark Border */
+    --text-primary: #ffffff;        /* Pure White Primary Text */
+    --text-secondary: #94a3b8;      /* Soft Muted Gray Text */
+    
+    /* Neon Accent Colors */
+    --primary-color: #00ff88;       /* Glowing Neon Green */
+    --primary-hover: #00cc6a;       /* Darker Neon Green */
+    --accent-blue: #00d9ff;        /* Electric Cyan */
+    
+    /* Shadows & Glows */
+    --card-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+    --neon-glow: 0 0 15px rgba(0, 255, 136, 0.25);
 }
 
-html{
-    scroll-behavior:smooth;
+/* 2. GLOBAL RESET & MOBILE TOUCH OPTIMIZATION */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    -webkit-tap-highlight-color: transparent; /* Removes ugly tap box on mobile */
 }
 
-body{
-    font-family:Arial, Helvetica, sans-serif;
-    line-height:1.6;
-    background:#ffffff;
-    color:#222;
+html {
+    scroll-behavior: smooth;
 }
 
-/* Images */
-img{
-    max-width:100%;
-    height:auto;
-    display:block;
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    background-color: var(--bg-color) !important;
+    color: var(--text-primary) !important;
+    line-height: 1.5;
+    overflow-x: hidden;
 }
 
-/* Links */
-a{
-    text-decoration:none;
-    color:inherit;
+/* 3. PREMIUM APP-LIKE CONTAINER & CARDS */
+.container {
+    background-color: var(--bg-color) !important;
 }
 
-/* Buttons */
+.game-card, 
+.detail-card,
+.card {
+    background: var(--card-bg) !important;
+    border: 1px solid var(--card-border) !important;
+    border-radius: 16px !important;
+    box-shadow: var(--card-shadow) !important;
+    margin-bottom: 12px;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Mobile Active / Touch Effect */
+.game-card:active,
+.detail-card:active {
+    transform: scale(0.98);
+    border-color: var(--primary-color) !important;
+}
+
+/* 4. TEXT & TYPOGRAPHY IN DARK MODE */
+h1, h2, h3, h4, .game-name {
+    color: var(--text-primary) !important;
+}
+
+p, span, .alt, .game-sub {
+    color: var(--text-secondary);
+}
+
+/* 5. GLOWING NEON DOWNLOAD BUTTONS */
 button,
-.btn{
-    cursor:pointer;
-    border:none;
-    outline:none;
-    transition:.3s ease;
+.btn,
+.download-btn {
+    background: linear-gradient(135deg, var(--primary-color), var(--primary-hover)) !important;
+    color: #000000 !important; /* High contrast black text on neon */
+    font-weight: 800 !important;
+    border: none !important;
+    border-radius: 50px !important;
+    padding: 8px 18px !important;
+    box-shadow: var(--neon-glow) !important;
+    cursor: pointer;
+    transition: all 0.25s ease;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
 }
 
-/* SVG Icons */
-svg{
-    width:20px;
-    height:20px;
-    vertical-align:middle;
-    fill:currentColor;
+button:active,
+.btn:active,
+.download-btn:active {
+    transform: scale(0.95);
+    box-shadow: 0 0 8px rgba(0, 255, 136, 0.4) !important;
 }
 
-/* Mobile Responsive */
-@media (max-width:768px){
-    body{
-        overflow-x:hidden;
-    }
+/* 6. NAVIGATION & HEADER GLASS LOOK */
+.top-header,
+.header-nav-link {
+    background: rgba(21, 28, 44, 0.85) !important;
+    backdrop-filter: blur(10px);
+    border-color: var(--card-border) !important;
+    color: var(--text-primary) !important;
+}
 
-    img,
-    button,
-    .btn{
-        max-width:100%;
-    }
+.header-nav-link.active {
+    background: var(--primary-color) !important;
+    color: #000000 !important;
+    font-weight: 700;
+}
+
+/* 7. MODERN SCROLLBAR */
+::-webkit-scrollbar {
+    width: 5px;
+}
+::-webkit-scrollbar-track {
+    background: var(--bg-color);
+}
+::-webkit-scrollbar-thumb {
+    background: #1e293b;
+    border-radius: 10px;
+}
+::-webkit-scrollbar-thumb:hover {
+    background: var(--primary-color);
 }
