@@ -551,7 +551,7 @@
     .footer-note { padding: 6px 10px 10px; text-align: center; color: #94a3b8; font-size: 0.5rem; background: #f8fafc; }
 
     .info-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.4); backdrop-filter: blur(3px); z-index: 99; justify-content: center; align-items: center; }
-    .info-card { background: white; max-width: 400px; width: 90%; padding: 0; border-radius: 28px; box-shadow: 0 30px 60px rgba(0,0,0,0.2); position: relative; max-height: 90vh; overflow-y: auto; }
+    .info-card { background: white; max-width: 400px; width: 90%; padding: 0; border-radius: 0; box-shadow: 0 30px 60px rgba(0,0,0,0.2); position: relative; max-height: 100vh; overflow-y: auto; }
     .info-card .close-top { position: absolute; top: 12px; right: 12px; z-index: 5; cursor: pointer; }
     .info-card .close-top .close-icon-wrap { width: 28px; height: 28px; }
     .info-card .close-top .close-icon-wrap .close-icon-inner { width: 14px; height: 14px; }
@@ -677,9 +677,11 @@
 
     /* ----- OVERLAY PAGE NAVIGATION (About/Contact/Disclaimer) - FULL VIEW FROM TOP TO BOTTOM ----- */
     .overlay-page-wrapper {
-      background: #f8fafc;
+      background: #ffffff;
       min-height: 100vh;
-      padding-bottom: 20px;
+      padding-bottom: 0;
+      margin: 0;
+      width: 100%;
     }
     .overlay-page-wrapper .top-header {
       position: sticky;
@@ -799,10 +801,10 @@
 
     .overlay-page-wrapper .overlay-content {
       padding: 16px;
-      background: white;
-      margin: 0 10px;
-      border-radius: 16px;
-      box-shadow: 0 2px 12px rgba(0,0,0,0.04);
+      background: #ffffff;
+      margin: 0;
+      border-radius: 0;
+      box-shadow: none;
     }
     .overlay-page-wrapper .overlay-content h1 {
       font-size: 1.2rem;
@@ -943,7 +945,7 @@
       .download-btn .btn-icon { width: 20px; height: 20px; }
       .related-item .rdownload { font-size: 0.4rem; padding: 3px 8px; }
       .related-item .rdownload .dl-icon-cyan { width: 14px; height: 14px; }
-      .overlay-page-wrapper .overlay-content { padding: 12px; margin: 0 6px; }
+      .overlay-page-wrapper .overlay-content { padding: 12px; margin: 0; }
       .overlay-page-wrapper .overlay-content h1 { font-size: 1rem; }
       .overlay-page-wrapper .overlay-content p { font-size: 0.75rem; }
       .overlay-back-link { font-size: 0.55rem; padding: 6px 12px; }
@@ -973,7 +975,7 @@
       .overlay-page-wrapper .top-header .share-btn svg { width: 10px; height: 10px; }
       .overlay-page-wrapper .top-header .telegram-btn { width: 24px; height: 24px; }
       .overlay-page-wrapper .top-header .header-bottom-row { padding: 4px 0; }
-      .info-card { padding: 0; }
+      .info-card { padding: 0; border-radius: 0; }
     }
   </style>
 </head>
@@ -1269,7 +1271,7 @@
 
 <!-- OVERLAY - used for About/Contact/Disclaimer with full page navigation -->
 <div class="info-overlay" id="infoOverlay">
-  <div class="info-card" style="position:relative; padding:0;">
+  <div class="info-card" style="position:relative; padding:0; border-radius:0; max-width:100%; width:100%;">
     <!-- REMOVED: close-top (✖ icon) and close-btn (✕ Close) -->
     <div id="overlayPageContent">
       <!-- This will be replaced with full page content -->
@@ -1454,7 +1456,7 @@
           <!-- EXACT SAME HEADER AS HOME PAGE -->
           ${headerHTML}
           <!-- CONTENT - FULL VIEW -->
-          <div class="overlay-content" style="margin:0;border-radius:0;padding:16px;">
+          <div class="overlay-content" style="margin:0;border-radius:0;padding:16px;background:#ffffff;">
             <h1>${result.title}</h1>
             ${result.content}
             <!-- Back to Home button with LED icon at the bottom -->
