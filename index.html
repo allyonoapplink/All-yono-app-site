@@ -687,7 +687,116 @@
       z-index: 10;
       background: white;
       border-bottom: 1px solid #e9edf4;
+      display: flex;
+      flex-direction: column;
+      padding: 8px 10px;
     }
+    .overlay-page-wrapper .top-header .header-nav-row {
+      display: flex;
+      justify-content: flex-start;
+      align-items: center;
+      gap: 12px;
+      padding: 4px 0;
+      flex-wrap: wrap;
+    }
+    .overlay-page-wrapper .top-header .header-nav-row .header-nav-link {
+      font-size: 0.55rem;
+      font-weight: 600;
+      color: #1e293b;
+      background: #f8fafc;
+      padding: 3px 12px;
+      border-radius: 40px;
+      border: 1px solid #e2e8f0;
+      cursor: pointer;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      transition: all 0.15s;
+    }
+    .overlay-page-wrapper .top-header .header-nav-row .header-nav-link:active { transform: scale(0.95); }
+    .overlay-page-wrapper .top-header .header-nav-row .header-nav-link.active { background: #1e293b; color: white; border-color: #1e293b; }
+    .overlay-page-wrapper .top-header .header-nav-row .header-nav-link .nav-icon { display: inline-flex; align-items: center; justify-content: center; width: 14px; height: 14px; }
+    .overlay-page-wrapper .top-header .header-nav-row .header-nav-link .nav-icon svg { width: 100%; height: 100%; stroke: currentColor; stroke-width: 2; fill: none; stroke-linecap: round; stroke-linejoin: round; }
+    
+    .overlay-page-wrapper .top-header .header-bottom-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 6px 0 2px 0;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+    .overlay-page-wrapper .top-header .header-bottom-row .header-left { display: flex; align-items: center; gap: 6px; }
+    .overlay-page-wrapper .top-header .header-bottom-row .header-right { display: flex; align-items: center; gap: 6px; }
+    
+    .overlay-page-wrapper .top-header .logo-cyan-round {
+      width: 32px; height: 32px; border-radius: 50%; background: #000; border: 2px solid #00ddff;
+      box-shadow: 0 0 15px rgba(0,200,255,0.3); overflow: hidden; flex-shrink: 0; display: flex;
+      align-items: center; justify-content: center; animation: cyanPulse 2s ease-in-out infinite;
+    }
+    .overlay-page-wrapper .top-header .logo-cyan-round img { width: 90%; height: 90%; object-fit: cover; border-radius: 50%; display: block; }
+    .overlay-page-wrapper .top-header .site-name-led-round {
+      display: inline-flex; align-items: center; justify-content: center; position: relative;
+      padding: 3px 12px 3px 10px; border-radius: 40px; background: #000; border: 2px solid #1a1a1a;
+      box-shadow: 0 0 20px rgba(0,255,100,0.1); min-height: 28px; overflow: hidden;
+    }
+    .overlay-page-wrapper .top-header .site-name-led-round::before {
+      content: ''; position: absolute; top: -4px; left: -4px; right: -4px; bottom: -4px; border-radius: 50px;
+      background: conic-gradient(from 0deg, #00ff00 0deg 40deg, #00ffff 90deg 130deg, #ffff00 180deg 220deg, #ff00ff 270deg 310deg, #00ff00 360deg);
+      animation: ledLeftMove 3s linear infinite; z-index: -1; padding: 4px;
+      -webkit-mask: radial-gradient(farthest-side, transparent calc(100% - 4px), #fff calc(100% - 3px));
+      mask: radial-gradient(farthest-side, transparent calc(100% - 4px), #fff calc(100% - 3px));
+    }
+    .overlay-page-wrapper .top-header .site-name-led-round::after {
+      content: ''; position: absolute; top: -8px; left: -8px; right: -8px; bottom: -8px; border-radius: 50px;
+      background: conic-gradient(from 30deg, rgba(0,255,0,0.15) 0deg 30deg, rgba(0,255,255,0.15) 90deg 120deg, rgba(255,255,0,0.15) 180deg 210deg, rgba(255,0,255,0.15) 270deg 300deg, rgba(0,255,0,0.15) 360deg);
+      animation: ledLeftMove 4s linear infinite reverse; z-index: -2; filter: blur(12px);
+    }
+    .overlay-page-wrapper .top-header .site-name-led-round .led-dot-round {
+      position: absolute; width: 6px; height: 6px; border-radius: 50%; z-index: 2;
+      animation: ledDotLeftMove 3s ease-in-out infinite; box-shadow: 0 0 12px currentColor;
+    }
+    .overlay-page-wrapper .top-header .site-name-led-round .led-dot-round.green { background: #00ff00; color: #00ff00; animation-delay:0s; }
+    .overlay-page-wrapper .top-header .site-name-led-round .led-dot-round.cyan { background: #00ffff; color: #00ffff; animation-delay:0.75s; }
+    .overlay-page-wrapper .top-header .site-name-led-round .led-dot-round.yellow { background: #ffff00; color: #ffff00; animation-delay:1.5s; }
+    .overlay-page-wrapper .top-header .site-name-led-round .led-dot-round.pink { background: #ff00ff; color: #ff00ff; animation-delay:2.25s; }
+    .overlay-page-wrapper .top-header .site-name-led-round .site-name-text {
+      font-weight: 700; font-size: 0.45rem; color: #ffffff; letter-spacing: 0.2px;
+      text-shadow: 0 0 15px rgba(0,255,100,0.15); white-space: nowrap; position: relative; z-index: 1;
+      padding: 1px 0; line-height: 1.2;
+    }
+    .overlay-page-wrapper .top-header .site-name-text .d1 { color: #86efac; font-weight: 800; }
+    .overlay-page-wrapper .top-header .site-name-text .d2 { color: #facc15; font-weight: 800; }
+    .overlay-page-wrapper .top-header .site-name-text .d3 { color: #60a5fa; font-weight: 800; }
+    .overlay-page-wrapper .top-header .site-name-text .d4 { color: #f472b6; font-weight: 800; }
+    .overlay-page-wrapper .top-header .site-name-text .sep { color: #6b7280; font-weight: 400; }
+    
+    .overlay-page-wrapper .top-header .share-btn { background: #000; color: white; border: none; padding: 3px 8px; border-radius: 40px; font-weight: 600; font-size: 0.45rem; cursor: pointer; display: flex; align-items: center; gap: 3px; border: 1px solid #222; }
+    .overlay-page-wrapper .top-header .share-btn:active { transform: scale(0.95); }
+    .overlay-page-wrapper .top-header .share-btn svg { width: 12px; height: 12px; fill: white; }
+    .overlay-page-wrapper .top-header .telegram-btn {
+      display: inline-block; width: 28px; height: 28px; border-radius: 50%; overflow: visible;
+      flex-shrink: 0; position: relative; background: #000; border: 2px solid #1a1a1a;
+      box-shadow: 0 0 10px rgba(0,255,100,0.2); padding: 2px;
+    }
+    .overlay-page-wrapper .top-header .telegram-btn::before {
+      content: ''; position: absolute; top: -3px; left: -3px; right: -3px; bottom: -3px; border-radius: 50%;
+      background: conic-gradient(from 0deg, #00ff00 0deg 30deg, #00ffff 90deg 120deg, #ff00ff 180deg 210deg, #ffff00 270deg 300deg, #00ff00 360deg);
+      animation: ledSlowSpinRound 10s linear infinite; z-index: -1; padding: 3px;
+      -webkit-mask: radial-gradient(farthest-side, transparent calc(100% - 3px), #fff calc(100% - 2px));
+      mask: radial-gradient(farthest-side, transparent calc(100% - 3px), #fff calc(100% - 2px));
+    }
+    .overlay-page-wrapper .top-header .telegram-btn img { width: 100%; height: 100%; object-fit: cover; display: block; border-radius: 50%; position: relative; z-index: 1; background: #000; }
+    .overlay-page-wrapper .top-header .telegram-btn .corner-led {
+      position: absolute; width: 4px; height: 4px; border-radius: 50%; z-index: 2;
+      animation: ledPulseSlow 2.5s ease-in-out infinite; box-shadow: 0 0 6px currentColor;
+    }
+    .overlay-page-wrapper .top-header .telegram-btn .corner-led.tl { top: -1px; left: -1px; color: #00ff00; background: #00ff00; animation-delay:0s; }
+    .overlay-page-wrapper .top-header .telegram-btn .corner-led.tr { top: -1px; right: -1px; color: #00ffff; background: #00ffff; animation-delay:0.6s; }
+    .overlay-page-wrapper .top-header .telegram-btn .corner-led.bl { bottom: -1px; left: -1px; color: #ff00ff; background: #ff00ff; animation-delay:1.2s; }
+    .overlay-page-wrapper .top-header .telegram-btn .corner-led.br { bottom: -1px; right: -1px; color: #ffff00; background: #ffff00; animation-delay:1.8s; }
+
     .overlay-page-wrapper .overlay-content {
       padding: 16px;
       background: white;
@@ -852,6 +961,18 @@
         width: 12px;
         height: 12px;
       }
+      .overlay-page-wrapper .top-header .header-nav-row .header-nav-link {
+        font-size: 0.45rem;
+        padding: 2px 8px;
+      }
+      .overlay-page-wrapper .top-header .logo-cyan-round { width: 26px; height: 26px; }
+      .overlay-page-wrapper .top-header .site-name-led-round { padding: 2px 8px 2px 6px; min-height: 22px; }
+      .overlay-page-wrapper .top-header .site-name-led-round .site-name-text { font-size: 0.35rem; }
+      .overlay-page-wrapper .top-header .site-name-led-round .led-dot-round { width: 4px; height: 4px; }
+      .overlay-page-wrapper .top-header .share-btn { font-size: 0.35rem; padding: 2px 6px; }
+      .overlay-page-wrapper .top-header .share-btn svg { width: 10px; height: 10px; }
+      .overlay-page-wrapper .top-header .telegram-btn { width: 24px; height: 24px; }
+      .overlay-page-wrapper .top-header .header-bottom-row { padding: 4px 0; }
     }
   </style>
 </head>
@@ -1341,20 +1462,49 @@
       });
       navHtml += '</div>';
 
-      // Build full page HTML - with Back to Home button (LED icon + text) at the bottom
+      // Build full page HTML - with full width header same as home page
       const fullHtml = `
         <div class="overlay-page-wrapper">
-          <div class="top-header" style="position:sticky;top:0;z-index:10;background:white;border-bottom:1px solid #e9edf4;padding:8px 10px;">
+          <!-- FULL WIDTH HEADER - SAME AS HOME PAGE -->
+          <div class="top-header" style="position:sticky;top:0;z-index:10;background:white;border-bottom:1px solid #e9edf4;display:flex;flex-direction:column;padding:8px 10px;">
             ${navHtml}
-            <div class="header-bottom-row" style="padding:6px 0 2px 0;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:6px;">
-              <div style="display:flex;align-items:center;gap:6px;">
-                <!-- Empty left side - no Telegram, no Share -->
+            <div class="header-bottom-row" style="display:flex;justify-content:space-between;align-items:center;padding:6px 0 2px 0;flex-wrap:wrap;gap:6px;">
+              <div class="header-left" style="display:flex;align-items:center;gap:6px;">
+                <div class="logo-cyan-round" style="width:32px;height:32px;border-radius:50%;background:#000;border:2px solid #00ddff;box-shadow:0 0 15px rgba(0,200,255,0.3);overflow:hidden;flex-shrink:0;display:flex;align-items:center;justify-content:center;animation:cyanPulse 2s ease-in-out infinite;">
+                  <img src="https://i.ibb.co/CssC2WbG/1000022725.jpg" alt="All Yono App Site" style="width:90%;height:90%;object-fit:cover;border-radius:50%;display:block;">
+                </div>
+                <div class="site-name-led-round" style="display:inline-flex;align-items:center;justify-content:center;position:relative;padding:3px 12px 3px 10px;border-radius:40px;background:#000;border:2px solid #1a1a1a;box-shadow:0 0 20px rgba(0,255,100,0.1);min-height:28px;overflow:hidden;">
+                  <span class="led-dot-round green" style="position:absolute;width:6px;height:6px;border-radius:50%;z-index:2;animation:ledDotLeftMove 3s ease-in-out infinite;box-shadow:0 0 12px currentColor;background:#00ff00;color:#00ff00;animation-delay:0s;"></span>
+                  <span class="led-dot-round cyan" style="position:absolute;width:6px;height:6px;border-radius:50%;z-index:2;animation:ledDotLeftMove 3s ease-in-out infinite 0.75s;box-shadow:0 0 12px currentColor;background:#00ffff;color:#00ffff;"></span>
+                  <span class="led-dot-round yellow" style="position:absolute;width:6px;height:6px;border-radius:50%;z-index:2;animation:ledDotLeftMove 3s ease-in-out infinite 1.5s;box-shadow:0 0 12px currentColor;background:#ffff00;color:#ffff00;"></span>
+                  <span class="led-dot-round pink" style="position:absolute;width:6px;height:6px;border-radius:50%;z-index:2;animation:ledDotLeftMove 3s ease-in-out infinite 2.25s;box-shadow:0 0 12px currentColor;background:#ff00ff;color:#ff00ff;"></span>
+                  <span class="site-name-text" style="font-weight:700;font-size:0.45rem;color:#ffffff;letter-spacing:0.2px;text-shadow:0 0 15px rgba(0,255,100,0.15);white-space:nowrap;position:relative;z-index:1;padding:1px 0;line-height:1.2;">
+                    <span class="d1" style="color:#86efac;font-weight:800;">All Yono App Site</span>
+                    <span class="sep" style="color:#6b7280;font-weight:400;"> • </span>
+                    <span class="d2" style="color:#facc15;font-weight:800;">All Yono Apk</span>
+                    <span class="sep" style="color:#6b7280;font-weight:400;"> • </span>
+                    <span class="d3" style="color:#60a5fa;font-weight:800;">All Yono New</span>
+                    <span class="sep" style="color:#6b7280;font-weight:400;"> • </span>
+                    <span class="d4" style="color:#f472b6;font-weight:800;">All Yono Games</span>
+                  </span>
+                </div>
               </div>
-              <div style="display:flex;align-items:center;gap:6px;">
-                <!-- No Telegram, no Share -->
+              <div class="header-right" style="display:flex;align-items:center;gap:6px;">
+                <a href="https://t.me/allyonogamesdite" target="_blank" rel="noopener noreferrer" class="telegram-btn" style="display:inline-block;width:28px;height:28px;border-radius:50%;overflow:visible;flex-shrink:0;position:relative;background:#000;border:2px solid #1a1a1a;box-shadow:0 0 10px rgba(0,255,100,0.2);padding:2px;">
+                  <span class="corner-led tl" style="position:absolute;width:4px;height:4px;border-radius:50%;z-index:2;animation:ledPulseSlow 2.5s ease-in-out infinite;box-shadow:0 0 6px currentColor;top:-1px;left:-1px;color:#00ff00;background:#00ff00;animation-delay:0s;"></span>
+                  <span class="corner-led tr" style="position:absolute;width:4px;height:4px;border-radius:50%;z-index:2;animation:ledPulseSlow 2.5s ease-in-out infinite 0.6s;box-shadow:0 0 6px currentColor;top:-1px;right:-1px;color:#00ffff;background:#00ffff;"></span>
+                  <span class="corner-led bl" style="position:absolute;width:4px;height:4px;border-radius:50%;z-index:2;animation:ledPulseSlow 2.5s ease-in-out infinite 1.2s;box-shadow:0 0 6px currentColor;bottom:-1px;left:-1px;color:#ff00ff;background:#ff00ff;"></span>
+                  <span class="corner-led br" style="position:absolute;width:4px;height:4px;border-radius:50%;z-index:2;animation:ledPulseSlow 2.5s ease-in-out infinite 1.8s;box-shadow:0 0 6px currentColor;bottom:-1px;right:-1px;color:#ffff00;background:#ffff00;"></span>
+                  <img src="https://i.ibb.co/Wp3zwWc3/telegram-icon.jpg" alt="Telegram" style="width:100%;height:100%;object-fit:cover;display:block;border-radius:50%;position:relative;z-index:1;background:#000;">
+                </a>
+                <button class="share-btn" id="shareBtnOverlay" style="background:#000;color:white;border:none;padding:3px 8px;border-radius:40px;font-weight:600;font-size:0.45rem;cursor:pointer;display:flex;align-items:center;gap:3px;border:1px solid #222;">
+                  <svg viewBox="0 0 24 24" style="width:12px;height:12px;fill:white;"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81 1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9c-1.66 0-3 1.34-3 3s1.34 3 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.16c-.05.21-.08.43-.08.65 0 1.61 1.31 2.92 2.92 2.92 1.61 0 2.92-1.31 2.92-2.92s-1.31-2.92-2.92-2.92z"/></svg>
+                  Share
+                </button>
               </div>
             </div>
           </div>
+          <!-- CONTENT -->
           <div class="overlay-content">
             <h1>${result.title}</h1>
             ${result.content}
@@ -1396,6 +1546,23 @@
           }
         });
       });
+
+      // Attach share button inside overlay
+      const shareBtnOverlay = document.getElementById('shareBtnOverlay');
+      if (shareBtnOverlay) {
+        shareBtnOverlay.addEventListener('click', function() {
+          const shareUrl = 'https://www.earntp.com/gold/jm9n7r';
+          if (navigator.share) {
+            navigator.share({
+              title: 'All Yono App Site – All Yono Apk – All Yono New – All Yono Games',
+              text: 'Download 45+ Yono Games with dual names – 567 Slots (Game), Saga Slots (APK), Jaiho 91 (Game) & more. Get ₹45 Bonus & ₹100 Withdrawal.',
+              url: shareUrl
+            }).catch(() => {});
+          } else {
+            navigator.clipboard.writeText(shareUrl).then(() => alert('Link copied!')).catch(() => prompt('Copy link:', shareUrl));
+          }
+        });
+      }
 
       // Scroll to top smoothly
       window.scrollTo({ top: 0, behavior: 'smooth' });
