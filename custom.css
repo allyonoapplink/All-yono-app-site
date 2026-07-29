@@ -268,23 +268,31 @@ body {
   color: var(--text-secondary) !important;
 }
 
-/* ----- CARD DOWNLOAD BUTTON – GREEN LED (Premium) ----- */
+/* ----- CARD DOWNLOAD BUTTON – Premium White with Green LED Glow ----- */
 .card-download-sm {
-  background: var(--accent-green) !important;
-  box-shadow: var(--glow-green) !important;
+  background: var(--bg-card) !important;
+  color: var(--text-primary) !important;
+  border: 1.5px solid var(--accent-green) !important;
+  box-shadow: var(--shadow-sm), var(--glow-green) !important;
   transition: all 0.3s ease !important;
   border-radius: 40px !important;
   padding: 3px 12px !important;
 }
 
 .card-download-sm:hover {
-  box-shadow: 0 0 40px rgba(0, 230, 118, 0.45) !important;
+  border-color: var(--accent-green) !important;
+  box-shadow: var(--shadow-md), 0 0 35px rgba(0, 230, 118, 0.35) !important;
   transform: scale(1.05) !important;
 }
 
 .card-download-sm .dl-icon svg {
-  stroke: var(--text-white) !important;
-  filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.30)) !important;
+  stroke: var(--accent-green) !important;
+  filter: drop-shadow(0 0 8px rgba(0, 230, 118, 0.30)) !important;
+}
+
+.card-download-sm .dl-icon svg path,
+.card-download-sm .dl-icon svg polyline {
+  stroke: var(--accent-green) !important;
 }
 
 /* ============================================================
@@ -387,7 +395,7 @@ body {
 }
 
 /* ============================================================
-   DOWNLOAD BUTTON – GREEN LED (Premium)
+   DOWNLOAD BUTTON – Premium White with Green LED Glow
    ============================================================ */
 .download-btn {
   background: var(--bg-card) !important;
@@ -404,6 +412,12 @@ body {
 }
 
 .download-btn .btn-icon svg {
+  stroke: var(--accent-green) !important;
+  filter: drop-shadow(0 0 8px rgba(0, 230, 118, 0.30)) !important;
+}
+
+.download-btn .btn-icon svg path,
+.download-btn .btn-icon svg polyline {
   stroke: var(--accent-green) !important;
 }
 
@@ -633,21 +647,29 @@ body {
   color: var(--text-secondary) !important;
 }
 
-/* ----- RELATED DOWNLOAD – GREEN LED ----- */
+/* ----- RELATED DOWNLOAD – Premium White with Green LED Glow ----- */
 .related-item .rdownload {
-  background: var(--accent-green) !important;
-  box-shadow: var(--glow-green) !important;
+  background: var(--bg-card) !important;
+  color: var(--text-primary) !important;
+  border: 1.5px solid var(--accent-green) !important;
+  box-shadow: var(--shadow-sm), var(--glow-green) !important;
   transition: all 0.3s ease !important;
 }
 
 .related-item .rdownload:hover {
-  box-shadow: 0 0 35px rgba(0, 230, 118, 0.40) !important;
+  border-color: var(--accent-green) !important;
+  box-shadow: var(--shadow-md), 0 0 35px rgba(0, 230, 118, 0.35) !important;
   transform: scale(1.05) !important;
 }
 
 .related-item .rdownload .dl-icon-cyan svg {
-  stroke: var(--text-white) !important;
-  filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.30)) !important;
+  stroke: var(--accent-green) !important;
+  filter: drop-shadow(0 0 8px rgba(0, 230, 118, 0.30)) !important;
+}
+
+.related-item .rdownload .dl-icon-cyan svg path,
+.related-item .rdownload .dl-icon-cyan svg polyline {
+  stroke: var(--accent-green) !important;
 }
 
 /* ============================================================
