@@ -45,6 +45,7 @@
       position: sticky;
       top: 0;
       z-index: 10;
+      box-sizing: border-box;
     }
     .header-nav-row {
       display: flex;
@@ -675,198 +676,112 @@
       100% { transform: rotate(360deg); }
     }
 
-    /* ----- OVERLAY PAGE NAVIGATION (About/Contact/Disclaimer) - FULL VIEW FROM TOP TO BOTTOM ----- */
+    /* ----- OVERLAY PAGE - FIXED HEADER OVERLAP ----- */
     .overlay-page-wrapper {
       background: #ffffff;
       min-height: 100vh;
       padding-bottom: 0;
       margin: 0;
       width: 100%;
+      padding-top: 0;
+      box-sizing: border-box;
     }
     .overlay-page-wrapper .top-header {
       position: sticky;
       top: 0;
-      z-index: 10;
+      z-index: 100;
       background: white;
       border-bottom: 1px solid #e9edf4;
       display: flex;
       flex-direction: column;
       padding: 8px 10px;
+      box-sizing: border-box;
     }
-    .overlay-page-wrapper .top-header .header-nav-row {
-      display: flex;
-      justify-content: flex-start;
-      align-items: center;
-      gap: 12px;
-      padding: 4px 0;
-      flex-wrap: wrap;
-    }
-    .overlay-page-wrapper .top-header .header-nav-row .header-nav-link {
-      font-size: 0.55rem;
-      font-weight: 600;
-      color: #1e293b;
-      background: #f8fafc;
-      padding: 3px 12px;
-      border-radius: 40px;
-      border: 1px solid #e2e8f0;
-      cursor: pointer;
-      text-decoration: none;
-      display: inline-flex;
-      align-items: center;
-      gap: 4px;
-      transition: all 0.15s;
-    }
-    .overlay-page-wrapper .top-header .header-nav-row .header-nav-link:active { transform: scale(0.95); }
-    .overlay-page-wrapper .top-header .header-nav-row .header-nav-link.active { background: #1e293b; color: white; border-color: #1e293b; }
-    .overlay-page-wrapper .top-header .header-nav-row .header-nav-link .nav-icon { display: inline-flex; align-items: center; justify-content: center; width: 14px; height: 14px; }
-    .overlay-page-wrapper .top-header .header-nav-row .header-nav-link .nav-icon svg { width: 100%; height: 100%; stroke: currentColor; stroke-width: 2; fill: none; stroke-linecap: round; stroke-linejoin: round; }
-    
-    .overlay-page-wrapper .top-header .header-bottom-row {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 6px 0 2px 0;
-      flex-wrap: wrap;
-      gap: 6px;
-    }
-    .overlay-page-wrapper .top-header .header-bottom-row .header-left { display: flex; align-items: center; gap: 6px; }
-    .overlay-page-wrapper .top-header .header-bottom-row .header-right { display: flex; align-items: center; gap: 6px; }
-    
-    .overlay-page-wrapper .top-header .logo-cyan-round {
-      width: 32px; height: 32px; border-radius: 50%; background: #000; border: 2px solid #00ddff;
-      box-shadow: 0 0 15px rgba(0,200,255,0.3); overflow: hidden; flex-shrink: 0; display: flex;
-      align-items: center; justify-content: center; animation: cyanPulse 2s ease-in-out infinite;
-    }
-    .overlay-page-wrapper .top-header .logo-cyan-round img { width: 90%; height: 90%; object-fit: cover; border-radius: 50%; display: block; }
-    .overlay-page-wrapper .top-header .site-name-led-round {
-      display: inline-flex; align-items: center; justify-content: center; position: relative;
-      padding: 3px 12px 3px 10px; border-radius: 40px; background: #000; border: 2px solid #1a1a1a;
-      box-shadow: 0 0 20px rgba(0,255,100,0.1); min-height: 28px; overflow: hidden;
-    }
-    .overlay-page-wrapper .top-header .site-name-led-round::before {
-      content: ''; position: absolute; top: -4px; left: -4px; right: -4px; bottom: -4px; border-radius: 50px;
-      background: conic-gradient(from 0deg, #00ff00 0deg 40deg, #00ffff 90deg 130deg, #ffff00 180deg 220deg, #ff00ff 270deg 310deg, #00ff00 360deg);
-      animation: ledLeftMove 3s linear infinite; z-index: -1; padding: 4px;
-      -webkit-mask: radial-gradient(farthest-side, transparent calc(100% - 4px), #fff calc(100% - 3px));
-      mask: radial-gradient(farthest-side, transparent calc(100% - 4px), #fff calc(100% - 3px));
-    }
-    .overlay-page-wrapper .top-header .site-name-led-round::after {
-      content: ''; position: absolute; top: -8px; left: -8px; right: -8px; bottom: -8px; border-radius: 50px;
-      background: conic-gradient(from 30deg, rgba(0,255,0,0.15) 0deg 30deg, rgba(0,255,255,0.15) 90deg 120deg, rgba(255,255,0,0.15) 180deg 210deg, rgba(255,0,255,0.15) 270deg 300deg, rgba(0,255,0,0.15) 360deg);
-      animation: ledLeftMove 4s linear infinite reverse; z-index: -2; filter: blur(12px);
-    }
-    .overlay-page-wrapper .top-header .site-name-led-round .led-dot-round {
-      position: absolute; width: 6px; height: 6px; border-radius: 50%; z-index: 2;
-      animation: ledDotLeftMove 3s ease-in-out infinite; box-shadow: 0 0 12px currentColor;
-    }
-    .overlay-page-wrapper .top-header .site-name-led-round .led-dot-round.green { background: #00ff00; color: #00ff00; animation-delay:0s; }
-    .overlay-page-wrapper .top-header .site-name-led-round .led-dot-round.cyan { background: #00ffff; color: #00ffff; animation-delay:0.75s; }
-    .overlay-page-wrapper .top-header .site-name-led-round .led-dot-round.yellow { background: #ffff00; color: #ffff00; animation-delay:1.5s; }
-    .overlay-page-wrapper .top-header .site-name-led-round .led-dot-round.pink { background: #ff00ff; color: #ff00ff; animation-delay:2.25s; }
-    .overlay-page-wrapper .top-header .site-name-led-round .site-name-text {
-      font-weight: 700; font-size: 0.45rem; color: #ffffff; letter-spacing: 0.2px;
-      text-shadow: 0 0 15px rgba(0,255,100,0.15); white-space: nowrap; position: relative; z-index: 1;
-      padding: 1px 0; line-height: 1.2;
-    }
-    .overlay-page-wrapper .top-header .site-name-text .d1 { color: #86efac; font-weight: 800; }
-    .overlay-page-wrapper .top-header .site-name-text .d2 { color: #facc15; font-weight: 800; }
-    .overlay-page-wrapper .top-header .site-name-text .d3 { color: #60a5fa; font-weight: 800; }
-    .overlay-page-wrapper .top-header .site-name-text .d4 { color: #f472b6; font-weight: 800; }
-    .overlay-page-wrapper .top-header .site-name-text .sep { color: #6b7280; font-weight: 400; }
-    
-    .overlay-page-wrapper .top-header .share-btn { background: #000; color: white; border: none; padding: 3px 8px; border-radius: 40px; font-weight: 600; font-size: 0.45rem; cursor: pointer; display: flex; align-items: center; gap: 3px; border: 1px solid #222; }
-    .overlay-page-wrapper .top-header .share-btn:active { transform: scale(0.95); }
-    .overlay-page-wrapper .top-header .share-btn svg { width: 12px; height: 12px; fill: white; }
-    .overlay-page-wrapper .top-header .telegram-btn {
-      display: inline-block; width: 28px; height: 28px; border-radius: 50%; overflow: visible;
-      flex-shrink: 0; position: relative; background: #000; border: 2px solid #1a1a1a;
-      box-shadow: 0 0 10px rgba(0,255,100,0.2); padding: 2px;
-    }
-    .overlay-page-wrapper .top-header .telegram-btn::before {
-      content: ''; position: absolute; top: -3px; left: -3px; right: -3px; bottom: -3px; border-radius: 50%;
-      background: conic-gradient(from 0deg, #00ff00 0deg 30deg, #00ffff 90deg 120deg, #ff00ff 180deg 210deg, #ffff00 270deg 300deg, #00ff00 360deg);
-      animation: ledSlowSpinRound 10s linear infinite; z-index: -1; padding: 3px;
-      -webkit-mask: radial-gradient(farthest-side, transparent calc(100% - 3px), #fff calc(100% - 2px));
-      mask: radial-gradient(farthest-side, transparent calc(100% - 3px), #fff calc(100% - 2px));
-    }
-    .overlay-page-wrapper .top-header .telegram-btn img { width: 100%; height: 100%; object-fit: cover; display: block; border-radius: 50%; position: relative; z-index: 1; background: #000; }
-    .overlay-page-wrapper .top-header .telegram-btn .corner-led {
-      position: absolute; width: 4px; height: 4px; border-radius: 50%; z-index: 2;
-      animation: ledPulseSlow 2.5s ease-in-out infinite; box-shadow: 0 0 6px currentColor;
-    }
-    .overlay-page-wrapper .top-header .telegram-btn .corner-led.tl { top: -1px; left: -1px; color: #00ff00; background: #00ff00; animation-delay:0s; }
-    .overlay-page-wrapper .top-header .telegram-btn .corner-led.tr { top: -1px; right: -1px; color: #00ffff; background: #00ffff; animation-delay:0.6s; }
-    .overlay-page-wrapper .top-header .telegram-btn .corner-led.bl { bottom: -1px; left: -1px; color: #ff00ff; background: #ff00ff; animation-delay:1.2s; }
-    .overlay-page-wrapper .top-header .telegram-btn .corner-led.br { bottom: -1px; right: -1px; color: #ffff00; background: #ffff00; animation-delay:1.8s; }
-
+    /* Ensure content below header has proper spacing */
     .overlay-page-wrapper .overlay-content {
-      padding: 16px;
+      padding: 20px 16px;
       background: #ffffff;
       margin: 0;
       border-radius: 0;
       box-shadow: none;
+      box-sizing: border-box;
+      /* scroll-margin-top for anchor offset if needed */
+      scroll-margin-top: 80px;
     }
-    .overlay-page-wrapper .overlay-content h1 {
-      font-size: 1.2rem;
-      color: #0b1e33;
-      margin-bottom: 12px;
-    }
-    .overlay-page-wrapper .overlay-content p {
-      color: #334155;
-      line-height: 1.6;
-      font-size: 0.85rem;
-    }
+    /* Tags containers - visible and properly positioned */
     .overlay-page-wrapper .overlay-content .page-tags-top,
     .overlay-page-wrapper .overlay-content .page-tags-bottom {
-      margin: 12px 0;
+      margin: 16px 0;
       display: flex;
       flex-wrap: wrap;
-      gap: 6px;
+      gap: 8px;
       width: 100%;
+      box-sizing: border-box;
+      padding: 0;
     }
     .overlay-page-wrapper .overlay-content .game-tag {
       background: #0b1e33;
       color: #fff;
-      font-size: 0.5rem;
-      padding: 4px 12px 4px 8px;
-      gap: 6px;
+      font-size: 0.55rem;
+      padding: 6px 14px 6px 10px;
+      gap: 8px;
       display: inline-flex;
       align-items: center;
       border-radius: 50px;
+      border: 1px solid rgba(255,255,255,0.1);
+      box-sizing: border-box;
+      white-space: nowrap;
     }
     .overlay-page-wrapper .overlay-content .game-tag .tag-loader {
-      width: 14px;
-      height: 14px;
+      width: 16px;
+      height: 16px;
     }
+    .overlay-page-wrapper .overlay-content h1 {
+      font-size: 1.3rem;
+      color: #0b1e33;
+      margin: 0 0 12px 0;
+      padding: 0;
+      clear: both;
+    }
+    .overlay-page-wrapper .overlay-content p {
+      color: #334155;
+      line-height: 1.7;
+      font-size: 0.9rem;
+      margin: 0 0 12px 0;
+      clear: both;
+    }
+    /* Back to Home button */
     .overlay-back-link {
       display: inline-flex;
       align-items: center;
       gap: 8px;
       background: #eef2ff;
       border: none;
-      padding: 8px 16px;
+      padding: 10px 20px;
       border-radius: 40px;
       font-weight: 600;
-      font-size: 0.65rem;
+      font-size: 0.7rem;
       color: #1e293b;
       cursor: pointer;
       text-decoration: none;
-      margin-top: 16px;
+      margin-top: 20px;
       border: 1px solid #dbeafe;
       transition: all 0.15s;
+      box-sizing: border-box;
     }
     .overlay-back-link:active { transform: scale(0.95); }
     .overlay-back-link .back-led-icon {
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      width: 22px;
-      height: 22px;
+      width: 24px;
+      height: 24px;
       border-radius: 50%;
       background: #000;
       border: 2px solid #1a1a1a;
       position: relative;
       box-shadow: 0 0 12px rgba(0,255,100,0.15);
+      flex-shrink: 0;
     }
     .overlay-back-link .back-led-icon::before {
       content: '';
@@ -883,14 +798,14 @@
       position: relative;
       z-index: 2;
       color: #fff;
-      font-size: 0.5rem;
+      font-size: 0.55rem;
       display: flex;
       align-items: center;
       justify-content: center;
     }
     .overlay-back-link .back-led-icon .inner-icon svg {
-      width: 14px;
-      height: 14px;
+      width: 16px;
+      height: 16px;
       stroke: #ffffff;
       stroke-width: 2.2;
       fill: none;
@@ -902,6 +817,7 @@
       100% { transform: rotate(360deg); }
     }
 
+    /* Responsive fixes for mobile */
     @media (max-width: 420px) {
       .header-nav-link { font-size: 0.45rem; padding: 2px 8px; }
       .logo-cyan-round { width: 26px; height: 26px; }
@@ -945,23 +861,24 @@
       .download-btn .btn-icon { width: 20px; height: 20px; }
       .related-item .rdownload { font-size: 0.4rem; padding: 3px 8px; }
       .related-item .rdownload .dl-icon-cyan { width: 14px; height: 14px; }
-      .overlay-page-wrapper .overlay-content { padding: 12px; margin: 0; }
-      .overlay-page-wrapper .overlay-content h1 { font-size: 1rem; }
-      .overlay-page-wrapper .overlay-content p { font-size: 0.75rem; }
-      .overlay-back-link { font-size: 0.55rem; padding: 6px 12px; }
-      .overlay-back-link .back-led-icon { width: 18px; height: 18px; }
-      .overlay-back-link .back-led-icon .inner-icon svg { width: 12px; height: 12px; }
+      .overlay-page-wrapper .overlay-content { padding: 16px 12px; }
+      .overlay-page-wrapper .overlay-content h1 { font-size: 1.1rem; }
+      .overlay-page-wrapper .overlay-content p { font-size: 0.8rem; }
+      .overlay-back-link { font-size: 0.6rem; padding: 8px 14px; }
+      .overlay-back-link .back-led-icon { width: 20px; height: 20px; }
+      .overlay-back-link .back-led-icon .inner-icon svg { width: 14px; height: 14px; }
       .overlay-page-wrapper .overlay-content .page-tags-top,
       .overlay-page-wrapper .overlay-content .page-tags-bottom {
-        gap: 4px;
+        gap: 6px;
+        margin: 12px 0;
       }
       .overlay-page-wrapper .overlay-content .game-tag {
-        font-size: 0.4rem;
-        padding: 3px 8px 3px 6px;
+        font-size: 0.45rem;
+        padding: 4px 10px 4px 8px;
       }
       .overlay-page-wrapper .overlay-content .game-tag .tag-loader {
-        width: 12px;
-        height: 12px;
+        width: 14px;
+        height: 14px;
       }
       .overlay-page-wrapper .top-header .header-nav-row .header-nav-link {
         font-size: 0.45rem;
@@ -1451,21 +1368,21 @@
       const headerHTML = document.getElementById('globalHeader').outerHTML;
       
       // Build full page HTML with the exact same header - FULL VIEW from top to bottom
+      // Added padding-top to ensure content is not hidden behind sticky header
       const fullHtml = `
-        <div class="overlay-page-wrapper">
-          <!-- EXACT SAME HEADER AS HOME PAGE -->
+        <div class="overlay-page-wrapper" style="padding-top:0;">
+          <!-- EXACT SAME HEADER AS HOME PAGE - Sticky -->
           ${headerHTML}
-          <!-- CONTENT - FULL VIEW (no title heading) -->
-          <div class="overlay-content" style="margin:0;border-radius:0;padding:16px;background:#ffffff;">
+          <!-- CONTENT - FULL VIEW with proper spacing -->
+          <div class="overlay-content" style="padding-top:20px;margin:0;border-radius:0;background:#ffffff;">
             ${result.content}
             <!-- Back to Home button with LED icon at the bottom -->
-            <div style="display:flex;justify-content:center;margin-top:20px;padding-bottom:10px;">
-              <button class="overlay-back-link" id="backToHomeBtn" style="display:inline-flex;align-items:center;gap:8px;background:#eef2ff;border:none;padding:8px 16px;border-radius:40px;font-weight:600;font-size:0.65rem;color:#1e293b;cursor:pointer;border:1px solid #dbeafe;">
-                <span class="back-led-icon" style="display:inline-flex;align-items:center;justify-content:center;width:22px;height:22px;border-radius:50%;background:#000;border:2px solid #1a1a1a;position:relative;box-shadow:0 0 12px rgba(0,255,100,0.15);">
-                  <span style="position:relative;z-index:2;color:#fff;font-size:0.5rem;display:flex;align-items:center;justify-content:center;">
-                    <svg viewBox="0 0 24 24" style="width:14px;height:14px;stroke:#ffffff;stroke-width:2.2;fill:none;stroke-linecap:round;stroke-linejoin:round;"><path d="M19 12H5"/><path d="M12 19l-7-7 7-7"/></svg>
+            <div style="display:flex;justify-content:center;margin-top:24px;padding-bottom:16px;">
+              <button class="overlay-back-link" id="backToHomeBtn">
+                <span class="back-led-icon">
+                  <span class="inner-icon">
+                    <svg viewBox="0 0 24 24"><path d="M19 12H5"/><path d="M12 19l-7-7 7-7"/></svg>
                   </span>
-                  <span style="position:absolute;inset:-2px;border-radius:50%;background:conic-gradient(from 0deg, #00ff00 0deg 40deg, #00ffff 90deg 130deg, #ffff00 180deg 220deg, #ff00ff 270deg 310deg, #00ff00 360deg);animation:ledSlowSpinRound 8s linear infinite;z-index:0;-webkit-mask:radial-gradient(farthest-side,transparent calc(100% - 2px),#fff calc(100% - 1px));mask:radial-gradient(farthest-side,transparent calc(100% - 2px),#fff calc(100% - 1px));"></span>
                 </span>
                 <span>← Back to Home</span>
               </button>
