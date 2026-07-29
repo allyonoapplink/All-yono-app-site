@@ -1,1 +1,65 @@
+/* ============================
+   custom.css
+   Global Custom Styles
+   ============================ */
 
+/* Reset */
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+html{
+    scroll-behavior:smooth;
+}
+
+body{
+    font-family:Arial, Helvetica, sans-serif;
+    line-height:1.6;
+    background:#ffffff;
+    color:#222;
+}
+
+/* Images */
+img{
+    max-width:100%;
+    height:auto;
+    display:block;
+}
+
+/* Links */
+a{
+    text-decoration:none;
+    color:inherit;
+}
+
+/* Buttons */
+button,
+.btn{
+    cursor:pointer;
+    border:none;
+    outline:none;
+    transition:.3s ease;
+}
+
+/* SVG Icons */
+svg{
+    width:20px;
+    height:20px;
+    vertical-align:middle;
+    fill:currentColor;
+}
+
+/* Mobile Responsive */
+@media (max-width:768px){
+    body{
+        overflow-x:hidden;
+    }
+
+    img,
+    button,
+    .btn{
+        max-width:100%;
+    }
+}
