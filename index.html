@@ -26,20 +26,8 @@
   <meta name="twitter:image" content="https://i.ibb.co/CssC2WbG/1000022725.jpg">
   
   <style>
-    /* Image containment fixes - all icons full view, no crop */
-    .card-img img,
-    .detail-img img,
-    .related-item img,
-    .logo-cyan-round img,
-    .telegram-btn img {
-      width: 100% !important;
-      height: 100% !important;
-      object-fit: contain !important;
-      object-position: center center !important;
-      display: block !important;
-      border-radius: inherit;
-    }
-    /* Ensure container respects aspect ratio */
+    /* ===== ICON NORMALIZATION - ALL APP ICONS SAME SIZE, FULL VIEW, NO CROP ===== */
+    /* Force all image containers to be identical size and centered */
     .card-img,
     .detail-img,
     .related-item img,
@@ -49,18 +37,86 @@
       align-items: center !important;
       justify-content: center !important;
       overflow: hidden !important;
-      background: #f8fafc;
+      background: #ffffff !important;
+      flex-shrink: 0 !important;
     }
-    .card-img { width: 42px; height: 42px; flex-shrink: 0; border-radius: 10px; }
-    .detail-img { width: 65px; height: 65px; flex-shrink: 0; border-radius: 14px; }
-    .related-item img { width: 28px; height: 28px; border-radius: 8px; flex-shrink: 0; }
-    .logo-cyan-round { width: 32px; height: 32px; border-radius: 50%; }
-    .telegram-btn { width: 28px; height: 28px; border-radius: 50%; }
-    /* Fallback for any missed images */
-    img {
+    
+    /* Fixed dimensions for all app icon containers */
+    .card-img {
+      width: 48px !important;
+      height: 48px !important;
+      border-radius: 12px !important;
+      border: 1px solid #e9edf4 !important;
+      margin-left: 18px !important;
+    }
+    
+    .detail-img {
+      width: 70px !important;
+      height: 70px !important;
+      border-radius: 14px !important;
+      border: 1px solid #e9edf4 !important;
+    }
+    
+    .related-item img {
+      width: 36px !important;
+      height: 36px !important;
+      border-radius: 10px !important;
+      border: 1px solid #e9edf4 !important;
+      object-fit: contain !important;
+      object-position: center center !important;
+      background: #ffffff !important;
+      display: block !important;
+    }
+    
+    /* Logo and Telegram - keep consistent but smaller */
+    .logo-cyan-round {
+      width: 36px !important;
+      height: 36px !important;
+      border-radius: 50% !important;
+      background: #ffffff !important;
+    }
+    
+    .telegram-btn {
+      width: 30px !important;
+      height: 30px !important;
+      border-radius: 50% !important;
+      background: #ffffff !important;
+    }
+    
+    /* Universal image rules - contain, center, no crop */
+    .card-img img,
+    .detail-img img,
+    .logo-cyan-round img,
+    .telegram-btn img {
+      width: 100% !important;
+      height: 100% !important;
+      object-fit: contain !important;
+      object-position: center center !important;
+      display: block !important;
+      border-radius: inherit !important;
+      background: #ffffff !important;
+    }
+    
+    /* Fix for any inline style overrides */
+    .card-img img[style],
+    .detail-img img[style],
+    .logo-cyan-round img[style],
+    .telegram-btn img[style] {
       object-fit: contain !important;
       object-position: center center !important;
     }
+    
+    /* Ensure related item images are also contained */
+    .related-item {
+      display: flex !important;
+      align-items: center !important;
+      gap: 10px !important;
+    }
+    
+    .related-item img {
+      flex-shrink: 0 !important;
+    }
+    
     /* Keep all other existing styles untouched */
   </style>
 </head>
