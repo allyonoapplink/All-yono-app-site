@@ -1,16 +1,48 @@
+/* 1. Main Background and Clean Canvas */
 body {
-  background-color: #FAFAFA; /* Soft premium white */
-  color: #1F2937;            /* Dark gray for easy reading */
-  font-family: sans-serif;
-  margin: 0;
-  padding: 16px;
+    background-color: #ffffff !important;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
 }
 
-.button {
-  background-color: #4F46E5; /* Premium Indigo */
-  color: #FFFFFF;
-  padding: 12px 24px;
-  border-radius: 8px;
-  border: none;
-  font-weight: bold;
+/* 2. List Cards - Clean Border & Soft HD Shadow */
+.card, .list-item { /* Aapke card class ka naam */
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 16px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
+    transition: all 0.3s ease;
+}
+
+.card:hover, .list-item:hover {
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+    transform: translateY(-2px);
+}
+
+/* 3. HD Dark Download Button (Rich Emerald Dark Theme) */
+.download-btn, button, a.download-link { /* Aapke download button ki class */
+    background: linear-gradient(135deg, #0f3822 0%, #062313 100%) !important;
+    color: #ffffff !important;
+    font-weight: 700 !important;
+    font-size: 14px;
+    padding: 10px 22px;
+    border-radius: 50px; /* Modern Smooth Rounded Pills */
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    box-shadow: 0 4px 14px rgba(6, 35, 19, 0.4);
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    text-decoration: none;
+    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Download Button Hover Effect (HD Glow) */
+.download-btn:hover, button:hover, a.download-link:hover {
+    background: linear-gradient(135deg, #154d2f 0%, #0a331c 100%) !important;
+    box-shadow: 0 6px 20px rgba(15, 56, 34, 0.6);
+    transform: scale(1.03);
+}
+
+/* Download Button Click/Active State */
+.download-btn:active, button:active {
+    transform: scale(0.97);
 }
