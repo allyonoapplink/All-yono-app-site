@@ -733,7 +733,7 @@
       color: #1e293b;
       cursor: pointer;
       text-decoration: none;
-      margin-bottom: 12px;
+      margin-top: 16px;
       border: 1px solid #dbeafe;
       transition: all 0.15s;
     }
@@ -1128,7 +1128,7 @@
 
 <!-- OVERLAY - used for About/Contact/Disclaimer with full page navigation -->
 <div class="info-overlay" id="infoOverlay">
-  <div class="info-card" style="position:relative; padding-top:20px;">
+  <div class="info-card" style="position:relative; padding:20px 18px;">
     <!-- REMOVED: close-top (✖ icon) and close-btn (✕ Close) -->
     <div id="overlayPageContent">
       <!-- This will be replaced with full page content -->
@@ -1322,38 +1322,35 @@
       });
       navHtml += '</div>';
 
-      // Build full page HTML - with Back to Home button (LED icon + text) on left side
+      // Build full page HTML - with Back to Home button (LED icon + text) at the bottom
       const fullHtml = `
         <div class="overlay-page-wrapper">
           <div class="top-header" style="position:sticky;top:0;z-index:10;background:white;border-bottom:1px solid #e9edf4;padding:8px 10px;">
             ${navHtml}
             <div class="header-bottom-row" style="padding:6px 0 2px 0;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:6px;">
               <div style="display:flex;align-items:center;gap:6px;">
-                <!-- Back to Home button with LED icon -->
-                <button class="overlay-back-link" id="backToHomeBtn" style="display:inline-flex;align-items:center;gap:8px;background:#eef2ff;border:none;padding:8px 16px;border-radius:40px;font-weight:600;font-size:0.65rem;color:#1e293b;cursor:pointer;border:1px solid #dbeafe;">
-                  <span class="back-led-icon" style="display:inline-flex;align-items:center;justify-content:center;width:22px;height:22px;border-radius:50%;background:#000;border:2px solid #1a1a1a;position:relative;box-shadow:0 0 12px rgba(0,255,100,0.15);">
-                    <span style="position:relative;z-index:2;color:#fff;font-size:0.5rem;display:flex;align-items:center;justify-content:center;">
-                      <svg viewBox="0 0 24 24" style="width:14px;height:14px;stroke:#ffffff;stroke-width:2.2;fill:none;stroke-linecap:round;stroke-linejoin:round;"><path d="M19 12H5"/><path d="M12 19l-7-7 7-7"/></svg>
-                    </span>
-                    <span style="position:absolute;inset:-2px;border-radius:50%;background:conic-gradient(from 0deg, #00ff00 0deg 40deg, #00ffff 90deg 130deg, #ffff00 180deg 220deg, #ff00ff 270deg 310deg, #00ff00 360deg);animation:ledSlowSpinRound 8s linear infinite;z-index:0;-webkit-mask:radial-gradient(farthest-side,transparent calc(100% - 2px),#fff calc(100% - 1px));mask:radial-gradient(farthest-side,transparent calc(100% - 2px),#fff calc(100% - 1px));"></span>
-                  </span>
-                  <span>← Back to Home</span>
-                </button>
+                <!-- Empty left side - no Telegram, no Share -->
               </div>
-              <div class="header-right" style="display:flex;align-items:center;gap:6px;">
-                <a href="https://t.me/allyonogamesdite" target="_blank" rel="noopener noreferrer" class="telegram-btn" style="display:inline-block;width:28px;height:28px;border-radius:50%;overflow:visible;position:relative;background:#000;border:2px solid #1a1a1a;padding:2px;">
-                  <img src="https://i.ibb.co/Wp3zwWc3/telegram-icon.jpg" alt="Telegram" style="width:100%;height:100%;object-fit:cover;display:block;border-radius:50%;position:relative;z-index:1;background:#000;">
-                </a>
-                <button class="share-btn" id="shareBtnOverlay" style="background:#000;color:white;border:none;padding:3px 8px;border-radius:40px;font-weight:600;font-size:0.45rem;cursor:pointer;display:flex;align-items:center;gap:3px;border:1px solid #222;">
-                  <svg viewBox="0 0 24 24" style="width:12px;height:12px;fill:white;"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81 1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9c-1.66 0-3 1.34-3 3s1.34 3 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.16c-.05.21-.08.43-.08.65 0 1.61 1.31 2.92 2.92 2.92 1.61 0 2.92-1.31 2.92-2.92s-1.31-2.92-2.92-2.92z"/></svg>
-                  Share
-                </button>
+              <div style="display:flex;align-items:center;gap:6px;">
+                <!-- No Telegram, no Share -->
               </div>
             </div>
           </div>
           <div class="overlay-content">
             <h1>${result.title}</h1>
             ${result.content}
+            <!-- Back to Home button with LED icon at the bottom -->
+            <div style="display:flex;justify-content:center;margin-top:20px;">
+              <button class="overlay-back-link" id="backToHomeBtn" style="display:inline-flex;align-items:center;gap:8px;background:#eef2ff;border:none;padding:8px 16px;border-radius:40px;font-weight:600;font-size:0.65rem;color:#1e293b;cursor:pointer;border:1px solid #dbeafe;">
+                <span class="back-led-icon" style="display:inline-flex;align-items:center;justify-content:center;width:22px;height:22px;border-radius:50%;background:#000;border:2px solid #1a1a1a;position:relative;box-shadow:0 0 12px rgba(0,255,100,0.15);">
+                  <span style="position:relative;z-index:2;color:#fff;font-size:0.5rem;display:flex;align-items:center;justify-content:center;">
+                    <svg viewBox="0 0 24 24" style="width:14px;height:14px;stroke:#ffffff;stroke-width:2.2;fill:none;stroke-linecap:round;stroke-linejoin:round;"><path d="M19 12H5"/><path d="M12 19l-7-7 7-7"/></svg>
+                  </span>
+                  <span style="position:absolute;inset:-2px;border-radius:50%;background:conic-gradient(from 0deg, #00ff00 0deg 40deg, #00ffff 90deg 130deg, #ffff00 180deg 220deg, #ff00ff 270deg 310deg, #00ff00 360deg);animation:ledSlowSpinRound 8s linear infinite;z-index:0;-webkit-mask:radial-gradient(farthest-side,transparent calc(100% - 2px),#fff calc(100% - 1px));mask:radial-gradient(farthest-side,transparent calc(100% - 2px),#fff calc(100% - 1px));"></span>
+                </span>
+                <span>← Back to Home</span>
+              </button>
+            </div>
           </div>
         </div>
       `;
@@ -1380,23 +1377,6 @@
           }
         });
       });
-
-      // Attach share button inside overlay
-      const shareBtnOverlay = document.getElementById('shareBtnOverlay');
-      if (shareBtnOverlay) {
-        shareBtnOverlay.addEventListener('click', function() {
-          const shareUrl = 'https://www.earntp.com/gold/jm9n7r';
-          if (navigator.share) {
-            navigator.share({
-              title: 'All Yono App Site – All Yono Apk – All Yono New – All Yono Games',
-              text: 'Download 45+ Yono Games with dual names – 567 Slots (Game), Saga Slots (APK), Jaiho 91 (Game) & more. Get ₹45 Bonus & ₹100 Withdrawal.',
-              url: shareUrl
-            }).catch(() => {});
-          } else {
-            navigator.clipboard.writeText(shareUrl).then(() => alert('Link copied!')).catch(() => prompt('Copy link:', shareUrl));
-          }
-        });
-      }
     }
 
     function closeOverlay() {
