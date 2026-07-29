@@ -1,4 +1,3 @@
-77777
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -1307,9 +1306,9 @@
 
     // ---- PAGE CONFIG ----
     const pageConfig = {
-      about: { url: 'about.html', title: 'About Us', placeholder: 'Add your custom About content here.' },
-      contact: { url: 'contact.html', title: 'Contact Us', placeholder: 'Add your custom Contact content here.' },
-      disclaimer: { url: 'disclaimer.html', title: 'Disclaimer', placeholder: 'Add your custom Disclaimer content here.' }
+      about: { url: 'about.html', title: '', placeholder: 'Add your custom About content here.' },
+      contact: { url: 'contact.html', title: '', placeholder: 'Add your custom Contact content here.' },
+      disclaimer: { url: 'disclaimer.html', title: '', placeholder: 'Add your custom Disclaimer content here.' }
     };
 
     // ---- HEADER NAV ----
@@ -1391,7 +1390,7 @@
     // ---- FETCH CONTENT FROM EXTERNAL HTML FILE ----
     async function fetchPageContent(pageType) {
       const config = pageConfig[pageType];
-      if (!config) return { title: pageType, content: 'Page not found.' };
+      if (!config) return { title: '', content: 'Page not found.' };
 
       try {
         const response = await fetch(config.url + '?t=' + Date.now());
@@ -1420,12 +1419,12 @@
               content = tagsHtml + content + tagsHtml.replace('page-tags-top', 'page-tags-bottom');
             }
           }
-          return { title: config.title, content: content };
+          return { title: '', content: content };
         } else {
-          return { title: config.title, content: config.placeholder };
+          return { title: '', content: config.placeholder };
         }
       } catch (e) {
-        return { title: config.title, content: config.placeholder };
+        return { title: '', content: config.placeholder };
       }
     }
 
@@ -1456,9 +1455,8 @@
         <div class="overlay-page-wrapper">
           <!-- EXACT SAME HEADER AS HOME PAGE -->
           ${headerHTML}
-          <!-- CONTENT - FULL VIEW -->
+          <!-- CONTENT - FULL VIEW (no title heading) -->
           <div class="overlay-content" style="margin:0;border-radius:0;padding:16px;background:#ffffff;">
-            <h1>${result.title}</h1>
             ${result.content}
             <!-- Back to Home button with LED icon at the bottom -->
             <div style="display:flex;justify-content:center;margin-top:20px;padding-bottom:10px;">
@@ -1490,11 +1488,13 @@
         });
       });
 
-      // Attach Back to Home button - Go to Home with scroll to top
+      // Attach Back to Home button
       const backToHomeBtn = document.getElementById('backToHomeBtn');
       if (backToHomeBtn) {
         backToHomeBtn.addEventListener('click', function(e) {
           e.preventDefault();
+          // Close overlay and go to home with scroll to top
+          infoOverlay.style.display = 'none';
           goHome();
         });
       }
