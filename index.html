@@ -551,7 +551,7 @@
     .footer-note { padding: 6px 10px 10px; text-align: center; color: #94a3b8; font-size: 0.5rem; background: #f8fafc; }
 
     .info-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.4); backdrop-filter: blur(3px); z-index: 99; justify-content: center; align-items: center; }
-    .info-card { background: white; max-width: 400px; width: 90%; padding: 20px 18px; border-radius: 28px; box-shadow: 0 30px 60px rgba(0,0,0,0.2); position: relative; max-height: 80vh; overflow-y: auto; }
+    .info-card { background: white; max-width: 400px; width: 90%; padding: 0; border-radius: 28px; box-shadow: 0 30px 60px rgba(0,0,0,0.2); position: relative; max-height: 90vh; overflow-y: auto; }
     .info-card .close-top { position: absolute; top: 12px; right: 12px; z-index: 5; cursor: pointer; }
     .info-card .close-top .close-icon-wrap { width: 28px; height: 28px; }
     .info-card .close-top .close-icon-wrap .close-icon-inner { width: 14px; height: 14px; }
@@ -675,13 +675,128 @@
       100% { transform: rotate(360deg); }
     }
 
-    /* ----- OVERLAY PAGE NAVIGATION (About/Contact/Disclaimer) - SAME AS HOME PAGE ----- */
+    /* ----- OVERLAY PAGE NAVIGATION (About/Contact/Disclaimer) - FULL VIEW FROM TOP TO BOTTOM ----- */
     .overlay-page-wrapper {
       background: #f8fafc;
       min-height: 100vh;
       padding-bottom: 20px;
     }
-    /* Use same exact header as home page - we'll clone it via JS */
+    .overlay-page-wrapper .top-header {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      background: white;
+      border-bottom: 1px solid #e9edf4;
+      display: flex;
+      flex-direction: column;
+      padding: 8px 10px;
+    }
+    .overlay-page-wrapper .top-header .header-nav-row {
+      display: flex;
+      justify-content: flex-start;
+      align-items: center;
+      gap: 12px;
+      padding: 4px 0;
+      flex-wrap: wrap;
+    }
+    .overlay-page-wrapper .top-header .header-nav-row .header-nav-link {
+      font-size: 0.55rem;
+      font-weight: 600;
+      color: #1e293b;
+      background: #f8fafc;
+      padding: 3px 12px;
+      border-radius: 40px;
+      border: 1px solid #e2e8f0;
+      cursor: pointer;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      transition: all 0.15s;
+    }
+    .overlay-page-wrapper .top-header .header-nav-row .header-nav-link:active { transform: scale(0.95); }
+    .overlay-page-wrapper .top-header .header-nav-row .header-nav-link.active { background: #1e293b; color: white; border-color: #1e293b; }
+    .overlay-page-wrapper .top-header .header-nav-row .header-nav-link .nav-icon { display: inline-flex; align-items: center; justify-content: center; width: 14px; height: 14px; }
+    .overlay-page-wrapper .top-header .header-nav-row .header-nav-link .nav-icon svg { width: 100%; height: 100%; stroke: currentColor; stroke-width: 2; fill: none; stroke-linecap: round; stroke-linejoin: round; }
+    
+    .overlay-page-wrapper .top-header .header-bottom-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 6px 0 2px 0;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+    .overlay-page-wrapper .top-header .header-bottom-row .header-left { display: flex; align-items: center; gap: 6px; }
+    .overlay-page-wrapper .top-header .header-bottom-row .header-right { display: flex; align-items: center; gap: 6px; }
+    
+    .overlay-page-wrapper .top-header .logo-cyan-round {
+      width: 32px; height: 32px; border-radius: 50%; background: #000; border: 2px solid #00ddff;
+      box-shadow: 0 0 15px rgba(0,200,255,0.3); overflow: hidden; flex-shrink: 0; display: flex;
+      align-items: center; justify-content: center; animation: cyanPulse 2s ease-in-out infinite;
+    }
+    .overlay-page-wrapper .top-header .logo-cyan-round img { width: 90%; height: 90%; object-fit: cover; border-radius: 50%; display: block; }
+    .overlay-page-wrapper .top-header .site-name-led-round {
+      display: inline-flex; align-items: center; justify-content: center; position: relative;
+      padding: 3px 12px 3px 10px; border-radius: 40px; background: #000; border: 2px solid #1a1a1a;
+      box-shadow: 0 0 20px rgba(0,255,100,0.1); min-height: 28px; overflow: hidden;
+    }
+    .overlay-page-wrapper .top-header .site-name-led-round::before {
+      content: ''; position: absolute; top: -4px; left: -4px; right: -4px; bottom: -4px; border-radius: 50px;
+      background: conic-gradient(from 0deg, #00ff00 0deg 40deg, #00ffff 90deg 130deg, #ffff00 180deg 220deg, #ff00ff 270deg 310deg, #00ff00 360deg);
+      animation: ledLeftMove 3s linear infinite; z-index: -1; padding: 4px;
+      -webkit-mask: radial-gradient(farthest-side, transparent calc(100% - 4px), #fff calc(100% - 3px));
+      mask: radial-gradient(farthest-side, transparent calc(100% - 4px), #fff calc(100% - 3px));
+    }
+    .overlay-page-wrapper .top-header .site-name-led-round::after {
+      content: ''; position: absolute; top: -8px; left: -8px; right: -8px; bottom: -8px; border-radius: 50px;
+      background: conic-gradient(from 30deg, rgba(0,255,0,0.15) 0deg 30deg, rgba(0,255,255,0.15) 90deg 120deg, rgba(255,255,0,0.15) 180deg 210deg, rgba(255,0,255,0.15) 270deg 300deg, rgba(0,255,0,0.15) 360deg);
+      animation: ledLeftMove 4s linear infinite reverse; z-index: -2; filter: blur(12px);
+    }
+    .overlay-page-wrapper .top-header .site-name-led-round .led-dot-round {
+      position: absolute; width: 6px; height: 6px; border-radius: 50%; z-index: 2;
+      animation: ledDotLeftMove 3s ease-in-out infinite; box-shadow: 0 0 12px currentColor;
+    }
+    .overlay-page-wrapper .top-header .site-name-led-round .led-dot-round.green { background: #00ff00; color: #00ff00; animation-delay:0s; }
+    .overlay-page-wrapper .top-header .site-name-led-round .led-dot-round.cyan { background: #00ffff; color: #00ffff; animation-delay:0.75s; }
+    .overlay-page-wrapper .top-header .site-name-led-round .led-dot-round.yellow { background: #ffff00; color: #ffff00; animation-delay:1.5s; }
+    .overlay-page-wrapper .top-header .site-name-led-round .led-dot-round.pink { background: #ff00ff; color: #ff00ff; animation-delay:2.25s; }
+    .overlay-page-wrapper .top-header .site-name-led-round .site-name-text {
+      font-weight: 700; font-size: 0.45rem; color: #ffffff; letter-spacing: 0.2px;
+      text-shadow: 0 0 15px rgba(0,255,100,0.15); white-space: nowrap; position: relative; z-index: 1;
+      padding: 1px 0; line-height: 1.2;
+    }
+    .overlay-page-wrapper .top-header .site-name-text .d1 { color: #86efac; font-weight: 800; }
+    .overlay-page-wrapper .top-header .site-name-text .d2 { color: #facc15; font-weight: 800; }
+    .overlay-page-wrapper .top-header .site-name-text .d3 { color: #60a5fa; font-weight: 800; }
+    .overlay-page-wrapper .top-header .site-name-text .d4 { color: #f472b6; font-weight: 800; }
+    .overlay-page-wrapper .top-header .site-name-text .sep { color: #6b7280; font-weight: 400; }
+    
+    .overlay-page-wrapper .top-header .share-btn { background: #000; color: white; border: none; padding: 3px 8px; border-radius: 40px; font-weight: 600; font-size: 0.45rem; cursor: pointer; display: flex; align-items: center; gap: 3px; border: 1px solid #222; }
+    .overlay-page-wrapper .top-header .share-btn:active { transform: scale(0.95); }
+    .overlay-page-wrapper .top-header .share-btn svg { width: 12px; height: 12px; fill: white; }
+    .overlay-page-wrapper .top-header .telegram-btn {
+      display: inline-block; width: 28px; height: 28px; border-radius: 50%; overflow: visible;
+      flex-shrink: 0; position: relative; background: #000; border: 2px solid #1a1a1a;
+      box-shadow: 0 0 10px rgba(0,255,100,0.2); padding: 2px;
+    }
+    .overlay-page-wrapper .top-header .telegram-btn::before {
+      content: ''; position: absolute; top: -3px; left: -3px; right: -3px; bottom: -3px; border-radius: 50%;
+      background: conic-gradient(from 0deg, #00ff00 0deg 30deg, #00ffff 90deg 120deg, #ff00ff 180deg 210deg, #ffff00 270deg 300deg, #00ff00 360deg);
+      animation: ledSlowSpinRound 10s linear infinite; z-index: -1; padding: 3px;
+      -webkit-mask: radial-gradient(farthest-side, transparent calc(100% - 3px), #fff calc(100% - 2px));
+      mask: radial-gradient(farthest-side, transparent calc(100% - 3px), #fff calc(100% - 2px));
+    }
+    .overlay-page-wrapper .top-header .telegram-btn img { width: 100%; height: 100%; object-fit: cover; display: block; border-radius: 50%; position: relative; z-index: 1; background: #000; }
+    .overlay-page-wrapper .top-header .telegram-btn .corner-led {
+      position: absolute; width: 4px; height: 4px; border-radius: 50%; z-index: 2;
+      animation: ledPulseSlow 2.5s ease-in-out infinite; box-shadow: 0 0 6px currentColor;
+    }
+    .overlay-page-wrapper .top-header .telegram-btn .corner-led.tl { top: -1px; left: -1px; color: #00ff00; background: #00ff00; animation-delay:0s; }
+    .overlay-page-wrapper .top-header .telegram-btn .corner-led.tr { top: -1px; right: -1px; color: #00ffff; background: #00ffff; animation-delay:0.6s; }
+    .overlay-page-wrapper .top-header .telegram-btn .corner-led.bl { bottom: -1px; left: -1px; color: #ff00ff; background: #ff00ff; animation-delay:1.2s; }
+    .overlay-page-wrapper .top-header .telegram-btn .corner-led.br { bottom: -1px; right: -1px; color: #ffff00; background: #ffff00; animation-delay:1.8s; }
+
     .overlay-page-wrapper .overlay-content {
       padding: 16px;
       background: white;
@@ -846,6 +961,19 @@
         width: 12px;
         height: 12px;
       }
+      .overlay-page-wrapper .top-header .header-nav-row .header-nav-link {
+        font-size: 0.45rem;
+        padding: 2px 8px;
+      }
+      .overlay-page-wrapper .top-header .logo-cyan-round { width: 26px; height: 26px; }
+      .overlay-page-wrapper .top-header .site-name-led-round { padding: 2px 8px 2px 6px; min-height: 22px; }
+      .overlay-page-wrapper .top-header .site-name-led-round .site-name-text { font-size: 0.35rem; }
+      .overlay-page-wrapper .top-header .site-name-led-round .led-dot-round { width: 4px; height: 4px; }
+      .overlay-page-wrapper .top-header .share-btn { font-size: 0.35rem; padding: 2px 6px; }
+      .overlay-page-wrapper .top-header .share-btn svg { width: 10px; height: 10px; }
+      .overlay-page-wrapper .top-header .telegram-btn { width: 24px; height: 24px; }
+      .overlay-page-wrapper .top-header .header-bottom-row { padding: 4px 0; }
+      .info-card { padding: 0; }
     }
   </style>
 </head>
@@ -1141,7 +1269,7 @@
 
 <!-- OVERLAY - used for About/Contact/Disclaimer with full page navigation -->
 <div class="info-overlay" id="infoOverlay">
-  <div class="info-card" style="position:relative; padding:20px 18px;">
+  <div class="info-card" style="position:relative; padding:0;">
     <!-- REMOVED: close-top (✖ icon) and close-btn (✕ Close) -->
     <div id="overlayPageContent">
       <!-- This will be replaced with full page content -->
@@ -1320,17 +1448,17 @@
       // Build the exact same header as home page (cloned from globalHeader)
       const headerHTML = document.getElementById('globalHeader').outerHTML;
       
-      // Build full page HTML with the exact same header
+      // Build full page HTML with the exact same header - FULL VIEW from top to bottom
       const fullHtml = `
         <div class="overlay-page-wrapper">
           <!-- EXACT SAME HEADER AS HOME PAGE -->
           ${headerHTML}
-          <!-- CONTENT -->
-          <div class="overlay-content">
+          <!-- CONTENT - FULL VIEW -->
+          <div class="overlay-content" style="margin:0;border-radius:0;padding:16px;">
             <h1>${result.title}</h1>
             ${result.content}
             <!-- Back to Home button with LED icon at the bottom -->
-            <div style="display:flex;justify-content:center;margin-top:20px;">
+            <div style="display:flex;justify-content:center;margin-top:20px;padding-bottom:10px;">
               <button class="overlay-back-link" id="backToHomeBtn" style="display:inline-flex;align-items:center;gap:8px;background:#eef2ff;border:none;padding:8px 16px;border-radius:40px;font-weight:600;font-size:0.65rem;color:#1e293b;cursor:pointer;border:1px solid #dbeafe;">
                 <span class="back-led-icon" style="display:inline-flex;align-items:center;justify-content:center;width:22px;height:22px;border-radius:50%;background:#000;border:2px solid #1a1a1a;position:relative;box-shadow:0 0 12px rgba(0,255,100,0.15);">
                   <span style="position:relative;z-index:2;color:#fff;font-size:0.5rem;display:flex;align-items:center;justify-content:center;">
