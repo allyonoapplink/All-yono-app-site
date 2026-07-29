@@ -6,7 +6,7 @@
 
 /* ----- ROOT VARIABLES (change these to customize) ----- */
 :root {
-  /* Main background & surface */
+  /* Main background & surface – pure white */
   --bg-body: #f0f2f8;
   --bg-card: #ffffff;
   --bg-surface: #f8faff;
@@ -19,7 +19,7 @@
   --text-muted: #7a8a9e;
   --text-white: #ffffff;
 
-  /* Accent colors – LED theme */
+  /* LED Accent colors – bright & vibrant */
   --accent-cyan: #00d4ff;
   --accent-blue: #4a8aff;
   --accent-purple: #7c5cbf;
@@ -29,23 +29,23 @@
   --accent-red: #ff3d3d;
   --accent-orange: #ff9100;
 
-  /* Glow effects */
-  --glow-cyan: 0 0 20px rgba(0, 212, 255, 0.3);
-  --glow-blue: 0 0 20px rgba(74, 138, 255, 0.25);
-  --glow-pink: 0 0 20px rgba(255, 94, 148, 0.25);
-  --glow-green: 0 0 20px rgba(0, 230, 118, 0.25);
-  --glow-gold: 0 0 20px rgba(255, 193, 7, 0.25);
-  --glow-purple: 0 0 20px rgba(124, 92, 191, 0.25);
+  /* LED Glow effects */
+  --glow-cyan: 0 0 20px rgba(0, 212, 255, 0.25);
+  --glow-blue: 0 0 20px rgba(74, 138, 255, 0.20);
+  --glow-pink: 0 0 20px rgba(255, 94, 148, 0.20);
+  --glow-green: 0 0 25px rgba(0, 230, 118, 0.35);
+  --glow-gold: 0 0 20px rgba(255, 193, 7, 0.20);
+  --glow-purple: 0 0 20px rgba(124, 92, 191, 0.20);
 
-  /* Shadows */
+  /* Shadows – soft & premium */
   --shadow-sm: 0 2px 12px rgba(0, 0, 0, 0.04);
   --shadow-md: 0 4px 24px rgba(0, 0, 0, 0.06);
   --shadow-lg: 0 8px 40px rgba(0, 0, 0, 0.08);
   --shadow-xl: 0 12px 56px rgba(0, 0, 0, 0.10);
 
-  /* Border */
+  /* Borders – ultra light */
   --border-light: #e8ecf5;
-  --border-glow: rgba(0, 212, 255, 0.3);
+  --border-glow: rgba(0, 212, 255, 0.20);
 
   /* Gradients – white to subtle tint */
   --gradient-card-1: linear-gradient(135deg, #ffffff, #f5f8ff);
@@ -57,7 +57,9 @@
   --gradient-card-7: linear-gradient(135deg, #fafaff, #ffffff);
 }
 
-/* ----- BODY & CONTAINER ----- */
+/* ============================================================
+   BODY & CONTAINER – Clean white
+   ============================================================ */
 body {
   background: var(--bg-body) !important;
 }
@@ -67,11 +69,13 @@ body {
   box-shadow: var(--shadow-lg) !important;
 }
 
-/* ----- HEADER (white background, LED accents) ----- */
+/* ============================================================
+   HEADER – White with LED accent glow
+   ============================================================ */
 .top-header {
   background: var(--bg-header) !important;
   border-bottom: 1px solid var(--border-light) !important;
-  box-shadow: 0 2px 20px rgba(0, 0, 0, 0.03) !important;
+  box-shadow: 0 2px 20px rgba(0, 0, 0, 0.02) !important;
 }
 
 .header-nav-link {
@@ -102,11 +106,11 @@ body {
 }
 
 @keyframes cyanPulseWhite {
-  0%, 100% { box-shadow: 0 0 15px rgba(0, 212, 255, 0.25); }
-  50% { box-shadow: 0 0 35px rgba(0, 212, 255, 0.45), 0 0 60px rgba(0, 212, 255, 0.10); }
+  0%, 100% { box-shadow: 0 0 15px rgba(0, 212, 255, 0.20); }
+  50% { box-shadow: 0 0 35px rgba(0, 212, 255, 0.40), 0 0 60px rgba(0, 212, 255, 0.08); }
 }
 
-/* ----- SITE NAME – White LED border ----- */
+/* ----- SITE NAME – White with LED border animation ----- */
 .site-name-led-round {
   background: var(--bg-card) !important;
   border-color: var(--border-light) !important;
@@ -124,16 +128,16 @@ body {
 
 .site-name-led-round::after {
   background: conic-gradient(from 30deg, 
-    rgba(0, 212, 255, 0.10) 0deg 30deg, 
-    rgba(74, 138, 255, 0.10) 90deg 120deg, 
-    rgba(124, 92, 191, 0.10) 180deg 210deg, 
-    rgba(255, 94, 148, 0.10) 270deg 300deg, 
-    rgba(0, 212, 255, 0.10) 360deg) !important;
+    rgba(0, 212, 255, 0.08) 0deg 30deg, 
+    rgba(74, 138, 255, 0.08) 90deg 120deg, 
+    rgba(124, 92, 191, 0.08) 180deg 210deg, 
+    rgba(255, 94, 148, 0.08) 270deg 300deg, 
+    rgba(0, 212, 255, 0.08) 360deg) !important;
 }
 
 .site-name-led-round .site-name-text {
   color: var(--text-primary) !important;
-  text-shadow: 0 0 30px rgba(0, 212, 255, 0.08) !important;
+  text-shadow: 0 0 30px rgba(0, 212, 255, 0.06) !important;
 }
 
 .site-name-text .d1 { color: var(--accent-cyan) !important; }
@@ -194,7 +198,9 @@ body {
 .telegram-btn .corner-led.bl { color: var(--accent-pink) !important; background: var(--accent-pink) !important; }
 .telegram-btn .corner-led.br { color: var(--accent-purple) !important; background: var(--accent-purple) !important; }
 
-/* ----- MARQUEE – White LED gradient ----- */
+/* ============================================================
+   MARQUEE – White with animated LED gradient
+   ============================================================ */
 .marquee-container {
   background: linear-gradient(90deg, 
     var(--accent-cyan) 0%, 
@@ -213,21 +219,24 @@ body {
 
 .marquee-container marquee {
   color: var(--text-white) !important;
-  text-shadow: 0 2px 12px rgba(0, 0, 0, 0.15) !important;
+  text-shadow: 0 2px 12px rgba(0, 0, 0, 0.12) !important;
 }
 
 .marquee-container marquee .highlight {
-  background: rgba(255, 255, 255, 0.20) !important;
+  background: rgba(255, 255, 255, 0.18) !important;
   color: var(--text-white) !important;
-  box-shadow: inset 0 0 30px rgba(255, 255, 255, 0.05) !important;
+  box-shadow: inset 0 0 30px rgba(255, 255, 255, 0.04) !important;
 }
 
-/* ----- CARDS – White with LED accent borders ----- */
+/* ============================================================
+   CARDS – White with LED accent borders & glow
+   ============================================================ */
 .card {
   background: var(--bg-card) !important;
   border-color: var(--border-light) !important;
   box-shadow: var(--shadow-sm) !important;
   transition: all 0.3s ease !important;
+  border-radius: 16px !important;
 }
 
 .card:hover {
@@ -259,23 +268,28 @@ body {
   color: var(--text-secondary) !important;
 }
 
+/* ----- CARD DOWNLOAD BUTTON – GREEN LED (Premium) ----- */
 .card-download-sm {
-  background: var(--accent-cyan) !important;
-  box-shadow: var(--glow-cyan) !important;
+  background: var(--accent-green) !important;
+  box-shadow: var(--glow-green) !important;
   transition: all 0.3s ease !important;
+  border-radius: 40px !important;
+  padding: 3px 12px !important;
 }
 
 .card-download-sm:hover {
-  box-shadow: 0 0 30px rgba(0, 212, 255, 0.4) !important;
+  box-shadow: 0 0 40px rgba(0, 230, 118, 0.45) !important;
   transform: scale(1.05) !important;
 }
 
 .card-download-sm .dl-icon svg {
   stroke: var(--text-white) !important;
-  filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.3)) !important;
+  filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.30)) !important;
 }
 
-/* ----- DETAIL VIEW – White with LED accents ----- */
+/* ============================================================
+   DETAIL VIEW – White with LED accents
+   ============================================================ */
 .game-detail-header {
   background: var(--bg-surface) !important;
   border-bottom: 1px solid var(--border-light) !important;
@@ -324,29 +338,29 @@ body {
 .detail-info .game-meta-detail .rating {
   background: rgba(0, 230, 118, 0.08) !important;
   color: var(--accent-green) !important;
-  border-color: rgba(0, 230, 118, 0.25) !important;
-  box-shadow: 0 0 20px rgba(0, 230, 118, 0.12) !important;
+  border-color: rgba(0, 230, 118, 0.20) !important;
+  box-shadow: 0 0 20px rgba(0, 230, 118, 0.08) !important;
 }
 
 .detail-info .game-meta-detail .size {
   background: rgba(0, 212, 255, 0.08) !important;
   color: var(--accent-cyan) !important;
-  border-color: rgba(0, 212, 255, 0.25) !important;
-  box-shadow: 0 0 20px rgba(0, 212, 255, 0.12) !important;
+  border-color: rgba(0, 212, 255, 0.20) !important;
+  box-shadow: 0 0 20px rgba(0, 212, 255, 0.08) !important;
 }
 
 .detail-info .game-meta-detail .votes {
   background: rgba(255, 94, 148, 0.08) !important;
   color: var(--accent-pink) !important;
-  border-color: rgba(255, 94, 148, 0.25) !important;
-  box-shadow: 0 0 20px rgba(255, 94, 148, 0.12) !important;
+  border-color: rgba(255, 94, 148, 0.20) !important;
+  box-shadow: 0 0 20px rgba(255, 94, 148, 0.08) !important;
 }
 
 .detail-info .game-meta-detail .bonus-badge {
   background: rgba(255, 193, 7, 0.08) !important;
   color: var(--accent-gold) !important;
-  border-color: rgba(255, 193, 7, 0.25) !important;
-  box-shadow: 0 0 20px rgba(255, 193, 7, 0.12) !important;
+  border-color: rgba(255, 193, 7, 0.20) !important;
+  box-shadow: 0 0 20px rgba(255, 193, 7, 0.08) !important;
 }
 
 /* Version section */
@@ -372,22 +386,25 @@ body {
   box-shadow: var(--glow-cyan) !important;
 }
 
-/* ----- DOWNLOAD BUTTON – White with LED glow ----- */
+/* ============================================================
+   DOWNLOAD BUTTON – GREEN LED (Premium)
+   ============================================================ */
 .download-btn {
   background: var(--bg-card) !important;
   color: var(--text-primary) !important;
-  border: 2px solid var(--accent-cyan) !important;
-  box-shadow: var(--shadow-md), var(--glow-cyan) !important;
+  border: 2px solid var(--accent-green) !important;
+  box-shadow: var(--shadow-md), var(--glow-green) !important;
   transition: all 0.3s ease !important;
+  border-radius: 60px !important;
 }
 
 .download-btn:hover {
   transform: scale(1.02) !important;
-  box-shadow: var(--shadow-lg), 0 0 40px rgba(0, 212, 255, 0.25) !important;
+  box-shadow: var(--shadow-lg), 0 0 50px rgba(0, 230, 118, 0.25) !important;
 }
 
 .download-btn .btn-icon svg {
-  stroke: var(--accent-cyan) !important;
+  stroke: var(--accent-green) !important;
 }
 
 .download-btn .btn-text {
@@ -396,18 +413,20 @@ body {
 
 .download-btn .btn-glow {
   background: conic-gradient(from 0deg, 
-    var(--accent-cyan) 0deg 35deg, 
-    var(--accent-blue) 90deg 125deg, 
-    var(--accent-purple) 180deg 215deg, 
-    var(--accent-pink) 270deg 305deg, 
-    var(--accent-cyan) 360deg) !important;
+    var(--accent-green) 0deg 35deg, 
+    var(--accent-cyan) 90deg 125deg, 
+    var(--accent-green) 180deg 215deg, 
+    var(--accent-cyan) 270deg 305deg, 
+    var(--accent-green) 360deg) !important;
 }
 
 .download-btn::after {
-  background: radial-gradient(circle, rgba(0, 212, 255, 0.06) 0%, transparent 60%) !important;
+  background: radial-gradient(circle, rgba(0, 230, 118, 0.06) 0%, transparent 60%) !important;
 }
 
-/* ----- TAG SECTION – White with LED ----- */
+/* ============================================================
+   TAG SECTION – White with LED
+   ============================================================ */
 .tag-section {
   background: var(--bg-surface) !important;
   border-top: 1px solid var(--border-light) !important;
@@ -437,7 +456,9 @@ body {
   color: var(--text-secondary) !important;
 }
 
-/* ----- TOC SECTION – White with LED ----- */
+/* ============================================================
+   TOC SECTION – White with LED
+   ============================================================ */
 .toc-section {
   background: var(--bg-surface) !important;
   border-top: 1px solid var(--border-light) !important;
@@ -497,7 +518,9 @@ body {
   color: var(--accent-cyan) !important;
 }
 
-/* ----- FAQ SECTION – White with LED ----- */
+/* ============================================================
+   FAQ SECTION – White with LED
+   ============================================================ */
 .faq-section {
   background: var(--bg-card) !important;
   border-top: 1px solid var(--border-light) !important;
@@ -537,7 +560,9 @@ body {
   color: var(--text-white) !important;
 }
 
-/* ----- GAME TAGS – White with LED ----- */
+/* ============================================================
+   GAME TAGS – White with LED
+   ============================================================ */
 .game-tags-section {
   background: var(--bg-card) !important;
   border-top: 1px solid var(--border-light) !important;
@@ -568,7 +593,9 @@ body {
   stroke: var(--accent-cyan) !important;
 }
 
-/* ----- RELATED SECTION – White with LED ----- */
+/* ============================================================
+   RELATED SECTION – White with LED
+   ============================================================ */
 .related-section {
   background: var(--bg-card) !important;
   border-top: 1px solid var(--border-light) !important;
@@ -606,23 +633,26 @@ body {
   color: var(--text-secondary) !important;
 }
 
+/* ----- RELATED DOWNLOAD – GREEN LED ----- */
 .related-item .rdownload {
-  background: var(--accent-cyan) !important;
-  box-shadow: var(--glow-cyan) !important;
+  background: var(--accent-green) !important;
+  box-shadow: var(--glow-green) !important;
   transition: all 0.3s ease !important;
 }
 
 .related-item .rdownload:hover {
-  box-shadow: 0 0 30px rgba(0, 212, 255, 0.4) !important;
+  box-shadow: 0 0 35px rgba(0, 230, 118, 0.40) !important;
   transform: scale(1.05) !important;
 }
 
 .related-item .rdownload .dl-icon-cyan svg {
   stroke: var(--text-white) !important;
-  filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.3)) !important;
+  filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.30)) !important;
 }
 
-/* ----- FOOTER – White with LED ----- */
+/* ============================================================
+   FOOTER – White with LED
+   ============================================================ */
 .footer-links {
   background: var(--bg-surface) !important;
   border-top: 1px solid var(--border-light) !important;
@@ -645,7 +675,9 @@ body {
   background: var(--bg-surface) !important;
 }
 
-/* ----- OVERLAY – White with LED ----- */
+/* ============================================================
+   OVERLAY – White with LED
+   ============================================================ */
 .info-overlay {
   background: rgba(0, 0, 0, 0.30) !important;
   backdrop-filter: blur(4px) !important;
@@ -705,66 +737,70 @@ body {
   stroke: var(--text-white) !important;
 }
 
-/* ----- LUCIDE ICONS – LED glow colors ----- */
+/* ============================================================
+   LUCIDE ICONS – LED glow colors
+   ============================================================ */
 .lucide-icon.glow-green {
-  filter: drop-shadow(0 0 8px rgba(0, 230, 118, 0.3)) !important;
+  filter: drop-shadow(0 0 8px rgba(0, 230, 118, 0.25)) !important;
   animation: iconGlowGreenWhite 2.5s ease-in-out infinite !important;
 }
 .lucide-icon.glow-cyan {
-  filter: drop-shadow(0 0 8px rgba(0, 212, 255, 0.3)) !important;
+  filter: drop-shadow(0 0 8px rgba(0, 212, 255, 0.25)) !important;
   animation: iconGlowCyanWhite 2.5s ease-in-out infinite 0.3s !important;
 }
 .lucide-icon.glow-gold {
-  filter: drop-shadow(0 0 8px rgba(255, 193, 7, 0.3)) !important;
+  filter: drop-shadow(0 0 8px rgba(255, 193, 7, 0.25)) !important;
   animation: iconGlowGoldWhite 2.5s ease-in-out infinite 0.6s !important;
 }
 .lucide-icon.glow-red {
-  filter: drop-shadow(0 0 8px rgba(255, 61, 61, 0.25)) !important;
+  filter: drop-shadow(0 0 8px rgba(255, 61, 61, 0.20)) !important;
   animation: iconGlowRedWhite 2.5s ease-in-out infinite 0.9s !important;
 }
 .lucide-icon.glow-purple {
-  filter: drop-shadow(0 0 8px rgba(124, 92, 191, 0.3)) !important;
+  filter: drop-shadow(0 0 8px rgba(124, 92, 191, 0.25)) !important;
   animation: iconGlowPurpleWhite 2.5s ease-in-out infinite 1.2s !important;
 }
 .lucide-icon.glow-blue {
-  filter: drop-shadow(0 0 8px rgba(74, 138, 255, 0.3)) !important;
+  filter: drop-shadow(0 0 8px rgba(74, 138, 255, 0.25)) !important;
   animation: iconGlowBlueWhite 2.5s ease-in-out infinite 0.5s !important;
 }
 .lucide-icon.glow-pink {
-  filter: drop-shadow(0 0 8px rgba(255, 94, 148, 0.3)) !important;
+  filter: drop-shadow(0 0 8px rgba(255, 94, 148, 0.25)) !important;
   animation: iconGlowPinkWhite 2.5s ease-in-out infinite 0.8s !important;
 }
 
 @keyframes iconGlowGreenWhite {
-  0%, 100% { filter: drop-shadow(0 0 4px rgba(0, 230, 118, 0.15)); }
-  50% { filter: drop-shadow(0 0 16px rgba(0, 230, 118, 0.4)); }
+  0%, 100% { filter: drop-shadow(0 0 4px rgba(0, 230, 118, 0.12)); }
+  50% { filter: drop-shadow(0 0 16px rgba(0, 230, 118, 0.35)); }
 }
 @keyframes iconGlowCyanWhite {
-  0%, 100% { filter: drop-shadow(0 0 4px rgba(0, 212, 255, 0.15)); }
-  50% { filter: drop-shadow(0 0 16px rgba(0, 212, 255, 0.4)); }
+  0%, 100% { filter: drop-shadow(0 0 4px rgba(0, 212, 255, 0.12)); }
+  50% { filter: drop-shadow(0 0 16px rgba(0, 212, 255, 0.35)); }
 }
 @keyframes iconGlowGoldWhite {
-  0%, 100% { filter: drop-shadow(0 0 4px rgba(255, 193, 7, 0.15)); }
-  50% { filter: drop-shadow(0 0 16px rgba(255, 193, 7, 0.4)); }
+  0%, 100% { filter: drop-shadow(0 0 4px rgba(255, 193, 7, 0.12)); }
+  50% { filter: drop-shadow(0 0 16px rgba(255, 193, 7, 0.35)); }
 }
 @keyframes iconGlowRedWhite {
-  0%, 100% { filter: drop-shadow(0 0 4px rgba(255, 61, 61, 0.12)); }
-  50% { filter: drop-shadow(0 0 14px rgba(255, 61, 61, 0.35)); }
+  0%, 100% { filter: drop-shadow(0 0 4px rgba(255, 61, 61, 0.10)); }
+  50% { filter: drop-shadow(0 0 14px rgba(255, 61, 61, 0.30)); }
 }
 @keyframes iconGlowPurpleWhite {
-  0%, 100% { filter: drop-shadow(0 0 4px rgba(124, 92, 191, 0.15)); }
-  50% { filter: drop-shadow(0 0 16px rgba(124, 92, 191, 0.4)); }
+  0%, 100% { filter: drop-shadow(0 0 4px rgba(124, 92, 191, 0.12)); }
+  50% { filter: drop-shadow(0 0 16px rgba(124, 92, 191, 0.35)); }
 }
 @keyframes iconGlowBlueWhite {
-  0%, 100% { filter: drop-shadow(0 0 4px rgba(74, 138, 255, 0.15)); }
-  50% { filter: drop-shadow(0 0 16px rgba(74, 138, 255, 0.4)); }
+  0%, 100% { filter: drop-shadow(0 0 4px rgba(74, 138, 255, 0.12)); }
+  50% { filter: drop-shadow(0 0 16px rgba(74, 138, 255, 0.35)); }
 }
 @keyframes iconGlowPinkWhite {
-  0%, 100% { filter: drop-shadow(0 0 4px rgba(255, 94, 148, 0.15)); }
-  50% { filter: drop-shadow(0 0 16px rgba(255, 94, 148, 0.4)); }
+  0%, 100% { filter: drop-shadow(0 0 4px rgba(255, 94, 148, 0.12)); }
+  50% { filter: drop-shadow(0 0 16px rgba(255, 94, 148, 0.35)); }
 }
 
-/* ----- LED ICON STYLES – White background ----- */
+/* ============================================================
+   LED ICON STYLES – White background
+   ============================================================ */
 .led-icon {
   background: var(--bg-card) !important;
   border-color: var(--border-light) !important;
@@ -831,10 +867,12 @@ body {
     #ffffff 320deg 360deg) !important;
 }
 .led-icon.glow-bg {
-  box-shadow: 0 0 30px rgba(0, 212, 255, 0.08), 0 0 60px rgba(0, 212, 255, 0.04) !important;
+  box-shadow: 0 0 30px rgba(0, 212, 255, 0.06), 0 0 60px rgba(0, 212, 255, 0.03) !important;
 }
 
-/* ----- CLOSE ICON – White with LED ----- */
+/* ============================================================
+   CLOSE ICON – White with LED
+   ============================================================ */
 .close-icon-wrap {
   background: var(--bg-card) !important;
   border-color: var(--border-light) !important;
@@ -855,10 +893,12 @@ body {
 }
 
 .close-icon-wrap .close-glow {
-  background: rgba(0, 212, 255, 0.05) !important;
+  background: rgba(0, 212, 255, 0.04) !important;
 }
 
-/* ----- GRADIENT OVERRIDES – White theme ----- */
+/* ============================================================
+   GRADIENT OVERRIDES – White theme
+   ============================================================ */
 .bg-gradient-1 .detail-card { background: var(--gradient-card-1) !important; }
 .bg-gradient-2 .detail-card { background: var(--gradient-card-2) !important; }
 .bg-gradient-3 .detail-card { background: var(--gradient-card-3) !important; }
@@ -867,20 +907,24 @@ body {
 .bg-gradient-6 .detail-card { background: var(--gradient-card-6) !important; }
 .bg-gradient-7 .detail-card { background: var(--gradient-card-7) !important; }
 
-/* ----- BORDER STYLES – LED accents ----- */
+/* ============================================================
+   BORDER STYLES – LED accents
+   ============================================================ */
 .border-style-1 .detail-card { border-left: 3px solid var(--accent-cyan) !important; }
 .border-style-2 .detail-card { border-right: 3px solid var(--accent-pink) !important; }
 .border-style-3 .detail-card { border-top: 3px solid var(--accent-green) !important; }
 .border-style-4 .detail-card { border-bottom: 3px solid var(--accent-purple) !important; }
 .border-style-5 .detail-card { border-left: 3px solid var(--accent-gold) !important; border-radius: 0 12px 12px 0 !important; }
 
-/* ----- LAYOUT BONUS COLORS – White theme ----- */
+/* ============================================================
+   LAYOUT BONUS COLORS – White theme
+   ============================================================ */
 .layout-left .detail-info .game-sub .signup-bonus { color: var(--accent-cyan) !important; }
 .layout-right .detail-info .game-sub .signup-bonus { color: var(--accent-purple) !important; }
 .layout-center .detail-info .game-sub .signup-bonus { color: var(--accent-gold) !important; }
 
 /* ============================================================
-   RESPONSIVE – White LED theme stays clean on mobile
+   RESPONSIVE – Premium HD mobile view
    ============================================================ */
 @media (max-width: 420px) {
   .header-nav-link {
