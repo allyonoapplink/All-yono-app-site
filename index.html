@@ -131,55 +131,32 @@
     .header-nav-link .nav-icon { display: inline-flex; align-items: center; justify-content: center; width: 14px; height: 14px; }
     .header-nav-link .nav-icon svg { width: 100%; height: 100%; stroke: currentColor; stroke-width: 2; fill: none; stroke-linecap: round; stroke-linejoin: round; }
 
-    /* "YONO GAMES View.COM" above About button + photo above Home */
-    .header-nav-link .above-label {
-      position: absolute;
-      top: -16px;
-      left: 50%;
-      transform: translateX(-50%);
-      font-size: 0.4rem;
-      font-weight: 700;
-      color: #0b1e33;
-      background: #eef2ff;
-      padding: 1px 6px;
-      border-radius: 20px;
-      white-space: nowrap;
-      border: 1px solid #dbeafe;
-      letter-spacing: 0.3px;
-      box-shadow: 0 1px 4px rgba(0,0,0,0.04);
-      pointer-events: none;
-    }
-    /* special case: about button gets the label */
-    .header-nav-link[data-page="about"] {
-      padding-top: 8px;
-    }
-
-    /* Photo above Home - bigger and premium */
+    /* Photo above Home - big, full-view, original proportion, no border/ring/background */
     .header-nav-link[data-page="home"] {
-      padding-top: 8px;
+      padding-top: 12px;
       position: relative;
     }
     .header-nav-link[data-page="home"] .home-photo-wrap {
       position: absolute;
-      top: -28px;
+      top: -36px;
       left: 50%;
       transform: translateX(-50%);
       display: flex;
       align-items: center;
-      gap: 8px;
+      gap: 10px;
       pointer-events: none;
       white-space: nowrap;
     }
     .header-nav-link[data-page="home"] .home-photo-wrap .home-img {
-      height: 26px;
+      height: 40px;
       width: auto;
-      max-width: 40px;
+      max-width: 60px;
       display: block;
-      border-radius: 2px;
       object-fit: contain;
+      /* No border, no ring, no background */
     }
     .header-nav-link[data-page="home"] .home-photo-wrap .home-label {
-      font-size: 0.45rem;
+      font-size: 0.5rem;
       font-weight: 700;
       color: #0b1e33;
       background: #eef2ff;
@@ -841,11 +818,9 @@
       .header-top-link .inline-icon { width: 14px; height: 14px; }
       .header-nav-link { font-size: 0.45rem; padding: 2px 4px; }
       .header-nav-link .nav-icon { width: 12px; height: 12px; }
-      .header-nav-link .above-label { font-size: 0.35rem; top: -14px; padding: 1px 4px; }
-      .header-nav-link[data-page="about"] { padding-top: 6px; }
-      .header-nav-link[data-page="home"] { padding-top: 6px; }
-      .header-nav-link[data-page="home"] .home-photo-wrap { top: -22px; gap: 4px; }
-      .header-nav-link[data-page="home"] .home-photo-wrap .home-img { height: 20px; max-width: 32px; }
+      .header-nav-link[data-page="home"] { padding-top: 10px; }
+      .header-nav-link[data-page="home"] .home-photo-wrap { top: -30px; gap: 6px; }
+      .header-nav-link[data-page="home"] .home-photo-wrap .home-img { height: 32px; max-width: 48px; }
       .header-nav-link[data-page="home"] .home-photo-wrap .home-label { font-size: 0.4rem; padding: 1px 6px; }
       .marquee-container marquee { font-size: 0.5rem; }
       .marquee-container marquee span { margin: 0 8px; }
@@ -903,11 +878,9 @@
         padding: 2px 4px;
       }
       .overlay-page-wrapper .top-header .header-nav-row .header-nav-link .nav-icon { width: 12px; height: 12px; }
-      .overlay-page-wrapper .top-header .header-nav-row .header-nav-link .above-label { font-size: 0.35rem; top: -14px; padding: 1px 4px; }
-      .overlay-page-wrapper .top-header .header-nav-row .header-nav-link[data-page="about"] { padding-top: 6px; }
-      .overlay-page-wrapper .top-header .header-nav-row .header-nav-link[data-page="home"] { padding-top: 6px; }
-      .overlay-page-wrapper .top-header .header-nav-row .header-nav-link[data-page="home"] .home-photo-wrap { top: -22px; gap: 4px; }
-      .overlay-page-wrapper .top-header .header-nav-row .header-nav-link[data-page="home"] .home-photo-wrap .home-img { height: 20px; max-width: 32px; }
+      .overlay-page-wrapper .top-header .header-nav-row .header-nav-link[data-page="home"] { padding-top: 10px; }
+      .overlay-page-wrapper .top-header .header-nav-row .header-nav-link[data-page="home"] .home-photo-wrap { top: -30px; gap: 6px; }
+      .overlay-page-wrapper .top-header .header-nav-row .header-nav-link[data-page="home"] .home-photo-wrap .home-img { height: 32px; max-width: 48px; }
       .overlay-page-wrapper .top-header .header-nav-row .header-nav-link[data-page="home"] .home-photo-wrap .home-label { font-size: 0.4rem; padding: 1px 6px; }
       .overlay-page-wrapper .top-header .header-top-link { font-size: 0.45rem; padding: 2px 6px; }
       .overlay-page-wrapper .top-header .header-top-link .inline-icon { width: 14px; height: 14px; }
@@ -934,9 +907,9 @@
     <!-- Row 2: Home | About | Contact | Disclaimer (left to right, equal spacing) -->
     <div class="header-nav-row">
       <span class="header-nav-link active" data-page="home">
-        <!-- Photo + YONO GAMES View.COM above Home -->
+        <!-- Photo + YONO GAMES View.COM above Home - BIG, FULL-VIEW, NO BORDER/RING/BG -->
         <span class="home-photo-wrap">
-          <img src="https://hidden-meadow-162.linkyhost.com" alt="YONO GAMES" class="home-img" loading="eager">
+          <img src="https://i.ibb.co/21819TqK/1786533341941.png" alt="YONO GAMES" class="home-img" loading="eager">
           <span class="home-label">YONO GAMES View.COM</span>
         </span>
         <span class="nav-icon"><svg viewBox="0 0 24 24"><path d="M3 12l9-9 9 9"/><path d="M5 10v10a1 1 0 001 1h3a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1h3a1 1 0 001-1V10"/></svg></span> Home
