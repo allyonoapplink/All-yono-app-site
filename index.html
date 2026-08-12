@@ -39,32 +39,79 @@
     #mainGrid.show { display: flex !important; opacity: 1 !important; }
     #detailView.show { display: block !important; opacity: 1 !important; }
 
-    /* ===== HEADER ===== */
+    /* ===== HEADER - NEW LAYOUT: top row = Telegram+Share, bottom row = Home About Contact Disclaimer ===== */
     .top-header {
       display: flex;
       flex-direction: column;
-      padding: 6px 10px;
+      padding: 4px 10px 6px 10px;
       background: white;
       border-bottom: 1px solid #e9edf4;
       position: sticky;
       top: 0;
       z-index: 10;
       box-sizing: border-box;
+      gap: 4px;
     }
+    /* Row 1: Telegram + Share (right side) */
+    .header-top-row {
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+      gap: 8px;
+      padding: 2px 0;
+    }
+    .header-top-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      font-size: 0.55rem;
+      font-weight: 500;
+      color: #1e293b;
+      background: #f8fafc;
+      padding: 3px 10px;
+      border-radius: 40px;
+      border: 1px solid #e2e8f0;
+      cursor: pointer;
+      text-decoration: none;
+      transition: all 0.15s;
+      white-space: nowrap;
+    }
+    .header-top-link:active { transform: scale(0.95); }
+    .header-top-link .inline-icon {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 16px;
+      height: 16px;
+      flex-shrink: 0;
+    }
+    .header-top-link .inline-icon svg {
+      width: 100%;
+      height: 100%;
+      stroke: currentColor;
+      stroke-width: 2;
+      fill: none;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+    .header-top-link.telegram-link .inline-icon svg { stroke: #0088cc; fill: #0088cc; fill-opacity:0.15; }
+    .header-top-link.share-link .inline-icon svg { stroke: #2563eb; }
+
+    /* Row 2: Home About Contact Disclaimer (left to right, equal spacing) */
     .header-nav-row {
       display: flex;
-      justify-content: flex-start;
+      justify-content: space-between;
       align-items: center;
-      gap: 6px;
+      gap: 4px;
       padding: 2px 0;
-      flex-wrap: wrap;
+      flex-wrap: nowrap;
     }
     .header-nav-link {
       font-size: 0.55rem;
       font-weight: 600;
       color: #1e293b;
       background: #f8fafc;
-      padding: 3px 10px;
+      padding: 3px 8px;
       border-radius: 40px;
       border: 1px solid #e2e8f0;
       cursor: pointer;
@@ -74,32 +121,13 @@
       gap: 4px;
       transition: all 0.15s;
       white-space: nowrap;
+      flex: 1;
+      justify-content: center;
     }
     .header-nav-link:active { transform: scale(0.95); }
     .header-nav-link.active { background: #1e293b; color: white; border-color: #1e293b; }
     .header-nav-link .nav-icon { display: inline-flex; align-items: center; justify-content: center; width: 14px; height: 14px; }
     .header-nav-link .nav-icon svg { width: 100%; height: 100%; stroke: currentColor; stroke-width: 2; fill: none; stroke-linecap: round; stroke-linejoin: round; }
-
-    /* small inline icon for telegram/share in header */
-    .header-nav-link .inline-icon {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      width: 16px;
-      height: 16px;
-      flex-shrink: 0;
-    }
-    .header-nav-link .inline-icon svg {
-      width: 100%;
-      height: 100%;
-      stroke: currentColor;
-      stroke-width: 2;
-      fill: none;
-      stroke-linecap: round;
-      stroke-linejoin: round;
-    }
-    .header-nav-link.telegram-link .inline-icon svg { stroke: #0088cc; fill: #0088cc; fill-opacity:0.15; }
-    .header-nav-link.share-link .inline-icon svg { stroke: #2563eb; }
 
     /* ===== MARQUEE ===== */
     .marquee-container { background: linear-gradient(90deg, #1a2a6c, #b21f1f, #fdbb2d); padding: 6px 0; overflow: hidden; border-bottom: 1px solid #e9edf4; }
@@ -626,8 +654,9 @@
       border-bottom: 1px solid #e9edf4;
       display: flex;
       flex-direction: column;
-      padding: 6px 10px;
+      padding: 4px 10px 6px 10px;
       box-sizing: border-box;
+      gap: 4px;
     }
     .overlay-page-wrapper .overlay-content {
       padding: 20px 16px;
@@ -746,9 +775,10 @@
     }
 
     @media (max-width: 420px) {
-      .header-nav-link { font-size: 0.45rem; padding: 2px 6px; }
+      .header-top-link { font-size: 0.45rem; padding: 2px 6px; }
+      .header-top-link .inline-icon { width: 14px; height: 14px; }
+      .header-nav-link { font-size: 0.45rem; padding: 2px 4px; }
       .header-nav-link .nav-icon { width: 12px; height: 12px; }
-      .header-nav-link .inline-icon { width: 14px; height: 14px; }
       .marquee-container marquee { font-size: 0.5rem; }
       .marquee-container marquee span { margin: 0 8px; }
       .card-number { width: 16px; height: 16px; font-size: 0.4rem; top: 2px; left: 2px; }
@@ -802,19 +832,32 @@
       }
       .overlay-page-wrapper .top-header .header-nav-row .header-nav-link {
         font-size: 0.45rem;
-        padding: 2px 6px;
+        padding: 2px 4px;
       }
       .overlay-page-wrapper .top-header .header-nav-row .header-nav-link .nav-icon { width: 12px; height: 12px; }
-      .overlay-page-wrapper .top-header .header-nav-row .header-nav-link .inline-icon { width: 14px; height: 14px; }
+      .overlay-page-wrapper .top-header .header-top-link { font-size: 0.45rem; padding: 2px 6px; }
+      .overlay-page-wrapper .top-header .header-top-link .inline-icon { width: 14px; height: 14px; }
       .info-card { padding: 0; border-radius: 0; }
     }
   </style>
 </head>
 <body>
 <div class="container" id="appContainer">
-  <!-- TOP HEADER (global) - HOME PAGE ORIGINAL -->
+  <!-- TOP HEADER (global) - NEW TWO-ROW LAYOUT -->
   <div class="top-header" id="globalHeader">
-    <!-- Row: Home | About | Contact | Telegram | Share | Disclaimer  (compact, left-to-right) -->
+    <!-- Row 1: Telegram + Share (right side) -->
+    <div class="header-top-row">
+      <a href="https://t.me/allyonogamesdite" target="_blank" rel="noopener noreferrer" class="header-top-link telegram-link">
+        <span class="inline-icon"><svg viewBox="0 0 24 24"><path d="M21.5 4.5L2.5 10.5L9.5 14.5L13.5 21.5L21.5 4.5Z"/><path d="M9.5 14.5L13.5 9.5"/></svg></span>
+        Telegram
+      </a>
+      <span class="header-top-link share-link" id="shareBtnCompact">
+        <span class="inline-icon"><svg viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81 1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9c-1.66 0-3 1.34-3 3s1.34 3 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.16c-.05.21-.08.43-.08.65 0 1.61 1.31 2.92 2.92 2.92 1.61 0 2.92-1.31 2.92-2.92s-1.31-2.92-2.92-2.92z"/></svg></span>
+        Share
+      </span>
+    </div>
+
+    <!-- Row 2: Home | About | Contact | Disclaimer (left to right, equal spacing) -->
     <div class="header-nav-row">
       <span class="header-nav-link active" data-page="home">
         <span class="nav-icon"><svg viewBox="0 0 24 24"><path d="M3 12l9-9 9 9"/><path d="M5 10v10a1 1 0 001 1h3a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1h3a1 1 0 001-1V10"/></svg></span> Home
@@ -824,16 +867,6 @@
       </span>
       <span class="header-nav-link" data-page="contact">
         <span class="nav-icon"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg></span> Contact
-      </span>
-      <!-- Telegram icon (above Disclaimer) -->
-      <a href="https://t.me/allyonogamesdite" target="_blank" rel="noopener noreferrer" class="header-nav-link telegram-link" style="background:transparent;border-color:transparent;gap:2px;padding:3px 6px;">
-        <span class="inline-icon"><svg viewBox="0 0 24 24"><path d="M21.5 4.5L2.5 10.5L9.5 14.5L13.5 21.5L21.5 4.5Z"/><path d="M9.5 14.5L13.5 9.5"/></svg></span>
-        <span style="font-size:0.5rem;font-weight:500;color:#0088cc;">Telegram</span>
-      </a>
-      <!-- Share button (above Disclaimer) -->
-      <span class="header-nav-link share-link" id="shareBtnCompact" style="background:transparent;border-color:transparent;gap:2px;padding:3px 6px;cursor:pointer;">
-        <span class="inline-icon"><svg viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81 1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9c-1.66 0-3 1.34-3 3s1.34 3 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.16c-.05.21-.08.43-.08.65 0 1.61 1.31 2.92 2.92 2.92 1.61 0 2.92-1.31 2.92-2.92s-1.31-2.92-2.92-2.92z"/></svg></span>
-        <span style="font-size:0.5rem;font-weight:500;color:#2563eb;">Share</span>
       </span>
       <span class="header-nav-link" data-page="disclaimer">
         <span class="nav-icon"><svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="M9 12l2 2 4-4"/></svg></span> Disclaimer
@@ -1115,7 +1148,7 @@
     };
 
     // ---- HEADER NAV ----
-    const headerNavLinks = document.querySelectorAll('.header-nav-link:not(.telegram-link):not(.share-link)');
+    const headerNavLinks = document.querySelectorAll('.header-nav-link');
     headerNavLinks.forEach(el => {
       el.addEventListener('click', function() {
         const page = this.dataset.page;
@@ -1283,7 +1316,7 @@
 
       overlayPageContent.innerHTML = fullHtml;
 
-      overlayPageContent.querySelectorAll('.header-nav-link:not(.telegram-link):not(.share-link)').forEach(el => {
+      overlayPageContent.querySelectorAll('.header-nav-link').forEach(el => {
         el.addEventListener('click', function(e) {
           const page = this.dataset.page;
           if (page === 'home') {
