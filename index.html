@@ -52,50 +52,13 @@
       box-sizing: border-box;
       gap: 4px;
     }
-    /* Row 1: Telegram + Share (right side) + Home photo + YONO GAMES View.Com (left side) */
+    /* Row 1: Telegram + Share (right side) */
     .header-top-row {
       display: flex;
-      justify-content: space-between;
+      justify-content: flex-end;
       align-items: center;
       gap: 8px;
       padding: 2px 0;
-    }
-    .header-top-left {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-    .header-top-photo {
-      width: 28px;
-      height: 28px;
-      border-radius: 50%;
-      overflow: hidden;
-      border: 2px solid #e2e8f0;
-      flex-shrink: 0;
-      background: #f8fafc;
-    }
-    .header-top-photo img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      display: block;
-    }
-    .header-top-label {
-      font-size: 0.55rem;
-      font-weight: 700;
-      color: #0b1e33;
-      background: #eef2ff;
-      padding: 2px 10px;
-      border-radius: 40px;
-      border: 1px solid #dbeafe;
-      white-space: nowrap;
-      letter-spacing: 0.3px;
-      box-shadow: 0 1px 4px rgba(0,0,0,0.04);
-    }
-    .header-top-right {
-      display: flex;
-      align-items: center;
-      gap: 8px;
     }
     .header-top-link {
       display: inline-flex;
@@ -168,7 +131,7 @@
     .header-nav-link .nav-icon { display: inline-flex; align-items: center; justify-content: center; width: 14px; height: 14px; }
     .header-nav-link .nav-icon svg { width: 100%; height: 100%; stroke: currentColor; stroke-width: 2; fill: none; stroke-linecap: round; stroke-linejoin: round; }
 
-    /* "YONO GAMES View.Com" above About button */
+    /* "YONO GAMES View.COM" above About button + photo above Home */
     .header-nav-link .above-label {
       position: absolute;
       top: -16px;
@@ -189,6 +152,43 @@
     /* special case: about button gets the label */
     .header-nav-link[data-page="about"] {
       padding-top: 8px;
+    }
+
+    /* Photo above Home */
+    .header-nav-link[data-page="home"] {
+      padding-top: 8px;
+      position: relative;
+    }
+    .header-nav-link[data-page="home"] .home-photo-wrap {
+      position: absolute;
+      top: -22px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      pointer-events: none;
+      white-space: nowrap;
+    }
+    .header-nav-link[data-page="home"] .home-photo-wrap .home-img {
+      height: 18px;
+      width: auto;
+      max-width: 30px;
+      display: block;
+      border-radius: 2px;
+      object-fit: contain;
+    }
+    .header-nav-link[data-page="home"] .home-photo-wrap .home-label {
+      font-size: 0.4rem;
+      font-weight: 700;
+      color: #0b1e33;
+      background: #eef2ff;
+      padding: 1px 6px;
+      border-radius: 20px;
+      border: 1px solid #dbeafe;
+      letter-spacing: 0.3px;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.04);
+      pointer-events: none;
     }
 
     /* ===== MARQUEE ===== */
@@ -837,14 +837,16 @@
     }
 
     @media (max-width: 420px) {
-      .header-top-photo { width: 22px; height: 22px; }
-      .header-top-label { font-size: 0.45rem; padding: 1px 6px; }
       .header-top-link { font-size: 0.45rem; padding: 2px 6px; }
       .header-top-link .inline-icon { width: 14px; height: 14px; }
       .header-nav-link { font-size: 0.45rem; padding: 2px 4px; }
       .header-nav-link .nav-icon { width: 12px; height: 12px; }
       .header-nav-link .above-label { font-size: 0.35rem; top: -14px; padding: 1px 4px; }
       .header-nav-link[data-page="about"] { padding-top: 6px; }
+      .header-nav-link[data-page="home"] { padding-top: 6px; }
+      .header-nav-link[data-page="home"] .home-photo-wrap { top: -18px; }
+      .header-nav-link[data-page="home"] .home-photo-wrap .home-img { height: 14px; max-width: 24px; }
+      .header-nav-link[data-page="home"] .home-photo-wrap .home-label { font-size: 0.35rem; padding: 1px 4px; }
       .marquee-container marquee { font-size: 0.5rem; }
       .marquee-container marquee span { margin: 0 8px; }
       .card-number { width: 16px; height: 16px; font-size: 0.4rem; top: 2px; left: 2px; }
@@ -903,8 +905,10 @@
       .overlay-page-wrapper .top-header .header-nav-row .header-nav-link .nav-icon { width: 12px; height: 12px; }
       .overlay-page-wrapper .top-header .header-nav-row .header-nav-link .above-label { font-size: 0.35rem; top: -14px; padding: 1px 4px; }
       .overlay-page-wrapper .top-header .header-nav-row .header-nav-link[data-page="about"] { padding-top: 6px; }
-      .overlay-page-wrapper .top-header .header-top-left .header-top-photo { width: 22px; height: 22px; }
-      .overlay-page-wrapper .top-header .header-top-left .header-top-label { font-size: 0.45rem; padding: 1px 6px; }
+      .overlay-page-wrapper .top-header .header-nav-row .header-nav-link[data-page="home"] { padding-top: 6px; }
+      .overlay-page-wrapper .top-header .header-nav-row .header-nav-link[data-page="home"] .home-photo-wrap { top: -18px; }
+      .overlay-page-wrapper .top-header .header-nav-row .header-nav-link[data-page="home"] .home-photo-wrap .home-img { height: 14px; max-width: 24px; }
+      .overlay-page-wrapper .top-header .header-nav-row .header-nav-link[data-page="home"] .home-photo-wrap .home-label { font-size: 0.35rem; padding: 1px 4px; }
       .overlay-page-wrapper .top-header .header-top-link { font-size: 0.45rem; padding: 2px 6px; }
       .overlay-page-wrapper .top-header .header-top-link .inline-icon { width: 14px; height: 14px; }
       .info-card { padding: 0; border-radius: 0; }
@@ -915,33 +919,29 @@
 <div class="container" id="appContainer">
   <!-- TOP HEADER (global) - NEW TWO-ROW LAYOUT -->
   <div class="top-header" id="globalHeader">
-    <!-- Row 1: Left: Photo + YONO GAMES View.Com | Right: Telegram + Share -->
+    <!-- Row 1: Telegram + Share (right side) -->
     <div class="header-top-row">
-      <div class="header-top-left">
-        <div class="header-top-photo">
-          <img src="https://hidden-meadow-162.linkyhost.com" alt="Home Photo" loading="eager">
-        </div>
-        <span class="header-top-label">YONO GAMES View.Com</span>
-      </div>
-      <div class="header-top-right">
-        <a href="https://t.me/allyonogamesdite" target="_blank" rel="noopener noreferrer" class="header-top-link telegram-link">
-          <span class="inline-icon"><svg viewBox="0 0 24 24"><path d="M21.5 4.5L2.5 10.5L9.5 14.5L13.5 21.5L21.5 4.5Z"/><path d="M9.5 14.5L13.5 9.5"/></svg></span>
-          Telegram
-        </a>
-        <span class="header-top-link share-link" id="shareBtnCompact">
-          <span class="inline-icon"><svg viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81 1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9c-1.66 0-3 1.34-3 3s1.34 3 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.16c-.05.21-.08.43-.08.65 0 1.61 1.31 2.92 2.92 2.92 1.61 0 2.92-1.31 2.92-2.92s-1.31-2.92-2.92-2.92z"/></svg></span>
-          Share
-        </span>
-      </div>
+      <a href="https://t.me/allyonogamesdite" target="_blank" rel="noopener noreferrer" class="header-top-link telegram-link">
+        <span class="inline-icon"><svg viewBox="0 0 24 24"><path d="M21.5 4.5L2.5 10.5L9.5 14.5L13.5 21.5L21.5 4.5Z"/><path d="M9.5 14.5L13.5 9.5"/></svg></span>
+        Telegram
+      </a>
+      <span class="header-top-link share-link" id="shareBtnCompact">
+        <span class="inline-icon"><svg viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81 1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9c-1.66 0-3 1.34-3 3s1.34 3 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.16c-.05.21-.08.43-.08.65 0 1.61 1.31 2.92 2.92 2.92 1.61 0 2.92-1.31 2.92-2.92s-1.31-2.92-2.92-2.92z"/></svg></span>
+        Share
+      </span>
     </div>
 
     <!-- Row 2: Home | About | Contact | Disclaimer (left to right, equal spacing) -->
     <div class="header-nav-row">
       <span class="header-nav-link active" data-page="home">
+        <!-- Photo + YONO GAMES View.COM above Home -->
+        <span class="home-photo-wrap">
+          <img src="https://hidden-meadow-162.linkyhost.com" alt="YONO GAMES" class="home-img" loading="eager">
+          <span class="home-label">YONO GAMES View.COM</span>
+        </span>
         <span class="nav-icon"><svg viewBox="0 0 24 24"><path d="M3 12l9-9 9 9"/><path d="M5 10v10a1 1 0 001 1h3a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1h3a1 1 0 001-1V10"/></svg></span> Home
       </span>
       <span class="header-nav-link" data-page="about">
-        <span class="above-label">YONO GAMES View.Com</span>
         <span class="nav-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg></span> About
       </span>
       <span class="header-nav-link" data-page="contact">
