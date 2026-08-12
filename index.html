@@ -105,6 +105,7 @@
       gap: 4px;
       padding: 2px 0;
       flex-wrap: nowrap;
+      position: relative;
     }
     .header-nav-link {
       font-size: 0.55rem;
@@ -123,11 +124,35 @@
       white-space: nowrap;
       flex: 1;
       justify-content: center;
+      position: relative;
     }
     .header-nav-link:active { transform: scale(0.95); }
     .header-nav-link.active { background: #1e293b; color: white; border-color: #1e293b; }
     .header-nav-link .nav-icon { display: inline-flex; align-items: center; justify-content: center; width: 14px; height: 14px; }
     .header-nav-link .nav-icon svg { width: 100%; height: 100%; stroke: currentColor; stroke-width: 2; fill: none; stroke-linecap: round; stroke-linejoin: round; }
+
+    /* "YONO GAMES VIEW.COM" above About button */
+    .header-nav-link .above-label {
+      position: absolute;
+      top: -16px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 0.4rem;
+      font-weight: 700;
+      color: #0b1e33;
+      background: #eef2ff;
+      padding: 1px 6px;
+      border-radius: 20px;
+      white-space: nowrap;
+      border: 1px solid #dbeafe;
+      letter-spacing: 0.3px;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.04);
+      pointer-events: none;
+    }
+    /* special case: about button gets the label */
+    .header-nav-link[data-page="about"] {
+      padding-top: 8px;
+    }
 
     /* ===== MARQUEE ===== */
     .marquee-container { background: linear-gradient(90deg, #1a2a6c, #b21f1f, #fdbb2d); padding: 6px 0; overflow: hidden; border-bottom: 1px solid #e9edf4; }
@@ -779,6 +804,8 @@
       .header-top-link .inline-icon { width: 14px; height: 14px; }
       .header-nav-link { font-size: 0.45rem; padding: 2px 4px; }
       .header-nav-link .nav-icon { width: 12px; height: 12px; }
+      .header-nav-link .above-label { font-size: 0.35rem; top: -14px; padding: 1px 4px; }
+      .header-nav-link[data-page="about"] { padding-top: 6px; }
       .marquee-container marquee { font-size: 0.5rem; }
       .marquee-container marquee span { margin: 0 8px; }
       .card-number { width: 16px; height: 16px; font-size: 0.4rem; top: 2px; left: 2px; }
@@ -835,6 +862,8 @@
         padding: 2px 4px;
       }
       .overlay-page-wrapper .top-header .header-nav-row .header-nav-link .nav-icon { width: 12px; height: 12px; }
+      .overlay-page-wrapper .top-header .header-nav-row .header-nav-link .above-label { font-size: 0.35rem; top: -14px; padding: 1px 4px; }
+      .overlay-page-wrapper .top-header .header-nav-row .header-nav-link[data-page="about"] { padding-top: 6px; }
       .overlay-page-wrapper .top-header .header-top-link { font-size: 0.45rem; padding: 2px 6px; }
       .overlay-page-wrapper .top-header .header-top-link .inline-icon { width: 14px; height: 14px; }
       .info-card { padding: 0; border-radius: 0; }
@@ -863,6 +892,7 @@
         <span class="nav-icon"><svg viewBox="0 0 24 24"><path d="M3 12l9-9 9 9"/><path d="M5 10v10a1 1 0 001 1h3a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1h3a1 1 0 001-1V10"/></svg></span> Home
       </span>
       <span class="header-nav-link" data-page="about">
+        <span class="above-label">YONO GAMES VIEW.COM</span>
         <span class="nav-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg></span> About
       </span>
       <span class="header-nav-link" data-page="contact">
