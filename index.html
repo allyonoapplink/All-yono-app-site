@@ -52,13 +52,50 @@
       box-sizing: border-box;
       gap: 4px;
     }
-    /* Row 1: Telegram + Share (right side) */
+    /* Row 1: Telegram + Share (right side) + Home photo + YONO GAMES View.Com (left side) */
     .header-top-row {
       display: flex;
-      justify-content: flex-end;
+      justify-content: space-between;
       align-items: center;
       gap: 8px;
       padding: 2px 0;
+    }
+    .header-top-left {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .header-top-photo {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      overflow: hidden;
+      border: 2px solid #e2e8f0;
+      flex-shrink: 0;
+      background: #f8fafc;
+    }
+    .header-top-photo img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+    .header-top-label {
+      font-size: 0.55rem;
+      font-weight: 700;
+      color: #0b1e33;
+      background: #eef2ff;
+      padding: 2px 10px;
+      border-radius: 40px;
+      border: 1px solid #dbeafe;
+      white-space: nowrap;
+      letter-spacing: 0.3px;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.04);
+    }
+    .header-top-right {
+      display: flex;
+      align-items: center;
+      gap: 8px;
     }
     .header-top-link {
       display: inline-flex;
@@ -131,7 +168,7 @@
     .header-nav-link .nav-icon { display: inline-flex; align-items: center; justify-content: center; width: 14px; height: 14px; }
     .header-nav-link .nav-icon svg { width: 100%; height: 100%; stroke: currentColor; stroke-width: 2; fill: none; stroke-linecap: round; stroke-linejoin: round; }
 
-    /* "YONO GAMES VIEW.COM" above About button */
+    /* "YONO GAMES View.Com" above About button */
     .header-nav-link .above-label {
       position: absolute;
       top: -16px;
@@ -800,6 +837,8 @@
     }
 
     @media (max-width: 420px) {
+      .header-top-photo { width: 22px; height: 22px; }
+      .header-top-label { font-size: 0.45rem; padding: 1px 6px; }
       .header-top-link { font-size: 0.45rem; padding: 2px 6px; }
       .header-top-link .inline-icon { width: 14px; height: 14px; }
       .header-nav-link { font-size: 0.45rem; padding: 2px 4px; }
@@ -864,6 +903,8 @@
       .overlay-page-wrapper .top-header .header-nav-row .header-nav-link .nav-icon { width: 12px; height: 12px; }
       .overlay-page-wrapper .top-header .header-nav-row .header-nav-link .above-label { font-size: 0.35rem; top: -14px; padding: 1px 4px; }
       .overlay-page-wrapper .top-header .header-nav-row .header-nav-link[data-page="about"] { padding-top: 6px; }
+      .overlay-page-wrapper .top-header .header-top-left .header-top-photo { width: 22px; height: 22px; }
+      .overlay-page-wrapper .top-header .header-top-left .header-top-label { font-size: 0.45rem; padding: 1px 6px; }
       .overlay-page-wrapper .top-header .header-top-link { font-size: 0.45rem; padding: 2px 6px; }
       .overlay-page-wrapper .top-header .header-top-link .inline-icon { width: 14px; height: 14px; }
       .info-card { padding: 0; border-radius: 0; }
@@ -874,16 +915,24 @@
 <div class="container" id="appContainer">
   <!-- TOP HEADER (global) - NEW TWO-ROW LAYOUT -->
   <div class="top-header" id="globalHeader">
-    <!-- Row 1: Telegram + Share (right side) -->
+    <!-- Row 1: Left: Photo + YONO GAMES View.Com | Right: Telegram + Share -->
     <div class="header-top-row">
-      <a href="https://t.me/allyonogamesdite" target="_blank" rel="noopener noreferrer" class="header-top-link telegram-link">
-        <span class="inline-icon"><svg viewBox="0 0 24 24"><path d="M21.5 4.5L2.5 10.5L9.5 14.5L13.5 21.5L21.5 4.5Z"/><path d="M9.5 14.5L13.5 9.5"/></svg></span>
-        Telegram
-      </a>
-      <span class="header-top-link share-link" id="shareBtnCompact">
-        <span class="inline-icon"><svg viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81 1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9c-1.66 0-3 1.34-3 3s1.34 3 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.16c-.05.21-.08.43-.08.65 0 1.61 1.31 2.92 2.92 2.92 1.61 0 2.92-1.31 2.92-2.92s-1.31-2.92-2.92-2.92z"/></svg></span>
-        Share
-      </span>
+      <div class="header-top-left">
+        <div class="header-top-photo">
+          <img src="https://hidden-meadow-162.linkyhost.com" alt="Home Photo" loading="eager">
+        </div>
+        <span class="header-top-label">YONO GAMES View.Com</span>
+      </div>
+      <div class="header-top-right">
+        <a href="https://t.me/allyonogamesdite" target="_blank" rel="noopener noreferrer" class="header-top-link telegram-link">
+          <span class="inline-icon"><svg viewBox="0 0 24 24"><path d="M21.5 4.5L2.5 10.5L9.5 14.5L13.5 21.5L21.5 4.5Z"/><path d="M9.5 14.5L13.5 9.5"/></svg></span>
+          Telegram
+        </a>
+        <span class="header-top-link share-link" id="shareBtnCompact">
+          <span class="inline-icon"><svg viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81 1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9c-1.66 0-3 1.34-3 3s1.34 3 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.16c-.05.21-.08.43-.08.65 0 1.61 1.31 2.92 2.92 2.92 1.61 0 2.92-1.31 2.92-2.92s-1.31-2.92-2.92-2.92z"/></svg></span>
+          Share
+        </span>
+      </div>
     </div>
 
     <!-- Row 2: Home | About | Contact | Disclaimer (left to right, equal spacing) -->
@@ -892,7 +941,7 @@
         <span class="nav-icon"><svg viewBox="0 0 24 24"><path d="M3 12l9-9 9 9"/><path d="M5 10v10a1 1 0 001 1h3a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1h3a1 1 0 001-1V10"/></svg></span> Home
       </span>
       <span class="header-nav-link" data-page="about">
-        <span class="above-label">YONO GAMES VIEW.COM</span>
+        <span class="above-label">YONO GAMES View.Com</span>
         <span class="nav-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg></span> About
       </span>
       <span class="header-nav-link" data-page="contact">
