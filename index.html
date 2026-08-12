@@ -154,32 +154,34 @@
       padding-top: 8px;
     }
 
-    /* Photo above Home - bigger and premium, full view */
+    /* Photo above Home - perfectly centered, full size, no crop */
     .header-nav-link[data-page="home"] {
       padding-top: 10px;
       position: relative;
     }
     .header-nav-link[data-page="home"] .home-photo-wrap {
       position: absolute;
-      top: -34px;
+      top: -38px;
       left: 50%;
       transform: translateX(-50%);
       display: flex;
       align-items: center;
+      justify-content: center;
       gap: 10px;
       pointer-events: none;
       white-space: nowrap;
       width: auto;
-      max-width: 180px;
+      max-width: 200px;
     }
     .header-nav-link[data-page="home"] .home-photo-wrap .home-img {
-      height: 40px;
+      height: 46px;
       width: auto;
-      max-width: 60px;
+      max-width: 70px;
       display: block;
       border-radius: 0;
       object-fit: contain;
       background: transparent;
+      flex-shrink: 0;
     }
     .header-nav-link[data-page="home"] .home-photo-wrap .home-label {
       font-size: 0.5rem;
@@ -192,6 +194,7 @@
       letter-spacing: 0.3px;
       box-shadow: 0 1px 4px rgba(0,0,0,0.04);
       pointer-events: none;
+      flex-shrink: 0;
     }
 
     /* ===== MARQUEE ===== */
@@ -847,8 +850,8 @@
       .header-nav-link .above-label { font-size: 0.35rem; top: -14px; padding: 1px 4px; }
       .header-nav-link[data-page="about"] { padding-top: 6px; }
       .header-nav-link[data-page="home"] { padding-top: 8px; }
-      .header-nav-link[data-page="home"] .home-photo-wrap { top: -28px; gap: 6px; max-width: 140px; }
-      .header-nav-link[data-page="home"] .home-photo-wrap .home-img { height: 32px; max-width: 48px; }
+      .header-nav-link[data-page="home"] .home-photo-wrap { top: -30px; gap: 6px; max-width: 150px; }
+      .header-nav-link[data-page="home"] .home-photo-wrap .home-img { height: 34px; max-width: 52px; }
       .header-nav-link[data-page="home"] .home-photo-wrap .home-label { font-size: 0.4rem; padding: 1px 8px; }
       .marquee-container marquee { font-size: 0.5rem; }
       .marquee-container marquee span { margin: 0 8px; }
@@ -909,8 +912,8 @@
       .overlay-page-wrapper .top-header .header-nav-row .header-nav-link .above-label { font-size: 0.35rem; top: -14px; padding: 1px 4px; }
       .overlay-page-wrapper .top-header .header-nav-row .header-nav-link[data-page="about"] { padding-top: 6px; }
       .overlay-page-wrapper .top-header .header-nav-row .header-nav-link[data-page="home"] { padding-top: 8px; }
-      .overlay-page-wrapper .top-header .header-nav-row .header-nav-link[data-page="home"] .home-photo-wrap { top: -28px; gap: 6px; max-width: 140px; }
-      .overlay-page-wrapper .top-header .header-nav-row .header-nav-link[data-page="home"] .home-photo-wrap .home-img { height: 32px; max-width: 48px; }
+      .overlay-page-wrapper .top-header .header-nav-row .header-nav-link[data-page="home"] .home-photo-wrap { top: -30px; gap: 6px; max-width: 150px; }
+      .overlay-page-wrapper .top-header .header-nav-row .header-nav-link[data-page="home"] .home-photo-wrap .home-img { height: 34px; max-width: 52px; }
       .overlay-page-wrapper .top-header .header-nav-row .header-nav-link[data-page="home"] .home-photo-wrap .home-label { font-size: 0.4rem; padding: 1px 8px; }
       .overlay-page-wrapper .top-header .header-top-link { font-size: 0.45rem; padding: 2px 6px; }
       .overlay-page-wrapper .top-header .header-top-link .inline-icon { width: 14px; height: 14px; }
@@ -937,7 +940,7 @@
     <!-- Row 2: Home | About | Contact | Disclaimer (left to right, equal spacing) -->
     <div class="header-nav-row">
       <span class="header-nav-link active" data-page="home">
-        <!-- Photo + YONO GAMES View.COM above Home -->
+        <!-- Photo + YONO GAMES View.COM above Home - perfectly centered -->
         <span class="home-photo-wrap">
           <img src="https://i.ibb.co/21819TqK/1786533341941.png" alt="YONO GAMES" class="home-img" loading="eager">
           <span class="home-label">YONO GAMES View.COM</span>
