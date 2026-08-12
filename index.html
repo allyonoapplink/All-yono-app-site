@@ -839,11 +839,63 @@
       .overlay-page-wrapper .top-header .header-top-link .inline-icon { width: 14px; height: 14px; }
       .info-card { padding: 0; border-radius: 0; }
     }
+
+    /* ----- NEW: HERO IMAGE + BRANDING BLOCK ----- */
+    .hero-block {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      padding: 8px 12px 4px 12px;
+      background: #ffffff;
+      border-bottom: 1px solid #e9edf4;
+      flex-wrap: wrap;
+    }
+    .hero-block .hero-img {
+      max-width: 100%;
+      height: auto;
+      flex: 0 0 auto;
+      border-radius: 12px;
+    }
+    .hero-block .hero-img img {
+      display: block;
+      max-width: 180px;
+      height: auto;
+      border-radius: 12px;
+      object-fit: contain;
+    }
+    .hero-block .hero-brand {
+      font-size: 1.2rem;
+      font-weight: 800;
+      color: #0b1e33;
+      letter-spacing: 1px;
+      white-space: nowrap;
+      background: linear-gradient(135deg, #1a2a6c, #b21f1f);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      text-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    }
+    @media (max-width: 420px) {
+      .hero-block .hero-brand { font-size: 1rem; }
+      .hero-block .hero-img img { max-width: 130px; }
+    }
   </style>
 </head>
 <body>
 <div class="container" id="appContainer">
-  <!-- TOP HEADER (global) - NEW TWO-ROW LAYOUT -->
+
+  <!-- ===== HERO: PHOTO + YONO GAMES View.Com ===== -->
+  <div class="hero-block">
+    <div class="hero-img">
+      <a href="https://ibb.co/39f93n1h" target="_blank">
+        <img src="https://i.ibb.co/21819TqK/1786533341941.png" alt="Yono Games Hero" border="0">
+      </a>
+    </div>
+    <div class="hero-brand">YONO GAMES View.Com</div>
+  </div>
+
+  <!-- TOP HEADER (global) - TWO-ROW LAYOUT (Home | About | Contact | Disclaimer) -->
   <div class="top-header" id="globalHeader">
     <!-- Row 1: Telegram + Share (right side) -->
     <div class="header-top-row">
@@ -857,7 +909,7 @@
       </span>
     </div>
 
-    <!-- Row 2: Home | About | Contact | Disclaimer (left to right, equal spacing) -->
+    <!-- Row 2: Home | About | Contact | Disclaimer -->
     <div class="header-nav-row">
       <span class="header-nav-link active" data-page="home">
         <span class="nav-icon"><svg viewBox="0 0 24 24"><path d="M3 12l9-9 9 9"/><path d="M5 10v10a1 1 0 001 1h3a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1h3a1 1 0 001-1V10"/></svg></span> Home
