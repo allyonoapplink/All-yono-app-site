@@ -73,287 +73,119 @@
             opacity: 1 !important;
         }
 
-        /* ===== HEADER ===== */
+        /* ===== HEADER - FIXED LAYOUT ===== */
         .top-header {
             display: flex;
             flex-direction: column;
-            padding: 8px 10px;
             background: white;
             border-bottom: 1px solid #e9edf4;
             position: sticky;
             top: 0;
             z-index: 10;
             box-sizing: border-box;
+            padding: 0 16px;
+            width: 100%;
         }
-        .header-nav-row {
+
+        /* Top row: Photo | Name | Telegram+Share */
+        .header-top-row {
             display: flex;
-            justify-content: flex-start;
             align-items: center;
-            gap: 12px;
-            padding: 4px 0;
-            flex-wrap: wrap;
+            justify-content: space-between;
+            height: 140px;
+            padding: 0;
+            gap: 8px;
+            flex-shrink: 0;
         }
-        .header-nav-link {
-            font-size: 0.55rem;
-            font-weight: 600;
-            color: #1e293b;
-            background: #f8fafc;
-            padding: 3px 12px;
-            border-radius: 40px;
-            border: 1px solid #e2e8f0;
-            cursor: pointer;
-            text-decoration: none;
-            display: inline-flex;
-            align-items: center;
-            gap: 4px;
-            transition: all 0.15s;
+
+        /* Photo - 64×64, top-left */
+        .header-photo {
+            flex: 0 0 64px;
+            width: 64px;
+            height: 64px;
+            border-radius: 50%;
+            overflow: hidden;
+            border: 2px solid #00ddff;
+            box-shadow: 0 0 20px rgba(0, 200, 255, 0.3);
+            animation: cyanPulse 2s ease-in-out infinite;
+            flex-shrink: 0;
+            background: #000;
         }
-        .header-nav-link:active {
-            transform: scale(0.95);
-        }
-        .header-nav-link.active {
-            background: #1e293b;
-            color: white;
-            border-color: #1e293b;
-        }
-        .header-nav-link .nav-icon {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            width: 14px;
-            height: 14px;
-        }
-        .header-nav-link .nav-icon svg {
+        .header-photo img {
             width: 100%;
             height: 100%;
-            stroke: currentColor;
-            stroke-width: 2;
-            fill: none;
-            stroke-linecap: round;
-            stroke-linejoin: round;
-        }
-
-        .header-bottom-row {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 6px 0 2px 0;
-            flex-wrap: wrap;
-            gap: 6px;
-        }
-        .header-left {
-            display: flex;
-            align-items: center;
-            gap: 6px;
-        }
-        .header-right {
-            display: flex;
-            align-items: center;
-            gap: 6px;
-        }
-
-        .logo-cyan-round {
-            width: 32px;
-            height: 32px;
-            border-radius: 50%;
-            background: #000;
-            border: 2px solid #00ddff;
-            box-shadow: 0 0 15px rgba(0, 200, 255, 0.3);
-            overflow: hidden;
-            flex-shrink: 0;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            animation: cyanPulse 2s ease-in-out infinite;
-        }
-        .logo-cyan-round img {
-            width: 90%;
-            height: 90%;
             object-fit: cover;
-            border-radius: 50%;
             display: block;
         }
         @keyframes cyanPulse {
-            0%,
-            100% {
-                box-shadow: 0 0 15px rgba(0, 200, 255, 0.3);
-            }
-            50% {
-                box-shadow: 0 0 25px rgba(0, 200, 255, 0.5);
-            }
+            0%, 100% { box-shadow: 0 0 15px rgba(0, 200, 255, 0.3); }
+            50% { box-shadow: 0 0 25px rgba(0, 200, 255, 0.6); }
         }
 
-        .site-name-led-round {
-            display: inline-flex;
-            align-items: center;
+        /* Name area - ~300px, 24px main, 14-15px secondary */
+        .header-name-area {
+            flex: 1 1 0;
+            min-width: 0;
+            max-width: 300px;
+            display: flex;
+            flex-direction: column;
             justify-content: center;
-            position: relative;
-            padding: 3px 12px 3px 10px;
-            border-radius: 40px;
-            background: #000;
-            border: 2px solid #1a1a1a;
-            box-shadow: 0 0 20px rgba(0, 255, 100, 0.1);
-            min-height: 28px;
-            overflow: hidden;
-        }
-        .site-name-led-round::before {
-            content: '';
-            position: absolute;
-            top: -4px;
-            left: -4px;
-            right: -4px;
-            bottom: -4px;
-            border-radius: 50px;
-            background: conic-gradient(from 0deg, #00ff00 0deg 40deg, #00ffff 90deg 130deg, #ffff00 180deg 220deg, #ff00ff 270deg 310deg, #00ff00 360deg);
-            animation: ledLeftMove 3s linear infinite;
-            z-index: -1;
-            padding: 4px;
-            -webkit-mask: radial-gradient(farthest-side, transparent calc(100% - 4px), #fff calc(100% - 3px));
-            mask: radial-gradient(farthest-side, transparent calc(100% - 4px), #fff calc(100% - 3px));
-        }
-        .site-name-led-round::after {
-            content: '';
-            position: absolute;
-            top: -8px;
-            left: -8px;
-            right: -8px;
-            bottom: -8px;
-            border-radius: 50px;
-            background: conic-gradient(from 30deg, rgba(0, 255, 0, 0.15) 0deg 30deg, rgba(0, 255, 255, 0.15) 90deg 120deg, rgba(255, 255, 0, 0.15) 180deg 210deg, rgba(255, 0, 255, 0.15) 270deg 300deg, rgba(0, 255, 0, 0.15) 360deg);
-            animation: ledLeftMove 4s linear infinite reverse;
-            z-index: -2;
-            filter: blur(12px);
-        }
-        @keyframes ledLeftMove {
-            0% {
-                transform: translateX(-20px);
-            }
-            50% {
-                transform: translateX(20px);
-            }
-            100% {
-                transform: translateX(-20px);
-            }
-        }
-
-        .site-name-led-round .led-dot-round {
-            position: absolute;
-            width: 6px;
-            height: 6px;
-            border-radius: 50%;
-            z-index: 2;
-            animation: ledDotLeftMove 3s ease-in-out infinite;
-            box-shadow: 0 0 12px currentColor;
-        }
-        .site-name-led-round .led-dot-round.green {
-            background: #00ff00;
-            color: #00ff00;
-            animation-delay: 0s;
-        }
-        .site-name-led-round .led-dot-round.cyan {
-            background: #00ffff;
-            color: #00ffff;
-            animation-delay: 0.75s;
-        }
-        .site-name-led-round .led-dot-round.yellow {
-            background: #ffff00;
-            color: #ffff00;
-            animation-delay: 1.5s;
-        }
-        .site-name-led-round .led-dot-round.pink {
-            background: #ff00ff;
-            color: #ff00ff;
-            animation-delay: 2.25s;
-        }
-
-        @keyframes ledDotLeftMove {
-            0% {
-                left: -4px;
-                top: 50%;
-                transform: translateY(-50%);
-            }
-            50% {
-                left: calc(100% - 4px);
-                top: 50%;
-                transform: translateY(-50%);
-            }
-            100% {
-                left: -4px;
-                top: 50%;
-                transform: translateY(-50%);
-            }
-        }
-
-        .site-name-led-round .site-name-text {
-            font-weight: 700;
-            font-size: 0.45rem;
-            color: #ffffff;
-            letter-spacing: 0.2px;
-            text-shadow: 0 0 15px rgba(0, 255, 100, 0.15);
-            white-space: nowrap;
-            position: relative;
-            z-index: 1;
-            padding: 1px 0;
             line-height: 1.2;
+            padding: 0 4px;
         }
-        .site-name-text .d1 {
-            color: #86efac;
+        .header-name-area .main-name {
+            font-size: 24px;
             font-weight: 800;
+            color: #0b1e33;
+            letter-spacing: 0.3px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
         }
-        .site-name-text .d2 {
-            color: #facc15;
-            font-weight: 800;
-        }
-        .site-name-text .d3 {
-            color: #60a5fa;
-            font-weight: 800;
-        }
-        .site-name-text .d4 {
-            color: #f472b6;
-            font-weight: 800;
-        }
-        .site-name-text .sep {
-            color: #6b7280;
-            font-weight: 400;
-        }
+        .header-name-area .main-name .d1 { color: #059669; }
+        .header-name-area .main-name .d2 { color: #d97706; }
+        .header-name-area .main-name .d3 { color: #2563eb; }
+        .header-name-area .main-name .d4 { color: #db2777; }
+        .header-name-area .main-name .sep { color: #6b7280; font-weight: 400; }
 
-        .share-btn {
-            background: #000;
-            color: white;
-            border: none;
-            padding: 3px 8px;
-            border-radius: 40px;
+        .header-name-area .sub-name {
+            font-size: 14px;
             font-weight: 600;
-            font-size: 0.45rem;
-            cursor: pointer;
+            color: #4b5563;
+            letter-spacing: 0.2px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        .header-name-area .sub-name .s1 { color: #059669; }
+        .header-name-area .sub-name .s2 { color: #d97706; }
+        .header-name-area .sub-name .s3 { color: #2563eb; }
+        .header-name-area .sub-name .s4 { color: #db2777; }
+        .header-name-area .sub-name .sep { color: #9ca3af; font-weight: 400; }
+
+        /* Right side: Telegram + Share */
+        .header-actions {
             display: flex;
             align-items: center;
-            gap: 3px;
-            border: 1px solid #222;
-        }
-        .share-btn:active {
-            transform: scale(0.95);
-        }
-        .share-btn svg {
-            width: 12px;
-            height: 12px;
-            fill: white;
+            gap: 10px;
+            flex-shrink: 0;
         }
 
-        .telegram-btn {
-            display: inline-block;
-            width: 28px;
-            height: 28px;
+        /* Telegram - 50×50 */
+        .header-telegram {
+            flex: 0 0 50px;
+            width: 50px;
+            height: 50px;
             border-radius: 50%;
             overflow: visible;
-            flex-shrink: 0;
             position: relative;
             background: #000;
             border: 2px solid #1a1a1a;
-            box-shadow: 0 0 10px rgba(0, 255, 100, 0.2);
+            box-shadow: 0 0 15px rgba(0, 255, 100, 0.2);
             padding: 2px;
+            flex-shrink: 0;
         }
-        .telegram-btn::before {
+        .header-telegram::before {
             content: '';
             position: absolute;
             top: -3px;
@@ -368,7 +200,7 @@
             -webkit-mask: radial-gradient(farthest-side, transparent calc(100% - 3px), #fff calc(100% - 2px));
             mask: radial-gradient(farthest-side, transparent calc(100% - 3px), #fff calc(100% - 2px));
         }
-        .telegram-btn img {
+        .header-telegram img {
             width: 100%;
             height: 100%;
             object-fit: cover;
@@ -378,7 +210,7 @@
             z-index: 1;
             background: #000;
         }
-        .telegram-btn .corner-led {
+        .header-telegram .corner-led {
             position: absolute;
             width: 4px;
             height: 4px;
@@ -387,46 +219,187 @@
             animation: ledPulseSlow 2.5s ease-in-out infinite;
             box-shadow: 0 0 6px currentColor;
         }
-        .telegram-btn .corner-led.tl {
-            top: -1px;
-            left: -1px;
-            color: #00ff00;
-            background: #00ff00;
-            animation-delay: 0s;
+        .header-telegram .corner-led.tl { top: -1px; left: -1px; color: #00ff00; background: #00ff00; animation-delay: 0s; }
+        .header-telegram .corner-led.tr { top: -1px; right: -1px; color: #00ffff; background: #00ffff; animation-delay: 0.6s; }
+        .header-telegram .corner-led.bl { bottom: -1px; left: -1px; color: #ff00ff; background: #ff00ff; animation-delay: 1.2s; }
+        .header-telegram .corner-led.br { bottom: -1px; right: -1px; color: #ffff00; background: #ffff00; animation-delay: 1.8s; }
+        @keyframes ledPulseSlow {
+            0%, 100% { opacity: 0.5; transform: scale(0.8); }
+            50% { opacity: 1; transform: scale(1.2); box-shadow: 0 0 10px currentColor; }
         }
-        .telegram-btn .corner-led.tr {
-            top: -1px;
-            right: -1px;
-            color: #00ffff;
-            background: #00ffff;
-            animation-delay: 0.6s;
-        }
-        .telegram-btn .corner-led.bl {
-            bottom: -1px;
-            left: -1px;
-            color: #ff00ff;
-            background: #ff00ff;
-            animation-delay: 1.2s;
-        }
-        .telegram-btn .corner-led.br {
-            bottom: -1px;
-            right: -1px;
-            color: #ffff00;
-            background: #ffff00;
-            animation-delay: 1.8s;
+        @keyframes ledSlowSpinRound {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
         }
 
-        @keyframes ledPulseSlow {
-            0%,
-            100% {
-                opacity: 0.5;
-                transform: scale(0.8);
-            }
-            50% {
-                opacity: 1;
-                transform: scale(1.2);
-                box-shadow: 0 0 10px currentColor;
-            }
+        /* Share - 120×48 */
+        .header-share {
+            flex: 0 0 120px;
+            height: 48px;
+            background: #000;
+            color: white;
+            border: none;
+            border-radius: 40px;
+            font-weight: 700;
+            font-size: 16px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            border: 1px solid #1a1a1a;
+            box-shadow: 0 0 20px rgba(0, 255, 100, 0.08);
+            transition: all 0.15s;
+            padding: 0 16px;
+            flex-shrink: 0;
+        }
+        .header-share:active {
+            transform: scale(0.95);
+        }
+        .header-share svg {
+            width: 20px;
+            height: 20px;
+            fill: white;
+            flex-shrink: 0;
+        }
+        .header-share span {
+            white-space: nowrap;
+        }
+
+        /* Nav row: Home | About | Contact | Disclaimer */
+        .header-nav-row {
+            display: flex;
+            align-items: center;
+            height: 55px;
+            padding: 0;
+            gap: 10px;
+            flex-shrink: 0;
+            border-top: 1px solid #f0f2f5;
+        }
+
+        .header-nav-link {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            height: 40px;
+            border-radius: 22px;
+            font-size: 18px;
+            font-weight: 600;
+            color: #1e293b;
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            cursor: pointer;
+            transition: all 0.15s;
+            text-decoration: none;
+            padding: 0 14px;
+            flex-shrink: 0;
+            white-space: nowrap;
+        }
+        .header-nav-link .nav-icon {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 22px;
+            height: 22px;
+            flex-shrink: 0;
+        }
+        .header-nav-link .nav-icon svg {
+            width: 100%;
+            height: 100%;
+            stroke: currentColor;
+            stroke-width: 2;
+            fill: none;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+        }
+        .header-nav-link:active {
+            transform: scale(0.95);
+        }
+        .header-nav-link.active {
+            background: #1e293b;
+            color: white;
+            border-color: #1e293b;
+        }
+
+        /* Specific widths per nav item */
+        .header-nav-link[data-page="home"] { width: 110px; }
+        .header-nav-link[data-page="about"] { width: 110px; }
+        .header-nav-link[data-page="contact"] { width: 120px; }
+        .header-nav-link[data-page="disclaimer"] { width: 135px; }
+
+        /* A–Z Tags row */
+        .az-tags-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            padding: 8px 16px 12px 16px;
+            background: white;
+            border-bottom: 1px solid #e9edf4;
+            width: 100%;
+            box-sizing: border-box;
+        }
+        .az-tag {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 4px;
+            padding: 4px 12px 4px 8px;
+            background: #0b1e33;
+            color: #ffffff;
+            border-radius: 50px;
+            font-size: 0.55rem;
+            font-weight: 600;
+            border: 1.5px solid rgba(255, 255, 255, 0.1);
+            cursor: pointer;
+            transition: all 0.2s ease;
+            box-shadow: 0 2px 12px rgba(0, 0, 0, 0.12), inset 0 1px 0 rgba(255, 255, 255, 0.05);
+            letter-spacing: 0.3px;
+        }
+        .az-tag:active {
+            transform: scale(0.95);
+            background: #1a2a4a;
+        }
+        .az-tag .tag-loader {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 14px;
+            height: 14px;
+            flex-shrink: 0;
+        }
+        .az-tag .tag-loader svg {
+            width: 100%;
+            height: 100%;
+            animation: loaderSpin 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
+            transform-origin: center center;
+        }
+        .az-tag .tag-loader .loader-ring {
+            fill: none;
+            stroke: #60a5fa;
+            stroke-width: 2.5;
+            stroke-linecap: round;
+            stroke-dasharray: 40, 120;
+            stroke-dashoffset: 0;
+            animation: loaderDash 1.5s ease-in-out infinite;
+        }
+        .az-tag .tag-loader .loader-ring-bg {
+            fill: none;
+            stroke: rgba(255, 255, 255, 0.08);
+            stroke-width: 2.5;
+        }
+        .az-tag .tag-text {
+            white-space: nowrap;
+            color: #e2e8f0;
+        }
+        @keyframes loaderSpin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        @keyframes loaderDash {
+            0% { stroke-dashoffset: 0; }
+            50% { stroke-dashoffset: -80; }
+            100% { stroke-dashoffset: -160; }
         }
 
         /* ===== MARQUEE ===== */
@@ -669,50 +642,25 @@
             letter-spacing: 0.5px;
         }
         @keyframes badgeGlow {
-            0%,
-            100% {
-                box-shadow: 0 0 8px rgba(220, 38, 38, 0.3);
-            }
-            50% {
-                box-shadow: 0 0 20px rgba(220, 38, 38, 0.6);
-            }
+            0%, 100% { box-shadow: 0 0 8px rgba(220, 38, 38, 0.3); }
+            50% { box-shadow: 0 0 20px rgba(220, 38, 38, 0.6); }
         }
 
         @keyframes metaGlowGreen {
-            0%,
-            100% {
-                box-shadow: 0 0 8px rgba(0, 255, 0, 0.15);
-            }
-            50% {
-                box-shadow: 0 0 18px rgba(0, 255, 0, 0.4);
-            }
+            0%, 100% { box-shadow: 0 0 8px rgba(0, 255, 0, 0.15); }
+            50% { box-shadow: 0 0 18px rgba(0, 255, 0, 0.4); }
         }
         @keyframes metaGlowCyan {
-            0%,
-            100% {
-                box-shadow: 0 0 8px rgba(0, 200, 255, 0.15);
-            }
-            50% {
-                box-shadow: 0 0 18px rgba(0, 200, 255, 0.4);
-            }
+            0%, 100% { box-shadow: 0 0 8px rgba(0, 200, 255, 0.15); }
+            50% { box-shadow: 0 0 18px rgba(0, 200, 255, 0.4); }
         }
         @keyframes metaGlowPink {
-            0%,
-            100% {
-                box-shadow: 0 0 8px rgba(255, 64, 129, 0.15);
-            }
-            50% {
-                box-shadow: 0 0 18px rgba(255, 64, 129, 0.4);
-            }
+            0%, 100% { box-shadow: 0 0 8px rgba(255, 64, 129, 0.15); }
+            50% { box-shadow: 0 0 18px rgba(255, 64, 129, 0.4); }
         }
         @keyframes metaGlowRed {
-            0%,
-            100% {
-                box-shadow: 0 0 8px rgba(255, 23, 68, 0.15);
-            }
-            50% {
-                box-shadow: 0 0 18px rgba(255, 23, 68, 0.4);
-            }
+            0%, 100% { box-shadow: 0 0 8px rgba(255, 23, 68, 0.15); }
+            50% { box-shadow: 0 0 18px rgba(255, 23, 68, 0.4); }
         }
 
         .detail-download {
@@ -785,67 +733,32 @@
         }
 
         @keyframes iconGlowGreen {
-            0%,
-            100% {
-                filter: drop-shadow(0 0 4px rgba(0, 255, 100, 0.2));
-            }
-            50% {
-                filter: drop-shadow(0 0 12px rgba(0, 255, 100, 0.5));
-            }
+            0%, 100% { filter: drop-shadow(0 0 4px rgba(0, 255, 100, 0.2)); }
+            50% { filter: drop-shadow(0 0 12px rgba(0, 255, 100, 0.5)); }
         }
         @keyframes iconGlowCyan {
-            0%,
-            100% {
-                filter: drop-shadow(0 0 4px rgba(0, 200, 255, 0.2));
-            }
-            50% {
-                filter: drop-shadow(0 0 12px rgba(0, 200, 255, 0.5));
-            }
+            0%, 100% { filter: drop-shadow(0 0 4px rgba(0, 200, 255, 0.2)); }
+            50% { filter: drop-shadow(0 0 12px rgba(0, 200, 255, 0.5)); }
         }
         @keyframes iconGlowGold {
-            0%,
-            100% {
-                filter: drop-shadow(0 0 4px rgba(255, 215, 0, 0.2));
-            }
-            50% {
-                filter: drop-shadow(0 0 12px rgba(255, 215, 0, 0.5));
-            }
+            0%, 100% { filter: drop-shadow(0 0 4px rgba(255, 215, 0, 0.2)); }
+            50% { filter: drop-shadow(0 0 12px rgba(255, 215, 0, 0.5)); }
         }
         @keyframes iconGlowRed {
-            0%,
-            100% {
-                filter: drop-shadow(0 0 4px rgba(255, 0, 0, 0.15));
-            }
-            50% {
-                filter: drop-shadow(0 0 10px rgba(255, 0, 0, 0.4));
-            }
+            0%, 100% { filter: drop-shadow(0 0 4px rgba(255, 0, 0, 0.15)); }
+            50% { filter: drop-shadow(0 0 10px rgba(255, 0, 0, 0.4)); }
         }
         @keyframes iconGlowPurple {
-            0%,
-            100% {
-                filter: drop-shadow(0 0 4px rgba(160, 80, 255, 0.2));
-            }
-            50% {
-                filter: drop-shadow(0 0 12px rgba(160, 80, 255, 0.5));
-            }
+            0%, 100% { filter: drop-shadow(0 0 4px rgba(160, 80, 255, 0.2)); }
+            50% { filter: drop-shadow(0 0 12px rgba(160, 80, 255, 0.5)); }
         }
         @keyframes iconGlowBlue {
-            0%,
-            100% {
-                filter: drop-shadow(0 0 4px rgba(50, 150, 255, 0.2));
-            }
-            50% {
-                filter: drop-shadow(0 0 12px rgba(50, 150, 255, 0.5));
-            }
+            0%, 100% { filter: drop-shadow(0 0 4px rgba(50, 150, 255, 0.2)); }
+            50% { filter: drop-shadow(0 0 12px rgba(50, 150, 255, 0.5)); }
         }
         @keyframes iconGlowPink {
-            0%,
-            100% {
-                filter: drop-shadow(0 0 4px rgba(255, 50, 150, 0.2));
-            }
-            50% {
-                filter: drop-shadow(0 0 12px rgba(255, 50, 150, 0.5));
-            }
+            0%, 100% { filter: drop-shadow(0 0 4px rgba(255, 50, 150, 0.2)); }
+            50% { filter: drop-shadow(0 0 12px rgba(255, 50, 150, 0.5)); }
         }
 
         .led-icon {
@@ -1216,25 +1129,6 @@
             stroke: rgba(255, 255, 255, 0.08);
             stroke-width: 2.5;
         }
-        @keyframes loaderSpin {
-            0% {
-                transform: rotate(0deg);
-            }
-            100% {
-                transform: rotate(360deg);
-            }
-        }
-        @keyframes loaderDash {
-            0% {
-                stroke-dashoffset: 0;
-            }
-            50% {
-                stroke-dashoffset: -80;
-            }
-            100% {
-                stroke-dashoffset: -160;
-            }
-        }
 
         .game-tag .tag-text {
             white-space: nowrap;
@@ -1298,26 +1192,17 @@
             animation: glowPulse 2s ease-in-out infinite;
         }
         @keyframes closeSpin {
-            0% {
-                transform: rotate(0deg);
-            }
-            100% {
-                transform: rotate(360deg);
-            }
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
         }
         @keyframes glowPulse {
-            0%,
-            100% {
-                opacity: 0.5;
-            }
-            50% {
-                opacity: 1;
-            }
+            0%, 100% { opacity: 0.5; }
+            50% { opacity: 1; }
         }
 
         /* ===== RELATED SECTION - NOW USING SAME CARD STYLE AS HOME ===== */
         .related-section {
-            padding: 8px 15px; /* match home side margin */
+            padding: 8px 15px;
             background: white;
             border-top: 1px solid #e9edf4;
         }
@@ -1333,26 +1218,20 @@
         .related-grid {
             display: flex;
             flex-direction: column;
-            gap: 12px; /* match home card gap */
-        }
-
-        /* ---- Reuse .card styles for related items ---- */
-        .related-grid .card {
-            /* .card styles already defined below, but we need to ensure they apply */
-            /* The .card class is already defined for home grid, we reuse it */
+            gap: 12px;
         }
 
         /* ===== MAIN GRID — FIXED MOBILE CARD LAYOUT ===== */
         #mainGrid {
             display: flex;
             flex-direction: column;
-            gap: 12px; /* Card gap 12px */
-            padding: 8px 15px; /* Side margin 15px */
+            gap: 12px;
+            padding: 8px 15px;
         }
 
         .card {
             background: white;
-            border-radius: 24px; /* 22-24px rounded corners */
+            border-radius: 24px;
             padding: 8px 12px;
             box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
             display: flex;
@@ -1365,7 +1244,7 @@
             width: 100%;
             box-sizing: border-box;
             flex-wrap: nowrap;
-            height: 125px; /* fixed height */
+            height: 125px;
             min-height: 125px;
         }
         .card:active {
@@ -1373,7 +1252,6 @@
             background: #fafcff;
         }
 
-        /* ---- NUMBER (32×32) ---- */
         .card-number {
             position: absolute;
             top: 4px;
@@ -1394,7 +1272,6 @@
             flex-shrink: 0;
         }
 
-        /* ---- IMAGE: 84×84, gap 30px from number ---- */
         .card-img {
             flex: 0 0 84px;
             height: 84px;
@@ -1403,7 +1280,7 @@
             background: #f0f4ff;
             overflow: hidden;
             border: 1px solid #e2e8f0;
-            margin-left: 30px; /* 25-30px gap from number */
+            margin-left: 30px;
         }
         .card-img img {
             width: 100%;
@@ -1412,7 +1289,6 @@
             display: block;
         }
 
-        /* ---- INFO: takes remaining space, no overflow ---- */
         .card-info {
             flex: 1 1 0;
             min-width: 0;
@@ -1425,7 +1301,7 @@
         }
         .card-name {
             font-weight: 700;
-            font-size: 0.9rem; /* ~20px */
+            font-size: 0.9rem;
             color: #0b1e33;
             display: flex;
             align-items: center;
@@ -1439,7 +1315,7 @@
             color: #6b7280;
         }
         .card-bonus {
-            font-size: 0.8rem; /* 18-20px */
+            font-size: 0.8rem;
             color: #dc2626;
             font-weight: 600;
             display: inline-flex;
@@ -1448,7 +1324,7 @@
             line-height: 1.2;
         }
         .card-withdraw {
-            font-size: 0.75rem; /* 18-20px */
+            font-size: 0.75rem;
             color: #0a0a0a;
             font-weight: 500;
             display: inline-flex;
@@ -1457,7 +1333,6 @@
             line-height: 1.2;
         }
 
-        /* ---- DOWNLOAD BUTTON: 185×55, close to info ---- */
         .card-download-sm {
             flex: 0 0 auto;
             background: #0a0a0a;
@@ -1472,12 +1347,12 @@
             display: inline-flex;
             align-items: center;
             gap: 6px;
-            margin-left: 4px; /* small gap from info */
+            margin-left: 4px;
             transition: none;
             box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
             line-height: 1.4;
             min-height: 55px;
-            min-width: 140px; /* flexible but approx 185px on larger screens */
+            min-width: 140px;
             justify-content: center;
             letter-spacing: 0.3px;
         }
@@ -1503,7 +1378,6 @@
             filter: drop-shadow(0 0 8px rgba(34, 197, 94, 0.5));
         }
 
-        /* ---- FOOTER ---- */
         .footer-links {
             display: flex;
             justify-content: center;
@@ -1776,12 +1650,8 @@
             mask: radial-gradient(farthest-side, transparent calc(100% - 2px), #fff calc(100% - 1px));
         }
         @keyframes btnGlowSpin {
-            0% {
-                transform: rotate(0deg);
-            }
-            100% {
-                transform: rotate(360deg);
-            }
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
         }
 
         .overlay-page-wrapper {
@@ -1918,58 +1788,82 @@
             stroke-linejoin: round;
         }
         @keyframes ledSlowSpinRound {
-            0% {
-                transform: rotate(0deg);
-            }
-            100% {
-                transform: rotate(360deg);
-            }
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
         }
 
         @media (max-width: 420px) {
-            .header-nav-link {
-                font-size: 0.45rem;
-                padding: 2px 8px;
+            .header-top-row {
+                height: 110px;
+                gap: 6px;
             }
-            .logo-cyan-round {
-                width: 26px;
-                height: 26px;
-            }
-            .site-name-led-round {
-                padding: 2px 8px 2px 6px;
-                min-height: 22px;
-            }
-            .site-name-led-round .site-name-text {
-                font-size: 0.35rem;
-            }
-            .site-name-led-round .led-dot-round {
-                width: 4px;
-                height: 4px;
-            }
-            .share-btn {
-                font-size: 0.35rem;
-                padding: 2px 6px;
-            }
-            .share-btn svg {
-                width: 10px;
-                height: 10px;
-            }
-            .telegram-btn {
-                width: 24px;
-                height: 24px;
-            }
-            .header-bottom-row {
-                padding: 4px 0;
-            }
-            .detail-img {
+            .header-photo {
+                flex: 0 0 50px;
                 width: 50px;
                 height: 50px;
             }
-            .detail-info .game-name {
-                font-size: 0.9rem;
+            .header-name-area .main-name {
+                font-size: 18px;
+            }
+            .header-name-area .sub-name {
+                font-size: 11px;
+            }
+            .header-actions {
+                gap: 6px;
+            }
+            .header-telegram {
+                flex: 0 0 40px;
+                width: 40px;
+                height: 40px;
+            }
+            .header-share {
+                flex: 0 0 90px;
+                height: 38px;
+                font-size: 13px;
+                padding: 0 10px;
+            }
+            .header-share svg {
+                width: 16px;
+                height: 16px;
+            }
+            .header-nav-row {
+                height: 46px;
+                gap: 6px;
+                flex-wrap: nowrap;
+                overflow-x: auto;
+                padding: 2px 0;
+                -webkit-overflow-scrolling: touch;
+            }
+            .header-nav-link {
+                font-size: 14px;
+                height: 34px;
+                padding: 0 10px;
+                flex-shrink: 0;
+            }
+            .header-nav-link .nav-icon {
+                width: 18px;
+                height: 18px;
+            }
+            .header-nav-link[data-page="home"] { width: 90px; }
+            .header-nav-link[data-page="about"] { width: 90px; }
+            .header-nav-link[data-page="contact"] { width: 100px; }
+            .header-nav-link[data-page="disclaimer"] { width: 110px; }
+            .az-tags-row {
+                padding: 6px 12px 10px 12px;
+                gap: 4px;
+            }
+            .az-tag {
+                font-size: 0.45rem;
+                padding: 3px 8px 3px 6px;
+            }
+            .az-tag .tag-loader {
+                width: 12px;
+                height: 12px;
+            }
+            .top-header {
+                padding: 0 12px;
             }
 
-            /* Adjust card for small screens */
             .card {
                 height: 105px;
                 min-height: 105px;
@@ -2168,9 +2062,54 @@
 </head>
 <body>
     <div class="container" id="appContainer">
-        <!-- TOP HEADER (global) - HOME PAGE ORIGINAL -->
+        <!-- HEADER - FIXED LAYOUT -->
         <div class="top-header" id="globalHeader">
-            <!-- Row 1: Home | About | Contact | Disclaimer -->
+            <!-- Top row: Photo | Name | Telegram+Share -->
+            <div class="header-top-row">
+                <!-- Photo 64×64 -->
+                <div class="header-photo">
+                    <img src="https://i.ibb.co/CssC2WbG/1000022725.jpg" alt="All Yono App Site" loading="eager" fetchpriority="high">
+                </div>
+
+                <!-- Name area: 24px main, 14px sub -->
+                <div class="header-name-area">
+                    <div class="main-name">
+                        <span class="d1">All Yono App Site</span>
+                        <span class="sep"> • </span>
+                        <span class="d2">All Yono Apk</span>
+                        <span class="sep"> • </span>
+                        <span class="d3">All Yono New</span>
+                        <span class="sep"> • </span>
+                        <span class="d4">All Yono Games</span>
+                    </div>
+                    <div class="sub-name">
+                        <span class="s1">All Yono App</span>
+                        <span class="sep"> • </span>
+                        <span class="s2">All Yono Apk</span>
+                        <span class="sep"> • </span>
+                        <span class="s3">All Yono New</span>
+                        <span class="sep"> • </span>
+                        <span class="s4">All Yono Games</span>
+                    </div>
+                </div>
+
+                <!-- Telegram + Share -->
+                <div class="header-actions">
+                    <a href="https://t.me/allyonogamesdite" target="_blank" rel="noopener noreferrer" class="header-telegram">
+                        <span class="corner-led tl"></span>
+                        <span class="corner-led tr"></span>
+                        <span class="corner-led bl"></span>
+                        <span class="corner-led br"></span>
+                        <img src="https://i.ibb.co/Wp3zwWc3/telegram-icon.jpg" alt="Telegram" loading="eager">
+                    </a>
+                    <button class="header-share" id="shareBtn">
+                        <svg viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81 1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9c-1.66 0-3 1.34-3 3s1.34 3 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.16c-.05.21-.08.43-.08.65 0 1.61 1.31 2.92 2.92 2.92 1.61 0 2.92-1.31 2.92-2.92s-1.31-2.92-2.92-2.92z"/></svg>
+                        <span>Share</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Nav row: Home | About | Contact | Disclaimer -->
             <div class="header-nav-row">
                 <span class="header-nav-link active" data-page="home">
                     <span class="nav-icon"><svg viewBox="0 0 24 24"><path d="M3 12l9-9 9 9"/><path d="M5 10v10a1 1 0 001 1h3a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1h3a1 1 0 001-1V10"/></svg></span> Home
@@ -2185,43 +2124,11 @@
                     <span class="nav-icon"><svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="M9 12l2 2 4-4"/></svg></span> Disclaimer
                 </span>
             </div>
+        </div>
 
-            <!-- Row 2: Logo | Tags | Telegram | Share -->
-            <div class="header-bottom-row">
-                <div class="header-left">
-                    <div class="logo-cyan-round">
-                        <img src="https://i.ibb.co/CssC2WbG/1000022725.jpg" alt="All Yono App Site" loading="eager" fetchpriority="high">
-                    </div>
-                    <div class="site-name-led-round">
-                        <span class="led-dot-round green"></span>
-                        <span class="led-dot-round cyan"></span>
-                        <span class="led-dot-round yellow"></span>
-                        <span class="led-dot-round pink"></span>
-                        <span class="site-name-text">
-                            <span class="d1">All Yono App Site</span>
-                            <span class="sep"> • </span>
-                            <span class="d2">All Yono Apk</span>
-                            <span class="sep"> • </span>
-                            <span class="d3">All Yono New</span>
-                            <span class="sep"> • </span>
-                            <span class="d4">All Yono Games</span>
-                        </span>
-                    </div>
-                </div>
-                <div class="header-right">
-                    <a href="https://t.me/allyonogamesdite" target="_blank" rel="noopener noreferrer" class="telegram-btn">
-                        <span class="corner-led tl"></span>
-                        <span class="corner-led tr"></span>
-                        <span class="corner-led bl"></span>
-                        <span class="corner-led br"></span>
-                        <img src="https://i.ibb.co/Wp3zwWc3/telegram-icon.jpg" alt="Telegram" loading="eager">
-                    </a>
-                    <button class="share-btn" id="shareBtn">
-                        <svg viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81 1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9c-1.66 0-3 1.34-3 3s1.34 3 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.16c-.05.21-.08.43-.08.65 0 1.61 1.31 2.92 2.92 2.92 1.61 0 2.92-1.31 2.92-2.92s-1.31-2.92-2.92-2.92z"/></svg>
-                        Share
-                    </button>
-                </div>
-            </div>
+        <!-- A–Z Tags Row -->
+        <div class="az-tags-row" id="azTagsRow">
+            <!-- Will be populated by JavaScript -->
         </div>
 
         <!-- MARQUEE (global) -->
@@ -2900,13 +2807,10 @@
                 // --- RENDER RELATED GAMES USING SAME CARD STYLE ---
                 const relatedGrid = document.getElementById('relatedGrid');
                 relatedGrid.innerHTML = '';
-                // Get all games except the current one
                 const otherGames = uniqueGames.filter(g => g.name !== game.name);
-                // Optionally limit to first 5 or all, we'll show all for now
                 otherGames.forEach((g, idx) => {
                     const card = document.createElement('div');
                     card.className = 'card';
-                    // Set data attributes for click handling
                     card.dataset.name = g.name;
                     card.dataset.altName = g.altName || g.name;
                     card.dataset.bonus = g.bonus;
@@ -2936,7 +2840,6 @@
                         `;
                     relatedGrid.appendChild(card);
 
-                    // Add click event to navigate to detail of that game
                     card.addEventListener('click', function() {
                         const gData = {
                             name: this.dataset.name,
@@ -3191,6 +3094,48 @@
                 };
             }
 
+            // ---- RENDER A–Z TAGS ----
+            function renderAZTags() {
+                const container = document.getElementById('azTagsRow');
+                container.innerHTML = '';
+                // Get first letter of each game name for A-Z tags
+                const letters = new Set();
+                uniqueGames.forEach(g => {
+                    const first = g.name.charAt(0).toUpperCase();
+                    if (first >= 'A' && first <= 'Z') letters.add(first);
+                });
+                const sorted = Array.from(letters).sort();
+                sorted.forEach(letter => {
+                    const tag = document.createElement('span');
+                    tag.className = 'az-tag';
+                    tag.innerHTML = `
+                        <span class="tag-loader">
+                            <svg viewBox="0 0 50 50">
+                                <circle class="loader-ring-bg" cx="25" cy="25" r="20"/>
+                                <circle class="loader-ring" cx="25" cy="25" r="20"/>
+                            </svg>
+                        </span>
+                        <span class="tag-text">${letter}</span>
+                    `;
+                    tag.addEventListener('click', function(e) {
+                        e.stopPropagation();
+                        // Scroll to first game starting with this letter
+                        const firstMatch = uniqueGames.find(g => g.name.charAt(0).toUpperCase() === letter);
+                        if (firstMatch) {
+                            // Find the card in mainGrid
+                            const cards = mainGrid.querySelectorAll('.card');
+                            for (let card of cards) {
+                                if (card.dataset.name === firstMatch.name) {
+                                    card.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                                    break;
+                                }
+                            }
+                        }
+                    });
+                    container.appendChild(tag);
+                });
+            }
+
             // ---- RENDER GRID ----
             function renderGrid() {
                 mainGrid.innerHTML = '';
@@ -3246,6 +3191,9 @@
                     });
                 });
             }
+
+            // ---- INIT ----
+            renderAZTags();
             renderGrid();
 
             // ---- POPSTATE (back navigation with scroll restoration) ----
@@ -3353,13 +3301,12 @@
                 if (url && url !== '#') window.open(url, '_blank');
             });
 
-            // ---- INIT ----
+            // ---- FINAL INIT ----
             history.replaceState({ page: 'home', data: null }, '', '#home');
             showMainGrid();
             headerNavLinks.forEach(l => l.classList.remove('active'));
             document.querySelector('.header-nav-link[data-page="home"]').classList.add('active');
             window.scrollTo({ top: 0, behavior: 'instant' });
-            // Set default SEO
             updateSEO(null, 'default');
         })();
     </script>
