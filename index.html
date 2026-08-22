@@ -122,7 +122,7 @@
             50% { box-shadow: 0 0 25px rgba(0, 200, 255, 0.6); }
         }
 
-        /* Name area - now only "YONO GAMES INFO" */
+        /* Name area - now only "YONO GAMES INFO" with smaller font to fit */
         .header-name-area {
             flex: 1 1 0;
             min-width: 0;
@@ -133,13 +133,13 @@
             padding: 0 4px;
         }
         .header-name-area .header-title {
-            font-size: 24px;
+            font-size: 17px;
             font-weight: 800;
             color: #0b1e33;
-            letter-spacing: 0.5px;
+            letter-spacing: 0.3px;
             white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
+            overflow: visible;
+            text-overflow: clip;
         }
 
         /* Right side: Telegram + Share */
@@ -920,87 +920,7 @@
             font-weight: 700;
         }
 
-        .game-tags-section {
-            padding: 10px;
-            background: white;
-            border-top: 1px solid #e9edf4;
-        }
-        .game-tags-section .game-tags-title {
-            font-weight: 700;
-            font-size: 0.85rem;
-            color: #0b1e33;
-            margin-bottom: 8px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-        .game-tags-container {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 8px;
-        }
-
-        .game-tag {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-            padding: 6px 14px 6px 10px;
-            background: #0b1e33;
-            color: #ffffff;
-            border-radius: 50px;
-            font-size: 0.55rem;
-            font-weight: 600;
-            border: 1.5px solid rgba(255, 255, 255, 0.1);
-            cursor: pointer;
-            transition: all 0.2s ease;
-            box-shadow: 0 2px 12px rgba(0, 0, 0, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.05);
-            position: relative;
-            letter-spacing: 0.3px;
-        }
-        .game-tag:active {
-            transform: scale(0.95);
-            background: #1a2a4a;
-        }
-        .game-tag:hover {
-            border-color: rgba(0, 200, 255, 0.3);
-            box-shadow: 0 2px 20px rgba(0, 200, 255, 0.1);
-        }
-
-        .tag-loader {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            width: 18px;
-            height: 18px;
-            flex-shrink: 0;
-            position: relative;
-        }
-        .tag-loader svg {
-            width: 100%;
-            height: 100%;
-            animation: loaderSpin 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
-            transform-origin: center center;
-        }
-        .tag-loader .loader-ring {
-            fill: none;
-            stroke: #60a5fa;
-            stroke-width: 2.5;
-            stroke-linecap: round;
-            stroke-dasharray: 40, 120;
-            stroke-dashoffset: 0;
-            animation: loaderDash 1.5s ease-in-out infinite;
-        }
-        .tag-loader .loader-ring-bg {
-            fill: none;
-            stroke: rgba(255, 255, 255, 0.08);
-            stroke-width: 2.5;
-        }
-
-        .game-tag .tag-text {
-            white-space: nowrap;
-            color: #e2e8f0;
-        }
+        /* ===== REMOVED game-tags-section completely ===== */
 
         .close-icon-wrap {
             display: inline-flex;
@@ -1670,7 +1590,7 @@
                 height: 50px;
             }
             .header-name-area .header-title {
-                font-size: 18px;
+                font-size: 14px;
             }
             .header-actions {
                 gap: 6px;
@@ -1771,10 +1691,6 @@
             }
             .marquee-container marquee span {
                 margin: 0 8px;
-            }
-            .telegram-btn .corner-led {
-                width: 3px;
-                height: 3px;
             }
             .led-icon {
                 width: 20px;
@@ -1878,17 +1794,6 @@
                 width: 26px;
                 height: 26px;
             }
-            .overlay-page-wrapper .top-header .site-name-led-round {
-                padding: 2px 8px 2px 6px;
-                min-height: 22px;
-            }
-            .overlay-page-wrapper .top-header .site-name-led-round .site-name-text {
-                font-size: 0.35rem;
-            }
-            .overlay-page-wrapper .top-header .site-name-led-round .led-dot-round {
-                width: 4px;
-                height: 4px;
-            }
             .overlay-page-wrapper .top-header .share-btn {
                 font-size: 0.35rem;
                 padding: 2px 6px;
@@ -1922,7 +1827,7 @@
                     <img src="https://i.ibb.co/CssC2WbG/1000022725.jpg" alt="All Yono App Site" loading="eager" fetchpriority="high">
                 </div>
 
-                <!-- Name area: only "YONO GAMES INFO" -->
+                <!-- Name area: only "YONO GAMES INFO" with smaller font -->
                 <div class="header-name-area">
                     <span class="header-title">YONO GAMES INFO</span>
                 </div>
@@ -1958,8 +1863,6 @@
                 </span>
             </div>
         </div>
-
-        <!-- A–Z Tags Row - REMOVED -->
 
         <!-- MARQUEE (global) -->
         <div class="marquee-container" id="globalMarquee">
@@ -2194,16 +2097,7 @@
                 </div>
             </div>
 
-            <!-- Tags Section -->
-            <div class="game-tags-section">
-                <div class="game-tags-title">
-                    <span class="lucide-icon glow-gold">
-                        <svg viewBox="0 0 24 24"><path d="M12 2H2v10l9.29 9.29c.94.94 2.48.94 3.42 0l6.58-6.58c.94-.94.94-2.48 0-3.42L12 2z"/><path d="M7 7h.01"/></svg>
-                    </span>
-                    <span>Tags – All Yono Games</span>
-                </div>
-                <div class="game-tags-container" id="gameTagsContainer"></div>
-            </div>
+            <!-- ===== REMOVED: Tags – All Yono Games section ===== -->
 
             <!-- RELATED SECTION - NOW USING SAME CARD STYLE AS HOME -->
             <div class="related-section">
@@ -2618,55 +2512,7 @@
                 document.getElementById('faq4Deposit').textContent = b.faq4d;
                 document.getElementById('faq4Ref').textContent = b.refFaq4;
 
-                const tagsContainer = document.getElementById('gameTagsContainer');
-                tagsContainer.innerHTML = '';
-                uniqueGames.forEach(g => {
-                    const tag = document.createElement('span');
-                    tag.className = 'game-tag';
-                    const displayName = g.name;
-                    tag.innerHTML = `
-                            <span class="tag-loader">
-                                <svg viewBox="0 0 50 50">
-                                    <circle class="loader-ring-bg" cx="25" cy="25" r="20"/>
-                                    <circle class="loader-ring" cx="25" cy="25" r="20"/>
-                                </svg>
-                            </span>
-                            <span class="tag-text">${displayName}</span>
-                        `;
-                    tag.dataset.name = g.name;
-                    tag.dataset.altName = g.altName || g.name;
-                    tag.dataset.bonus = g.bonus;
-                    tag.dataset.withdrawal = g.withdrawal;
-                    tag.dataset.downloadUrl = g.downloadUrl;
-                    tag.dataset.img = g.img;
-                    tag.dataset.rating = g.rating || getRandomRating();
-                    tag.dataset.size = g.size || getRandomSize();
-                    tag.dataset.votes = g.votes || getRandomVotes();
-                    tag.dataset.version = g.version || 'v2.0.0';
-                    tag.dataset.layout = g.layout || 'left';
-                    tag.dataset.bg = g.bg || 'bg-gradient-1';
-                    tag.dataset.border = g.border || 'border-style-1';
-                    tag.addEventListener('click', function(e) {
-                        e.stopPropagation();
-                        const gData = {
-                            name: this.dataset.name,
-                            altName: this.dataset.altName,
-                            bonus: this.dataset.bonus,
-                            withdrawal: this.dataset.withdrawal,
-                            downloadUrl: this.dataset.downloadUrl,
-                            img: this.dataset.img,
-                            rating: this.dataset.rating,
-                            size: this.dataset.size,
-                            votes: this.dataset.votes,
-                            version: this.dataset.version,
-                            layout: this.dataset.layout,
-                            bg: this.dataset.bg,
-                            border: this.dataset.border
-                        };
-                        showDetail(gData);
-                    });
-                    tagsContainer.appendChild(tag);
-                });
+                // ===== REMOVED: game-tags-container population =====
 
                 // --- RENDER RELATED GAMES USING SAME CARD STYLE ---
                 const relatedGrid = document.getElementById('relatedGrid');
