@@ -730,6 +730,7 @@
             box-shadow: 0 0 20px rgba(0, 255, 0, 0.15), 0 0 40px rgba(0, 200, 255, 0.05);
         }
 
+        /* ===== TAG SECTION (Top Offers) - MODIFIED ===== */
         .tag-section {
             padding: 10px;
             background: #f8fafc;
@@ -769,7 +770,9 @@
             color: #334155;
             line-height: 1.6;
         }
+        /* Remove icon styles from tag-box, we use plain text */
 
+        /* ===== FAQ SECTION ===== */
         .faq-section {
             padding: 10px;
             background: white;
@@ -810,6 +813,7 @@
             line-height: 1.5;
         }
 
+        /* ===== TABLE OF CONTENTS - MODIFIED ===== */
         .toc-section {
             padding: 10px;
             background: #f8fafc;
@@ -867,6 +871,10 @@
             margin-top: 8px;
             gap: 6px;
             flex-direction: column;
+            border: 2px solid #dc2626; /* red border */
+            border-radius: 12px;
+            padding: 6px;
+            background: #ffffff;
         }
         .toc-body.open {
             display: flex;
@@ -2010,23 +2018,20 @@
                 </div>
             </div>
 
-            <!-- Top Offers Section -->
+            <!-- Top Offers Section (Tags) - MODIFIED -->
             <div class="tag-section" id="tagSection">
                 <div class="tag-title" id="tagSectionTitle">
-                    <span class="lucide-icon glow-green">
-                        <svg viewBox="0 0 24 24"><path d="M3 11h2m10 0h2m-6-6v4m0 10v-4m-6.5-1.5L7 14m7.5 3.5L17 14M4 20l2-1.5M20 20l-2-1.5"/><path d="M10.5 4.5L12 6l1.5-1.5"/><path d="M12 6v4"/><path d="M4 4l2.5 2.5"/><path d="M20 4l-2.5 2.5"/></svg>
-                    </span>
+                    <span style="display:inline-block;font-size:1rem;margin-right:6px;">🏷️</span>
                     <span>Top Offers</span>
                 </div>
                 <div class="tag-grid" id="tagGridContainer"></div>
             </div>
 
+            <!-- Table of Contents - MODIFIED -->
             <div class="toc-section">
                 <div class="toc-header" id="tocToggle">
                     <div class="toc-left">
-                        <span class="lucide-icon glow-blue">
-                            <svg viewBox="0 0 24 24"><path d="M16 4h2a2 2 0 012 2v14a2 2 0 01-2 2H6a2 2 0 01-2-2V6a2 2 0 012-2h2"/><rect x="8" y="2" width="8" height="4" rx="1"/><path d="M9 12h6"/><path d="M9 16h4"/></svg>
-                        </span>
+                        <span style="display:inline-block;font-size:1rem;margin-right:6px;">📚</span>
                         <span class="toc-title">Table of Contents</span>
                     </div>
                     <div class="toc-right" id="tocArrow">▼</div>
@@ -2084,9 +2089,7 @@
             <!-- FAQ Section -->
             <div class="faq-section">
                 <div class="faq-title">
-                    <span class="lucide-icon glow-pink">
-                        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 015.83 1c0 2-3 3-3 3"/><path d="M12 17h.01"/></svg>
-                    </span>
+                    <span style="display:inline-block;font-size:1rem;margin-right:6px;">❓</span>
                     <span>Frequently Asked Questions</span>
                 </div>
                 <div class="faq-grid">
@@ -2097,14 +2100,10 @@
                 </div>
             </div>
 
-            <!-- ===== REMOVED: Tags – All Yono Games section ===== -->
-
             <!-- RELATED SECTION - NOW USING SAME CARD STYLE AS HOME -->
             <div class="related-section">
                 <div class="related-title">
-                    <span class="lucide-icon glow-purple">
-                        <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
-                    </span>
+                    <span style="display:inline-block;font-size:1rem;margin-right:6px;">🎮</span>
                     Other Related Yono Games
                 </div>
                 <div class="related-grid" id="relatedGrid"></div>
@@ -2131,6 +2130,13 @@
         </div>
     </div>
 
+    <!-- FLOATING DOWNLOAD BUTTON (appears on scroll) -->
+    <div id="floatingDownload" style="position:fixed; bottom:20px; left:50%; transform:translateX(-50%); z-index:1000; display:none; width:calc(100% - 40px); max-width:440px; background: linear-gradient(135deg, #00ddff, #00ff88); padding:4px; border-radius:60px; box-shadow:0 8px 30px rgba(0,200,255,0.5);">
+        <a href="#" id="floatingDownloadLink" target="_blank" style="display:flex; align-items:center; justify-content:center; gap:10px; background:#0b1e33; color:#fff; border-radius:60px; padding:14px 20px; text-decoration:none; font-weight:700; font-size:1rem; letter-spacing:0.5px;">
+            <span style="font-size:1.4rem;">⬇</span> Download APK Now
+        </a>
+    </div>
+
     <script>
         (function() {
             // ---- UNLIMITED HISTORY WITH SCROLL RESTORATION ----
@@ -2143,6 +2149,8 @@
             const infoOverlay = document.getElementById('infoOverlay');
             const backBtn = document.getElementById('backBtn');
             const overlayPageContent = document.getElementById('overlayPageContent');
+            const floatingDownload = document.getElementById('floatingDownload');
+            const floatingDownloadLink = document.getElementById('floatingDownloadLink');
 
             // SEO elements
             const seoTitle = document.getElementById('seoTitle');
@@ -2212,6 +2220,8 @@
                 window.scrollTo({ top: 0, behavior: 'instant' });
                 // Reset SEO to default
                 updateSEO('default', null);
+                // Hide floating button
+                floatingDownload.style.display = 'none';
             }
 
             function showMainGrid() {
@@ -2225,6 +2235,7 @@
                 // Show global header and marquee
                 document.getElementById('globalHeader').style.display = 'flex';
                 document.getElementById('globalMarquee').style.display = 'block';
+                floatingDownload.style.display = 'none';
             }
 
             function showDetailView() {
@@ -2237,6 +2248,9 @@
                 infoOverlay.style.display = 'none';
                 document.getElementById('globalHeader').style.display = 'flex';
                 document.getElementById('globalMarquee').style.display = 'block';
+                // Floating button appears on scroll - we'll handle in scroll event
+                // but initially hide
+                floatingDownload.style.display = 'none';
             }
 
             // ---- FETCH CONTENT FROM EXTERNAL HTML FILE ----
@@ -2354,6 +2368,7 @@
 
                 // Scroll to top smoothly
                 window.scrollTo({ top: 0, behavior: 'smooth' });
+                floatingDownload.style.display = 'none';
             }
 
             function closeOverlay() {
@@ -2393,6 +2408,200 @@
                 ogDescription.content = seoDescription.textContent;
                 twitterTitle.content = seoTitle.textContent;
                 twitterDescription.content = seoDescription.textContent;
+            }
+
+            // ---- CONTENT GENERATION HELPER ----
+            function seededRandom(seed) {
+                return function() {
+                    seed = (seed * 9301 + 49297) % 233280;
+                    return seed / 233280;
+                };
+            }
+
+            // ---- GENERATE UNIQUE TOP OFFERS (TAGS) PER APP ----
+            function generateTopOffers(game) {
+                const name = game.name;
+                const alt = game.altName || name;
+                const bonus = game.bonus;
+                const withdrawal = game.withdrawal;
+                // seed from name
+                let seed = 0;
+                for (let i = 0; i < name.length; i++) seed = (seed * 31 + name.charCodeAt(i)) % 1000000;
+                const rng = seededRandom(seed);
+
+                // Define a pool of offer topics with multiple description variations
+                const topics = [
+                    {
+                        head: `🎁 Welcome Bonus on ${name}`,
+                        templates: [
+                            `New users of ${name} can claim a generous signup bonus of ${bonus} immediately after registration. This bonus can be used to play a variety of games including rummy, slots, and teen patti.`,
+                            `${name} offers a welcome package worth ${bonus} to all first-time players. Simply sign up and the bonus is credited to your account automatically.`,
+                            `Get started with ${name} by claiming your ${bonus} welcome bonus. No deposit is required to activate this offer.`
+                        ]
+                    },
+                    {
+                        head: `💰 Referral Rewards on ${alt}`,
+                        templates: [
+                            `Invite friends to join ${alt} and earn up to ₹${Math.floor(rng()*30+10)} per referral. Your friends also get a bonus on signup.`,
+                            `The referral program of ${alt} allows you to earn extra cash for every successful referral. Share your link and start earning.`,
+                            `With ${alt}, you can earn unlimited referral bonuses. Each friend you bring gets a bonus and you get rewarded too.`
+                        ]
+                    },
+                    {
+                        head: `⚡ Fast Withdrawal - ${name}`,
+                        templates: [
+                            `${name} supports instant UPI withdrawals starting from ${withdrawal}. Your winnings are transferred to your bank account within minutes.`,
+                            `Withdraw your earnings from ${name} quickly using UPI or bank transfer. Minimum withdrawal is ${withdrawal}.`,
+                            `Enjoy hassle-free withdrawals on ${name}. The minimum withdrawal amount is ${withdrawal} and processing is fast.`
+                        ]
+                    },
+                    {
+                        head: `🎮 Game Variety in ${alt}`,
+                        templates: [
+                            `${alt} offers a wide range of games including classic rummy, slots, bingo, and spin games. There is something for every player.`,
+                            `Explore over 20+ game options inside ${alt}. From card games to slot machines, you'll find it all.`,
+                            `The game library of ${alt} is extensive, featuring popular titles like Teen Patti, Andar Bahar, and many more.`
+                        ]
+                    },
+                    {
+                        head: `🔒 Secure & Trusted - ${name}`,
+                        templates: [
+                            `${name} uses advanced encryption to protect your personal and financial data. Play with peace of mind.`,
+                            `Security is a top priority for ${name}. All transactions are encrypted and your privacy is respected.`,
+                            `Trusted by thousands, ${name} ensures a safe gaming environment with regular security audits.`
+                        ]
+                    },
+                    {
+                        head: `📱 Easy Installation of ${alt}`,
+                        templates: [
+                            `Download and install ${alt} APK in just a few taps. The app is lightweight and works smoothly on most Android devices.`,
+                            `Installing ${alt} is simple. Just download the APK, enable unknown sources, and install.`,
+                            `Get ${alt} on your phone quickly. The APK file is small and installation takes less than a minute.`
+                        ]
+                    },
+                    {
+                        head: `🎰 Daily Bonuses on ${name}`,
+                        templates: [
+                            `Log in daily to ${name} and collect your daily bonus. Streak rewards and spin wheels are available every day.`,
+                            `${name} rewards its loyal players with daily bonuses, cashback, and special offers.`,
+                            `Don't miss out on daily rewards on ${name}. Check the app every day for new bonuses.`
+                        ]
+                    },
+                    {
+                        head: `🏆 Tournaments on ${alt}`,
+                        templates: [
+                            `Compete in exciting tournaments on ${alt} and win big prizes. Leaderboards and cash rewards await.`,
+                            `${alt} hosts regular tournaments with guaranteed prize pools. Test your skills and earn real money.`,
+                            `Join the competitive scene on ${alt} and climb the ranks. Tournaments are held frequently.`
+                        ]
+                    },
+                    {
+                        head: `💳 Easy Deposits on ${name}`,
+                        templates: [
+                            `Depositing money on ${name} is easy with UPI, bank transfer, and other payment methods. Minimum deposit is ₹100.`,
+                            `${name} supports multiple payment options including UPI and net banking. Fund your account instantly.`,
+                            `Add funds to your ${name} wallet quickly. The app supports all major payment gateways.`
+                        ]
+                    },
+                    {
+                        head: `🌟 User-Friendly Interface of ${alt}`,
+                        templates: [
+                            `${alt} features a clean and intuitive interface that makes it easy for beginners to get started.`,
+                            `Navigating ${alt} is a breeze. The design is simple and all games are easily accessible.`,
+                            `With its user-friendly design, ${alt} ensures a smooth experience for all players.`
+                        ]
+                    }
+                ];
+
+                // Randomly pick 5 unique topics
+                const selected = [];
+                const indices = Array.from({length: topics.length}, (_, i) => i);
+                for (let i = indices.length - 1; i > 0; i--) {
+                    const j = Math.floor(rng() * (i + 1));
+                    [indices[i], indices[j]] = [indices[j], indices[i]];
+                }
+                const chosenIndices = indices.slice(0, 5);
+                const offers = [];
+                for (let idx of chosenIndices) {
+                    const topic = topics[idx];
+                    const template = topic.templates[Math.floor(rng() * topic.templates.length)];
+                    offers.push({
+                        head: topic.head,
+                        content: template
+                    });
+                }
+                return offers;
+            }
+
+            // ---- GENERATE UNIQUE TOC CONTENT PER APP ----
+            function generateTocContent(game) {
+                const name = game.name;
+                const alt = game.altName || name;
+                const bonus = game.bonus;
+                const withdrawal = game.withdrawal;
+                let seed = 0;
+                for (let i = 0; i < name.length; i++) seed = (seed * 31 + name.charCodeAt(i)) % 1000000;
+                const rng = seededRandom(seed);
+
+                // Overview variations
+                const overviews = [
+                    `${name} is a top-rated real cash gaming app in India, offering a variety of games like rummy, slots, and bingo. New users get a ${bonus} bonus. The app is secure and offers fast UPI withdrawals starting from ${withdrawal}.`,
+                    `Experience the thrill of winning real money with ${name}. This app features a rich collection of games and a generous ${bonus} welcome bonus. Withdraw your winnings quickly via UPI.`,
+                    `${name} brings the best of online gaming to your fingertips. Enjoy a ${bonus} signup bonus and play popular games. The app is known for its reliability and ease of use.`
+                ];
+                // Features variations
+                const features = [
+                    `<ul><li><strong>Welcome Bonus:</strong> Up to ${bonus} for new users</li><li><strong>Fast Withdrawal:</strong> Minimum ${withdrawal} via UPI</li><li><strong>Game Selection:</strong> Rummy, Slots, Teen Patti, Bingo</li><li><strong>Security:</strong> Encrypted transactions</li><li><strong>Daily Rewards:</strong> Bonuses and cashback</li><li><strong>User Friendly:</strong> Easy navigation</li></ul>`,
+                    `<ul><li><strong>Signup Offer:</strong> ${bonus} free bonus</li><li><strong>Withdraw:</strong> From ${withdrawal}</li><li><strong>Games:</strong> Slots, Rummy, Poker, etc.</li><li><strong>Safety:</strong> Advanced encryption</li><li><strong>Promotions:</strong> Referral bonuses</li><li><strong>Interface:</strong> Clean and modern</li></ul>`,
+                    `<ul><li><strong>New User Bonus:</strong> ${bonus}</li><li><strong>Minimum Withdrawal:</strong> ${withdrawal}</li><li><strong>Game Variety:</strong> 20+ games</li><li><strong>Secure:</strong> Protected payments</li><li><strong>Offers:</strong> Daily spin and rewards</li><li><strong>Experience:</strong> Smooth gameplay</li></ul>`
+                ];
+                // Download steps variations
+                const downloads = [
+                    `<ul><li><strong>1.</strong> Tap the Download button above</li><li><strong>2.</strong> Enable "Install from unknown sources"</li><li><strong>3.</strong> Open the APK and install</li><li><strong>4.</strong> Register with your phone</li><li><strong>5.</strong> Claim your ${bonus} bonus!</li></ul>`,
+                    `<ul><li><strong>Step 1:</strong> Click Download</li><li><strong>Step 2:</strong> Allow installation</li><li><strong>Step 3:</strong> Install APK</li><li><strong>Step 4:</strong> Sign up</li><li><strong>Step 5:</strong> Get your ${bonus}</li></ul>`,
+                    `<ul><li><strong>1.</strong> Press Download</li><li><strong>2.</strong> Accept permissions</li><li><strong>3.</strong> Install</li><li><strong>4.</strong> Open and register</li><li><strong>5.</strong> Receive ${bonus}</li></ul>`
+                ];
+                // Safety variations
+                const safeties = [
+                    `${name} uses standard encryption to protect your data. All transactions are processed through secure gateways. The app is regularly updated to fix any vulnerabilities.`,
+                    `Your safety is important to ${name}. The app employs advanced security measures to ensure your personal and financial information remains private.`,
+                    `With ${name}, you can play with confidence. The app follows strict security protocols and offers a safe environment for real money gaming.`
+                ];
+                // Why choose variations
+                const whys = [
+                    `<ul><li><strong>Welcome Bonus:</strong> ${bonus}</li><li><strong>Fast UPI:</strong> Withdraw from ${withdrawal}</li><li><strong>Many Games:</strong> Rummy, Slots, Bingo</li><li><strong>Optimized:</strong> Works on all devices</li><li><strong>Updates:</strong> Regular new features</li><li><strong>Easy:</strong> Perfect for beginners</li></ul>`,
+                    `<ul><li><strong>Bonus:</strong> ${bonus} signup</li><li><strong>Withdrawal:</strong> Quick ${withdrawal}</li><li><strong>Variety:</strong> 20+ games</li><li><strong>Performance:</strong> Smooth experience</li><li><strong>Support:</strong> 24/7 help</li><li><strong>Interface:</strong> Simple</li></ul>`,
+                    `<ul><li><strong>Free Bonus:</strong> ${bonus}</li><li><strong>Fast Cashout:</strong> From ${withdrawal}</li><li><strong>Diverse Games:</strong> Slots, Rummy, etc.</li><li><strong>Secure:</strong> Safe transactions</li><li><strong>Regular Offers:</strong> Daily rewards</li><li><strong>User-Friendly:</strong> Easy to use</li></ul>`
+                ];
+
+                return {
+                    overview: overviews[Math.floor(rng() * overviews.length)],
+                    features: features[Math.floor(rng() * features.length)],
+                    download: downloads[Math.floor(rng() * downloads.length)],
+                    safety: safeties[Math.floor(rng() * safeties.length)],
+                    why: whys[Math.floor(rng() * whys.length)]
+                };
+            }
+
+            // ---- GENERATE UNIQUE FAQ CONTENT PER APP ----
+            function generateFaqContent(game) {
+                const name = game.name;
+                const alt = game.altName || name;
+                const bonus = game.bonus;
+                const withdrawal = game.withdrawal;
+                let seed = 0;
+                for (let i = 0; i < name.length; i++) seed = (seed * 31 + name.charCodeAt(i)) % 1000000;
+                const rng = seededRandom(seed);
+                const b1 = Math.floor(rng() * 300 + 200);
+                const b2 = Math.floor(rng() * 300 + 200);
+                const ref1 = Math.floor(rng() * 30 + 5);
+                const ref2 = Math.floor(rng() * 30 + 5);
+                return {
+                    faq1: `The ${alt} APP APK is an excellent application that offers users a sign-up bonus of ₹${b1} when they join. This game includes a fantastic bonus program, and you can learn more by reading the complete post. Additionally, ${name} APK is a popular slots game with a minimum withdrawal amount of ${withdrawal}. Referral Bonus: ₹${ref1}`,
+                    faq2: `To sign up for the ${alt} APK, follow these steps:<br><strong>•</strong> Click on the Download Button for the ${name} APK.<br><strong>•</strong> Select OK to start the download.<br><strong>•</strong> Install the App application on your smartphone.<br><strong>•</strong> Open the new app and click on Play as Guest.<br><strong>•</strong> Click on the Profile Button and bind your mobile number.<br>After completing these steps, you will receive a sign-up bonus of ₹${b2}. Referral Bonus: ₹${ref2}`,
+                    faq3: `The ${alt} app offers support for 75+ different types of games. You can enjoy a variety of games such as Rummy, Teen Patti, 7 Up Down, Dragon vs Tiger, and many more.`,
+                    faq4: `<strong>•</strong> Enjoy a bonus of ₹${Math.floor(rng()*100+20)} for free in the APK.<br><strong>•</strong> Access to 20 gaming options.<br><strong>•</strong> Earn up to ₹${Math.floor(rng()*200+50)} for inviting friends.<br><strong>•</strong> Withdrawals can be made starting from a minimum of ₹${Math.floor(rng()*400+100)}.<br><strong>•</strong> Click on the Profile Button and bind your mobile number.<br><strong>•</strong> The minimum deposit required is ₹${Math.floor(rng()*200+50)}. Referral Bonus: ₹${Math.floor(rng()*30+5)}`
+                };
             }
 
             // ---- RENDER FUNCTIONS ----
@@ -2436,59 +2645,54 @@
                     (game.votes || '27K');
                 document.getElementById('detailVersion').textContent = game.version || 'v2.0.0';
                 document.getElementById('detailDownloadBtn').href = game.downloadUrl;
+                // Update floating button
+                floatingDownloadLink.href = game.downloadUrl;
 
-                const gName = game.name;
-                const b = getUniqueBonuses(gName);
-
+                // ---- GENERATE TOP OFFERS (TAGS) ----
+                const offers = generateTopOffers(game);
                 const tagContainer = document.getElementById('tagGridContainer');
-                const shuffled = buildOfferTags(gName, b);
                 tagContainer.innerHTML = '';
-                shuffled.forEach(t => {
+                offers.forEach((offer, idx) => {
                     const box = document.createElement('div');
                     box.className = 'tag-box';
-                    box.innerHTML = '<div class="tag-head">' + t.head + ' ' + t.title + '</div><div class="tag-content">' +
-                        t.content + '</div>';
+                    box.innerHTML = `<div class="tag-head">${offer.head}</div><div class="tag-content">${offer.content}</div>`;
                     tagContainer.appendChild(box);
                 });
 
-                document.getElementById('toc1Name').textContent = gName;
-                document.getElementById('toc1Name2').textContent = gName;
-                document.getElementById('toc1Name3').textContent = gName;
-                document.getElementById('toc1Name4').textContent = gName;
-                document.getElementById('toc1Bonus').textContent = b.toc1Bonus;
-                document.getElementById('toc1Withdraw').textContent = b.tocWithdraw;
-                document.getElementById('toc2Name').textContent = gName;
-                document.getElementById('toc2Bonus1').textContent = b.toc2Bonus1;
-                document.getElementById('toc2Withdraw').textContent = b.tocWithdraw;
-                document.getElementById('toc3Name').textContent = gName;
-                document.getElementById('toc3Bonus').textContent = b.toc3Bonus;
-                document.getElementById('toc4Name').textContent = gName;
-                document.getElementById('toc4Name2').textContent = gName;
-                document.getElementById('toc5Name').textContent = gName;
-                document.getElementById('toc5Bonus1').textContent = b.toc5Bonus1;
+                // ---- GENERATE TOC CONTENT ----
+                const tocData = generateTocContent(game);
+                document.getElementById('toc1Name').textContent = game.name;
+                document.getElementById('toc1Name2').textContent = game.name;
+                document.getElementById('toc1Name3').textContent = game.name;
+                document.getElementById('toc1Name4').textContent = game.name;
+                document.getElementById('toc1Content').innerHTML = tocData.overview;
+                document.getElementById('toc2Name').textContent = game.name;
+                document.getElementById('toc2Content').innerHTML = tocData.features;
+                document.getElementById('toc3Name').textContent = game.name;
+                document.getElementById('toc3Content').innerHTML = tocData.download;
+                document.getElementById('toc4Name').textContent = game.name;
+                document.getElementById('toc4Name2').textContent = game.name;
+                document.getElementById('toc4Content').innerHTML = tocData.safety;
+                document.getElementById('toc5Name').textContent = game.name;
+                document.getElementById('toc5Content').innerHTML = tocData.why;
 
-                document.getElementById('faq1Name').textContent = gName;
-                document.getElementById('faq1Name2').textContent = gName;
-                document.getElementById('faq1Name3').textContent = gName;
-                document.getElementById('faq1Bonus').textContent = b.faq1;
-                document.getElementById('faq1Ref').textContent = b.refFaq1;
-                document.getElementById('faq2Name').textContent = gName;
-                document.getElementById('faq2Name2').textContent = gName;
-                document.getElementById('faq2Name3').textContent = gName;
-                document.getElementById('faq2Bonus').textContent = b.faq2;
-                document.getElementById('faq2Ref').textContent = b.refFaq2;
-                document.getElementById('faq3Name').textContent = gName;
-                document.getElementById('faq3Name2').textContent = gName;
-                document.getElementById('faq4Name').textContent = gName;
-                document.getElementById('faq4Bonus').textContent = b.faq4;
-                document.getElementById('faq4Bonus2').textContent = b.faq4b;
-                document.getElementById('faq4Withdraw').textContent = b.faq4w;
-                document.getElementById('faq4Deposit').textContent = b.faq4d;
-                document.getElementById('faq4Ref').textContent = b.refFaq4;
+                // ---- GENERATE FAQ CONTENT ----
+                const faqData = generateFaqContent(game);
+                document.getElementById('faq1Name').textContent = game.name;
+                document.getElementById('faq1Name2').textContent = game.name;
+                document.getElementById('faq1Name3').textContent = game.name;
+                document.getElementById('faq1Content').innerHTML = faqData.faq1;
+                document.getElementById('faq2Name').textContent = game.name;
+                document.getElementById('faq2Name2').textContent = game.name;
+                document.getElementById('faq2Name3').textContent = game.name;
+                document.getElementById('faq2Content').innerHTML = faqData.faq2;
+                document.getElementById('faq3Name').textContent = game.name;
+                document.getElementById('faq3Name2').textContent = game.name;
+                document.getElementById('faq3Content').innerHTML = faqData.faq3;
+                document.getElementById('faq4Name').textContent = game.name;
+                document.getElementById('faq4Content').innerHTML = faqData.faq4;
 
-                // ===== REMOVED: game-tags-container population =====
-
-                // --- RENDER RELATED GAMES USING SAME CARD STYLE ---
+                // ---- RENDER RELATED GAMES (unchanged) ----
                 const relatedGrid = document.getElementById('relatedGrid');
                 relatedGrid.innerHTML = '';
                 const otherGames = uniqueGames.filter(g => g.name !== game.name);
@@ -2545,6 +2749,10 @@
                 });
 
                 showDetailView();
+                // Show floating button after a slight delay (scroll will handle visibility)
+                setTimeout(() => {
+                    floatingDownload.style.display = 'block';
+                }, 500);
             }
 
             function renderOverlay(pageType) {
@@ -2650,121 +2858,6 @@
             function getRandomSize() { return (30 + Math.floor(Math.random() * 40)) + ' MB'; }
 
             function getRandomVotes() { return (Math.floor(Math.random() * 30) + 5) + 'K'; }
-
-            function getUniqueBonuses(gameName) {
-                const seed = gameName.length * 7 + (gameName.charCodeAt(0) || 10);
-                return {
-                    tag1: 20 + (seed * 3) % 880,
-                    tag2: 20 + (seed * 7) % 880,
-                    tag3: 20 + (seed * 2) % 880,
-                    tag3b: 20 + (seed * 4) % 880,
-                    tag4: 20 + (seed * 5) % 880,
-                    tag5: 20 + (seed * 6) % 880,
-                    faq1: 20 + (seed * 11) % 880,
-                    faq2: 20 + (seed * 9) % 880,
-                    faq4: 20 + (seed * 3) % 880,
-                    faq4b: 20 + (seed * 7) % 880,
-                    faq4w: 20 + (seed * 8) % 880,
-                    faq4d: 20 + (seed * 2) % 880,
-                    ref1: 5 + (seed * 2) % 20,
-                    ref2: 5 + (seed * 3) % 20,
-                    ref3: 5 + (seed * 4) % 20,
-                    ref4: 5 + (seed * 5) % 20,
-                    ref5: 5 + (seed * 6) % 20,
-                    refFaq1: 5 + (seed * 7) % 20,
-                    refFaq2: 5 + (seed * 8) % 20,
-                    refFaq4: 5 + (seed * 9) % 20,
-                    toc1Bonus: 50 + (seed * 3) % 50,
-                    toc2Bonus1: 50 + (seed * 4) % 50,
-                    toc3Bonus: 50 + (seed * 5) % 50,
-                    toc5Bonus1: 50 + (seed * 6) % 50,
-                    tocWithdraw: 100 + (seed * 2) % 50
-                };
-            }
-
-            // ---- ATOMIC DYNAMIC TAG SYSTEM (unique Top Offers tags per app) ----
-            function hashSeed(str) {
-                let h = 5381;
-                for (let i = 0; i < str.length; i++) { h = ((h << 5) + h) + str.charCodeAt(i); h = h >>> 0; }
-                return h >>> 0;
-            }
-            function seededRng(seed) {
-                let a = seed;
-                return function() {
-                    a |= 0; a = (a + 0x6D2B79F5) | 0;
-                    let t = Math.imul(a ^ a >>> 15, 1 | a);
-                    t = (t + Math.imul(t ^ t >>> 7, 61 | t)) ^ t;
-                    return ((t ^ t >>> 14) >>> 0) / 4294967296;
-                };
-            }
-            function offerIcon(path) {
-                return '<span class="lucide-icon glow-gold" style="width:18px;height:18px;"><svg viewBox="0 0 24 24">' +
-                    path + '</svg></span>';
-            }
-            function buildOfferPool(gName, b) {
-                return [
-                    { m: 1, head: offerIcon('<path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>'),
-                        title: gName + ' APK – Grab ₹' + b.tag1 + ' Signup Bonus Today',
-                        content: 'New users unlock an instant welcome bonus after quick mobile verification. Play rummy, slots & teen patti with zero entry cost.' },
-                    { m: 1, head: offerIcon('<path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/>'),
-                        title: 'Invite Friends & Earn With ' + gName + ' Referral Program',
-                        content: 'Every successful referral adds ₹' + b.ref1 + ' to your wallet instantly, on top of your own signup reward.' },
-                    { m: 1, head: offerIcon('<rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V4a1 1 0 00-1-1H9a1 1 0 00-1 1v3"/><path d="M8 12h8"/>'),
-                        title: 'Fast UPI Withdrawal Inside ' + gName + ' App',
-                        content: 'Cash out starting from ₹100 directly to your bank account, with no long waiting time for approvals.' },
-                    { m: 1, head: offerIcon('<path d="M4 21h16"/><path d="M4 14l4-4 4 4 4-4 4 4"/><path d="M4 7l4-4 4 4 4-4 4 4"/>'),
-                        title: gName + ' Game Library: Rummy, Teen Patti, Slots & More',
-                        content: 'Switch between 20+ real cash games in one app, from classic card tables to spin & slot machines.' },
-                    { m: 1, head: offerIcon('<rect x="3" y="8" width="18" height="13" rx="2"/><path d="M3 8l9-5 9 5"/><path d="M8 12h8"/>'),
-                        title: 'First Deposit Bonus Available On ' + gName,
-                        content: 'Top up your wallet and receive a matching bonus credit, making your first cash game session go further.' },
-                    { m: 1, head: offerIcon('<path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>'),
-                        title: gName + ' – Verified & Secure APK File',
-                        content: 'Every download is scanned and signed, and transactions run through encrypted UPI/bank gateways for safety.' },
-                    { m: 2, head: offerIcon('<circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/>'),
-                        title: 'Daily Login Rewards Inside ' + gName,
-                        content: 'Open ' + gName + ' every day to collect streak bonuses, spin wheel credits and surprise cashback drops.' },
-                    { m: 1, head: offerIcon('<path d="M20 7h-4.5L15 4H9L8.5 7H4v13h16V7z"/>'),
-                        title: gName + ' APK Size & Latest Version Details',
-                        content: 'Lightweight install under 60MB, with the newest update bringing smoother animations and fewer crashes.' },
-                    { m: 1, head: offerIcon('<path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>'),
-                        title: 'Join Cash Tournaments On ' + gName,
-                        content: 'Compete in scheduled rummy and slot contests with leaderboard prizes credited directly to your wallet.' },
-                    { m: 1, head: offerIcon('<path d="M18 8h1a4 4 0 010 8h-1"/><path d="M2 8h16v9a4 4 0 01-4 4H6a4 4 0 01-4-4V8z"/><path d="M6 1v3"/><path d="M10 1v3"/><path d="M14 1v3"/>'),
-                        title: gName + ' 24x7 Player Support',
-                        content: 'Get help with KYC, deposits or withdrawals anytime through in-app chat or the support helpline.' },
-                    { m: 1, head: offerIcon('<path d="M23 4v6h-6"/><path d="M1 20v-6h6"/><path d="M3.51 9a9 9 0 0114.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0020.49 15"/>'),
-                        title: 'Trusted By Thousands Of ' + gName + ' Players',
-                        content: 'Consistent ratings and steady download numbers make this one of the more reliable options in its category.' },
-                    { m: 2, head: offerIcon('<path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/>'),
-                        title: gName + ' Instant Cashout Explained',
-                        content: 'Once KYC is verified on ' + gName + ', most withdrawal requests are processed within minutes, not days.' },
-                    { m: 1, head: offerIcon('<rect x="3" y="8" width="18" height="13" rx="2"/><path d="M3 8l9-5 9 5"/><path d="M12 3v5"/>'),
-                        title: 'Exclusive New-User Offer On ' + gName,
-                        content: 'First-time installers get a bigger starting bonus window before it reverts to the standard signup amount.' },
-                    { m: 1, head: offerIcon('<circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 015.83 1c0 2-3 3-3 3"/><path d="M12 17h.01"/>'),
-                        title: gName + ' – Simple Interface For Beginners',
-                        content: 'Clean menus and guided onboarding help first-time real cash gamers get playing within a couple of minutes.' },
-                    { m: 1, head: offerIcon('<path d="M12 9v4"/><path d="M12 17h.01"/><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/>'),
-                        title: 'Play Responsibly With ' + gName,
-                        content: 'Set a personal budget before each session; the app supports UPI limits to help you stay in control.' },
-                    { m: 1, head: offerIcon('<path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>'),
-                        title: gName + ' Bonus Range: ₹' + b.tag3 + ' – ₹' + b.tag3b,
-                        content: 'The exact signup bonus can vary by campaign, but new accounts typically land within this reward bracket. Referral Bonus: ₹' +
-                            b.ref3 }
-                ];
-            }
-            function buildOfferTags(gName, b) {
-                const pool = buildOfferPool(gName, b);
-                const seed = hashSeed(gName);
-                const rnd = seededRng(seed);
-                const idx = pool.map((_, i) => i);
-                for (let i = idx.length - 1; i > 0; i--) {
-                    const j = Math.floor(rnd() * (i + 1));
-                    const tmp = idx[i]; idx[i] = idx[j]; idx[j] = tmp;
-                }
-                return idx.slice(0, 5).map(i => pool[i]);
-            }
 
             // ---- RENDER GRID (no A-Z tags) ----
             function renderGrid() {
@@ -2928,6 +3021,18 @@
             document.getElementById('detailTitle').addEventListener('click', function() {
                 const url = document.getElementById('detailDownloadBtn').href;
                 if (url && url !== '#') window.open(url, '_blank');
+            });
+
+            // ---- SCROLL EVENT FOR FLOATING BUTTON ----
+            let lastScrollY = 0;
+            window.addEventListener('scroll', function() {
+                const currentScroll = window.scrollY;
+                if (currentScroll > 300 && detailView.classList.contains('show')) {
+                    floatingDownload.style.display = 'block';
+                } else {
+                    floatingDownload.style.display = 'none';
+                }
+                lastScrollY = currentScroll;
             });
 
             // ---- FINAL INIT ----
