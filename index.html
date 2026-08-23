@@ -2194,27 +2194,8 @@
                     const doc = parser.parseFromString(html, 'text/html');
                     const body = doc.body;
                     if (body && body.innerHTML.trim()) {
-                        let content = body.innerHTML;
-                        // Check if content already has page-tags-top or page-tags-bottom
-                        if (!content.includes('page-tags-top') && !content.includes('page-tags-bottom')) {
-                            const tagElements = body.querySelectorAll('.game-tag, .tag-text');
-                            let tagsHtml = '';
-                            if (tagElements.length > 0) {
-                                tagsHtml = '<div class="page-tags-top">';
-                                tagElements.forEach(el => {
-                                    const text = el.textContent.trim();
-                                    if (text) {
-                                        tagsHtml +=
-                                            `<span class="game-tag"><span class="tag-loader"><svg viewBox="0 0 50 50"><circle class="loader-ring-bg" cx="25" cy="25" r="20"/><circle class="loader-ring" cx="25" cy="25" r="20"/></svg></span><span class="tag-text">${text}</span></span>`;
-                                    }
-                                });
-                                tagsHtml += '</div>';
-                            }
-                            if (tagsHtml) {
-                                content = tagsHtml + content + tagsHtml.replace('page-tags-top', 'page-tags-bottom');
-                            }
-                        }
-                        return { title: '', content: content };
+                        // Return content as-is, without adding any extra tags
+                        return { title: '', content: body.innerHTML };
                     } else {
                         return { title: '', content: config.placeholder };
                     }
@@ -2246,6 +2227,7 @@
                 const headerHTML = document.getElementById('globalHeader').outerHTML;
 
                 // Build full page HTML with the exact same header - FULL VIEW from top to bottom
+                // Back button label changed to "Back to Games"
                 const fullHtml = `
                     <div class="overlay-page-wrapper" style="padding-top:0;">
                         <!-- EXACT SAME HEADER AS HOME PAGE - Sticky -->
@@ -2253,7 +2235,7 @@
                         <!-- CONTENT - FULL VIEW with proper spacing -->
                         <div class="overlay-content" style="padding-top:20px;margin:0;border-radius:0;background:#ffffff;">
                             ${result.content}
-                            <!-- Back to Home button with LED icon - FAST ONE CLICK TO HOME -->
+                            <!-- Back to Games button with LED icon - FAST ONE CLICK TO HOME -->
                             <div style="display:flex;justify-content:center;margin-top:24px;padding-bottom:16px;">
                                 <button class="overlay-back-link" id="backToHomeBtn" style="cursor:pointer;">
                                     <span class="back-led-icon">
@@ -2261,7 +2243,7 @@
                                             <svg viewBox="0 0 24 24"><path d="M19 12H5"/><path d="M12 19l-7-7 7-7"/></svg>
                                         </span>
                                     </span>
-                                    <span>← Back to Home</span>
+                                    <span>← Back to Games</span>
                                 </button>
                             </div>
                         </div>
@@ -2282,7 +2264,7 @@
                     });
                 });
 
-                // Attach Back to Home button - FAST ONE CLICK TO HOME
+                // Attach Back to Games button - FAST ONE CLICK TO HOME
                 const backToHomeBtn = document.getElementById('backToHomeBtn');
                 if (backToHomeBtn) {
                     backToHomeBtn.addEventListener('click', function(e) {
