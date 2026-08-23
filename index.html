@@ -815,61 +815,11 @@
             background: #f8fafc;
             border-top: 1px solid #e9edf4;
         }
-        .toc-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            background: white;
-            padding: 10px 14px;
-            border-radius: 12px;
-            border: 1px solid #e9edf4;
-            cursor: pointer;
-        }
-        .toc-header:active {
-            transform: scale(0.97);
-        }
-        .toc-header .toc-left {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-        .toc-header .toc-left .toc-icon {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            width: 24px;
-            height: 24px;
-            border-radius: 50%;
-            background: #000;
-            border: 2px solid #1a1a1a;
-            box-shadow: 0 0 15px rgba(255, 0, 0, 0.1);
-        }
-        .toc-header .toc-left .toc-icon .inner {
-            font-size: 0.6rem;
-            font-weight: 800;
-            color: #fff;
-        }
-        .toc-header .toc-left .toc-title {
-            font-weight: 700;
-            font-size: 0.85rem;
-            color: #0b1e33;
-        }
-        .toc-header .toc-right {
-            font-size: 1.2rem;
-            color: #64748b;
-            transition: transform 0.3s ease;
-        }
-        .toc-header .toc-right.open {
-            transform: rotate(180deg);
-        }
+        /* ===== TOC - heading removed, body always visible ===== */
         .toc-body {
-            display: none;
-            margin-top: 8px;
-            gap: 6px;
-            flex-direction: column;
-        }
-        .toc-body.open {
             display: flex;
+            flex-direction: column;
+            gap: 6px;
         }
         .toc-item {
             background: white;
@@ -2021,16 +1971,8 @@
                 <div class="tag-grid" id="tagGridContainer"></div>
             </div>
 
+            <!-- ===== TOC SECTION - HEADING REMOVED, BODY ALWAYS VISIBLE ===== -->
             <div class="toc-section">
-                <div class="toc-header" id="tocToggle">
-                    <div class="toc-left">
-                        <span class="lucide-icon glow-blue">
-                            <svg viewBox="0 0 24 24"><path d="M16 4h2a2 2 0 012 2v14a2 2 0 01-2 2H6a2 2 0 01-2-2V6a2 2 0 012-2h2"/><rect x="8" y="2" width="8" height="4" rx="1"/><path d="M9 12h6"/><path d="M9 16h4"/></svg>
-                        </span>
-                        <span class="toc-title">Table of Contents</span>
-                    </div>
-                    <div class="toc-right" id="tocArrow">▼</div>
-                </div>
                 <div class="toc-body" id="tocBody">
                     <div class="toc-item">
                         <div class="toc-item-head"><span class="num">1</span> 📖 Overview – <span id="toc1Name">Game Name</span></div>
@@ -2919,12 +2861,7 @@
                 }
             });
 
-            // ---- TOC TOGGLE ----
-            document.getElementById('tocToggle').addEventListener('click', function() {
-                document.getElementById('tocBody').classList.toggle('open');
-                document.getElementById('tocArrow').classList.toggle('open');
-            });
-
+            // ---- DETAIL TITLE CLICK - OPENS DOWNLOAD ----
             document.getElementById('detailTitle').addEventListener('click', function() {
                 const url = document.getElementById('detailDownloadBtn').href;
                 if (url && url !== '#') window.open(url, '_blank');
